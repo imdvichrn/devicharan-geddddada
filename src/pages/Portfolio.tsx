@@ -95,10 +95,7 @@ const highlights = [
 ];
 
 export function Portfolio() {
-  const handleDownloadCV = () => {
-    // In a real implementation, this would download the actual CV
-    console.log('Download CV clicked');
-  };
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -152,13 +149,14 @@ export function Portfolio() {
                 </div>
                 
                 <div className="flex flex-wrap justify-center gap-4">
-                  <Button 
-                    onClick={handleDownloadCV}
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                  <a
+                    href="/cv.pdf"
+                    download
+                    className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground"
                   >
                     <Download className="mr-2 h-4 w-4" />
                     Download CV
-                  </Button>
+                  </a>
                   <Button 
                     variant="outline" 
                     onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
