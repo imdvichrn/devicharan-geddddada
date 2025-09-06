@@ -46,7 +46,7 @@ const projects = [
     description: "Professional video editing projects showcasing creative storytelling and technical skills",
     year: "2024", 
     technologies: ["CapCut", "DaVinci Resolve", "Video Production"],
-    link: "#"
+    link: "https://youtube.com/@scenesyncclips?si=xx0J30hHGUVaoY82"
   },
   {
     title: "Content & Design",
