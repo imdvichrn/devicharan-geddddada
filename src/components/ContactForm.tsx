@@ -133,7 +133,7 @@ export function ContactForm() {
             name="honeypot"
             value={formData.honeypot}
             onChange={handleInputChange}
-            className="absolute -left-9999px"
+            className="absolute -left-9999px bg-transparent"
             tabIndex={-1}
             autoComplete="off"
           />
