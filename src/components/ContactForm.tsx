@@ -146,7 +146,7 @@ export function ContactForm() {
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
-                className={`bg-background/50 ${errors.name ? 'border-destructive' : ''}`}
+                className={`bg-transparent border-glass-border ${errors.name ? 'border-destructive' : ''}`}
                 required
               />
               {errors.name && (
