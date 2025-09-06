@@ -39,7 +39,7 @@ const projects = [
     description: "Built using Wix/AI Builder with modern design principles and responsive layout",
     year: "2024",
     technologies: ["Wix", "AI Builder", "Web Design"],
-    link: "#"
+    link: "https://demo-project0045.lovable.app/"
   },
   {
     title: "Video Editing Demos",
@@ -270,7 +270,13 @@ export function Portfolio() {
                       </Badge>
                     ))}
                   </div>
-                  <Button variant="outline" size="sm" className="w-full">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="w-full"
+                    onClick={() => window.open(project.link, '_blank')}
+                    disabled={project.link === '#'}
+                  >
                     <ExternalLink className="mr-2 h-3 w-3" />
                     View Project
                   </Button>
