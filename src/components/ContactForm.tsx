@@ -162,7 +162,7 @@ export function ContactForm() {
                 type="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className={`bg-background/50 ${errors.email ? 'border-destructive' : ''}`}
+                className={`bg-transparent border-glass-border ${errors.email ? 'border-destructive' : ''}`}
                 required
               />
               {errors.email && (
@@ -178,7 +178,7 @@ export function ContactForm() {
               name="subject"
               value={formData.subject}
               onChange={handleInputChange}
-              className={`bg-background/50 ${errors.subject ? 'border-destructive' : ''}`}
+              className={`bg-transparent border-glass-border ${errors.subject ? 'border-destructive' : ''}`}
               required
             />
             {errors.subject && (
@@ -194,7 +194,7 @@ export function ContactForm() {
               value={formData.message}
               onChange={handleInputChange}
               rows={5}
-              className={`bg-background/50 resize-none ${errors.message ? 'border-destructive' : ''}`}
+              className={`bg-transparent border-glass-border resize-none ${errors.message ? 'border-destructive' : ''}`}
               required
             />
             {errors.message && (
