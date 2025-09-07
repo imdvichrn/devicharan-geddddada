@@ -13,7 +13,7 @@ export function SiriOrb({ className }: SiriOrbProps) {
       loop
       muted
       playsInline
-      style={{ width: '1.5rem', height: '1.5rem', borderRadius: '50%', objectFit: 'cover', display: 'block' }}
+      style={{ width: '1.5rem', height: '1.5rem', borderRadius: '50%', objectFit: 'cover' }}
       className={className}
     />
   );
