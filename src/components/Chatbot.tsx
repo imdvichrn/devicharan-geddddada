@@ -12,6 +12,7 @@ interface Message {
   content: string;
 }
 
+export function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -83,12 +84,12 @@ interface Message {
       </Button>
 
       {/* Chatbot Panel */}
-    {isOpen && (
-      <div className="fixed bottom-24 right-6 w-96 h-[500px] glass-elevated rounded-2xl shadow-2xl z-40 animate-slide-up overflow-hidden">
+      {isOpen && (
+        <div className="fixed bottom-24 right-6 w-96 h-[500px] glass-elevated rounded-2xl shadow-2xl z-40 animate-slide-up overflow-hidden">
           {/* Header */}
           <div className="p-4 border-b border-glass-border">
             <div className="flex items-center justify-between">
-        <WindowChrome />
+              <WindowChrome />
               <div className="flex-1 text-center">
                 <h3 className="font-medium text-foreground">ECHOLESS</h3>
                 <p className="text-sm text-muted-foreground">Devi charañ assistant</p>
@@ -147,7 +148,7 @@ interface Message {
             </div>
           </form>
         </div>
-  )}
+      )}
     </>
   );
 }
