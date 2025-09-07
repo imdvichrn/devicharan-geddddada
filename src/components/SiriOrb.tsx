@@ -7,14 +7,18 @@ interface SiriOrbProps {
 
 export function SiriOrb({ className }: SiriOrbProps) {
   return (
-    <video
-      src="/siri-wave.webm"
-      autoPlay
-      loop
-      muted
-      playsInline
-      style={{ width: '1.5rem', height: '1.5rem', borderRadius: '50%', objectFit: 'cover' }}
-      className={className}
-    />
+    <div
+      className={cn("w-6 h-6 relative overflow-hidden", className)}
+      style={{ background: 'none', padding: 0, margin: 0 }}
+    >
+      <video
+        src="/siri-wave.webm"
+        autoPlay
+        loop
+        muted
+        playsInline
+        style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', display: 'block' }}
+      />
+    </div>
   );
 }
