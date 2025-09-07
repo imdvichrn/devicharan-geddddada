@@ -91,7 +91,7 @@ export function Chatbot() {
             <div className="flex items-center justify-between">
               <WindowChrome />
               <div className="flex-1 text-center">
-                <h3 className="font-medium text-foreground">echoless</h3>
+                <h3 className="font-medium text-foreground">ECHOLESS</h3>
                 <p className="text-sm text-muted-foreground">Devi charañ assistant</p>
               </div>
             </div>
