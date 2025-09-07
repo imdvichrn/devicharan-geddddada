@@ -92,7 +92,7 @@ export function Chatbot() {
               <WindowChrome />
               <div className="flex-1 text-center">
                 <h3 className="font-medium text-foreground">echoless</h3>
-                <p className="text-sm text-muted-foreground">Portfolio Assistant</p>
+                <p className="text-sm text-muted-foreground">Devi charañ assistant</p>
               </div>
             </div>
           </div>
