@@ -200,31 +200,7 @@ All colors MUST be HSL for proper theming.
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    transition: box-shadow 0.2s, transform 0.2s, background 0.2s;
-    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.10);
-    border: none;
-    outline: none;
-    padding: 0;
-    margin: 0;
-    display: inline-block;
-    position: relative;
-  }
-
-  .window-dot:active {
-    transform: scale(0.85);
-  }
-
-  .window-dot.red:hover, .window-dot.red:focus {
-    box-shadow: 0 0 0 2px #ff5f56aa;
-    background: #ff5f56;
-  }
-  .window-dot.yellow:hover, .window-dot.yellow:focus {
-    box-shadow: 0 0 0 2px #ffbd2eaa;
-    background: #ffbd2e;
-  }
-  .window-dot.green:hover, .window-dot.green:focus {
-    box-shadow: 0 0 0 2px #27c93faa;
-    background: #27c93f;
+    transition: var(--transition-smooth);
   }
 
   .window-dot.red {
