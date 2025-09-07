@@ -66,12 +66,21 @@ export function Chatbot() {
       {/* Chatbot Toggle Button */}
       <Button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 w-14 h-14 rounded-full shadow-lg bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-200 hover:scale-110 z-50 ${
+        className={`fixed bottom-6 right-6 w-14 h-14 rounded-full shadow-lg transition-all duration-200 hover:scale-110 z-50 overflow-hidden ${
           isOpen ? 'animate-scale-out' : 'animate-scale-in'
         }`}
         aria-label="Toggle chatbot"
+        style={{ padding: 0, background: 'none' }}
       >
-        <SiriOrb isOpen={isOpen} />
+        <video
+          src="/siri-wave.webm"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover rounded-full"
+          style={{ display: 'block' }}
+        />
       </Button>
 
       {/* Chatbot Panel */}
