@@ -13,8 +13,6 @@ interface Message {
 }
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
-  const [isMaximized, setIsMaximized] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
@@ -85,21 +83,12 @@ interface Message {
       </Button>
 
       {/* Chatbot Panel */}
-      {isOpen && !isMinimized && (
-        <div
-          className={`fixed bottom-24 right-6 glass-elevated rounded-2xl shadow-2xl z-40 animate-slide-up overflow-hidden transition-all duration-300 ${
-            isMaximized ? 'w-[98vw] h-[90vh] left-1/2 -translate-x-1/2 right-auto' : 'w-96 h-[500px]'
-          }`}
-          style={isMaximized ? { left: '50%', transform: 'translateX(-50%)' } : {}}
-        >
+    {isOpen && (
+      <div className="fixed bottom-24 right-6 w-96 h-[500px] glass-elevated rounded-2xl shadow-2xl z-40 animate-slide-up overflow-hidden">
           {/* Header */}
           <div className="p-4 border-b border-glass-border">
             <div className="flex items-center justify-between">
-              <WindowChrome
-                onClose={() => setIsOpen(false)}
-                onMinimize={() => setIsMinimized(true)}
-                onZoom={() => setIsMaximized((v) => !v)}
-              />
+        <WindowChrome />
               <div className="flex-1 text-center">
                 <h3 className="font-medium text-foreground">ECHOLESS</h3>
                 <p className="text-sm text-muted-foreground">Devi charañ assistant</p>
@@ -158,16 +147,7 @@ interface Message {
             </div>
           </form>
         </div>
-      )}
-      {/* Restore from minimized */}
-      {isOpen && isMinimized && (
-        <button
-          className="fixed bottom-24 right-6 px-4 py-2 rounded-full bg-muted text-foreground shadow z-40 border border-glass-border"
-          onClick={() => setIsMinimized(false)}
-        >
-          Restore Chat
-        </button>
-      )}
+  )}
     </>
   );
 }
