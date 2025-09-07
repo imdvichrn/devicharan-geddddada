@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
+import { Send, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { WindowChrome } from './WindowChrome';
+import { SiriOrb } from './SiriOrb';
 import { sendChatMessage } from '@/services/chatService';
 import { useToast } from '@/hooks/use-toast';
 
@@ -70,7 +71,7 @@ export function Chatbot() {
         }`}
         aria-label="Toggle chatbot"
       >
-        {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
+        <SiriOrb isOpen={isOpen} />
       </Button>
 
       {/* Chatbot Panel */}

@@ -119,6 +119,34 @@ export default {
           "0%, 100%": { transform: "translateY(0px)" },
           "50%": { transform: "translateY(-10px)" },
         },
+        "siri-pulse": {
+          "0%, 100%": { 
+            background: "linear-gradient(135deg, #60a5fa, #a855f7, #06b6d4)",
+            transform: "scale(1)"
+          },
+          "33%": { 
+            background: "linear-gradient(135deg, #f87171, #60a5fa, #34d399)",
+            transform: "scale(1.05)"
+          },
+          "66%": { 
+            background: "linear-gradient(135deg, #34d399, #06b6d4, #a855f7)",
+            transform: "scale(0.95)"
+          }
+        },
+        "siri-flow": {
+          "0%": { transform: "rotate(0deg)", opacity: "0.3" },
+          "50%": { transform: "rotate(180deg)", opacity: "0.7" },
+          "100%": { transform: "rotate(360deg)", opacity: "0.3" }
+        },
+        "siri-ripple": {
+          "0%": { transform: "scale(0.8)", opacity: "0.8" },
+          "50%": { transform: "scale(1.2)", opacity: "0.4" },
+          "100%": { transform: "scale(0.8)", opacity: "0.8" }
+        },
+        "siri-glow": {
+          "0%, 100%": { opacity: "0.6", filter: "blur(4px)" },
+          "50%": { opacity: "0.9", filter: "blur(6px)" }
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -130,6 +158,10 @@ export default {
         "slide-up": "slide-up 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
         "glow-pulse": "glow-pulse 2s ease-in-out infinite",
         "float": "float 6s ease-in-out infinite",
+        "siri-pulse": "siri-pulse 4s ease-in-out infinite",
+        "siri-flow": "siri-flow 6s linear infinite",
+        "siri-ripple": "siri-ripple 3s ease-in-out infinite",
+        "siri-glow": "siri-glow 2s ease-in-out infinite"
       },
       backdropBlur: {
         xs: "2px",
