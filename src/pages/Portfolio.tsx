@@ -5,6 +5,8 @@ import { WindowChrome } from '@/components/WindowChrome';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { toast } from '@/hooks/use-toast';
+import { useState } from 'react';
 import { 
   Mail, 
   Phone, 
@@ -16,7 +18,8 @@ import {
   Briefcase,
   GraduationCap,
   Star,
-  Calendar
+  Calendar,
+  Loader2
 } from 'lucide-react';
 import heroImage from '@/assets/hero-bg.jpg';
 import profileImage from '@/assets/profile-avatar.jpg';
@@ -95,9 +98,44 @@ const highlights = [
 ];
 
 export function Portfolio() {
-  const handleDownloadCV = () => {
-    // In a real implementation, this would download the actual CV
-    console.log('Download CV clicked');
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownloadCV = async () => {
+    try {
+      setIsDownloading(true);
+      
+      // Create a link element to trigger download
+      const link = document.createElement('a');
+      link.href = '/cv.pdf';
+      link.download = 'Geddada_Devicharan_CV.pdf';
+      
+      // Check if file exists by trying to fetch it
+      const response = await fetch('/cv.pdf');
+      if (!response.ok) {
+        throw new Error('CV file not found');
+      }
+      
+      // Trigger download
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      toast({
+        title: "Download Started",
+        description: "Your CV is being downloaded...",
+      });
+      
+    } catch (error) {
+      console.error('Download error:', error);
+      toast({
+        title: "Download Failed",
+        description: "Unable to download CV. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      // Add a small delay to show the loading state
+      setTimeout(() => setIsDownloading(false), 1000);
+    }
   };
 
   return (
@@ -154,10 +192,20 @@ export function Portfolio() {
                 <div className="flex flex-wrap justify-center gap-4">
                   <Button 
                     onClick={handleDownloadCV}
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                    disabled={isDownloading}
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-50"
                   >
-                    <Download className="mr-2 h-4 w-4" />
-                    Download CV
+                    {isDownloading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Downloading...
+                      </>
+                    ) : (
+                      <>
+                        <Download className="mr-2 h-4 w-4" />
+                        Download CV
+                      </>
+                    )}
                   </Button>
                   <Button 
                     variant="outline" 
