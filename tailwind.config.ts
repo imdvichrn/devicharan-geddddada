@@ -119,85 +119,110 @@ export default {
           "0%, 100%": { transform: "translateY(0px)" },
           "50%": { transform: "translateY(-10px)" },
         },
-        "siri-core": {
+        "siri-core-pulse": {
           "0%, 100%": { 
             transform: "scale(1)",
-            boxShadow: "0 0 20px rgba(255, 255, 255, 0.8), inset 0 0 20px rgba(59, 130, 246, 0.1)"
+            boxShadow: "0 0 15px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.6)"
           },
           "50%": { 
-            transform: "scale(1.1)",
-            boxShadow: "0 0 30px rgba(255, 255, 255, 1), inset 0 0 30px rgba(59, 130, 246, 0.2)"
+            transform: "scale(1.2)",
+            boxShadow: "0 0 20px rgba(255, 255, 255, 1), 0 0 40px rgba(255, 255, 255, 0.8)"
           }
         },
-        "siri-wave-1": {
+        "siri-wave-blue": {
           "0%": { 
-            transform: "rotate(0deg) scale(1)",
-            opacity: "0.4"
+            transform: "rotate(0deg) scale(0.8) skewX(0deg)",
+            opacity: "0.5"
           },
-          "50%": { 
-            transform: "rotate(180deg) scale(1.3)",
+          "25%": { 
+            transform: "rotate(90deg) scale(1.3) skewX(10deg)",
             opacity: "0.7"
           },
-          "100%": { 
-            transform: "rotate(360deg) scale(1)",
-            opacity: "0.4"
-          }
-        },
-        "siri-wave-2": {
-          "0%": { 
-            transform: "rotate(120deg) scale(0.8)",
-            opacity: "0.3"
-          },
           "50%": { 
-            transform: "rotate(300deg) scale(1.4)",
+            transform: "rotate(180deg) scale(1.1) skewX(-5deg)",
             opacity: "0.6"
           },
+          "75%": { 
+            transform: "rotate(270deg) scale(1.4) skewX(15deg)",
+            opacity: "0.8"
+          },
           "100%": { 
-            transform: "rotate(480deg) scale(0.8)",
-            opacity: "0.3"
+            transform: "rotate(360deg) scale(0.8) skewX(0deg)",
+            opacity: "0.5"
           }
         },
-        "siri-wave-3": {
+        "siri-wave-aqua": {
           "0%": { 
-            transform: "rotate(240deg) scale(1.1)",
-            opacity: "0.35"
+            transform: "rotate(45deg) scale(1.2) skewY(5deg)",
+            opacity: "0.45"
           },
-          "50%": { 
-            transform: "rotate(60deg) scale(0.7)",
+          "33%": { 
+            transform: "rotate(165deg) scale(0.9) skewY(-10deg)",
             opacity: "0.65"
           },
+          "66%": { 
+            transform: "rotate(285deg) scale(1.5) skewY(8deg)",
+            opacity: "0.75"
+          },
           "100%": { 
-            transform: "rotate(-120deg) scale(1.1)",
-            opacity: "0.35"
+            transform: "rotate(405deg) scale(1.2) skewY(5deg)",
+            opacity: "0.45"
           }
         },
-        "siri-wave-4": {
+        "siri-wave-pink": {
           "0%": { 
-            transform: "rotate(300deg) scale(0.9)",
-            opacity: "0.25"
+            transform: "rotate(120deg) scale(1.1) skewX(-8deg)",
+            opacity: "0.4"
           },
-          "50%": { 
-            transform: "rotate(120deg) scale(1.5)",
+          "40%": { 
+            transform: "rotate(240deg) scale(1.6) skewX(12deg)",
+            opacity: "0.7"
+          },
+          "80%": { 
+            transform: "rotate(360deg) scale(0.7) skewX(-3deg)",
             opacity: "0.5"
           },
           "100%": { 
-            transform: "rotate(-60deg) scale(0.9)",
-            opacity: "0.25"
+            transform: "rotate(480deg) scale(1.1) skewX(-8deg)",
+            opacity: "0.4"
           }
         },
-        "siri-shimmer": {
-          "0%": { transform: "translateX(-100%) rotate(45deg)", opacity: "0" },
-          "50%": { opacity: "1" },
-          "100%": { transform: "translateX(100%) rotate(45deg)", opacity: "0" }
+        "siri-wave-purple": {
+          "0%": { 
+            transform: "rotate(200deg) scale(0.9) skewY(-12deg)",
+            opacity: "0.45"
+          },
+          "30%": { 
+            transform: "rotate(300deg) scale(1.4) skewY(6deg)",
+            opacity: "0.8"
+          },
+          "70%": { 
+            transform: "rotate(420deg) scale(1.2) skewY(-4deg)",
+            opacity: "0.6"
+          },
+          "100%": { 
+            transform: "rotate(560deg) scale(0.9) skewY(-12deg)",
+            opacity: "0.45"
+          }
         },
-        "siri-glow": {
+        "siri-flow-1": {
+          "0%": { transform: "rotate(0deg) translateX(2px)", opacity: "0.2" },
+          "50%": { transform: "rotate(180deg) translateX(-3px)", opacity: "0.4" },
+          "100%": { transform: "rotate(360deg) translateX(2px)", opacity: "0.2" }
+        },
+        "siri-flow-2": {
+          "0%": { transform: "rotate(180deg) translateY(-2px)", opacity: "0.15" },
+          "50%": { transform: "rotate(0deg) translateY(3px)", opacity: "0.35" },
+          "100%": { transform: "rotate(-180deg) translateY(-2px)", opacity: "0.15" }
+        },
+        "siri-outer-glow": {
           "0%, 100%": { 
             opacity: "0.3",
             transform: "scale(1)"
           },
           "50%": { 
-            opacity: "0.7",
-            transform: "scale(1.2)"
+            opacity: "0.6",
+            transform: "scale(1.1)"
           }
         }
       },
@@ -211,16 +236,17 @@ export default {
         "slide-up": "slide-up 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
         "glow-pulse": "glow-pulse 2s ease-in-out infinite",
         "float": "float 6s ease-in-out infinite",
-        "siri-core": "siri-core 3s ease-in-out infinite",
-        "siri-wave-1": "siri-wave-1 8s linear infinite",
-        "siri-wave-2": "siri-wave-2 12s linear infinite reverse",
-        "siri-wave-3": "siri-wave-3 10s linear infinite",
-        "siri-wave-4": "siri-wave-4 14s linear infinite reverse",
-        "siri-shimmer": "siri-shimmer 4s ease-in-out infinite",
-        "siri-glow": "siri-glow 5s ease-in-out infinite"
+        "siri-core-pulse": "siri-core-pulse 2s ease-in-out infinite",
+        "siri-wave-blue": "siri-wave-blue 12s linear infinite",
+        "siri-wave-aqua": "siri-wave-aqua 15s linear infinite reverse",
+        "siri-wave-pink": "siri-wave-pink 10s linear infinite",
+        "siri-wave-purple": "siri-wave-purple 18s linear infinite reverse",
+        "siri-flow-1": "siri-flow-1 8s ease-in-out infinite",
+        "siri-flow-2": "siri-flow-2 11s ease-in-out infinite reverse",
+        "siri-outer-glow": "siri-outer-glow 4s ease-in-out infinite"
       },
-      backdropBlur: {
-        xs: "2px",
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       },
     },
   },
