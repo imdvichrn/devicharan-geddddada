@@ -1,7 +1,11 @@
 // DO NOT COMMIT .env
-// Simple JSON vector store with cosine similarity
+
 import fs from "fs";
 import path from "path";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const VECTORS_PATH = path.join(__dirname, "vectors.json");
 

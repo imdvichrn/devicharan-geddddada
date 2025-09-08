@@ -1,9 +1,15 @@
 // DO NOT COMMIT .env
 // Express server entry for chat API and static serving
+
+
 import express from "express";
 import dotenv from "dotenv";
 import path from "path";
-import chatRouter from "./api/chat";
+import chatRouter from "./api/chat.ts";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 dotenv.config();
 

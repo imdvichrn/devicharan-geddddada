@@ -1,10 +1,15 @@
 // DO NOT COMMIT .env
 // Script to index text files into local vector store
+
 import fs from "fs";
 import path from "path";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
 import OpenAI from "openai";
 import dotenv from "dotenv";
 import { upsert } from "./vectorStore.js";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 dotenv.config();
 
