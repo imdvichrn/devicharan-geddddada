@@ -1,5 +1,6 @@
 // Simple chat UI for portfolio assistant
 import React, { useState, useRef, useEffect } from "react";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 interface Message {
   role: "user" | "assistant";
@@ -50,9 +51,21 @@ export default function Chat() {
       </div>
       {chartData && (
         <div className="my-2 p-2 border rounded bg-white">
-          <div className="font-semibold mb-1">Chart Preview</div>
-          {/* Placeholder for chart rendering, e.g. Chart.js or Recharts */}
-          <pre className="text-xs overflow-x-auto">{JSON.stringify(chartData, null, 2)}</pre>
+          <div className="font-semibold mb-1">Chart Data</div>
+          {chartData.data ? (
+            <ResponsiveContainer width="100%" height={200}>
+              <BarChart data={chartData.data}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="value" fill="#8884d8" />
+              </BarChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="text-sm text-gray-600">{chartData.message || 'Chart data available'}</div>
+          )}
         </div>
       )}
       <form onSubmit={sendMessage} className="flex gap-2">

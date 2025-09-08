@@ -1,15 +1,9 @@
-// Copilot: Create an Express POST /api/chat endpoint.
-// It should load DEEPSEEK_API_KEY from .env,
-// send the user messages to DeepSeek's chat API (https://api.deepseek.com),
-// and return the assistant's reply as JSON.
-
-dotenv.config();
-
 // DO NOT COMMIT .env
 import express from "express";
 import OpenAI from "openai";
 import dotenv from "dotenv";
-import { search } from "../vectorStore.ts";
+import { search } from "../vectorStore";
+import { addMemory, getMemory } from "../memory";
 
 dotenv.config();
 
@@ -48,11 +42,17 @@ router.post("/", async (req, res) => {
     const queryEmbedding = embedResp.data[0].embedding;
 
     // 2. Search vector store
-    const topMatches = search(queryEmbedding, 3);
+    const topMatches = search(queryEmbedding, 5);
     const threshold = 0.65;
     const goodMatches = topMatches.filter(m => m.score > threshold);
 
-    let systemPrompt = "You are Devicharan's AI assistant. Use his portfolio data when possible.";
+    // 3. Get memory context
+    const recentMemory = getMemory(10);
+    const memoryContext = recentMemory.length > 0 
+      ? `Recent conversation context:\n${recentMemory.map(m => `${m.role}: ${m.content}`).join('\n')}\n`
+      : '';
+
+    let systemPrompt = "You are Devicharan's personal AI assistant. Prefer his portfolio data first when answering questions about him, his skills, projects, or experience.";
     let context = "";
     let sources: string[] = [];
     if (goodMatches.length > 0) {
@@ -63,12 +63,15 @@ router.post("/", async (req, res) => {
       console.log("[chat] No strong local match, falling back to DeepSeek only.");
     }
 
-    // 3. Build messages for DeepSeek
+    // 4. Build messages for DeepSeek
     const dsMessages: OpenAI.ChatCompletionMessageParam[] = [
       { role: "system", content: systemPrompt },
     ];
     if (context) {
-      dsMessages.push({ role: "system", content: "Relevant info:\n" + context });
+      dsMessages.push({ role: "system", content: "Relevant portfolio info:\n" + context });
+    }
+    if (memoryContext) {
+      dsMessages.push({ role: "system", content: memoryContext });
     }
     // Only include role/content for user/assistant messages
     for (const m of messages) {
@@ -77,13 +80,24 @@ router.post("/", async (req, res) => {
       }
     }
 
-    // 4. Call DeepSeek
+    // 5. Call DeepSeek
     const completion = await client.chat.completions.create({
       model: "deepseek-chat",
       messages: dsMessages,
     });
     const reply = completion.choices[0].message?.content || "No reply";
-    res.json({ reply, sources });
+
+    // 6. Save to memory
+    addMemory({ role: "user", content: userQuery, timestamp: new Date() });
+    addMemory({ role: "assistant", content: reply, timestamp: new Date(), sources });
+
+    // 7. Check for chart data (simple CSV detection)
+    let chartData = null;
+    if (userQuery.toLowerCase().includes('chart') || userQuery.toLowerCase().includes('graph') || userQuery.toLowerCase().includes('data')) {
+      chartData = { type: 'placeholder', message: 'Chart functionality can be extended here' };
+    }
+
+    res.json({ reply, sources, chartData });
   } catch (error) {
     console.error("[chat] Error communicating with DeepSeek API:", error);
     res.status(500).json({ error: "Failed to get response" });
