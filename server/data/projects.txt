@@ -1,0 +1,5 @@
+Projects:
+- Smart Home Automation System
+- Portfolio Website
+- IoT Energy Meter
+- Chatbot Assistant
