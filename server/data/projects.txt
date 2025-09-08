@@ -1,5 +1,5 @@
-Projects:
-- Smart Home Automation System
-- Portfolio Website
-- IoT Energy Meter
-- Chatbot Assistant
+📂 Projects
+- Portfolio Website (2024): Built a personal site using Wix & AI builders to showcase work and skills.
+- Video Editing Demos (2024): Edited social media-style clips with transitions, overlays, and music.
+- Data Entry & Research Practice (2024): Created mock databases, applied formulas, and structured datasets.
+- Content Design (2024): Designed posters & infographics in Canva, experimented with AI-assisted copywriting.
