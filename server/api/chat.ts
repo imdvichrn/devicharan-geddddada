@@ -34,33 +34,45 @@ router.post("/", async (req, res) => {
   const userQuery = lastUserMsg.content;
 
   try {
+    console.log(`[chat] Processing user query: "${userQuery}"`);
+    
     // 1. Embed the query
+    console.log("[chat] Creating embedding for user query...");
     const embedResp = await client.embeddings.create({
       model: "text-embedding-3-small",
       input: userQuery,
     });
     const queryEmbedding = embedResp.data[0].embedding;
+    console.log(`[chat] Generated embedding with ${queryEmbedding.length} dimensions`);
 
     // 2. Search vector store
+    console.log("[chat] Searching vector store for relevant content...");
     const topMatches = search(queryEmbedding, 5);
     const threshold = 0.65;
     const goodMatches = topMatches.filter(m => m.score > threshold);
+    
+    console.log(`[chat] Found ${topMatches.length} total matches, ${goodMatches.length} above threshold (${threshold})`);
+    if (topMatches.length > 0) {
+      console.log("[chat] Top match scores:", topMatches.map(m => `${m.source}: ${m.score.toFixed(3)}`));
+    }
 
     // 3. Get memory context
     const recentMemory = getMemory(10);
     const memoryContext = recentMemory.length > 0 
       ? `Recent conversation context:\n${recentMemory.map(m => `${m.role}: ${m.content}`).join('\n')}\n`
       : '';
+    console.log(`[chat] Retrieved ${recentMemory.length} recent memory items`);
 
     let systemPrompt = "You are Devicharan's personal AI assistant. Prefer his portfolio data first when answering questions about him, his skills, projects, or experience.";
     let context = "";
     let sources: string[] = [];
+    
     if (goodMatches.length > 0) {
       context = goodMatches.map(r => r.text).join("\n");
       sources = goodMatches.map(r => r.source);
-      console.log(`[chat] Found ${goodMatches.length} relevant chunks:`, sources);
+      console.log(`[chat] Using portfolio data from sources:`, sources);
     } else {
-      console.log("[chat] No strong local match, falling back to DeepSeek only.");
+      console.log("[chat] No strong portfolio matches found, using general knowledge");
     }
 
     // 4. Build messages for DeepSeek
@@ -80,23 +92,34 @@ router.post("/", async (req, res) => {
       }
     }
 
+    console.log(`[chat] Sending ${dsMessages.length} messages to DeepSeek...`);
+
     // 5. Call DeepSeek
     const completion = await client.chat.completions.create({
       model: "deepseek-chat",
       messages: dsMessages,
     });
     const reply = completion.choices[0].message?.content || "No reply";
+    console.log(`[chat] Received reply from DeepSeek (${reply.length} characters)`);
 
     // 6. Save to memory
     addMemory({ role: "user", content: userQuery, timestamp: new Date() });
     addMemory({ role: "assistant", content: reply, timestamp: new Date(), sources });
+    console.log("[chat] Saved conversation to memory");
 
-    // 7. Check for chart data (simple CSV detection)
+    // 7. Check for chart data (enhanced detection)
     let chartData = null;
-    if (userQuery.toLowerCase().includes('chart') || userQuery.toLowerCase().includes('graph') || userQuery.toLowerCase().includes('data')) {
-      chartData = { type: 'placeholder', message: 'Chart functionality can be extended here' };
+    const chartKeywords = ['chart', 'graph', 'plot', 'data', 'visualization', 'analytics', 'statistics', 'metrics'];
+    if (chartKeywords.some(keyword => userQuery.toLowerCase().includes(keyword))) {
+      chartData = { 
+        type: 'placeholder', 
+        message: 'Chart functionality can be extended here',
+        query: userQuery 
+      };
+      console.log("[chat] Chart data detected based on query keywords");
     }
 
+    console.log(`[chat] Responding with ${sources.length} sources and chartData: ${!!chartData}`);
     res.json({ reply, sources, chartData });
   } catch (error) {
     console.error("[chat] Error communicating with DeepSeek API:", error);
