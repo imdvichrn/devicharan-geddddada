@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 import OpenAI from "openai";
 import dotenv from "dotenv";
-import { upsert } from "./vectorStore";
+import { upsert } from "./vectorStore.js";
 
 dotenv.config();
 
