@@ -17,7 +17,26 @@ export function SiriOrb({ className }: SiriOrbProps) {
         loop
         muted
         playsInline
-        style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', display: 'block' }}
+        preload="auto"
+        onLoadedData={(e) => {
+          // Ensure video loops continuously
+          const video = e.currentTarget;
+          video.currentTime = 0;
+          video.play().catch(console.error);
+        }}
+        onEnded={(e) => {
+          // Force restart if loop fails
+          const video = e.currentTarget;
+          video.currentTime = 0;
+          video.play().catch(console.error);
+        }}
+        style={{ 
+          width: '100%', 
+          height: '100%', 
+          borderRadius: '50%', 
+          objectFit: 'cover', 
+          display: 'block' 
+        }}
       />
     </div>
   );

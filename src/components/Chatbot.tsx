@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Send, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,7 +12,7 @@ interface Message {
   content: string;
 }
 
-export function Chatbot() {
+export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -24,6 +24,10 @@ export function Chatbot() {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+
+  useImperativeHandle(ref, () => ({
+    toggleChat: () => setIsOpen(!isOpen)
+  }));
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -78,6 +82,19 @@ export function Chatbot() {
           loop
           muted
           playsInline
+          preload="auto"
+          onLoadedData={(e) => {
+            // Ensure video loops continuously
+            const video = e.currentTarget;
+            video.currentTime = 0;
+            video.play().catch(console.error);
+          }}
+          onEnded={(e) => {
+            // Force restart if loop fails
+            const video = e.currentTarget;
+            video.currentTime = 0;
+            video.play().catch(console.error);
+          }}
           className="w-full h-full object-cover rounded-full"
           style={{ display: 'block' }}
         />
@@ -151,4 +168,4 @@ export function Chatbot() {
       )}
     </>
   );
-}
+});

@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { 
   Mail, 
   Phone, 
@@ -21,6 +21,8 @@ import {
   Calendar,
   Loader2
 } from 'lucide-react';
+import { useKeyboardShortcuts, createPortfolioShortcuts } from '@/hooks/useKeyboardShortcuts';
+import { KeyboardShortcutsHelp } from '@/components/KeyboardShortcutsHelp';
 import heroImage from '@/assets/hero-bg.jpg';
 import profileImage from '@/assets/profile-avatar.jpg';
 
@@ -99,6 +101,7 @@ const highlights = [
 
 export function Portfolio() {
   const [isDownloading, setIsDownloading] = useState(false);
+  const chatbotRef = useRef<{ toggleChat: () => void }>(null);
 
   const handleDownloadCV = async () => {
     try {
@@ -137,6 +140,37 @@ export function Portfolio() {
       setTimeout(() => setIsDownloading(false), 1000);
     }
   };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const scrollToContact = () => {
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToProjects = () => {
+    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(console.error);
+    } else {
+      document.exitFullscreen().catch(console.error);
+    }
+  };
+
+  const shortcuts = createPortfolioShortcuts({
+    toggleChat: () => chatbotRef.current?.toggleChat(),
+    scrollToTop,
+    scrollToContact,
+    toggleFullscreen,
+    downloadCV: handleDownloadCV,
+    openProjects: scrollToProjects,
+  });
+
+  useKeyboardShortcuts(shortcuts);
 
   return (
     <div className="min-h-screen bg-background">
@@ -412,7 +446,10 @@ export function Portfolio() {
       </footer>
 
       {/* Chatbot */}
-      <Chatbot />
+      <Chatbot ref={chatbotRef} />
+      
+      {/* Keyboard Shortcuts Help */}
+      <KeyboardShortcutsHelp />
     </div>
   );
 }
