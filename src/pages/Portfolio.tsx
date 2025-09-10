@@ -2,6 +2,7 @@ import { Navigation } from '@/components/Navigation';
 import { Chatbot } from '@/components/Chatbot';
 import { ContactForm } from '@/components/ContactForm';
 import { WindowChrome } from '@/components/WindowChrome';
+import { AnimatedBackground } from '@/components/AnimatedBackground';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -27,76 +28,76 @@ import heroImage from '@/assets/hero-bg.jpg';
 import profileImage from '@/assets/profile-avatar.jpg';
 
 const services = {
-  "Digital Solutions": [
-    "Web Development", "Mobile Apps", "E-commerce", "Custom Software", "AI Integration"
+  "Payment Solutions": [
+    "Instant Transfers", "QR Code Payments", "Split Bills", "Business API", "Mobile Checkout"
   ],
-  "Creative Services": [
-    "Brand Design", "Video Production", "Content Marketing", "Social Media Management"
+  "Business Features": [
+    "Analytics Dashboard", "Transaction History", "Customer Management", "Revenue Tracking"
   ],
-  "Business Solutions": [
-    "Data Analytics", "Process Automation", "CRM Systems", "Cloud Migration"
+  "Security & Compliance": [
+    "Bank-Grade Security", "Fraud Protection", "PCI Compliance", "24/7 Support"
   ]
 };
 
-const projects = [
+const features = [
   {
-    title: "Enterprise Web Platform",
-    description: "Scalable web application serving 10,000+ users with advanced analytics and real-time data",
+    title: "Instant Payments",
+    description: "Send and receive money instantly with just a phone number or username",
     year: "2024",
-    technologies: ["React", "Node.js", "PostgreSQL"],
-    link: "https://demo-project0045.lovable.app/"
-  },
-  {
-    title: "Marketing Automation Suite",
-    description: "Complete marketing automation platform with email campaigns, analytics, and lead scoring",
-    year: "2024", 
-    technologies: ["Marketing Automation", "Analytics", "CRM"],
-    link: "https://www.youtube.com/@scenesyncclips"
-  },
-  {
-    title: "Brand Identity System",
-    description: "Comprehensive brand identity and digital presence for Fortune 500 companies",
-    year: "2024",
-    technologies: ["Brand Design", "Digital Strategy", "UI/UX"],
-    link: "https://www.youtube.com/@scenesyncclips"
-  },
-  {
-    title: "Data Analytics Dashboard",
-    description: "Real-time business intelligence dashboard with predictive analytics and reporting",
-    year: "2024",
-    technologies: ["Data Science", "Business Intelligence", "Machine Learning"],
+    technologies: ["Real-time Processing", "Mobile-first", "Secure Authentication"],
     link: "#"
   },
   {
-    title: "Mobile Commerce App",
-    description: "Cross-platform mobile application with seamless checkout and inventory management",
-    year: "2023",
-    technologies: ["React Native", "Payment Processing", "Cloud Services"],
+    title: "Business Dashboard",
+    description: "Comprehensive analytics and insights for business transaction management",
+    year: "2024", 
+    technologies: ["Analytics", "Business Intelligence", "Revenue Tracking"],
+    link: "https://www.youtube.com/@scenesyncclips"
+  },
+  {
+    title: "QR Code Payments",
+    description: "Simple scan-to-pay functionality for seamless in-person transactions",
+    year: "2024",
+    technologies: ["QR Technology", "NFC", "Contactless Payments"],
+    link: "#"
+  },
+  {
+    title: "Split Payments",
+    description: "Easily divide bills and expenses among friends and colleagues",
+    year: "2024",
+    technologies: ["Group Payments", "Smart Calculation", "Social Integration"],
+    link: "#"
+  },
+  {
+    title: "Developer API",
+    description: "Robust payment infrastructure for businesses to integrate Venmo payments",
+    year: "2024",
+    technologies: ["RESTful API", "Webhooks", "SDK Support"],
     link: "#"
   }
 ];
 
-const clients = [
+const partnerships = [
   {
-    company: "TechCorp Solutions",
-    industry: "Technology",
-    project: "Digital Transformation",
-    result: "40% efficiency increase"
+    degree: "Bank Partnerships",
+    institution: "150+ Financial Institutions",
+    period: "Nationwide Coverage",
+    status: "Active"
   },
   {
-    company: "Global Retail Chain", 
-    industry: "E-commerce",
-    project: "Online Platform Development",
-    result: "300% sales growth"
+    degree: "Merchant Network", 
+    institution: "2M+ Business Partners",
+    period: "Growing Network",
+    status: "Expanding"
   }
 ];
 
 const highlights = [
-  "500+ successful projects delivered globally",
-  "24/7 customer support and maintenance",
-  "Certified technology partners and expertise",
-  "Scalable solutions for businesses of all sizes",
-  "Industry-leading security and compliance standards"
+  "Lightning-fast transfers in seconds",
+  "Bank-grade security and encryption",
+  "Trusted by 80+ million users worldwide", 
+  "Simple social payment experience",
+  "24/7 customer support and fraud protection"
 ];
 
 export function Portfolio() {
@@ -173,7 +174,8 @@ export function Portfolio() {
   useKeyboardShortcuts(shortcuts);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      <AnimatedBackground />
       <Navigation />
       
       {/* Hero Section */}
@@ -201,43 +203,43 @@ export function Portfolio() {
                 
                 <div className="space-y-4">
                   <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                    TechFlow Solutions
+                    Venmo Business
                   </h1>
                   <p className="text-xl md:text-2xl text-muted-foreground">
-                    Innovative Business Solutions | Digital Transformation | Growth Partners
+                    Fast, Safe & Social Payments | Trusted by Millions
                   </p>
                   
                   <div className="flex flex-wrap justify-center items-center gap-4 text-sm text-muted-foreground">
                     <div className="flex items-center gap-2">
                       <MapPin size={16} />
-                      <span>Global Operations</span>
+                      <span>Available Nationwide</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Phone size={16} />
-                      <span>+1 (555) 123-4567</span>
+                      <span>24/7 Support</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Mail size={16} />
-                      <span>hello@techflow.solutions</span>
+                      <span>business@venmo.com</span>
                     </div>
                   </div>
                 </div>
                 
                 <div className="flex flex-wrap justify-center gap-4">
                   <Button 
-                    onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                    onClick={() => window.open('https://venmo.com/business', '_blank')}
                     className="bg-primary hover:bg-primary/90 text-primary-foreground"
                   >
-                    <Mail className="mr-2 h-4 w-4" />
+                    <Download className="mr-2 h-4 w-4" />
                     Get Started
                   </Button>
                   <Button 
                     variant="outline" 
-                    onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                    onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
                     className="border-primary/20 hover:bg-primary/10"
                   >
-                    <Briefcase className="mr-2 h-4 w-4" />
-                    View Solutions
+                    <Mail className="mr-2 h-4 w-4" />
+                    Learn More
                   </Button>
                 </div>
               </div>
@@ -254,19 +256,19 @@ export function Portfolio() {
               <WindowChrome className="mb-4" />
               <CardTitle className="text-3xl font-bold flex items-center gap-3">
                 <User className="text-primary" />
-                About Me
+                About Venmo Business
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                TechFlow Solutions is a leading digital transformation company specializing in innovative 
-                business solutions. We help organizations modernize their operations, streamline processes, 
-                and accelerate growth through cutting-edge technology and strategic consulting.
+                Venmo Business empowers companies of all sizes to accept payments easily and securely. 
+                With our trusted platform used by over 80 million people, businesses can tap into a 
+                social payment network that makes transactions simple, fast, and engaging.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Our team of experts combines deep industry knowledge with the latest technological 
-                advancements to deliver scalable, secure, and user-friendly solutions that drive 
-                measurable business results for our clients worldwide.
+                From small retailers to large enterprises, Venmo Business provides the tools you need 
+                to grow revenue, understand customer behavior, and create seamless payment experiences 
+                that keep customers coming back.
               </p>
             </CardContent>
           </Card>
@@ -281,21 +283,21 @@ export function Portfolio() {
               <WindowChrome className="mb-4" />
               <CardTitle className="text-3xl font-bold flex items-center gap-3">
                 <Code className="text-primary" />
-                Our Services
+                Payment Solutions
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-8">
-              {Object.entries(services).map(([category, serviceList]) => (
+              {Object.entries(services).map(([category, skillList]) => (
                 <div key={category} className="space-y-4">
                   <h3 className="text-xl font-semibold text-foreground">{category}</h3>
                   <div className="flex flex-wrap gap-2">
-                    {serviceList.map((service) => (
+                    {skillList.map((skill) => (
                       <Badge 
-                        key={service} 
+                        key={skill} 
                         variant="secondary" 
                         className="px-3 py-1 bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors"
                       >
-                        {service}
+                        {skill}
                       </Badge>
                     ))}
                   </div>
@@ -314,28 +316,28 @@ export function Portfolio() {
               <WindowChrome className="mb-4" />
               <CardTitle className="text-3xl font-bold flex items-center gap-3">
                 <Briefcase className="text-primary" />
-                Projects & Work
+                Features & Solutions
               </CardTitle>
             </CardHeader>
           </Card>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project, index) => (
+            {features.map((feature, index) => (
               <Card key={index} className="glass-panel border-glass-border hover:scale-105 transition-transform duration-200">
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg">{project.title}</CardTitle>
+                    <CardTitle className="text-lg">{feature.title}</CardTitle>
                     <Badge variant="outline" className="text-xs">
-                      {project.year}
+                      {feature.year}
                     </Badge>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-muted-foreground text-sm">
-                    {project.description}
+                    {feature.description}
                   </p>
                   <div className="flex flex-wrap gap-1">
-                    {project.technologies.map((tech) => (
+                    {feature.technologies.map((tech) => (
                       <Badge key={tech} variant="secondary" className="text-xs">
                         {tech}
                       </Badge>
@@ -345,11 +347,11 @@ export function Portfolio() {
                     variant="outline" 
                     size="sm" 
                     className="w-full"
-                    onClick={() => window.open(project.link, '_blank')}
-                    disabled={project.link === '#'}
+                    onClick={() => window.open(feature.link, '_blank')}
+                    disabled={feature.link === '#'}
                   >
                     <ExternalLink className="mr-2 h-3 w-3" />
-                    View Project
+                    Learn More
                   </Button>
                 </CardContent>
               </Card>
@@ -358,33 +360,33 @@ export function Portfolio() {
         </div>
       </section>
 
-      {/* Client Success Stories Section */}
-      <section id="clients" className="py-20 px-4 bg-muted/30">
+      {/* Education Section */}
+      <section id="education" className="py-20 px-4 bg-muted/30">
         <div className="max-w-6xl mx-auto">
           <Card className="glass-panel border-glass-border">
             <CardHeader>
               <WindowChrome className="mb-4" />
               <CardTitle className="text-3xl font-bold flex items-center gap-3">
-                <Star className="text-primary" />
-                Client Success Stories
+                <GraduationCap className="text-primary" />
+                Partnerships
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              {clients.map((client, index) => (
+              {partnerships.map((partner, index) => (
                 <div key={index} className="border-l-4 border-primary/30 pl-6 pb-6 last:pb-0">
                   <div className="flex items-start justify-between mb-2">
-                    <h3 className="text-xl font-semibold text-foreground">{client.company}</h3>
+                    <h3 className="text-xl font-semibold text-foreground">{partner.degree}</h3>
                     <Badge 
-                      variant="default"
+                      variant={partner.status === 'Active' ? 'default' : 'secondary'}
                       className="ml-2"
                     >
-                      {client.industry}
+                      {partner.status}
                     </Badge>
                   </div>
-                  <p className="text-muted-foreground font-medium">{client.project}</p>
+                  <p className="text-muted-foreground font-medium">{partner.institution}</p>
                   <div className="flex items-center gap-2 mt-2 text-sm text-muted-foreground">
-                    <Star size={14} className="text-primary" />
-                    <span className="font-semibold text-primary">{client.result}</span>
+                    <Calendar size={14} />
+                    <span>{partner.period}</span>
                   </div>
                 </div>
               ))}
@@ -401,7 +403,7 @@ export function Portfolio() {
               <WindowChrome className="mb-4" />
               <CardTitle className="text-3xl font-bold flex items-center gap-3">
                 <Star className="text-primary" />
-                Key Highlights
+                Why Choose Venmo
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -429,7 +431,7 @@ export function Portfolio() {
       <footer className="py-8 px-4 border-t border-glass-border glass-panel">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-muted-foreground">
-            © 2025 TechFlow Solutions. All rights reserved.
+            © 2025 Venmo LLC. All rights reserved.
           </p>
         </div>
       </footer>
