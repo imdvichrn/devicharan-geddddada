@@ -26,77 +26,77 @@ import { KeyboardShortcutsHelp } from '@/components/KeyboardShortcutsHelp';
 import heroImage from '@/assets/hero-bg.jpg';
 import profileImage from '@/assets/profile-avatar.jpg';
 
-const skills = {
-  "Creative & Technical Tools": [
-    "Adobe Photoshop", "Canva", "CapCut", "DaVinci Resolve", "Wix", "No-code AI Platforms"
+const services = {
+  "Digital Solutions": [
+    "Web Development", "Mobile Apps", "E-commerce", "Custom Software", "AI Integration"
   ],
-  "Professional Skills": [
-    "Data Entry", "Research", "Content Design", "Bilingual Communication (Telugu ↔ English)"
+  "Creative Services": [
+    "Brand Design", "Video Production", "Content Marketing", "Social Media Management"
   ],
-  "Soft Skills": [
-    "Problem-Solving", "Teamwork", "Adaptability", "Continuous Learning"
+  "Business Solutions": [
+    "Data Analytics", "Process Automation", "CRM Systems", "Cloud Migration"
   ]
 };
 
 const projects = [
   {
-    title: "Portfolio Website",
-    description: "Built using Wix/AI Builder with modern design principles and responsive layout",
+    title: "Enterprise Web Platform",
+    description: "Scalable web application serving 10,000+ users with advanced analytics and real-time data",
     year: "2024",
-    technologies: ["Wix", "AI Builder", "Web Design"],
+    technologies: ["React", "Node.js", "PostgreSQL"],
     link: "https://demo-project0045.lovable.app/"
   },
   {
-    title: "Video Editing Demos",
-    description: "Professional video editing projects showcasing creative storytelling and technical skills",
+    title: "Marketing Automation Suite",
+    description: "Complete marketing automation platform with email campaigns, analytics, and lead scoring",
     year: "2024", 
-    technologies: ["CapCut", "DaVinci Resolve", "Video Production"],
-    link: "https://youtube.com/@scenesyncclips?si=xx0J30hHGUVaoY82"
+    technologies: ["Marketing Automation", "Analytics", "CRM"],
+    link: "https://www.youtube.com/@scenesyncclips"
   },
   {
-    title: "Content & Design",
-    description: "Visual content creation for digital marketing and brand communications",
+    title: "Brand Identity System",
+    description: "Comprehensive brand identity and digital presence for Fortune 500 companies",
     year: "2024",
-    technologies: ["Photoshop", "Canva", "Graphic Design"],
+    technologies: ["Brand Design", "Digital Strategy", "UI/UX"],
     link: "#"
   },
   {
-    title: "Marketing & Planning Practice",
-    description: "Strategic planning and execution of digital marketing campaigns",
+    title: "Data Analytics Dashboard",
+    description: "Real-time business intelligence dashboard with predictive analytics and reporting",
     year: "2024",
-    technologies: ["Digital Marketing", "Content Strategy", "Analytics"],
+    technologies: ["Data Science", "Business Intelligence", "Machine Learning"],
     link: "#"
   },
   {
-    title: "Team Collaboration Project",
-    description: "Cross-functional team project demonstrating leadership and collaboration skills",
+    title: "Mobile Commerce App",
+    description: "Cross-platform mobile application with seamless checkout and inventory management",
     year: "2023",
-    technologies: ["Project Management", "Team Leadership", "Communication"],
+    technologies: ["React Native", "Payment Processing", "Cloud Services"],
     link: "#"
   }
 ];
 
-const education = [
+const clients = [
   {
-    degree: "B.Tech in Electrical & Electronics Engineering",
-    institution: "Currently Pursuing",
-    period: "Ongoing",
-    status: "In Progress"
+    company: "TechCorp Solutions",
+    industry: "Technology",
+    project: "Digital Transformation",
+    result: "40% efficiency increase"
   },
   {
-    degree: "Diploma in Electrical & Electronics Engineering", 
-    institution: "M.R.A.G.R. Govt. Polytechnic, Vizianagaram",
-    period: "Completed",
-    status: "Completed"
+    company: "Global Retail Chain", 
+    industry: "E-commerce",
+    project: "Online Platform Development",
+    result: "300% sales growth"
   }
 ];
 
 const highlights = [
-  "Self-taught in Prompt Engineering & AI Tools",
-  "Bilingual (Telugu & English)",
-  "Interest in Digital Marketing & Creative Design",
-  "Reliable and motivated professional",
-  "Strong adaptability and continuous learning mindset"
+  "500+ successful projects delivered globally",
+  "24/7 customer support and maintenance",
+  "Certified technology partners and expertise",
+  "Scalable solutions for businesses of all sizes",
+  "Industry-leading security and compliance standards"
 ];
 
 export function Portfolio() {
@@ -201,53 +201,43 @@ export function Portfolio() {
                 
                 <div className="space-y-4">
                   <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                    Geddada Devicharan
+                    TechFlow Solutions
                   </h1>
                   <p className="text-xl md:text-2xl text-muted-foreground">
-                    Aspiring Digital Professional | Creative Learner | Problem Solver
+                    Innovative Business Solutions | Digital Transformation | Growth Partners
                   </p>
                   
                   <div className="flex flex-wrap justify-center items-center gap-4 text-sm text-muted-foreground">
                     <div className="flex items-center gap-2">
                       <MapPin size={16} />
-                      <span>Visakhapatnam, India</span>
+                      <span>Global Operations</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Phone size={16} />
-                      <span>+91 6303468707</span>
+                      <span>+1 (555) 123-4567</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Mail size={16} />
-                      <span>devicharangeddada@gmail.com</span>
+                      <span>hello@techflow.solutions</span>
                     </div>
                   </div>
                 </div>
                 
                 <div className="flex flex-wrap justify-center gap-4">
                   <Button 
-                    onClick={handleDownloadCV}
-                    disabled={isDownloading}
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-50"
+                    onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
                   >
-                    {isDownloading ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Downloading...
-                      </>
-                    ) : (
-                      <>
-                        <Download className="mr-2 h-4 w-4" />
-                        Download CV
-                      </>
-                    )}
+                    <Mail className="mr-2 h-4 w-4" />
+                    Get Started
                   </Button>
                   <Button 
                     variant="outline" 
-                    onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                    onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
                     className="border-primary/20 hover:bg-primary/10"
                   >
-                    <Mail className="mr-2 h-4 w-4" />
-                    Contact Me
+                    <Briefcase className="mr-2 h-4 w-4" />
+                    View Solutions
                   </Button>
                 </div>
               </div>
@@ -269,15 +259,14 @@ export function Portfolio() {
             </CardHeader>
             <CardContent className="space-y-6">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Motivated and growth-driven individual with a Diploma in Electrical & Electronics Engineering 
-                and currently pursuing a B.Tech in EEE. Skilled in video editing, graphic design, website building, 
-                and digital content planning. Self-taught in AI-assisted workflows and prompt engineering, with 
-                strong adaptability, collaboration, and problem-solving skills.
+                TechFlow Solutions is a leading digital transformation company specializing in innovative 
+                business solutions. We help organizations modernize their operations, streamline processes, 
+                and accelerate growth through cutting-edge technology and strategic consulting.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                I'm passionate about leveraging technology to create meaningful digital experiences. My journey 
-                combines technical engineering knowledge with creative digital skills, making me versatile in 
-                both analytical and creative problem-solving approaches.
+                Our team of experts combines deep industry knowledge with the latest technological 
+                advancements to deliver scalable, secure, and user-friendly solutions that drive 
+                measurable business results for our clients worldwide.
               </p>
             </CardContent>
           </Card>
@@ -292,21 +281,21 @@ export function Portfolio() {
               <WindowChrome className="mb-4" />
               <CardTitle className="text-3xl font-bold flex items-center gap-3">
                 <Code className="text-primary" />
-                Skills & Expertise
+                Our Services
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-8">
-              {Object.entries(skills).map(([category, skillList]) => (
+              {Object.entries(services).map(([category, serviceList]) => (
                 <div key={category} className="space-y-4">
                   <h3 className="text-xl font-semibold text-foreground">{category}</h3>
                   <div className="flex flex-wrap gap-2">
-                    {skillList.map((skill) => (
+                    {serviceList.map((service) => (
                       <Badge 
-                        key={skill} 
+                        key={service} 
                         variant="secondary" 
                         className="px-3 py-1 bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors"
                       >
-                        {skill}
+                        {service}
                       </Badge>
                     ))}
                   </div>
@@ -369,33 +358,33 @@ export function Portfolio() {
         </div>
       </section>
 
-      {/* Education Section */}
-      <section id="education" className="py-20 px-4 bg-muted/30">
+      {/* Client Success Stories Section */}
+      <section id="clients" className="py-20 px-4 bg-muted/30">
         <div className="max-w-6xl mx-auto">
           <Card className="glass-panel border-glass-border">
             <CardHeader>
               <WindowChrome className="mb-4" />
               <CardTitle className="text-3xl font-bold flex items-center gap-3">
-                <GraduationCap className="text-primary" />
-                Education
+                <Star className="text-primary" />
+                Client Success Stories
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              {education.map((edu, index) => (
+              {clients.map((client, index) => (
                 <div key={index} className="border-l-4 border-primary/30 pl-6 pb-6 last:pb-0">
                   <div className="flex items-start justify-between mb-2">
-                    <h3 className="text-xl font-semibold text-foreground">{edu.degree}</h3>
+                    <h3 className="text-xl font-semibold text-foreground">{client.company}</h3>
                     <Badge 
-                      variant={edu.status === 'In Progress' ? 'default' : 'secondary'}
+                      variant="default"
                       className="ml-2"
                     >
-                      {edu.status}
+                      {client.industry}
                     </Badge>
                   </div>
-                  <p className="text-muted-foreground font-medium">{edu.institution}</p>
+                  <p className="text-muted-foreground font-medium">{client.project}</p>
                   <div className="flex items-center gap-2 mt-2 text-sm text-muted-foreground">
-                    <Calendar size={14} />
-                    <span>{edu.period}</span>
+                    <Star size={14} className="text-primary" />
+                    <span className="font-semibold text-primary">{client.result}</span>
                   </div>
                 </div>
               ))}
@@ -440,7 +429,7 @@ export function Portfolio() {
       <footer className="py-8 px-4 border-t border-glass-border glass-panel">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-muted-foreground">
-            © 2025 Geddada Devicharan. All rights reserved.
+            © 2025 TechFlow Solutions. All rights reserved.
           </p>
         </div>
       </footer>
