@@ -2,6 +2,7 @@ import { Navigation } from '@/components/Navigation';
 import { Chatbot } from '@/components/Chatbot';
 import { ContactForm } from '@/components/ContactForm';
 import { WindowChrome } from '@/components/WindowChrome';
+import { AnimatedBackground } from '@/components/AnimatedBackground';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -26,77 +27,77 @@ import { KeyboardShortcutsHelp } from '@/components/KeyboardShortcutsHelp';
 import heroImage from '@/assets/hero-bg.jpg';
 import profileImage from '@/assets/profile-avatar.jpg';
 
-const skills = {
-  "Creative & Technical Tools": [
-    "Adobe Photoshop", "Canva", "CapCut", "DaVinci Resolve", "Wix", "No-code AI Platforms"
+const services = {
+  "Payment Solutions": [
+    "Instant Transfers", "QR Code Payments", "Split Bills", "Business API", "Mobile Checkout"
   ],
-  "Professional Skills": [
-    "Data Entry", "Research", "Content Design", "Bilingual Communication (Telugu ↔ English)"
+  "Business Features": [
+    "Analytics Dashboard", "Transaction History", "Customer Management", "Revenue Tracking"
   ],
-  "Soft Skills": [
-    "Problem-Solving", "Teamwork", "Adaptability", "Continuous Learning"
+  "Security & Compliance": [
+    "Bank-Grade Security", "Fraud Protection", "PCI Compliance", "24/7 Support"
   ]
 };
 
-const projects = [
+const features = [
   {
-    title: "Portfolio Website",
-    description: "Built using Wix/AI Builder with modern design principles and responsive layout",
+    title: "Instant Payments",
+    description: "Send and receive money instantly with just a phone number or username",
     year: "2024",
-    technologies: ["Wix", "AI Builder", "Web Design"],
-    link: "https://demo-project0045.lovable.app/"
+    technologies: ["Real-time Processing", "Mobile-first", "Secure Authentication"],
+    link: "#"
   },
   {
-    title: "Video Editing Demos",
-    description: "Professional video editing projects showcasing creative storytelling and technical skills",
+    title: "Business Dashboard",
+    description: "Comprehensive analytics and insights for business transaction management",
     year: "2024", 
-    technologies: ["CapCut", "DaVinci Resolve", "Video Production"],
-    link: "https://youtube.com/@scenesyncclips?si=xx0J30hHGUVaoY82"
+    technologies: ["Analytics", "Business Intelligence", "Revenue Tracking"],
+    link: "https://www.youtube.com/@scenesyncclips"
   },
   {
-    title: "Content & Design",
-    description: "Visual content creation for digital marketing and brand communications",
+    title: "QR Code Payments",
+    description: "Simple scan-to-pay functionality for seamless in-person transactions",
     year: "2024",
-    technologies: ["Photoshop", "Canva", "Graphic Design"],
+    technologies: ["QR Technology", "NFC", "Contactless Payments"],
     link: "#"
   },
   {
-    title: "Marketing & Planning Practice",
-    description: "Strategic planning and execution of digital marketing campaigns",
+    title: "Split Payments",
+    description: "Easily divide bills and expenses among friends and colleagues",
     year: "2024",
-    technologies: ["Digital Marketing", "Content Strategy", "Analytics"],
+    technologies: ["Group Payments", "Smart Calculation", "Social Integration"],
     link: "#"
   },
   {
-    title: "Team Collaboration Project",
-    description: "Cross-functional team project demonstrating leadership and collaboration skills",
-    year: "2023",
-    technologies: ["Project Management", "Team Leadership", "Communication"],
+    title: "Developer API",
+    description: "Robust payment infrastructure for businesses to integrate Venmo payments",
+    year: "2024",
+    technologies: ["RESTful API", "Webhooks", "SDK Support"],
     link: "#"
   }
 ];
 
-const education = [
+const partnerships = [
   {
-    degree: "B.Tech in Electrical & Electronics Engineering",
-    institution: "Currently Pursuing",
-    period: "Ongoing",
-    status: "In Progress"
+    degree: "Bank Partnerships",
+    institution: "150+ Financial Institutions",
+    period: "Nationwide Coverage",
+    status: "Active"
   },
   {
-    degree: "Diploma in Electrical & Electronics Engineering", 
-    institution: "M.R.A.G.R. Govt. Polytechnic, Vizianagaram",
-    period: "Completed",
-    status: "Completed"
+    degree: "Merchant Network", 
+    institution: "2M+ Business Partners",
+    period: "Growing Network",
+    status: "Expanding"
   }
 ];
 
 const highlights = [
-  "Self-taught in Prompt Engineering & AI Tools",
-  "Bilingual (Telugu & English)",
-  "Interest in Digital Marketing & Creative Design",
-  "Reliable and motivated professional",
-  "Strong adaptability and continuous learning mindset"
+  "Lightning-fast transfers in seconds",
+  "Bank-grade security and encryption",
+  "Trusted by 80+ million users worldwide", 
+  "Simple social payment experience",
+  "24/7 customer support and fraud protection"
 ];
 
 export function Portfolio() {
@@ -173,7 +174,8 @@ export function Portfolio() {
   useKeyboardShortcuts(shortcuts);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      <AnimatedBackground />
       <Navigation />
       
       {/* Hero Section */}
@@ -201,45 +203,35 @@ export function Portfolio() {
                 
                 <div className="space-y-4">
                   <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                    Geddada Devicharan
+                    Venmo Business
                   </h1>
                   <p className="text-xl md:text-2xl text-muted-foreground">
-                    Aspiring Digital Professional | Creative Learner | Problem Solver
+                    Fast, Safe & Social Payments | Trusted by Millions
                   </p>
                   
                   <div className="flex flex-wrap justify-center items-center gap-4 text-sm text-muted-foreground">
                     <div className="flex items-center gap-2">
                       <MapPin size={16} />
-                      <span>Visakhapatnam, India</span>
+                      <span>Available Nationwide</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Phone size={16} />
-                      <span>+91 6303468707</span>
+                      <span>24/7 Support</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Mail size={16} />
-                      <span>devicharangeddada@gmail.com</span>
+                      <span>business@venmo.com</span>
                     </div>
                   </div>
                 </div>
                 
                 <div className="flex flex-wrap justify-center gap-4">
                   <Button 
-                    onClick={handleDownloadCV}
-                    disabled={isDownloading}
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-50"
+                    onClick={() => window.open('https://venmo.com/business', '_blank')}
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
                   >
-                    {isDownloading ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Downloading...
-                      </>
-                    ) : (
-                      <>
-                        <Download className="mr-2 h-4 w-4" />
-                        Download CV
-                      </>
-                    )}
+                    <Download className="mr-2 h-4 w-4" />
+                    Get Started
                   </Button>
                   <Button 
                     variant="outline" 
@@ -247,7 +239,7 @@ export function Portfolio() {
                     className="border-primary/20 hover:bg-primary/10"
                   >
                     <Mail className="mr-2 h-4 w-4" />
-                    Contact Me
+                    Learn More
                   </Button>
                 </div>
               </div>
@@ -264,20 +256,19 @@ export function Portfolio() {
               <WindowChrome className="mb-4" />
               <CardTitle className="text-3xl font-bold flex items-center gap-3">
                 <User className="text-primary" />
-                About Me
+                About Venmo Business
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Motivated and growth-driven individual with a Diploma in Electrical & Electronics Engineering 
-                and currently pursuing a B.Tech in EEE. Skilled in video editing, graphic design, website building, 
-                and digital content planning. Self-taught in AI-assisted workflows and prompt engineering, with 
-                strong adaptability, collaboration, and problem-solving skills.
+                Venmo Business empowers companies of all sizes to accept payments easily and securely. 
+                With our trusted platform used by over 80 million people, businesses can tap into a 
+                social payment network that makes transactions simple, fast, and engaging.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                I'm passionate about leveraging technology to create meaningful digital experiences. My journey 
-                combines technical engineering knowledge with creative digital skills, making me versatile in 
-                both analytical and creative problem-solving approaches.
+                From small retailers to large enterprises, Venmo Business provides the tools you need 
+                to grow revenue, understand customer behavior, and create seamless payment experiences 
+                that keep customers coming back.
               </p>
             </CardContent>
           </Card>
@@ -292,11 +283,11 @@ export function Portfolio() {
               <WindowChrome className="mb-4" />
               <CardTitle className="text-3xl font-bold flex items-center gap-3">
                 <Code className="text-primary" />
-                Skills & Expertise
+                Payment Solutions
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-8">
-              {Object.entries(skills).map(([category, skillList]) => (
+              {Object.entries(services).map(([category, skillList]) => (
                 <div key={category} className="space-y-4">
                   <h3 className="text-xl font-semibold text-foreground">{category}</h3>
                   <div className="flex flex-wrap gap-2">
@@ -325,28 +316,28 @@ export function Portfolio() {
               <WindowChrome className="mb-4" />
               <CardTitle className="text-3xl font-bold flex items-center gap-3">
                 <Briefcase className="text-primary" />
-                Projects & Work
+                Features & Solutions
               </CardTitle>
             </CardHeader>
           </Card>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project, index) => (
+            {features.map((feature, index) => (
               <Card key={index} className="glass-panel border-glass-border hover:scale-105 transition-transform duration-200">
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg">{project.title}</CardTitle>
+                    <CardTitle className="text-lg">{feature.title}</CardTitle>
                     <Badge variant="outline" className="text-xs">
-                      {project.year}
+                      {feature.year}
                     </Badge>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-muted-foreground text-sm">
-                    {project.description}
+                    {feature.description}
                   </p>
                   <div className="flex flex-wrap gap-1">
-                    {project.technologies.map((tech) => (
+                    {feature.technologies.map((tech) => (
                       <Badge key={tech} variant="secondary" className="text-xs">
                         {tech}
                       </Badge>
@@ -356,11 +347,11 @@ export function Portfolio() {
                     variant="outline" 
                     size="sm" 
                     className="w-full"
-                    onClick={() => window.open(project.link, '_blank')}
-                    disabled={project.link === '#'}
+                    onClick={() => window.open(feature.link, '_blank')}
+                    disabled={feature.link === '#'}
                   >
                     <ExternalLink className="mr-2 h-3 w-3" />
-                    View Project
+                    Learn More
                   </Button>
                 </CardContent>
               </Card>
@@ -377,25 +368,25 @@ export function Portfolio() {
               <WindowChrome className="mb-4" />
               <CardTitle className="text-3xl font-bold flex items-center gap-3">
                 <GraduationCap className="text-primary" />
-                Education
+                Partnerships
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              {education.map((edu, index) => (
+              {partnerships.map((partner, index) => (
                 <div key={index} className="border-l-4 border-primary/30 pl-6 pb-6 last:pb-0">
                   <div className="flex items-start justify-between mb-2">
-                    <h3 className="text-xl font-semibold text-foreground">{edu.degree}</h3>
+                    <h3 className="text-xl font-semibold text-foreground">{partner.degree}</h3>
                     <Badge 
-                      variant={edu.status === 'In Progress' ? 'default' : 'secondary'}
+                      variant={partner.status === 'Active' ? 'default' : 'secondary'}
                       className="ml-2"
                     >
-                      {edu.status}
+                      {partner.status}
                     </Badge>
                   </div>
-                  <p className="text-muted-foreground font-medium">{edu.institution}</p>
+                  <p className="text-muted-foreground font-medium">{partner.institution}</p>
                   <div className="flex items-center gap-2 mt-2 text-sm text-muted-foreground">
                     <Calendar size={14} />
-                    <span>{edu.period}</span>
+                    <span>{partner.period}</span>
                   </div>
                 </div>
               ))}
@@ -412,7 +403,7 @@ export function Portfolio() {
               <WindowChrome className="mb-4" />
               <CardTitle className="text-3xl font-bold flex items-center gap-3">
                 <Star className="text-primary" />
-                Key Highlights
+                Why Choose Venmo
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -440,7 +431,7 @@ export function Portfolio() {
       <footer className="py-8 px-4 border-t border-glass-border glass-panel">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-muted-foreground">
-            © 2025 Geddada Devicharan. All rights reserved.
+            © 2025 Venmo LLC. All rights reserved.
           </p>
         </div>
       </footer>
