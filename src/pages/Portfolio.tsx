@@ -58,7 +58,7 @@ const projects = [
     description: "Comprehensive brand identity and digital presence for Fortune 500 companies",
     year: "2024",
     technologies: ["Brand Design", "Digital Strategy", "UI/UX"],
-    link: "#"
+    link: "https://www.youtube.com/@scenesyncclips"
   },
   {
     title: "Data Analytics Dashboard",
