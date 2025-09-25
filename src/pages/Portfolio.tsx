@@ -151,6 +151,7 @@ export function Portfolio() {
     document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Portfolio component for Geddada Devicharan
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch(console.error);
