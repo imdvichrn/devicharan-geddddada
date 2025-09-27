@@ -224,8 +224,11 @@ export default {
             opacity: "0.6",
             transform: "scale(1.1)"
           }
-        }
-      },
+        },
+        "spin-slow": {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(360deg)" },
+        },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
@@ -243,7 +246,8 @@ export default {
         "siri-wave-purple": "siri-wave-purple 18s linear infinite reverse",
         "siri-flow-1": "siri-flow-1 8s ease-in-out infinite",
         "siri-flow-2": "siri-flow-2 11s ease-in-out infinite reverse",
-        "siri-outer-glow": "siri-outer-glow 4s ease-in-out infinite"
+        "siri-outer-glow": "siri-outer-glow 4s ease-in-out infinite",
+        "spin-slow": "spin-slow 30s linear infinite",
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
