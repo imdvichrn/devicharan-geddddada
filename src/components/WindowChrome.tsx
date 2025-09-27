@@ -1,5 +1,5 @@
-import ChatBoard from "./ChatBoard";
-// ...existing code...
+import Echoless from "./Echoless";
+  <Echoless />
 interface WindowChromeProps {
   className?: string;
 }
@@ -85,8 +85,34 @@ export function WindowChrome({ className = "", onClose, onMinimize, onZoom }: Wi
   };
 
   return (
-    <div>
-      <ChatBoard />
+    <div className={`flex items-center gap-2 ${className}`}>
+      <button
+        type="button"
+        className="window-dot red focus:outline-none hover:scale-110 active:scale-95 transition-transform"
+        title="Close"
+        tabIndex={0}
+        onClick={handleClose}
+        aria-label="Close"
+        style={{ cursor: 'pointer' }}
+      />
+      <button
+        type="button"
+        className="window-dot yellow focus:outline-none hover:scale-110 active:scale-95 transition-transform"
+        title="Minimize"
+        tabIndex={0}
+        onClick={handleMinimize}
+        aria-label="Minimize"
+        style={{ cursor: 'pointer' }}
+      />
+      <button
+        type="button"
+        className="window-dot green focus:outline-none hover:scale-110 active:scale-95 transition-transform"
+        title="Fullscreen"
+        tabIndex={0}
+        onClick={handleZoom}
+        aria-label="Toggle Fullscreen"
+        style={{ cursor: 'pointer' }}
+      />
     </div>
   );
 }
