@@ -21,6 +21,8 @@ import {
   Calendar,
   Loader2
 } from 'lucide-react';
+import { useKeyboardShortcuts, createPortfolioShortcuts } from '@/hooks/useKeyboardShortcuts';
+import { KeyboardShortcutsHelp } from '@/components/KeyboardShortcutsHelp';
 import heroImage from '@/assets/hero-bg.jpg';
 import profileImage from '@/assets/profile-avatar.jpg';
 
@@ -151,7 +153,6 @@ export function Portfolio() {
     document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // Portfolio component for Geddada Devicharan
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch(console.error);
@@ -160,6 +161,16 @@ export function Portfolio() {
     }
   };
 
+  const shortcuts = createPortfolioShortcuts({
+    toggleChat: () => chatbotRef.current?.toggleChat(),
+    scrollToTop,
+    scrollToContact,
+    toggleFullscreen,
+    downloadCV: handleDownloadCV,
+    openProjects: scrollToProjects,
+  });
+
+  useKeyboardShortcuts(shortcuts);
 
   return (
     <div className="min-h-screen bg-background">
@@ -437,6 +448,8 @@ export function Portfolio() {
       {/* Chatbot */}
       <Chatbot ref={chatbotRef} />
       
+      {/* Keyboard Shortcuts Help */}
+      <KeyboardShortcutsHelp />
     </div>
   );
 }
