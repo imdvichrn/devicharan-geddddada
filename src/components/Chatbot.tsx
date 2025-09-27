@@ -4,12 +4,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { WindowChrome } from './WindowChrome';
 import { SiriOrb } from './SiriOrb';
-import { sendChatMessage } from '@/services/chatService';
+import { QuickActions } from './QuickActions';
 import { useToast } from '@/hooks/use-toast';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
+  sources?: string[];
+  timestamp?: Date;
 }
 
 export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
@@ -17,7 +19,23 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Hi! I'm Devicharan's portfolio assistant. Ask me about my skills, projects, or anything else you'd like to know!"
+      content: `👋 Hello! I'm Devicharan's AI assistant with complete access to his portfolio, projects, and experience.
+
+🎯 **What I can help with:**
+• Projects & technical work
+• Skills & expertise 
+• Education & background
+• Contact & collaboration
+• Real-time portfolio insights
+
+💬 **Pro tips:**
+• Ask specific questions for detailed answers
+• Try: "Tell me about your latest projects"
+• Try: "What technologies do you work with?"
+• Try: "How can I contact you?"
+
+Ready to explore? What would you like to know first?`,
+      timestamp: new Date()
     }
   ]);
   const [input, setInput] = useState('');
@@ -43,26 +61,112 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
 
     const userMessage = input.trim();
     setInput('');
-    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
+    
+    // Add user message with timestamp
+    const newUserMessage: Message = { 
+      role: 'user', 
+      content: userMessage, 
+      timestamp: new Date() 
+    };
+    setMessages(prev => [...prev, newUserMessage]);
     setIsLoading(true);
 
     try {
-      const response = await sendChatMessage([...messages, { role: 'user', content: userMessage }]);
-      setMessages(prev => [...prev, { role: 'assistant', content: response }]);
+      // Send to real backend API
+      console.log("[Chatbot] Sending message to backend:", userMessage);
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          messages: [...messages, newUserMessage].map(({ timestamp, ...msg }) => msg)
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log("[Chatbot] Received response:", data);
+
+      // Enhanced response with sources and suggestions
+      let assistantContent = data.reply || "Sorry, I couldn't process that request.";
+      
+      // Add conversation continuation suggestions
+      if (Math.random() > 0.7) { // 30% chance to add suggestions
+        const suggestions = [
+          "\n\n💡 **Want to know more?** Ask about specific projects or technologies!",
+          "\n\n🚀 **Next steps?** Check out my latest work or get in touch!",
+          "\n\n🔍 **Explore deeper:** Ask about my learning journey or future goals!",
+          "\n\n📈 **Curious about growth?** Ask how I'm developing new skills!",
+          "\n\n🤝 **Ready to collaborate?** Let's discuss how we can work together!"
+        ];
+        assistantContent += suggestions[Math.floor(Math.random() * suggestions.length)];
+      }
+
+      const assistantMessage: Message = {
+        role: 'assistant',
+        content: assistantContent,
+        sources: data.sources || [],
+        timestamp: new Date()
+      };
+
+      setMessages(prev => [...prev, assistantMessage]);
+
     } catch (error) {
       console.error('Chat error:', error);
       toast({
-        title: "Error",
-        description: "Sorry, I'm having trouble responding right now. Please try again later.",
+        title: "Connection Error",
+        description: "I'm having trouble connecting. Please try again or contact Devicharan directly.",
         variant: "destructive",
       });
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: "Sorry, I'm having trouble responding right now. Please try again later or contact me directly at devicharangeddada@gmail.com" 
-      }]);
+      
+      const errorMessage: Message = {
+        role: 'assistant',
+        content: `🔧 **Connection Issue** - I'm temporarily unavailable, but you can reach Devicharan directly:
+
+📧 **Email:** devicharangeddada@gmail.com
+📱 **Phone:** +91 6303468707
+📍 **Location:** Visakhapatnam, India
+
+I'll be back online soon with full portfolio insights!`,
+        timestamp: new Date()
+      };
+      
+      setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleQuickAction = (question: string) => {
+    if (isLoading) return;
+    
+    setInput(question);
+    // Automatically send the message
+    const event = new Event('submit') as any;
+    sendMessage(event);
+  };
+
+  const handleConversationEnd = () => {
+    const endMessage: Message = {
+      role: 'assistant',
+      content: `👋 **Thanks for chatting!** 
+
+🎯 **What we covered:** Portfolio insights, projects, and opportunities to connect
+
+📬 **Next steps:**
+• Email: devicharangeddada@gmail.com  
+• Phone: +91 6303468707
+• Based in: Visakhapatnam, India
+
+💡 **Come back anytime** for updated portfolio information and project details!
+
+*Hope to hear from you soon!* 🚀`,
+      timestamp: new Date()
+    };
+    
+    setMessages(prev => [...prev, endMessage]);
   };
 
   return (
@@ -106,10 +210,40 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
           {/* Header */}
           <div className="p-4 border-b border-glass-border">
             <div className="flex items-center justify-between">
-              <WindowChrome />
+              <WindowChrome 
+                onClose={() => setIsOpen(false)}
+                onMinimize={() => {
+                  // Minimize animation
+                  const panel = document.querySelector('.fixed.bottom-24.right-6') as HTMLElement;
+                  if (panel) {
+                    panel.style.transform = 'scale(0.1)';
+                    panel.style.opacity = '0';
+                    setTimeout(() => setIsOpen(false), 200);
+                  }
+                }}
+                onZoom={() => {
+                  // Toggle between normal and expanded view
+                  const panel = document.querySelector('.fixed.bottom-24.right-6') as HTMLElement;
+                  if (panel) {
+                    const isExpanded = panel.classList.contains('expanded');
+                    if (isExpanded) {
+                      panel.style.width = '24rem';
+                      panel.style.height = '500px';
+                      panel.classList.remove('expanded');
+                    } else {
+                      panel.style.width = '32rem';
+                      panel.style.height = '600px';
+                      panel.classList.add('expanded');
+                    }
+                  }
+                }}
+              />
               <div className="flex-1 text-center">
-                <h3 className="font-medium text-foreground">ECHOLESS</h3>
-                <p className="text-sm text-muted-foreground">Devi charañ assistant</p>
+                <h3 className="font-medium text-foreground">DevAssist AI</h3>
+                <p className="text-sm text-muted-foreground flex items-center justify-center gap-1">
+                  <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                  Live Portfolio Data
+                </p>
               </div>
             </div>
           </div>
@@ -119,16 +253,37 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
             {messages.map((message, index) => (
               <div
                 key={index}
-                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} group`}
               >
                 <div
-                  className={`max-w-[80%] p-3 rounded-2xl text-sm ${
+                  className={`max-w-[85%] p-3 rounded-2xl text-sm transition-all duration-200 group-hover:shadow-md ${
                     message.role === 'user'
                       ? 'bg-primary text-primary-foreground ml-4'
-                      : 'bg-muted text-muted-foreground mr-4'
+                      : 'bg-muted text-muted-foreground mr-4 border border-border/50'
                   }`}
                 >
-                  {message.content}
+                  <div className="whitespace-pre-wrap">{message.content}</div>
+                  
+                  {/* Sources */}
+                  {message.sources && message.sources.length > 0 && (
+                    <div className="mt-2 pt-2 border-t border-border/30">
+                      <div className="text-xs font-medium mb-1 text-muted-foreground/70">Sources:</div>
+                      <div className="flex flex-wrap gap-1">
+                        {message.sources.map((source, idx) => (
+                          <span key={idx} className="text-xs bg-background/50 text-foreground/60 px-2 py-1 rounded border border-border/30">
+                            📄 {source}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Timestamp */}
+                  {message.timestamp && (
+                    <div className="text-xs text-muted-foreground/50 mt-1">
+                      {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -143,16 +298,30 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
             <div ref={messagesEndRef} />
           </div>
 
+          {/* Quick Actions */}
+          {messages.length <= 2 && (
+            <QuickActions 
+              onActionClick={handleQuickAction} 
+              disabled={isLoading}
+            />
+          )}
+
           {/* Input */}
           <form onSubmit={sendMessage} className="p-4 border-t border-glass-border">
             <div className="flex gap-2">
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask me anything..."
+                placeholder="Ask about projects, skills, experience..."
                 className="flex-1 bg-background/50 border-glass-border"
                 disabled={isLoading}
-                maxLength={1500}
+                maxLength={2000}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage(e);
+                  }
+                }}
               />
               <Button 
                 type="submit" 
@@ -163,6 +332,24 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
                 <Send size={16} />
               </Button>
             </div>
+            
+            {/* Conversation controls */}
+            {messages.length > 6 && (
+              <div className="flex justify-between items-center mt-2">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleConversationEnd}
+                  className="text-xs text-muted-foreground"
+                >
+                  End conversation
+                </Button>
+                <div className="text-xs text-muted-foreground">
+                  {messages.length} messages • Live data
+                </div>
+              </div>
+            )}
           </form>
         </div>
       )}
