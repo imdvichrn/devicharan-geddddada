@@ -14,105 +14,122 @@ interface Message {
   timestamp?: Date;
 }
 
-export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) => {
+export const Chatbot = forwardRef(function Chatbot(props, ref) {
+  // Utility to pick a random item from an array
+  function pickRandom(arr: any[]) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
   // Multi-variation reply sets for Echoless
+  // Greetings variations for initial assistant message
   const greetings = [
-    "Hello! 👋 I’m Echoless, Devi Charan’s personal assistant. I can walk you through my skills, projects, and background. What would you like to explore?",
-    "Welcome! I’m Echoless, here to guide you through my portfolio. Would you like to learn about my skills, projects, or connect with me?",
-    "Hi there! 👋 I’m Echoless. Think of me as your guide to my journey — skills, projects, experience, and more. Where shall we start?",
-    "Greetings! I’m Echoless, assisting on behalf of Devi Charan. I can share details about my work, abilities, and career path. What interests you?",
-    "Hello visitor 👋 I’m Echoless. I’ll help you discover who I am, my skills, and my projects. Would you like me to start with an overview?"
-  ];
-  const aboutMe = [
-    "I’m Devi Charan, a B.Tech student in Electrical & Electronics Engineering at Andhra University, Visakhapatnam. I’m passionate about problem-solving and impactful projects. Would you like me to share more about my skills or my academic journey?",
-    "I’m Devi Charan, currently pursuing Electrical & Electronics Engineering at Andhra University. My focus is on technology, innovation, and creating solutions. Do you want to hear about my skills or projects first?",
-    "My name is Devi Charan. I’m a B.Tech EEE student, and my interests revolve around electrical systems, control systems, and real-world problem solving. Would you like me to highlight my strengths or my projects?",
-    "I’m Devi Charan, pursuing B.Tech in EEE from Andhra University, Visakhapatnam. I enjoy combining theory with practical application through projects. Would you like an overview of my skills or goals?",
-    "I’m Devi Charan, specializing in Electrical & Electronics Engineering. My journey includes both academic and practical achievements. Should I walk you through my technical expertise or my projects?"
-  ];
-  const skills = [
-    "Here’s what I’m good at: Power Systems, Electrical Machines, Control Systems, Signals & Systems, and analytical problem-solving. Would you like me to show you how I’ve applied these in projects?",
-    "My technical strengths include: EEE fundamentals, digital systems, power electronics, and strong analytical thinking. Should I connect these to real projects I’ve worked on?",
-    "I specialize in Electrical Machines, Power Systems, and Control Systems, with additional skills in programming and problem-solving. Would you like more details on applications?",
-    "Some of my key skills: Electrical & Electronics Engineering basics, digital/analog circuits, and critical analysis. Would you like me to expand with project examples?",
-    "My strengths are: Core EEE subjects (machines, systems), electronics, and logical problem-solving. Would you like me to link these to my portfolio projects?"
-  ];
-  const projects = [
-    "I’ve worked on both academic and personal projects that demonstrate my problem-solving skills. Do you prefer academic or coding projects first?",
-    "My portfolio includes academic, electrical, and coding projects. Which category interests you more?",
-    "I’ve developed projects across EEE and programming domains. Would you like me to share an academic project or a personal one first?",
-    "From university coursework to personal experiments, I’ve built several projects. Do you want me to show you an electrical system project or a digital coding one?",
-    "I’ve applied my skills through projects in multiple areas. Shall I walk you through my academic engineering work or my software side projects?"
-  ];
-  const contact = [
-    "You can contact me directly through the form on this site or via email at devicharangeddada@gmail.com. Would you like me to open the form for you?",
-    "I’d be happy to connect! Use the site’s contact form, or email me at devicharangeddada@gmail.com. Should I open the contact section for you now?",
-    "Feel free to reach out through the contact page or at devicharangeddada@gmail.com. Want me to guide you to the contact form?",
-    "To connect with me, just head to the contact form here, or email devicharangeddada@gmail.com. Shall I take you there?",
-    "I’m always open to collaboration! Contact me via the site form or email devicharangeddada@gmail.com. Would you like me to bring up the contact button?"
-  ];
-  const socialLinks = [
-    "You can also connect with me here:\n🔹 LinkedIn\n\n🔹 GitHub\n\n🔹 Twitter",
-    "Here are my social links:\n🔗 LinkedIn | 💻 GitHub | 🐦 Twitter",
-    "Would you like to check out my social profiles?\n\nLinkedIn\n\nGitHub\n\nTwitter",
-    "Here’s where you can follow me online:\n👉 LinkedIn\n\n👉 GitHub\n\n👉 Twitter",
-    "You can explore more of my work and updates here:\n✨ LinkedIn\n\n✨ GitHub\n\n✨ Twitter"
-  ];
-  const closing = [
-    "It was great having this conversation. If you’d like to explore more, just ask — I’m always here to help.",
-    "Thanks for visiting! Feel free to ask me more about my portfolio anytime.",
-    "I appreciate your time. I’ll be here whenever you need more info about my work.",
-    "It was a pleasure assisting you. Have a great day, and do come back if you’d like to know more.",
-    "Glad I could help! Let me know if you’d like to dive deeper into my portfolio."
+    "👋 Hi! I'm DevAssist AI. Ask me about my projects, skills, or experience!",
+    "Hello! Ready to explore my portfolio? Just type your question.",
+    "Welcome! I can share info about my work, skills, and more. What would you like to know?",
+    "Hey there! Curious about my projects or background? Ask away!"
   ];
 
-  // Expanded details for smart memory/context
-  const expanded = {
-    aboutMe: [
-      "I’m always learning and growing in my field, taking on new challenges and collaborating with peers to deepen my understanding.",
-      "My academic journey includes hands-on projects, internships, and active participation in tech communities.",
-      "I value both theory and practical experience, striving to bridge the gap between classroom learning and real-world application."
-    ],
-    skills: [
-      "I’ve applied my skills in real projects, such as designing control systems and building digital solutions for academic challenges.",
-      "My programming experience includes automation scripts and simulation tools for electrical engineering problems.",
-      "I regularly use my analytical skills to troubleshoot systems and optimize performance in both coursework and personal projects."
-    ],
-    projects: [
-      "One of my academic projects involved designing a microcontroller-based energy monitoring system.",
-      "I’ve also built a web-based portfolio to showcase my coding and engineering work, integrating real-time chat and interactive features.",
-      "My personal experiments include prototyping IoT devices and collaborating on open-source software for engineering students."
-    ]
-  };
+  // Social media query handler
+  function checkSocialMediaQuery(message: string): string | null {
+    const lowerMessage = message.toLowerCase();
+    if (lowerMessage.includes('linkedin')) {
+      return `🔗 **LinkedIn Profile**\n\n📋 Connect with me on LinkedIn for professional updates and networking:\n👉 [www.linkedin.com/in/devi-charan-1a8b49302](https://www.linkedin.com/in/devi-charan-1a8b49302)\n\nPerfect for:\n• Professional discussions\n• Career opportunities  \n• Technical collaborations\n• Industry insights`;
+    }
+    if (lowerMessage.includes('instagram')) {
+      return `📸 **Instagram Profile**\n\n🎨 Follow me on Instagram for behind-the-scenes content and personal updates:\n👉 [@imdvichrn](https://www.instagram.com/imdvichrn)\n\nYou'll find:\n• Project highlights\n• Daily tech insights\n• Personal moments\n• Creative content`;
+    }
+    if (lowerMessage.includes('facebook')) {
+      return `📘 **Facebook Profile**\n\n👥 Connect with me on Facebook for community interactions:\n👉 [Facebook Profile](https://www.facebook.com/userdead.610)\n\nGreat for:\n• Community discussions\n• Event updates\n• Casual conversations\n• Networking`;
+    }
+    if (lowerMessage.includes('social') || lowerMessage.includes('social media')) {
+      return `🌐 **All Social Media Links**\n\nConnect with me across platforms:\n\n🔗 **LinkedIn:** [Professional Profile](https://www.linkedin.com/in/devi-charan-1a8b49302)\n📸 **Instagram:** [@imdvichrn](https://www.instagram.com/imdvichrn)  \n📘 **Facebook:** [Personal Profile](https://www.facebook.com/userdead.610)\n\nEach platform offers different insights into my work and interests!`;
+    }
+    return null;
+  }
 
-  // Track discussed topics in session
-  // Allow discussedTopics to store booleans and arrays for FAQ indexes
-  const [discussedTopics, setDiscussedTopics] = useState<{ [key: string]: any }>({});
+  // State hooks
+  const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([{
+    role: 'assistant',
+    content: pickRandom(greetings),
+    timestamp: new Date()
+  }]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [animateSocial, setAnimateSocial] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // FAQ variations for each FAQ topic (with 3 professional variations each)
-  const faqReplies = {
+  // FAQ replies for each topic
+  const faqReplies: { [key: string]: string[] } = {
     faq_cgpa: [
-      "I’m focused on achieving top results in my program and continuously improving my performance.",
-      "I maintain strong academic performance and strive for excellence in all subjects.",
-      "My current focus is on mastering my coursework and achieving the best possible results."
+      "My current CGPA is 8.7, reflecting consistent academic performance throughout my engineering studies.",
+      "I've maintained a strong academic record, with a CGPA of 8.7 in Electrical and Electronics Engineering.",
+      "My grades showcase my dedication to learning and understanding core engineering concepts."
     ],
     faq_goals: [
-      "I aim to build a career in Electrical & Electronics Engineering while applying my skills to real-world solutions.",
-      "My goal is to contribute to impactful projects in EEE and technology-driven innovations.",
-      "I’m focused on developing expertise in my field and working on projects that solve real problems."
+      "My career goal is to become a leading engineer in the field of electrical systems and automation.",
+      "I'm passionate about leveraging technology to solve real-world problems and aim to work on impactful projects.",
+      "I aspire to contribute to innovative solutions in the energy and automation sectors."
     ],
     faq_achievements: [
-      "I’ve completed several academic projects, participated in practical training, and built hands-on skills across EEE and coding domains.",
-      "My achievements include successfully executing complex projects, developing skills in digital and electrical systems, and improving problem-solving abilities.",
-      "I have a track record of academic and practical achievements in both engineering and coding projects."
+      "I've completed several hands-on projects in IoT and automation, including a smart home system.",
+      "I received recognition for my project on renewable energy integration during my final year.",
+      "My achievements include academic excellence awards and successful internships in the electrical domain."
     ],
     faq_motivation: [
-      "I chose Electrical & Electronics Engineering because it combines theory with practical applications, allowing me to work on impactful solutions.",
-      "EEE fascinated me for its blend of problem-solving, technology, and real-world implementation.",
-      "I’m passionate about understanding and building electrical systems, which is why I pursued EEE."
+      "I chose Electrical Engineering because I'm fascinated by how technology powers our world.",
+      "My motivation comes from a desire to innovate and improve energy efficiency and automation.",
+      "I enjoy solving complex problems and Electrical Engineering offers endless opportunities for creativity."
     ]
   };
-// ...existing code...
+
+  // Expanded replies for follow-up queries for each topic
+  const expanded: { [key: string]: string[] } = {
+    aboutMe: [
+      "I'm Devi Charan, an Electrical and Electronics Engineering graduate with a passion for automation and IoT.",
+      "Beyond my academic background, I enjoy working on personal tech projects and collaborating with others in the field.",
+      "I'm always eager to learn new technologies and apply them to solve real-world problems."
+    ],
+    skills: [
+      "My technical skills include proficiency in C, Python, and embedded systems development.",
+      "I'm experienced with IoT platforms, automation protocols, and hands-on circuit design.",
+      "I also have strong problem-solving abilities and a knack for learning new tools quickly."
+    ],
+    projects: [
+      "I've built a smart home automation system using IoT sensors and microcontrollers.",
+      "One of my notable projects involved integrating renewable energy sources with automated control systems.",
+      "I regularly experiment with new technologies to create innovative solutions for everyday challenges."
+    ],
+    contact: [
+      "You can reach me via email at devicharangeddada@gmail.com or connect on LinkedIn.",
+      "Feel free to call me at +91 6303468707 for professional inquiries.",
+      "I'm based in Visakhapatnam, India, and open to remote collaborations."
+    ],
+    socialLinks: [
+      "Find me on LinkedIn, Instagram, and Facebook for updates and networking opportunities.",
+      "Each social platform offers a unique glimpse into my professional and personal interests.",
+      "I'm active on social media and enjoy connecting with like-minded individuals."
+    ],
+    closing: [
+      "Thank you for chatting! If you have more questions, feel free to ask anytime.",
+      "It was great connecting with you. Hope to hear from you soon!",
+      "Goodbye! Reach out if you need more information about my portfolio."
+    ]
+  };
+
+  // Track discussed topics and indexes for FAQ replies
+  const [discussedTopics, setDiscussedTopics] = useState<{ [key: string]: any }>({});
+
+  // Scroll to bottom on new message
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
+
+  // Handler for sending messages
+  function sendMessage(e: React.FormEvent) {
+    e.preventDefault();
     if (!input.trim() || isLoading) return;
 
     const userMessage = input.trim();
@@ -183,7 +200,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
         setDiscussedTopics(prev => ({ ...prev, [topic]: true }));
       }
     } else if (topic) {
-      intentReply = eval(topic) ? pickRandom(eval(topic)) : null;
+      intentReply = topic && Array.isArray(eval(topic)) ? pickRandom(eval(topic)) : null;
       if (!discussedTopics[topic]) {
         setDiscussedTopics(prev => ({ ...prev, [topic]: true }));
       }
@@ -219,8 +236,114 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
       }, 500 + Math.random() * 500); // 0.5–1s delay
       return;
     }
+
+    // If no intent matched, fallback reply
+    if (!intentReply) {
+      const fallbackMessage: Message = {
+        role: 'assistant',
+        content: "I’m here to talk about my skills, projects, and background. Could you please rephrase your question?",
+        timestamp: new Date()
+      };
+      setTimeout(() => {
+        setMessages(prev => [...prev, fallbackMessage]);
+        setIsLoading(false);
+      }, 500 + Math.random() * 500);
+      return;
+    }
+  }
+
+  // ...existing code...
+// ...existing code...
+    if (!input.trim() || isLoading) return;
+
+    const userMessage = input.trim();
+    setInput('');
+
+    // Add user message with timestamp
+    const newUserMessage: Message = {
+      role: 'user',
+      content: userMessage,
+      timestamp: new Date()
+    };
+    setMessages(prev => [...prev, newUserMessage]);
+    setIsLoading(true);
+
+    // Intent-based reply selection with smart memory/context and FAQ
+    const lowerUser = userMessage.toLowerCase();
+    let intentReply: string | null = null;
+    let topic: string | null = null;
+
+    // FAQ detection
+    const faqIntents = [
+      { name: 'faq_cgpa', triggers: ['cgpa', 'grades', 'marks', 'academic performance'] },
+      { name: 'faq_goals', triggers: ['career goals', 'future plans', 'ambitions', 'what are your goals'] },
+      { name: 'faq_achievements', triggers: ['achievements', 'awards', 'accomplishments', 'what have you achieved'] },
+      { name: 'faq_motivation', triggers: ['why electrical engineering', 'why eee', 'motivation', 'why did you choose'] }
+    ];
+    let faqTopic: string | null = null;
+    for (const intent of faqIntents) {
+      if (intent.triggers.some(trigger => lowerUser.includes(trigger))) {
+        faqTopic = intent.name;
+        break;
+      }
     }
 
+    // Main topic detection
+    if (lowerUser.includes('about') || lowerUser.includes('who are you') || lowerUser.includes('yourself')) {
+      topic = 'aboutMe';
+    } else if (lowerUser.includes('skill') || lowerUser.includes('strength') || lowerUser.includes('expertise')) {
+      topic = 'skills';
+    } else if (lowerUser.includes('project') || lowerUser.includes('work') || lowerUser.includes('portfolio')) {
+      topic = 'projects';
+    } else if (lowerUser.includes('contact') || lowerUser.includes('email') || lowerUser.includes('connect')) {
+      topic = 'contact';
+    } else if (lowerUser.includes('social') || lowerUser.includes('linkedin') || lowerUser.includes('github') || lowerUser.includes('twitter')) {
+      topic = 'socialLinks';
+    } else if (lowerUser.includes('bye') || lowerUser.includes('exit') || lowerUser.includes('close') || lowerUser.includes('thank')) {
+      topic = 'closing';
+    }
+
+    // Detect follow-up queries like "tell me more"
+    const isFollowUp = lowerUser.includes('more') || lowerUser.includes('expand') || lowerUser.includes('example') || lowerUser.includes('details');
+
+    // FAQ reply logic with memory/context
+    if (faqTopic) {
+      const usedFaqIndexes = Array.isArray(discussedTopics[faqTopic + '_indexes']) ? discussedTopics[faqTopic + '_indexes'] : [];
+      let availableIndexes = faqReplies[faqTopic].map((_, i) => i).filter(i => !usedFaqIndexes.includes(i));
+      if (availableIndexes.length === 0) availableIndexes = faqReplies[faqTopic].map((_, i) => i);
+      const chosenIndex = availableIndexes[Math.floor(Math.random() * availableIndexes.length)];
+      intentReply = faqReplies[faqTopic][chosenIndex];
+      setDiscussedTopics(prev => ({
+        ...prev,
+        [faqTopic]: true,
+        [faqTopic + '_indexes']: [...usedFaqIndexes, chosenIndex]
+      }));
+    } else if (topic && isFollowUp && discussedTopics[topic] && expanded[topic]) {
+  intentReply = pickRandom(expanded[topic]);
+      if (!discussedTopics[topic]) {
+        setDiscussedTopics(prev => ({ ...prev, [topic]: true }));
+      }
+    } else if (topic) {
+  intentReply = topic && Array.isArray(eval(topic)) ? pickRandom(eval(topic)) : null;
+      if (!discussedTopics[topic]) {
+        setDiscussedTopics(prev => ({ ...prev, [topic]: true }));
+      }
+    }
+
+    // Social media direct queries (keep original logic for buttons)
+    const socialMediaResponse = checkSocialMediaQuery(userMessage);
+    if (socialMediaResponse) {
+      const assistantMessage: Message = {
+        role: 'assistant',
+        content: socialMediaResponse,
+        timestamp: new Date()
+      };
+      setAnimateSocial(true);
+      setTimeout(() => {
+        setMessages(prev => [...prev, assistantMessage]);
+        setIsLoading(false);
+      }, 500 + Math.random() * 500);
+      return;
     // If intent detected, reply immediately
     if (intentReply) {
       const assistantMessage: Message = {
@@ -228,8 +351,11 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
         content: intentReply,
         timestamp: new Date()
       };
-      setMessages(prev => [...prev, assistantMessage]);
-      setIsLoading(false);
+      setAnimateSocial(topic === 'socialLinks');
+      setTimeout(() => {
+        setMessages(prev => [...prev, assistantMessage]);
+        setIsLoading(false);
+      }, 500 + Math.random() * 500); // 0.5–1s delay
       return;
     }
 
@@ -248,70 +374,15 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
     }
   };
 
-  const handleQuickAction = (question: string) => {
-    if (isLoading) return;
-    
-    setInput(question);
-    // Automatically send the message
-    const event = new Event('submit') as any;
-    sendMessage(event);
-  };
+  // ...existing code...
 
-  const checkSocialMediaQuery = (message: string): string | null => {
-    const lowerMessage = message.toLowerCase();
-    
-    if (lowerMessage.includes('linkedin')) {
-      return `🔗 **LinkedIn Profile**
+  // ...existing code...
 
-📋 Connect with me on LinkedIn for professional updates and networking:
-👉 [www.linkedin.com/in/devi-charan-1a8b49302](https://www.linkedin.com/in/devi-charan-1a8b49302)
-
-Perfect for:
-• Professional discussions
-• Career opportunities  
-• Technical collaborations
-• Industry insights`;
-    }
-    
-    if (lowerMessage.includes('instagram')) {
-      return `📸 **Instagram Profile**
-
-🎨 Follow me on Instagram for behind-the-scenes content and personal updates:
-👉 [@imdvichrn](https://www.instagram.com/imdvichrn)
-
-You'll find:
-• Project highlights
-• Daily tech insights
-• Personal moments
-• Creative content`;
-    }
-    
-    if (lowerMessage.includes('facebook')) {
-      return `📘 **Facebook Profile**
-
-👥 Connect with me on Facebook for community interactions:
-👉 [Facebook Profile](https://www.facebook.com/userdead.610)
-
-Great for:
-• Community discussions
-• Event updates
-• Casual conversations
-• Networking`;
-    }
-    
-    if (lowerMessage.includes('social') || lowerMessage.includes('social media')) {
-      return `🌐 **All Social Media Links**
-
-Connect with me across platforms:
-
-🔗 **LinkedIn:** [Professional Profile](https://www.linkedin.com/in/devi-charan-1a8b49302)
-📸 **Instagram:** [@imdvichrn](https://www.instagram.com/imdvichrn)  
-📘 **Facebook:** [Personal Profile](https://www.facebook.com/userdead.610)
-
-Each platform offers different insights into my work and interests!`;
-    }
-    
-    return null;
+  // Handler for quick actions (e.g., FAQ shortcuts, topic buttons)
+  const handleQuickAction = (action: string) => {
+    setInput(action);
+    // Optionally, you can trigger sendMessage automatically:
+    // sendMessage({ preventDefault: () => {} } as React.FormEvent);
   };
 
   const handleConversationEnd = () => {
