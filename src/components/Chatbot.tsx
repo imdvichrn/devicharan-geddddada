@@ -14,199 +14,64 @@ interface Message {
   timestamp?: Date;
 }
 
-export const Chatbot = forwardRef(function Chatbot(props, ref) {
-  // Utility to pick a random item from an array
-  function pickRandom(arr: any[]) {
-    return arr[Math.floor(Math.random() * arr.length)];
-  }
+export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      role: 'assistant',
+      content: `👋 Hello! I'm Devicharan's AI assistant with complete access to his portfolio, projects, and experience.
 
-  // Multi-variation reply sets for Echoless
-  // Greetings variations for initial assistant message
-  const greetings = [
-    "👋 Hi! I'm DevAssist AI. Ask me about my projects, skills, or experience!",
-    "Hello! Ready to explore my portfolio? Just type your question.",
-    "Welcome! I can share info about my work, skills, and more. What would you like to know?",
-    "Hey there! Curious about my projects or background? Ask away!"
-  ];
+🎯 **What I can help with:**
+• Projects & technical work
+• Skills & expertise 
+• Education & background
+• Contact & collaboration
+• Real-time portfolio insights
 
-  // Social media query handler
-  function checkSocialMediaQuery(message: string): string | null {
-    const lowerMessage = message.toLowerCase();
-    if (lowerMessage.includes('linkedin')) {
-      return `🔗 **LinkedIn Profile**\n\n📋 Connect with me on LinkedIn for professional updates and networking:\n👉 [www.linkedin.com/in/devi-charan-1a8b49302](https://www.linkedin.com/in/devi-charan-1a8b49302)\n\nPerfect for:\n• Professional discussions\n• Career opportunities  \n• Technical collaborations\n• Industry insights`;
-    }
-    if (lowerMessage.includes('instagram')) {
-      return `📸 **Instagram Profile**\n\n🎨 Follow me on Instagram for behind-the-scenes content and personal updates:\n👉 [@imdvichrn](https://www.instagram.com/imdvichrn)\n\nYou'll find:\n• Project highlights\n• Daily tech insights\n• Personal moments\n• Creative content`;
-    }
-    if (lowerMessage.includes('facebook')) {
-      return `📘 **Facebook Profile**\n\n👥 Connect with me on Facebook for community interactions:\n👉 [Facebook Profile](https://www.facebook.com/userdead.610)\n\nGreat for:\n• Community discussions\n• Event updates\n• Casual conversations\n• Networking`;
-    }
-    if (lowerMessage.includes('social') || lowerMessage.includes('social media')) {
-      return `🌐 **All Social Media Links**\n\nConnect with me across platforms:\n\n🔗 **LinkedIn:** [Professional Profile](https://www.linkedin.com/in/devi-charan-1a8b49302)\n📸 **Instagram:** [@imdvichrn](https://www.instagram.com/imdvichrn)  \n📘 **Facebook:** [Personal Profile](https://www.facebook.com/userdead.610)\n\nEach platform offers different insights into my work and interests!`;
-    }
-    return null;
-  }
+💬 **Pro tips:**
+• Ask specific questions for detailed answers
+• Try: "Tell me about your latest projects"
+• Try: "What technologies do you work with?"
+• Try: "How can I contact you?"
 
-  // State hooks
+Ready to explore? What would you like to know first?`,
+      timestamp: new Date()
+    }
+  ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([{
-    role: 'assistant',
-    content: pickRandom(greetings),
-    timestamp: new Date()
-  }]);
-  const [isOpen, setIsOpen] = useState(false);
-  const [animateSocial, setAnimateSocial] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
 
-  // FAQ replies for each topic
-  const faqReplies: { [key: string]: string[] } = {
-    faq_cgpa: [
-      "My current CGPA is 8.7, reflecting consistent academic performance throughout my engineering studies.",
-      "I've maintained a strong academic record, with a CGPA of 8.7 in Electrical and Electronics Engineering.",
-      "My grades showcase my dedication to learning and understanding core engineering concepts."
-    ],
-    faq_goals: [
-      "My career goal is to become a leading engineer in the field of electrical systems and automation.",
-      "I'm passionate about leveraging technology to solve real-world problems and aim to work on impactful projects.",
-      "I aspire to contribute to innovative solutions in the energy and automation sectors."
-    ],
-    faq_achievements: [
-      "I've completed several hands-on projects in IoT and automation, including a smart home system.",
-      "I received recognition for my project on renewable energy integration during my final year.",
-      "My achievements include academic excellence awards and successful internships in the electrical domain."
-    ],
-    faq_motivation: [
-      "I chose Electrical Engineering because I'm fascinated by how technology powers our world.",
-      "My motivation comes from a desire to innovate and improve energy efficiency and automation.",
-      "I enjoy solving complex problems and Electrical Engineering offers endless opportunities for creativity."
-    ]
+  useImperativeHandle(ref, () => ({
+    toggleChat: () => setIsOpen(!isOpen)
+  }));
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // Expanded replies for follow-up queries for each topic
-  const expanded: { [key: string]: string[] } = {
-    aboutMe: [
-      "I'm Devi Charan, an Electrical and Electronics Engineering graduate with a passion for automation and IoT.",
-      "Beyond my academic background, I enjoy working on personal tech projects and collaborating with others in the field.",
-      "I'm always eager to learn new technologies and apply them to solve real-world problems."
-    ],
-    skills: [
-      "My technical skills include proficiency in C, Python, and embedded systems development.",
-      "I'm experienced with IoT platforms, automation protocols, and hands-on circuit design.",
-      "I also have strong problem-solving abilities and a knack for learning new tools quickly."
-    ],
-    projects: [
-      "I've built a smart home automation system using IoT sensors and microcontrollers.",
-      "One of my notable projects involved integrating renewable energy sources with automated control systems.",
-      "I regularly experiment with new technologies to create innovative solutions for everyday challenges."
-    ],
-    contact: [
-      "You can reach me via email at devicharangeddada@gmail.com or connect on LinkedIn.",
-      "Feel free to call me at +91 6303468707 for professional inquiries.",
-      "I'm based in Visakhapatnam, India, and open to remote collaborations."
-    ],
-    socialLinks: [
-      "Find me on LinkedIn, Instagram, and Facebook for updates and networking opportunities.",
-      "Each social platform offers a unique glimpse into my professional and personal interests.",
-      "I'm active on social media and enjoy connecting with like-minded individuals."
-    ],
-    closing: [
-      "Thank you for chatting! If you have more questions, feel free to ask anytime.",
-      "It was great connecting with you. Hope to hear from you soon!",
-      "Goodbye! Reach out if you need more information about my portfolio."
-    ]
-  };
-
-  // Track discussed topics and indexes for FAQ replies
-  const [discussedTopics, setDiscussedTopics] = useState<{ [key: string]: any }>({});
-
-  // Scroll to bottom on new message
   useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
+    scrollToBottom();
   }, [messages]);
 
-  // Handler for sending messages
-  function sendMessage(e: React.FormEvent) {
+  const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
     const userMessage = input.trim();
     setInput('');
-
+    
     // Add user message with timestamp
-    const newUserMessage: Message = {
-      role: 'user',
-      content: userMessage,
-      timestamp: new Date()
+    const newUserMessage: Message = { 
+      role: 'user', 
+      content: userMessage, 
+      timestamp: new Date() 
     };
     setMessages(prev => [...prev, newUserMessage]);
     setIsLoading(true);
 
-    // Intent-based reply selection with smart memory/context and FAQ
-    const lowerUser = userMessage.toLowerCase();
-    let intentReply: string | null = null;
-    let topic: string | null = null;
-
-    // FAQ detection
-    const faqIntents = [
-      { name: 'faq_cgpa', triggers: ['cgpa', 'grades', 'marks', 'academic performance'] },
-      { name: 'faq_goals', triggers: ['career goals', 'future plans', 'ambitions', 'what are your goals'] },
-      { name: 'faq_achievements', triggers: ['achievements', 'awards', 'accomplishments', 'what have you achieved'] },
-      { name: 'faq_motivation', triggers: ['why electrical engineering', 'why eee', 'motivation', 'why did you choose'] }
-    ];
-    let faqTopic: string | null = null;
-    for (const intent of faqIntents) {
-      if (intent.triggers.some(trigger => lowerUser.includes(trigger))) {
-        faqTopic = intent.name;
-        break;
-      }
-    }
-
-    // Main topic detection
-    if (lowerUser.includes('about') || lowerUser.includes('who are you') || lowerUser.includes('yourself')) {
-      topic = 'aboutMe';
-    } else if (lowerUser.includes('skill') || lowerUser.includes('strength') || lowerUser.includes('expertise')) {
-      topic = 'skills';
-    } else if (lowerUser.includes('project') || lowerUser.includes('work') || lowerUser.includes('portfolio')) {
-      topic = 'projects';
-    } else if (lowerUser.includes('contact') || lowerUser.includes('email') || lowerUser.includes('connect')) {
-      topic = 'contact';
-    } else if (lowerUser.includes('social') || lowerUser.includes('linkedin') || lowerUser.includes('github') || lowerUser.includes('twitter')) {
-      topic = 'socialLinks';
-    } else if (lowerUser.includes('bye') || lowerUser.includes('exit') || lowerUser.includes('close') || lowerUser.includes('thank')) {
-      topic = 'closing';
-    }
-
-    // Detect follow-up queries like "tell me more"
-    const isFollowUp = lowerUser.includes('more') || lowerUser.includes('expand') || lowerUser.includes('example') || lowerUser.includes('details');
-
-    // FAQ reply logic with memory/context
-    if (faqTopic) {
-      const usedFaqIndexes = Array.isArray(discussedTopics[faqTopic + '_indexes']) ? discussedTopics[faqTopic + '_indexes'] : [];
-      let availableIndexes = faqReplies[faqTopic].map((_, i) => i).filter(i => !usedFaqIndexes.includes(i));
-      if (availableIndexes.length === 0) availableIndexes = faqReplies[faqTopic].map((_, i) => i);
-      const chosenIndex = availableIndexes[Math.floor(Math.random() * availableIndexes.length)];
-      intentReply = faqReplies[faqTopic][chosenIndex];
-      setDiscussedTopics(prev => ({
-        ...prev,
-        [faqTopic]: true,
-        [faqTopic + '_indexes']: [...usedFaqIndexes, chosenIndex]
-      }));
-    } else if (topic && isFollowUp && discussedTopics[topic] && expanded[topic]) {
-      intentReply = pickRandom(expanded[topic]);
-      if (!discussedTopics[topic]) {
-        setDiscussedTopics(prev => ({ ...prev, [topic]: true }));
-      }
-    } else if (topic) {
-      intentReply = topic && Array.isArray(eval(topic)) ? pickRandom(eval(topic)) : null;
-      if (!discussedTopics[topic]) {
-        setDiscussedTopics(prev => ({ ...prev, [topic]: true }));
-      }
-    }
-
-    // Social media direct queries (keep original logic for buttons)
+    // Check for social media queries
     const socialMediaResponse = checkSocialMediaQuery(userMessage);
     if (socialMediaResponse) {
       const assistantMessage: Message = {
@@ -214,175 +79,143 @@ export const Chatbot = forwardRef(function Chatbot(props, ref) {
         content: socialMediaResponse,
         timestamp: new Date()
       };
-      setAnimateSocial(true);
-      setTimeout(() => {
-        setMessages(prev => [...prev, assistantMessage]);
-        setIsLoading(false);
-      }, 500 + Math.random() * 500);
+      setMessages(prev => [...prev, assistantMessage]);
+      setIsLoading(false);
       return;
     }
 
-    // If intent detected, reply immediately
-    if (intentReply) {
+    try {
+      // Send to real backend API
+      console.log("[Chatbot] Sending message to backend:", userMessage);
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          messages: [...messages, newUserMessage].map(({ timestamp, ...msg }) => msg)
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log("[Chatbot] Received response:", data);
+
+      // Enhanced response with sources and suggestions
+      let assistantContent = data.reply || "Sorry, I couldn't process that request.";
+      
+      // Add conversation continuation suggestions
+      if (Math.random() > 0.7) { // 30% chance to add suggestions
+        const suggestions = [
+          "\n\n💡 **Want to know more?** Ask about specific projects or technologies!",
+          "\n\n🚀 **Next steps?** Check out my latest work or get in touch!",
+          "\n\n🔍 **Explore deeper:** Ask about my learning journey or future goals!",
+          "\n\n📈 **Curious about growth?** Ask how I'm developing new skills!",
+          "\n\n🤝 **Ready to collaborate?** Let's discuss how we can work together!"
+        ];
+        assistantContent += suggestions[Math.floor(Math.random() * suggestions.length)];
+      }
+
       const assistantMessage: Message = {
         role: 'assistant',
-        content: intentReply,
+        content: assistantContent,
+        sources: data.sources || [],
         timestamp: new Date()
       };
-      setAnimateSocial(topic === 'socialLinks');
-      setTimeout(() => {
-        setMessages(prev => [...prev, assistantMessage]);
-        setIsLoading(false);
-      }, 500 + Math.random() * 500); // 0.5–1s delay
-      return;
-    }
 
-    // If no intent matched, fallback reply
-    if (!intentReply) {
-      const fallbackMessage: Message = {
+      setMessages(prev => [...prev, assistantMessage]);
+
+    } catch (error) {
+      console.error('Chat error:', error);
+      toast({
+        title: "Connection Error",
+        description: "I'm having trouble connecting. Please try again or contact Devicharan directly.",
+        variant: "destructive",
+      });
+      
+      const errorMessage: Message = {
         role: 'assistant',
-        content: "I’m here to talk about my skills, projects, and background. Could you please rephrase your question?",
+        content: `🔧 **Connection Issue** - I'm temporarily unavailable, but you can reach Devicharan directly:
+
+📧 **Email:** devicharangeddada@gmail.com
+📱 **Phone:** +91 6303468707
+📍 **Location:** Visakhapatnam, India
+
+I'll be back online soon with full portfolio insights!`,
         timestamp: new Date()
       };
-      setTimeout(() => {
-        setMessages(prev => [...prev, fallbackMessage]);
-        setIsLoading(false);
-      }, 500 + Math.random() * 500);
-      return;
-    }
-  }
-
-  // ...existing code...
-// ...existing code...
-    if (!input.trim() || isLoading) return;
-
-    const userMessage = input.trim();
-    setInput('');
-
-    // Add user message with timestamp
-    const newUserMessage: Message = {
-      role: 'user',
-      content: userMessage,
-      timestamp: new Date()
-    };
-    setMessages(prev => [...prev, newUserMessage]);
-    setIsLoading(true);
-
-    // Intent-based reply selection with smart memory/context and FAQ
-    const lowerUser = userMessage.toLowerCase();
-    let intentReply: string | null = null;
-    let topic: string | null = null;
-
-    // FAQ detection
-    const faqIntents = [
-      { name: 'faq_cgpa', triggers: ['cgpa', 'grades', 'marks', 'academic performance'] },
-      { name: 'faq_goals', triggers: ['career goals', 'future plans', 'ambitions', 'what are your goals'] },
-      { name: 'faq_achievements', triggers: ['achievements', 'awards', 'accomplishments', 'what have you achieved'] },
-      { name: 'faq_motivation', triggers: ['why electrical engineering', 'why eee', 'motivation', 'why did you choose'] }
-    ];
-    let faqTopic: string | null = null;
-    for (const intent of faqIntents) {
-      if (intent.triggers.some(trigger => lowerUser.includes(trigger))) {
-        faqTopic = intent.name;
-        break;
-      }
-    }
-
-    // Main topic detection
-    if (lowerUser.includes('about') || lowerUser.includes('who are you') || lowerUser.includes('yourself')) {
-      topic = 'aboutMe';
-    } else if (lowerUser.includes('skill') || lowerUser.includes('strength') || lowerUser.includes('expertise')) {
-      topic = 'skills';
-    } else if (lowerUser.includes('project') || lowerUser.includes('work') || lowerUser.includes('portfolio')) {
-      topic = 'projects';
-    } else if (lowerUser.includes('contact') || lowerUser.includes('email') || lowerUser.includes('connect')) {
-      topic = 'contact';
-    } else if (lowerUser.includes('social') || lowerUser.includes('linkedin') || lowerUser.includes('github') || lowerUser.includes('twitter')) {
-      topic = 'socialLinks';
-    } else if (lowerUser.includes('bye') || lowerUser.includes('exit') || lowerUser.includes('close') || lowerUser.includes('thank')) {
-      topic = 'closing';
-    }
-
-    // Detect follow-up queries like "tell me more"
-    const isFollowUp = lowerUser.includes('more') || lowerUser.includes('expand') || lowerUser.includes('example') || lowerUser.includes('details');
-
-    // FAQ reply logic with memory/context
-    if (faqTopic) {
-      const usedFaqIndexes = Array.isArray(discussedTopics[faqTopic + '_indexes']) ? discussedTopics[faqTopic + '_indexes'] : [];
-      let availableIndexes = faqReplies[faqTopic].map((_, i) => i).filter(i => !usedFaqIndexes.includes(i));
-      if (availableIndexes.length === 0) availableIndexes = faqReplies[faqTopic].map((_, i) => i);
-      const chosenIndex = availableIndexes[Math.floor(Math.random() * availableIndexes.length)];
-      intentReply = faqReplies[faqTopic][chosenIndex];
-      setDiscussedTopics(prev => ({
-        ...prev,
-        [faqTopic]: true,
-        [faqTopic + '_indexes']: [...usedFaqIndexes, chosenIndex]
-      }));
-    } else if (topic && isFollowUp && discussedTopics[topic] && expanded[topic]) {
-  intentReply = pickRandom(expanded[topic]);
-      if (!discussedTopics[topic]) {
-        setDiscussedTopics(prev => ({ ...prev, [topic]: true }));
-      }
-    } else if (topic) {
-  intentReply = topic && Array.isArray(eval(topic)) ? pickRandom(eval(topic)) : null;
-      if (!discussedTopics[topic]) {
-        setDiscussedTopics(prev => ({ ...prev, [topic]: true }));
-      }
-    }
-
-    // Social media direct queries (keep original logic for buttons)
-    const socialMediaResponse = checkSocialMediaQuery(userMessage);
-    if (socialMediaResponse) {
-      const assistantMessage: Message = {
-        role: 'assistant',
-        content: socialMediaResponse,
-        timestamp: new Date()
-      };
-      setAnimateSocial(true);
-      setTimeout(() => {
-        setMessages(prev => [...prev, assistantMessage]);
-        setIsLoading(false);
-      }, 500 + Math.random() * 500);
-      return;
-    // If intent detected, reply immediately
-    if (intentReply) {
-      const assistantMessage: Message = {
-        role: 'assistant',
-        content: intentReply,
-        timestamp: new Date()
-      };
-      setAnimateSocial(topic === 'socialLinks');
-      setTimeout(() => {
-        setMessages(prev => [...prev, assistantMessage]);
-        setIsLoading(false);
-      }, 500 + Math.random() * 500); // 0.5–1s delay
-      return;
-    }
-
-    // If no intent matched, fallback reply
-    if (!intentReply) {
-      const fallbackMessage: Message = {
-        role: 'assistant',
-        content: "I’m here to talk about my skills, projects, and background. Could you please rephrase your question?",
-        timestamp: new Date()
-      };
-      setTimeout(() => {
-        setMessages(prev => [...prev, fallbackMessage]);
-        setIsLoading(false);
-      }, 500 + Math.random() * 500);
-      return;
+      
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  // ...existing code...
+  const handleQuickAction = (question: string) => {
+    if (isLoading) return;
+    
+    setInput(question);
+    // Automatically send the message
+    const event = new Event('submit') as any;
+    sendMessage(event);
+  };
 
-  // ...existing code...
+  const checkSocialMediaQuery = (message: string): string | null => {
+    const lowerMessage = message.toLowerCase();
+    
+    if (lowerMessage.includes('linkedin')) {
+      return `🔗 **LinkedIn Profile**
 
-  // Handler for quick actions (e.g., FAQ shortcuts, topic buttons)
-  const handleQuickAction = (action: string) => {
-    setInput(action);
-    // Optionally, you can trigger sendMessage automatically:
-    // sendMessage({ preventDefault: () => {} } as React.FormEvent);
+📋 Connect with me on LinkedIn for professional updates and networking:
+👉 [www.linkedin.com/in/devi-charan-1a8b49302](https://www.linkedin.com/in/devi-charan-1a8b49302)
+
+Perfect for:
+• Professional discussions
+• Career opportunities  
+• Technical collaborations
+• Industry insights`;
+    }
+    
+    if (lowerMessage.includes('instagram')) {
+      return `📸 **Instagram Profile**
+
+🎨 Follow me on Instagram for behind-the-scenes content and personal updates:
+👉 [@imdvichrn](https://www.instagram.com/imdvichrn)
+
+You'll find:
+• Project highlights
+• Daily tech insights
+• Personal moments
+• Creative content`;
+    }
+    
+    if (lowerMessage.includes('facebook')) {
+      return `📘 **Facebook Profile**
+
+👥 Connect with me on Facebook for community interactions:
+👉 [Facebook Profile](https://www.facebook.com/userdead.610)
+
+Great for:
+• Community discussions
+• Event updates
+• Casual conversations
+• Networking`;
+    }
+    
+    if (lowerMessage.includes('social') || lowerMessage.includes('social media')) {
+      return `🌐 **All Social Media Links**
+
+Connect with me across platforms:
+
+🔗 **LinkedIn:** [Professional Profile](https://www.linkedin.com/in/devi-charan-1a8b49302)
+📸 **Instagram:** [@imdvichrn](https://www.instagram.com/imdvichrn)  
+📘 **Facebook:** [Personal Profile](https://www.facebook.com/userdead.610)
+
+Each platform offers different insights into my work and interests!`;
+    }
+    
+    return null;
   };
 
   const handleConversationEnd = () => {
@@ -595,25 +428,27 @@ export const Chatbot = forwardRef(function Chatbot(props, ref) {
               <Button
                 variant="ghost"
                 size="sm"
-                className={`p-2 h-8 w-8 rounded-full hover:bg-muted/50 transition-colors ${animateSocial ? 'animate-glow-bounce' : ''}`}
+                className="p-2 h-8 w-8 rounded-full hover:bg-muted/50 transition-colors"
                 onClick={() => window.open('https://www.linkedin.com/in/devi-charan-1a8b49302', '_blank')}
                 aria-label="LinkedIn Profile"
               >
                 <Linkedin size={16} className="text-muted-foreground hover:text-primary transition-colors" />
               </Button>
+              
               <Button
                 variant="ghost"
                 size="sm"
-                className={`p-2 h-8 w-8 rounded-full hover:bg-muted/50 transition-colors ${animateSocial ? 'animate-glow-bounce' : ''}`}
+                className="p-2 h-8 w-8 rounded-full hover:bg-muted/50 transition-colors"
                 onClick={() => window.open('https://www.instagram.com/imdvichrn', '_blank')}
                 aria-label="Instagram Profile"
               >
                 <Instagram size={16} className="text-muted-foreground hover:text-primary transition-colors" />
               </Button>
+              
               <Button
                 variant="ghost"
                 size="sm"
-                className={`p-2 h-8 w-8 rounded-full hover:bg-muted/50 transition-colors ${animateSocial ? 'animate-glow-bounce' : ''}`}
+                className="p-2 h-8 w-8 rounded-full hover:bg-muted/50 transition-colors"
                 onClick={() => window.open('https://www.facebook.com/userdead.610', '_blank')}
                 aria-label="Facebook Profile"
               >
@@ -621,7 +456,6 @@ export const Chatbot = forwardRef(function Chatbot(props, ref) {
               </Button>
             </div>
           </div>
-
         </div>
       )}
     </>
