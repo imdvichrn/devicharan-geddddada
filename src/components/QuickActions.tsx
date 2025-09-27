@@ -1,10 +1,16 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 
+// Define the props interface for QuickActions
 interface QuickActionsProps {
   onActionClick: (question: string) => void;
   disabled?: boolean;
 }
+
+// Removed unused imports
+// import Chatbot from "./Chatbot";
+// import Chat from "./Chat";
+// import { chatService } from "../services/chatService";
 
 export const QuickActions: React.FC<QuickActionsProps> = ({ onActionClick, disabled = false }) => {
   const quickQuestions = [
