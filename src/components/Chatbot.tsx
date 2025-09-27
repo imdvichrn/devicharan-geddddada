@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 're
 import { Send, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { WindowChrome } from './WindowChrome';
 import { SiriOrb } from './SiriOrb';
 import { QuickActions } from './QuickActions';
 import { useToast } from '@/hooks/use-toast';
@@ -18,7 +19,22 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: `👋 Hello! I'm Devicharan's AI assistant with complete access to his portfolio, projects, and experience.\n\n🎯 **What I can help with:**\n• Projects & technical work\n• Skills & expertise \n• Education & background\n• Contact & collaboration\n• Real-time portfolio insights\n\n💬 **Pro tips:**\n• Ask specific questions for detailed answers\n• Try: "Tell me about your latest projects"\n• Try: "What technologies do you work with?"\n• Try: "How can I contact you?"\n\nReady to explore? What would you like to know first?`,
+      content: `👋 Hello! I'm Devicharan's AI assistant with complete access to his portfolio, projects, and experience.
+
+🎯 **What I can help with:**
+• Projects & technical work
+• Skills & expertise 
+• Education & background
+• Contact & collaboration
+• Real-time portfolio insights
+
+💬 **Pro tips:**
+• Ask specific questions for detailed answers
+• Try: "Tell me about your latest projects"
+• Try: "What technologies do you work with?"
+• Try: "How can I contact you?"
+
+Ready to explore? What would you like to know first?`,
       timestamp: new Date()
     }
   ]);
@@ -46,6 +62,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
     const userMessage = input.trim();
     setInput('');
     
+    // Add user message with timestamp
     const newUserMessage: Message = { 
       role: 'user', 
       content: userMessage, 
@@ -55,6 +72,8 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
     setIsLoading(true);
 
     try {
+      // Send to real backend API
+      console.log("[Chatbot] Sending message to backend:", userMessage);
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -68,10 +87,13 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
       }
 
       const data = await response.json();
+      console.log("[Chatbot] Received response:", data);
 
+      // Enhanced response with sources and suggestions
       let assistantContent = data.reply || "Sorry, I couldn't process that request.";
       
-      if (Math.random() > 0.7) {
+      // Add conversation continuation suggestions
+      if (Math.random() > 0.7) { // 30% chance to add suggestions
         const suggestions = [
           "\n\n💡 **Want to know more?** Ask about specific projects or technologies!",
           "\n\n🚀 **Next steps?** Check out my latest work or get in touch!",
@@ -101,7 +123,13 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
       
       const errorMessage: Message = {
         role: 'assistant',
-        content: `🔧 **Connection Issue** - I'm temporarily unavailable, but you can reach Devicharan directly:\n\n📧 **Email:** devicharangeddada@gmail.com\n📱 **Phone:** +91 6303468707\n📍 **Location:** Visakhapatnam, India\n\nI'll be back online soon with full portfolio insights!`,
+        content: `🔧 **Connection Issue** - I'm temporarily unavailable, but you can reach Devicharan directly:
+
+📧 **Email:** devicharangeddada@gmail.com
+📱 **Phone:** +91 6303468707
+📍 **Location:** Visakhapatnam, India
+
+I'll be back online soon with full portfolio insights!`,
         timestamp: new Date()
       };
       
@@ -115,6 +143,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
     if (isLoading) return;
     
     setInput(question);
+    // Automatically send the message
     const event = new Event('submit') as any;
     sendMessage(event);
   };
@@ -122,7 +151,18 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
   const handleConversationEnd = () => {
     const endMessage: Message = {
       role: 'assistant',
-      content: `👋 **Thanks for chatting!** \n\n🎯 **What we covered:** Portfolio insights, projects, and opportunities to connect\n\n📬 **Next steps:**\n• Email: devicharangeddada@gmail.com  \n• Phone: +91 6303468707\n• Based in: Visakhapatnam, India\n\n💡 **Come back anytime** for updated portfolio information and project details!\n\n*Hope to hear from you soon!* 🚀`,
+      content: `👋 **Thanks for chatting!** 
+
+🎯 **What we covered:** Portfolio insights, projects, and opportunities to connect
+
+📬 **Next steps:**
+• Email: devicharangeddada@gmail.com  
+• Phone: +91 6303468707
+• Based in: Visakhapatnam, India
+
+💡 **Come back anytime** for updated portfolio information and project details!
+
+*Hope to hear from you soon!* 🚀`,
       timestamp: new Date()
     };
     
@@ -131,9 +171,12 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
 
   return (
     <>
+      {/* Chatbot Toggle Button */}
       <Button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 w-14 h-14 rounded-full shadow-lg transition-all duration-200 hover:scale-110 z-50 overflow-hidden ${isOpen ? 'animate-scale-out' : 'animate-scale-in'}`}
+        className={`fixed bottom-6 right-6 w-14 h-14 rounded-full shadow-lg transition-all duration-200 hover:scale-110 z-50 overflow-hidden ${
+          isOpen ? 'animate-scale-out' : 'animate-scale-in'
+        }`}
         aria-label="Toggle chatbot"
         style={{ padding: 0, background: 'none' }}
       >
@@ -145,11 +188,13 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
           playsInline
           preload="auto"
           onLoadedData={(e) => {
+            // Ensure video loops continuously
             const video = e.currentTarget;
             video.currentTime = 0;
             video.play().catch(console.error);
           }}
           onEnded={(e) => {
+            // Force restart if loop fails
             const video = e.currentTarget;
             video.currentTime = 0;
             video.play().catch(console.error);
@@ -159,23 +204,67 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
         />
       </Button>
 
+      {/* Chatbot Panel */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 w-96 h-[500px] glass-elevated rounded-2xl shadow-2xl z-40 animate-slide-up overflow-hidden flex flex-col">
-          <div className="p-4 border-b border-glass-border flex justify-center items-center">
-            <SiriOrb />
+        <div className="fixed bottom-24 right-6 w-96 h-[500px] glass-elevated rounded-2xl shadow-2xl z-40 animate-slide-up overflow-hidden">
+          {/* Header */}
+          <div className="p-4 border-b border-glass-border">
+            <div className="flex items-center justify-between">
+              <WindowChrome 
+                onClose={() => setIsOpen(false)}
+                onMinimize={() => {
+                  // Minimize animation
+                  const panel = document.querySelector('.fixed.bottom-24.right-6') as HTMLElement;
+                  if (panel) {
+                    panel.style.transform = 'scale(0.1)';
+                    panel.style.opacity = '0';
+                    setTimeout(() => setIsOpen(false), 200);
+                  }
+                }}
+                onZoom={() => {
+                  // Toggle between normal and expanded view
+                  const panel = document.querySelector('.fixed.bottom-24.right-6') as HTMLElement;
+                  if (panel) {
+                    const isExpanded = panel.classList.contains('expanded');
+                    if (isExpanded) {
+                      panel.style.width = '24rem';
+                      panel.style.height = '500px';
+                      panel.classList.remove('expanded');
+                    } else {
+                      panel.style.width = '32rem';
+                      panel.style.height = '600px';
+                      panel.classList.add('expanded');
+                    }
+                  }
+                }}
+              />
+              <div className="flex-1 text-center">
+                <h3 className="font-medium text-foreground">DevAssist AI</h3>
+                <p className="text-sm text-muted-foreground flex items-center justify-center gap-1">
+                  <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                  Live Portfolio Data
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {/* Messages */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 h-[340px]">
             {messages.map((message, index) => (
               <div
                 key={index}
                 className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} group`}
               >
                 <div
-                  className={`max-w-[85%] p-3 rounded-2xl text-sm transition-all duration-200 group-hover:shadow-md ${message.role === 'user' ? 'bg-primary text-primary-foreground ml-4' : 'bg-muted text-muted-foreground mr-4 border border-border/50'}`}
+                  className={`max-w-[85%] p-3 rounded-2xl text-sm transition-all duration-200 group-hover:shadow-md ${
+                    message.role === 'user'
+                      ? 'bg-primary text-primary-foreground ml-4'
+                      : 'bg-muted text-muted-foreground mr-4 border border-border/50'
+                  }`}
                 >
                   <div className="whitespace-pre-wrap">{message.content}</div>
                   
+                  {/* Sources */}
                   {message.sources && message.sources.length > 0 && (
                     <div className="mt-2 pt-2 border-t border-border/30">
                       <div className="text-xs font-medium mb-1 text-muted-foreground/70">Sources:</div>
@@ -189,6 +278,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
                     </div>
                   )}
 
+                  {/* Timestamp */}
                   {message.timestamp && (
                     <div className="text-xs text-muted-foreground/50 mt-1">
                       {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -208,6 +298,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
             <div ref={messagesEndRef} />
           </div>
 
+          {/* Quick Actions */}
           {messages.length <= 2 && (
             <QuickActions 
               onActionClick={handleQuickAction} 
@@ -215,7 +306,8 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
             />
           )}
 
-          <form onSubmit={sendMessage} className="p-4 border-t border-glass-border mt-auto">
+          {/* Input */}
+          <form onSubmit={sendMessage} className="p-4 border-t border-glass-border">
             <div className="flex gap-2">
               <Input
                 value={input}
@@ -241,6 +333,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
               </Button>
             </div>
             
+            {/* Conversation controls */}
             {messages.length > 6 && (
               <div className="flex justify-between items-center mt-2">
                 <Button
