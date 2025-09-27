@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
-import { Send, Loader2 } from 'lucide-react';
+import { Send, Loader2, Linkedin, Instagram, Facebook } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { WindowChrome } from './WindowChrome';
@@ -70,6 +70,19 @@ Ready to explore? What would you like to know first?`,
     };
     setMessages(prev => [...prev, newUserMessage]);
     setIsLoading(true);
+
+    // Check for social media queries
+    const socialMediaResponse = checkSocialMediaQuery(userMessage);
+    if (socialMediaResponse) {
+      const assistantMessage: Message = {
+        role: 'assistant',
+        content: socialMediaResponse,
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, assistantMessage]);
+      setIsLoading(false);
+      return;
+    }
 
     try {
       // Send to real backend API
@@ -146,6 +159,63 @@ I'll be back online soon with full portfolio insights!`,
     // Automatically send the message
     const event = new Event('submit') as any;
     sendMessage(event);
+  };
+
+  const checkSocialMediaQuery = (message: string): string | null => {
+    const lowerMessage = message.toLowerCase();
+    
+    if (lowerMessage.includes('linkedin')) {
+      return `🔗 **LinkedIn Profile**
+
+📋 Connect with me on LinkedIn for professional updates and networking:
+👉 [www.linkedin.com/in/devi-charan-1a8b49302](https://www.linkedin.com/in/devi-charan-1a8b49302)
+
+Perfect for:
+• Professional discussions
+• Career opportunities  
+• Technical collaborations
+• Industry insights`;
+    }
+    
+    if (lowerMessage.includes('instagram')) {
+      return `📸 **Instagram Profile**
+
+🎨 Follow me on Instagram for behind-the-scenes content and personal updates:
+👉 [@imdvichrn](https://www.instagram.com/imdvichrn)
+
+You'll find:
+• Project highlights
+• Daily tech insights
+• Personal moments
+• Creative content`;
+    }
+    
+    if (lowerMessage.includes('facebook')) {
+      return `📘 **Facebook Profile**
+
+👥 Connect with me on Facebook for community interactions:
+👉 [Facebook Profile](https://www.facebook.com/userdead.610)
+
+Great for:
+• Community discussions
+• Event updates
+• Casual conversations
+• Networking`;
+    }
+    
+    if (lowerMessage.includes('social') || lowerMessage.includes('social media')) {
+      return `🌐 **All Social Media Links**
+
+Connect with me across platforms:
+
+🔗 **LinkedIn:** [Professional Profile](https://www.linkedin.com/in/devi-charan-1a8b49302)
+📸 **Instagram:** [@imdvichrn](https://www.instagram.com/imdvichrn)  
+📘 **Facebook:** [Personal Profile](https://www.facebook.com/userdead.610)
+
+Each platform offers different insights into my work and interests!`;
+    }
+    
+    return null;
   };
 
   const handleConversationEnd = () => {
@@ -351,6 +421,41 @@ I'll be back online soon with full portfolio insights!`,
               </div>
             )}
           </form>
+
+          {/* Social Media Footer */}
+          <div className="px-4 pb-4 border-t border-glass-border/50">
+            <div className="flex justify-center items-center gap-4 pt-3">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="p-2 h-8 w-8 rounded-full hover:bg-muted/50 transition-colors"
+                onClick={() => window.open('https://www.linkedin.com/in/devi-charan-1a8b49302', '_blank')}
+                aria-label="LinkedIn Profile"
+              >
+                <Linkedin size={16} className="text-muted-foreground hover:text-primary transition-colors" />
+              </Button>
+              
+              <Button
+                variant="ghost"
+                size="sm"
+                className="p-2 h-8 w-8 rounded-full hover:bg-muted/50 transition-colors"
+                onClick={() => window.open('https://www.instagram.com/imdvichrn', '_blank')}
+                aria-label="Instagram Profile"
+              >
+                <Instagram size={16} className="text-muted-foreground hover:text-primary transition-colors" />
+              </Button>
+              
+              <Button
+                variant="ghost"
+                size="sm"
+                className="p-2 h-8 w-8 rounded-full hover:bg-muted/50 transition-colors"
+                onClick={() => window.open('https://www.facebook.com/userdead.610', '_blank')}
+                aria-label="Facebook Profile"
+              >
+                <Facebook size={16} className="text-muted-foreground hover:text-primary transition-colors" />
+              </Button>
+            </div>
+          </div>
         </div>
       )}
     </>
