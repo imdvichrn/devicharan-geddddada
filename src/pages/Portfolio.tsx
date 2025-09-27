@@ -19,7 +19,10 @@ import {
   GraduationCap,
   Star,
   Calendar,
-  Loader2
+  Loader2,
+  Linkedin,
+  Instagram,
+  Facebook
 } from 'lucide-react';
 import heroImage from '@/assets/hero-bg.jpg';
 import profileImage from '@/assets/profile-avatar.jpg';
@@ -427,10 +430,45 @@ export function Portfolio() {
 
       {/* Footer */}
       <footer className="py-8 px-4 border-t border-glass-border glass-panel">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-muted-foreground">
-            © 2025 Geddada Devicharan. All rights reserved.
-          </p>
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center space-y-4">
+            {/* Social Media Links */}
+            <div className="flex justify-center items-center gap-6">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-colors"
+                onClick={() => window.open('https://www.linkedin.com/in/devi-charan-1a8b49302', '_blank')}
+                aria-label="LinkedIn Profile"
+              >
+                <Linkedin size={20} className="text-muted-foreground hover:text-primary transition-colors" />
+              </Button>
+              
+              <Button
+                variant="ghost"
+                size="sm"
+                className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-colors"
+                onClick={() => window.open('https://www.instagram.com/imdvichrn', '_blank')}
+                aria-label="Instagram Profile"
+              >
+                <Instagram size={20} className="text-muted-foreground hover:text-primary transition-colors" />
+              </Button>
+              
+              <Button
+                variant="ghost"
+                size="sm"
+                className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-colors"
+                onClick={() => window.open('https://www.facebook.com/userdead.610', '_blank')}
+                aria-label="Facebook Profile"
+              >
+                <Facebook size={20} className="text-muted-foreground hover:text-primary transition-colors" />
+              </Button>
+            </div>
+            
+            <p className="text-muted-foreground">
+              © 2025 Geddada Devicharan. All rights reserved.
+            </p>
+          </div>
         </div>
       </footer>
 
