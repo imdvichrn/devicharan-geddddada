@@ -1,3 +1,14 @@
+/* Animated glow and bounce for social media buttons */
+.animate-glow-bounce {
+  animation: glowBounce 1.2s cubic-bezier(.4,0,.2,1) 1;
+  box-shadow: 0 0 12px 2px #3b82f6, 0 0 24px 4px #60a5fa;
+}
+@keyframes glowBounce {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 #3b82f6; }
+  30% { transform: scale(1.15); box-shadow: 0 0 12px 2px #3b82f6; }
+  60% { transform: scale(0.95); box-shadow: 0 0 24px 4px #60a5fa; }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 #3b82f6; }
+}
 #root {
   max-width: 1280px;
   margin: 0 auto;

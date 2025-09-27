@@ -1,0 +1,109 @@
+{
+  "intents": [
+    {
+      "name": "greeting",
+      "triggers": ["hi", "hello", "hey", "greetings", "start"],
+      "responses": [
+        "Hello! 👋 I’m Echoless, Devi Charan’s personal assistant. I can walk you through my skills, projects, and background. What would you like to explore?",
+        "Welcome! I’m Echoless, here to guide you through my portfolio. Would you like to learn about my skills, projects, or connect with me?",
+        "Hi there! 👋 I’m Echoless. Think of me as your guide to my journey — skills, projects, experience, and more. Where shall we start?",
+        "Greetings! I’m Echoless, assisting on behalf of Devi Charan. I can share details about my work, abilities, and career path. What interests you?",
+        "Hello visitor 👋 I’m Echoless. I’ll help you discover who I am, my skills, and my projects. Would you like me to start with an overview?"
+      ]
+    },
+    {
+      "name": "about_me",
+      "triggers": ["about", "yourself", "who are you", "background", "bio"],
+      "responses": [
+        "I’m Devi Charan, a B.Tech student in Electrical & Electronics Engineering at Andhra University, Visakhapatnam. I’m passionate about problem-solving and impactful projects. Would you like me to share more about my skills or my academic journey?",
+        "I’m Devi Charan, currently pursuing Electrical & Electronics Engineering at Andhra University. My focus is on technology, innovation, and creating solutions. Do you want to hear about my skills or projects first?",
+        "My name is Devi Charan. I’m a B.Tech EEE student, and my interests revolve around electrical systems, control systems, and real-world problem solving. Would you like me to highlight my strengths or my projects?",
+        "I’m Devi Charan, pursuing B.Tech in EEE from Andhra University, Visakhapatnam. I enjoy combining theory with practical application through projects. Would you like an overview of my skills or goals?",
+        "I’m Devi Charan, specializing in Electrical & Electronics Engineering. My journey includes both academic and practical achievements. Should I walk you through my technical expertise or my projects?"
+      ]
+    },
+    {
+      "name": "skills",
+      "triggers": ["skills", "strengths", "expertise", "what are you good at"],
+      "responses": [
+        "Here’s what I’m good at: Power Systems, Electrical Machines, Control Systems, Signals & Systems, and analytical problem-solving. Would you like me to show you how I’ve applied these in projects?",
+        "My technical strengths include: EEE fundamentals, digital systems, power electronics, and strong analytical thinking. Should I connect these to real projects I’ve worked on?",
+        "I specialize in Electrical Machines, Power Systems, and Control Systems, with additional skills in programming and problem-solving. Would you like more details on applications?",
+        "Some of my key skills: Electrical & Electronics Engineering basics, digital/analog circuits, and critical analysis. Would you like me to expand with project examples?",
+        "My strengths are: Core EEE subjects (machines, systems), electronics, and logical problem-solving. Would you like me to link these to my portfolio projects?"
+      ]
+    },
+    {
+      "name": "projects",
+      "triggers": ["projects", "work", "portfolio", "show me your projects"],
+      "responses": [
+        "I’ve worked on both academic and personal projects that demonstrate my problem-solving skills. Do you prefer academic or coding projects first?",
+        "My portfolio includes academic, electrical, and coding projects. Which category interests you more?",
+        "I’ve developed projects across EEE and programming domains. Would you like me to share an academic project or a personal one first?",
+        "From university coursework to personal experiments, I’ve built several projects. Do you want me to show you an electrical system project or a digital coding one?",
+        "I’ve applied my skills through projects in multiple areas. Shall I walk you through my academic engineering work or my software side projects?"
+      ]
+    },
+    {
+      "name": "contact",
+      "triggers": ["contact", "email", "connect", "how can I contact you"],
+      "responses": [
+        "You can contact me directly through the form on this site or via email at devicharangeddada@gmail.com. Would you like me to open the form for you?",
+        "I’d be happy to connect! Use the site’s contact form, or email me at devicharangeddada@gmail.com. Should I open the contact section for you now?",
+        "Feel free to reach out through the contact page or at devicharangeddada@gmail.com. Want me to guide you to the contact form?",
+        "To connect with me, just head to the contact form here, or email devicharangeddada@gmail.com. Shall I take you there?",
+        "I’m always open to collaboration! Contact me via the site form or email devicharangeddada@gmail.com. Would you like me to bring up the contact button?"
+      ]
+    },
+    {
+      "name": "social_links",
+      "triggers": ["social", "linkedin", "github", "twitter", "social media"],
+      "responses": [
+        "You can also connect with me here:\n🔹 LinkedIn\n\n🔹 GitHub\n\n🔹 Twitter",
+        "Here are my social links:\n🔗 LinkedIn | 💻 GitHub | 🐦 Twitter",
+        "Would you like to check out my social profiles?\n\nLinkedIn\n\nGitHub\n\nTwitter",
+        "Here’s where you can follow me online:\n👉 LinkedIn\n\n👉 GitHub\n\n👉 Twitter",
+        "You can explore more of my work and updates here:\n✨ LinkedIn\n\n✨ GitHub\n\n✨ Twitter"
+      ]
+    },
+    {
+      "name": "closing",
+      "triggers": ["bye", "exit", "close", "thank you", "thanks", "that’s all"],
+      "responses": [
+        "It was great having this conversation. If you’d like to explore more, just ask — I’m always here to help.",
+        "Thanks for visiting! Feel free to ask me more about my portfolio anytime.",
+        "I appreciate your time. I’ll be here whenever you need more info about my work.",
+        "It was a pleasure assisting you. Have a great day, and do come back if you’d like to know more.",
+        "Glad I could help! Let me know if you’d like to dive deeper into my portfolio."
+      ]
+    },
+    {
+      "name": "faq_cgpa",
+      "triggers": ["cgpa", "grades", "marks", "academic performance"],
+      "responses": [
+        "I’m focused on achieving top results in my program, currently maintaining strong performance with continuous improvement."
+      ]
+    },
+    {
+      "name": "faq_goals",
+      "triggers": ["career goals", "future plans", "ambitions", "what are your goals"],
+      "responses": [
+        "I aim to build a career in Electrical & Electronics Engineering while applying my skills in technology and real-world problem solving."
+      ]
+    },
+    {
+      "name": "faq_achievements",
+      "triggers": ["achievements", "awards", "accomplishments", "what have you achieved"],
+      "responses": [
+        "I’ve completed key academic projects, participated in practical training, and built skills across engineering and coding."
+      ]
+    },
+    {
+      "name": "faq_motivation",
+      "triggers": ["why electrical engineering", "why eee", "motivation", "why did you choose"],
+      "responses": [
+        "I chose EEE because it combines theory and application, allowing me to work on impactful solutions that power the world."
+      ]
+    }
+  ]
+}
