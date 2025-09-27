@@ -251,68 +251,18 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
       return;
     }
 
-    try {
-      // Send to real backend API
-      console.log("[Chatbot] Sending message to backend:", userMessage);
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          messages: [...messages, newUserMessage].map(({ timestamp, ...msg }) => msg)
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      console.log("[Chatbot] Received response:", data);
-
-      // Enhanced response with sources and suggestions
-      let assistantContent = data.reply || "I’m here to talk about my skills, projects, and background. Could you please rephrase your question?";
-      // Add conversation continuation suggestions
-      if (Math.random() > 0.7) {
-        const suggestions = [
-          "\n\n💡 Want to know more? Ask about my skills, projects, or how to contact me!",
-          "\n\n🚀 Next steps? Explore my latest work or connect with me directly!",
-          "\n\n🔍 Explore deeper: Ask about my academic journey or future goals!",
-          "\n\n📈 Curious about growth? Ask how I’m developing new skills!",
-          "\n\n🤝 Ready to collaborate? Let’s discuss how we can work together!"
-        ];
-        assistantContent += suggestions[Math.floor(Math.random() * suggestions.length)];
-      }
-      const assistantMessage: Message = {
+    // If no intent matched, fallback reply
+    if (!intentReply) {
+      const fallbackMessage: Message = {
         role: 'assistant',
-        content: assistantContent,
-        sources: data.sources || [],
+        content: "I’m here to talk about my skills, projects, and background. Could you please rephrase your question?",
         timestamp: new Date()
       };
-      setMessages(prev => [...prev, assistantMessage]);
-
-    } catch (error) {
-      console.error('Chat error:', error);
-      toast({
-        title: "Connection Error",
-        description: "I'm having trouble connecting. Please try again or contact Devicharan directly.",
-        variant: "destructive",
-      });
-      
-      const errorMessage: Message = {
-        role: 'assistant',
-        content: `🔧 **Connection Issue** - I'm temporarily unavailable, but you can reach Devicharan directly:
-
-📧 **Email:** devicharangeddada@gmail.com
-📱 **Phone:** +91 6303468707
-📍 **Location:** Visakhapatnam, India
-
-I'll be back online soon with full portfolio insights!`,
-        timestamp: new Date()
-      };
-      
-      setMessages(prev => [...prev, errorMessage]);
-    } finally {
-      setIsLoading(false);
+      setTimeout(() => {
+        setMessages(prev => [...prev, fallbackMessage]);
+        setIsLoading(false);
+      }, 500 + Math.random() * 500);
+      return;
     }
   };
 
@@ -618,7 +568,7 @@ Each platform offers different insights into my work and interests!`;
               </Button>
             </div>
           </div>
-/* Add animation CSS for glowing and bouncing social buttons */
+
         </div>
       )}
     </>
