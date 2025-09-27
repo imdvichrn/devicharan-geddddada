@@ -1,50 +1,4 @@
-  // Expanded details for smart memory/context
-  const expanded = {
-    aboutMe: [
-      "I’m always learning and growing in my field, taking on new challenges and collaborating with peers to deepen my understanding.",
-      "My academic journey includes hands-on projects, internships, and active participation in tech communities.",
-      "I value both theory and practical experience, striving to bridge the gap between classroom learning and real-world application."
-    ],
-    skills: [
-      "I’ve applied my skills in real projects, such as designing control systems and building digital solutions for academic challenges.",
-      "My programming experience includes automation scripts and simulation tools for electrical engineering problems.",
-      "I regularly use my analytical skills to troubleshoot systems and optimize performance in both coursework and personal projects."
-    ],
-    projects: [
-      "One of my academic projects involved designing a microcontroller-based energy monitoring system.",
-      "I’ve also built a web-based portfolio to showcase my coding and engineering work, integrating real-time chat and interactive features.",
-      "My personal experiments include prototyping IoT devices and collaborating on open-source software for engineering students."
-    ]
-  };
-
-  // Track discussed topics in session
-  // Allow discussedTopics to store booleans and arrays for FAQ indexes
-  const [discussedTopics, setDiscussedTopics] = useState<{ [key: string]: any }>({});
 import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
-  // FAQ variations for each FAQ topic
-  // FAQ variations for each FAQ topic (with 3 professional variations each)
-  const faqReplies = {
-    faq_cgpa: [
-      "I’m focused on achieving top results in my program and continuously improving my performance.",
-      "I maintain strong academic performance and strive for excellence in all subjects.",
-      "My current focus is on mastering my coursework and achieving the best possible results."
-    ],
-    faq_goals: [
-      "I aim to build a career in Electrical & Electronics Engineering while applying my skills to real-world solutions.",
-      "My goal is to contribute to impactful projects in EEE and technology-driven innovations.",
-      "I’m focused on developing expertise in my field and working on projects that solve real problems."
-    ],
-    faq_achievements: [
-      "I’ve completed several academic projects, participated in practical training, and built hands-on skills across EEE and coding domains.",
-      "My achievements include successfully executing complex projects, developing skills in digital and electrical systems, and improving problem-solving abilities.",
-      "I have a track record of academic and practical achievements in both engineering and coding projects."
-    ],
-    faq_motivation: [
-      "I chose Electrical & Electronics Engineering because it combines theory with practical applications, allowing me to work on impactful solutions.",
-      "EEE fascinated me for its blend of problem-solving, technology, and real-world implementation.",
-      "I’m passionate about understanding and building electrical systems, which is why I pursued EEE."
-    ]
-  };
 import { Send, Loader2, Linkedin, Instagram, Facebook } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -60,8 +14,7 @@ interface Message {
   timestamp?: Date;
 }
 
-export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
-  const [isOpen, setIsOpen] = useState(false);
+export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) => {
   // Multi-variation reply sets for Echoless
   const greetings = [
     "Hello! 👋 I’m Echoless, Devi Charan’s personal assistant. I can walk you through my skills, projects, and background. What would you like to explore?",
@@ -113,24 +66,53 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
     "Glad I could help! Let me know if you’d like to dive deeper into my portfolio."
   ];
 
-  // Helper to pick a random reply
-  function pickRandom(arr: string[]) {
-    return arr[Math.floor(Math.random() * arr.length)];
-  }
+  // Expanded details for smart memory/context
+  const expanded = {
+    aboutMe: [
+      "I’m always learning and growing in my field, taking on new challenges and collaborating with peers to deepen my understanding.",
+      "My academic journey includes hands-on projects, internships, and active participation in tech communities.",
+      "I value both theory and practical experience, striving to bridge the gap between classroom learning and real-world application."
+    ],
+    skills: [
+      "I’ve applied my skills in real projects, such as designing control systems and building digital solutions for academic challenges.",
+      "My programming experience includes automation scripts and simulation tools for electrical engineering problems.",
+      "I regularly use my analytical skills to troubleshoot systems and optimize performance in both coursework and personal projects."
+    ],
+    projects: [
+      "One of my academic projects involved designing a microcontroller-based energy monitoring system.",
+      "I’ve also built a web-based portfolio to showcase my coding and engineering work, integrating real-time chat and interactive features.",
+      "My personal experiments include prototyping IoT devices and collaborating on open-source software for engineering students."
+    ]
+  };
 
-  // Initial greeting
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: 'assistant',
-      content: pickRandom(greetings),
-      timestamp: new Date()
-    }
-  ]);
-  const [input, setInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [animateSocial, setAnimateSocial] = useState(false);
-  const sendMessage = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Track discussed topics in session
+  // Allow discussedTopics to store booleans and arrays for FAQ indexes
+  const [discussedTopics, setDiscussedTopics] = useState<{ [key: string]: any }>({});
+
+  // FAQ variations for each FAQ topic (with 3 professional variations each)
+  const faqReplies = {
+    faq_cgpa: [
+      "I’m focused on achieving top results in my program and continuously improving my performance.",
+      "I maintain strong academic performance and strive for excellence in all subjects.",
+      "My current focus is on mastering my coursework and achieving the best possible results."
+    ],
+    faq_goals: [
+      "I aim to build a career in Electrical & Electronics Engineering while applying my skills to real-world solutions.",
+      "My goal is to contribute to impactful projects in EEE and technology-driven innovations.",
+      "I’m focused on developing expertise in my field and working on projects that solve real problems."
+    ],
+    faq_achievements: [
+      "I’ve completed several academic projects, participated in practical training, and built hands-on skills across EEE and coding domains.",
+      "My achievements include successfully executing complex projects, developing skills in digital and electrical systems, and improving problem-solving abilities.",
+      "I have a track record of academic and practical achievements in both engineering and coding projects."
+    ],
+    faq_motivation: [
+      "I chose Electrical & Electronics Engineering because it combines theory with practical applications, allowing me to work on impactful solutions.",
+      "EEE fascinated me for its blend of problem-solving, technology, and real-world implementation.",
+      "I’m passionate about understanding and building electrical systems, which is why I pursued EEE."
+    ]
+  };
+// ...existing code...
     if (!input.trim() || isLoading) return;
 
     const userMessage = input.trim();
