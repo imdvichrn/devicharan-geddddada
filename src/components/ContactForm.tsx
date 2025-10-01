@@ -118,7 +118,7 @@ export function ContactForm() {
   };
 
   return (
-    <Card className="glass-panel border-glass-border">
+    <Card className="glass-panel border-glass-border hover-scale transition-all duration-300">
       <CardHeader>
         <div className="flex items-center justify-between mb-4">
           <WindowChrome />
@@ -204,7 +204,7 @@ export function ContactForm() {
 
           <Button
             type="submit"
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground hover-scale"
             disabled={isSubmitting}
           >
             {isSubmitting ? (

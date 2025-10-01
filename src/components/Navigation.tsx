@@ -53,20 +53,19 @@ export function Navigation() {
           <div className="flex-shrink-0">
             <button
               onClick={() => scrollToSection('home')}
-              className="text-xl font-bold text-foreground hover:text-primary transition-colors"
+              className="text-xl font-bold text-foreground hover:text-primary transition-all duration-200 hover-scale"
             >
               Devicharan
             </button>
           </div>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               {navItems.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover-scale ${
                     activeSection === item.id
                       ? 'text-primary bg-primary/10'
                       : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
@@ -84,7 +83,7 @@ export function Navigation() {
               variant="ghost"
               size="sm"
               onClick={toggleTheme}
-              className="w-9 h-9 p-0"
+              className="w-9 h-9 p-0 hover-scale"
               aria-label="Toggle theme"
             >
               {theme === 'light' ? (

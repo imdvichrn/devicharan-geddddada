@@ -30,7 +30,7 @@ export const QuickActions: React.FC<QuickActionsProps> = ({ onActionClick, disab
             key={index}
             variant="outline"
             size="sm"
-            className="text-xs h-7 px-2 hover:bg-primary hover:text-primary-foreground transition-all duration-200"
+            className="text-xs h-7 px-2 hover:bg-primary hover:text-primary-foreground transition-all duration-200 hover-scale"
             onClick={() => onActionClick(question)}
             disabled={disabled}
           >

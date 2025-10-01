@@ -25,24 +25,51 @@ const responses = {
     "I've worked on various projects including my personal portfolio website, video editing demos for social media, data entry practice projects, and AI-assisted content design work.",
   ],
 
-  contact: [
-    "You can reach me at:\n📧 Email: devicharangeddada@gmail.com\n📞 Phone: +91 6303468707\n📍 Location: Visakhapatnam, India\n\nFeel free to connect anytime!",
-    "Here's how to contact me:\n• Email: devicharangeddada@gmail.com\n• Phone: +91 6303468707\n• Based in Visakhapatnam, India\n\nI'd love to hear from you!",
-  ],
+  contact: {
+    text: [
+      "Here are the ways you can reach me:",
+      "I'd love to hear from you! Here's how you can contact me:",
+    ],
+    buttons: [
+      { label: 'Email Me', icon: 'mail', action: 'email' },
+      { label: 'View Contact', icon: 'link', action: 'contact-page' }
+    ]
+  },
 
-  social: [
-    "Connect with me on:\n🔗 LinkedIn: www.linkedin.com/in/devi-charan-1a8b49302\n📸 Instagram: @imdvichrn\n📘 Facebook: facebook.com/userdead.610",
-    "Find me on social media:\n• LinkedIn: linkedin.com/in/devi-charan-1a8b49302\n• Instagram: instagram.com/imdvichrn\n• Facebook: facebook.com/userdead.610",
-  ],
+  social: {
+    text: [
+      "Let's connect! You can find me on these platforms:",
+      "I'm active on social media! Connect with me:",
+    ],
+    buttons: [
+      { label: 'LinkedIn', icon: 'link', action: 'linkedin' },
+      { label: 'Instagram', icon: 'link', action: 'instagram' },
+      { label: 'Facebook', icon: 'link', action: 'facebook' }
+    ]
+  },
 
-  portfolio: [
-    "You're already on my portfolio website! Feel free to explore around. If you want to see more of my work, check out my projects section or connect with me on social media.",
-  ],
+  portfolio: {
+    text: [
+      "You're already on my portfolio! Want to explore specific sections?",
+      "Welcome to my portfolio! Here's what you can check out:",
+    ],
+    buttons: [
+      { label: 'View Projects', icon: 'link', action: 'projects' },
+      { label: 'Download CV', icon: 'link', action: 'cv' }
+    ]
+  },
 
-  support: [
-    "💙 Thank you for your interest!\n\nYou can support me by:\n• Following me on LinkedIn, Instagram, or Facebook\n• Sharing my portfolio with others\n• Reaching out for collaboration opportunities\n• Providing feedback on my work\n\nEvery bit of support helps me grow!",
-    "I really appreciate your support! 🙏\n\nYou can help by:\n• Connecting on my social media\n• Sharing my work with your network\n• Collaborating on projects\n• Spreading the word about my portfolio\n\nThank you!",
-  ],
+  support: {
+    text: [
+      "💙 Thank you for your interest in supporting me!",
+      "I really appreciate your support! 🙏",
+    ],
+    buttons: [
+      { label: 'Follow on LinkedIn', icon: 'heart', action: 'linkedin' },
+      { label: 'Share Portfolio', icon: 'heart', action: 'share' },
+      { label: 'Get in Touch', icon: 'mail', action: 'contact-page' }
+    ]
+  },
 
   experience: [
     "I'm currently focused on building a strong digital portfolio through self-driven projects. I'm open to internships and entry-level opportunities in:\n• Data Research\n• Content Creation\n• Customer Support\n• AI-assisted workflows",
@@ -80,66 +107,81 @@ async function getResponse(userInput) {
 
   // Greeting
   if (matchKeywords(input, ['hi', 'hello', 'hey', 'greetings', 'hola'])) {
-    return randomChoice(responses.greeting);
+    return { text: randomChoice(responses.greeting) };
   }
 
   // About
   if (matchKeywords(input, ['about', 'who are you', 'introduce yourself', 'tell me about yourself', 'background'])) {
-    return randomChoice(responses.about);
+    return { text: randomChoice(responses.about) };
   }
 
   // Skills
   if (matchKeywords(input, ['skills', 'what can you do', 'expertise', 'abilities', 'technologies'])) {
-    return randomChoice(responses.skills);
+    return { text: randomChoice(responses.skills) };
   }
 
-  // Projects
+  // Projects - with buttons
   if (matchKeywords(input, ['projects', 'work', 'portfolio', 'what have you built', 'showcase'])) {
-    return randomChoice(responses.projects);
+    return {
+      text: randomChoice(responses.projects),
+      buttons: responses.portfolio.buttons
+    };
   }
 
-  // Contact
-  if (matchKeywords(input, ['contact', 'email', 'phone', 'reach', 'get in touch', 'location'])) {
-    return randomChoice(responses.contact);
-  }
-
-  // Social Media
-  if (matchKeywords(input, ['social', 'linkedin', 'instagram', 'facebook', 'follow', 'connect'])) {
-    return randomChoice(responses.social);
-  }
-
-  // Portfolio Link
+  // Portfolio - with buttons
   if (matchKeywords(input, ['website', 'portfolio link', 'site', 'webpage'])) {
-    return randomChoice(responses.portfolio);
+    return {
+      text: randomChoice(responses.portfolio.text),
+      buttons: responses.portfolio.buttons
+    };
   }
 
-  // Support
+  // Contact - with buttons
+  if (matchKeywords(input, ['contact', 'email', 'phone', 'reach', 'get in touch', 'location'])) {
+    return {
+      text: randomChoice(responses.contact.text),
+      buttons: responses.contact.buttons
+    };
+  }
+
+  // Social Media - with buttons
+  if (matchKeywords(input, ['social', 'linkedin', 'instagram', 'facebook', 'follow', 'connect'])) {
+    return {
+      text: randomChoice(responses.social.text),
+      buttons: responses.social.buttons
+    };
+  }
+
+  // Support - with buttons
   if (matchKeywords(input, ['support', 'help you', 'contribute', 'share', 'promote'])) {
-    return randomChoice(responses.support);
+    return {
+      text: randomChoice(responses.support.text),
+      buttons: responses.support.buttons
+    };
   }
 
   // Experience
   if (matchKeywords(input, ['experience', 'work history', 'jobs', 'internship'])) {
-    return randomChoice(responses.experience);
+    return { text: randomChoice(responses.experience) };
   }
 
   // Education
   if (matchKeywords(input, ['education', 'study', 'college', 'university', 'degree', 'diploma'])) {
-    return randomChoice(responses.education);
+    return { text: randomChoice(responses.education) };
   }
 
   // Achievements
   if (matchKeywords(input, ['achievement', 'accomplishment', 'certification', 'awards'])) {
-    return randomChoice(responses.achievements);
+    return { text: randomChoice(responses.achievements) };
   }
 
   // Goodbye
   if (matchKeywords(input, ['bye', 'goodbye', 'see you', 'later', 'thanks', 'thank you'])) {
-    return randomChoice(responses.goodbye);
+    return { text: randomChoice(responses.goodbye) };
   }
 
   // Fallback
-  return randomChoice(responses.fallback);
+  return { text: randomChoice(responses.fallback) };
 }
 
 export default getResponse;

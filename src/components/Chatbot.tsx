@@ -5,14 +5,22 @@ import { Input } from '@/components/ui/input';
 import { WindowChrome } from './WindowChrome';
 import { SiriOrb } from './SiriOrb';
 import { QuickActions } from './QuickActions';
+import { ActionButtons } from './ActionButtons';
 import { useToast } from '@/hooks/use-toast';
 import getResponse from './echoless.js';
+
+interface ActionButton {
+  label: string;
+  icon: 'mail' | 'link' | 'heart';
+  action: string;
+}
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
   sources?: string[];
   timestamp?: Date;
+  buttons?: ActionButton[];
 }
 
 export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
@@ -73,8 +81,9 @@ What would you like to know?`,
       
       const assistantMessage: Message = {
         role: 'assistant',
-        content: reply,
-        timestamp: new Date()
+        content: reply.text,
+        timestamp: new Date(),
+        buttons: reply.buttons
       };
 
       // Simulate a brief thinking delay
@@ -98,6 +107,52 @@ What would you like to know?`,
       
       setMessages(prev => [...prev, errorMessage]);
       setIsLoading(false);
+    }
+  };
+
+  const handleButtonAction = (action: string) => {
+    switch (action) {
+      case 'email':
+        window.location.href = 'mailto:devicharangeddada@gmail.com';
+        break;
+      case 'linkedin':
+        window.open('https://www.linkedin.com/in/devi-charan-1a8b49302', '_blank');
+        break;
+      case 'instagram':
+        window.open('https://www.instagram.com/imdvichrn', '_blank');
+        break;
+      case 'facebook':
+        window.open('https://www.facebook.com/userdead.610', '_blank');
+        break;
+      case 'projects':
+        document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+        setIsOpen(false);
+        break;
+      case 'cv':
+        const link = document.createElement('a');
+        link.href = '/cv.pdf';
+        link.download = 'Geddada_Devicharan_CV.pdf';
+        link.click();
+        break;
+      case 'contact-page':
+        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+        setIsOpen(false);
+        break;
+      case 'share':
+        if (navigator.share) {
+          navigator.share({
+            title: 'Devicharan Portfolio',
+            text: 'Check out Devicharan\'s portfolio!',
+            url: window.location.href
+          }).catch(console.error);
+        } else {
+          navigator.clipboard.writeText(window.location.href);
+          toast({
+            title: "Link Copied!",
+            description: "Portfolio link copied to clipboard",
+          });
+        }
+        break;
     }
   };
 
@@ -206,6 +261,15 @@ What would you like to know?`,
                 >
                   <div className="whitespace-pre-wrap">{message.content}</div>
                   
+                  {/* Action Buttons */}
+                  {message.buttons && message.buttons.length > 0 && (
+                    <ActionButtons 
+                      buttons={message.buttons.map(btn => ({
+                        ...btn,
+                        action: () => handleButtonAction(btn.action)
+                      }))}
+                    />
+                  )}
 
                   {/* Timestamp */}
                   {message.timestamp && (

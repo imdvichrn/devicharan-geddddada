@@ -6,7 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
 import { 
   Mail, 
   Phone, 
@@ -102,7 +103,25 @@ const highlights = [
 
 export function Portfolio() {
   const [isDownloading, setIsDownloading] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
   const chatbotRef = useRef<{ toggleChat: () => void }>(null);
+
+  // Intersection observers for scroll animations
+  const [aboutRef, aboutInView] = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [skillsRef, skillsInView] = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [projectsRef, projectsInView] = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [educationRef, educationInView] = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [highlightsRef, highlightsInView] = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [contactRef, contactInView] = useInView({ triggerOnce: true, threshold: 0.1 });
+
+  // Parallax effect for hero
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleDownloadCV = async () => {
     try {
@@ -171,8 +190,11 @@ export function Portfolio() {
       {/* Hero Section */}
       <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${heroImage})` }}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-100"
+          style={{ 
+            backgroundImage: `url(${heroImage})`,
+            transform: `translateY(${scrollY * 0.5}px)`
+          }}
         >
           <div className="absolute inset-0 bg-background/20 backdrop-blur-sm"></div>
         </div>
@@ -219,7 +241,7 @@ export function Portfolio() {
                   <Button 
                     onClick={handleDownloadCV}
                     disabled={isDownloading}
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-50"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-50 hover-scale"
                   >
                     {isDownloading ? (
                       <>
@@ -236,7 +258,7 @@ export function Portfolio() {
                   <Button 
                     variant="outline" 
                     onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="border-primary/20 hover:bg-primary/10"
+                    className="border-primary/20 hover:bg-primary/10 hover-scale"
                   >
                     <Mail className="mr-2 h-4 w-4" />
                     Contact Me
@@ -250,8 +272,13 @@ export function Portfolio() {
 
       {/* About Section */}
       <section id="about" className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <Card className="glass-panel border-glass-border">
+        <div 
+          ref={aboutRef}
+          className={`max-w-6xl mx-auto transition-all duration-700 ${
+            aboutInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
+          <Card className="glass-panel border-glass-border hover-scale">
             <CardHeader>
               <WindowChrome className="mb-4" />
               <CardTitle className="text-3xl font-bold flex items-center gap-3">
@@ -278,8 +305,13 @@ export function Portfolio() {
 
       {/* Skills Section */}
       <section id="skills" className="py-20 px-4 bg-muted/30">
-        <div className="max-w-6xl mx-auto">
-          <Card className="glass-panel border-glass-border">
+        <div 
+          ref={skillsRef}
+          className={`max-w-6xl mx-auto transition-all duration-700 delay-100 ${
+            skillsInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
+          <Card className="glass-panel border-glass-border hover-scale">
             <CardHeader>
               <WindowChrome className="mb-4" />
               <CardTitle className="text-3xl font-bold flex items-center gap-3">
@@ -296,7 +328,7 @@ export function Portfolio() {
                       <Badge 
                         key={skill} 
                         variant="secondary" 
-                        className="px-3 py-1 bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors"
+                        className="px-3 py-1 bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-all duration-200 hover-scale"
                       >
                         {skill}
                       </Badge>
@@ -311,8 +343,13 @@ export function Portfolio() {
 
       {/* Projects Section */}
       <section id="projects" className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <Card className="glass-panel border-glass-border mb-8">
+        <div 
+          ref={projectsRef}
+          className={`max-w-6xl mx-auto transition-all duration-700 delay-200 ${
+            projectsInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
+          <Card className="glass-panel border-glass-border mb-8 hover-scale">
             <CardHeader>
               <WindowChrome className="mb-4" />
               <CardTitle className="text-3xl font-bold flex items-center gap-3">
@@ -324,7 +361,11 @@ export function Portfolio() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project, index) => (
-              <Card key={index} className="glass-panel border-glass-border hover:scale-105 transition-transform duration-200">
+              <Card 
+                key={index} 
+                className="glass-panel border-glass-border hover-scale transition-all duration-300"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-lg">{project.title}</CardTitle>
@@ -347,7 +388,7 @@ export function Portfolio() {
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="w-full"
+                    className="w-full hover-scale"
                     onClick={() => window.open(project.link, '_blank')}
                     disabled={project.link === '#'}
                   >
@@ -363,8 +404,13 @@ export function Portfolio() {
 
       {/* Education Section */}
       <section id="education" className="py-20 px-4 bg-muted/30">
-        <div className="max-w-6xl mx-auto">
-          <Card className="glass-panel border-glass-border">
+        <div 
+          ref={educationRef}
+          className={`max-w-6xl mx-auto transition-all duration-700 delay-300 ${
+            educationInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
+          <Card className="glass-panel border-glass-border hover-scale">
             <CardHeader>
               <WindowChrome className="mb-4" />
               <CardTitle className="text-3xl font-bold flex items-center gap-3">
@@ -398,8 +444,13 @@ export function Portfolio() {
 
       {/* Highlights Section */}
       <section id="highlights" className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <Card className="glass-panel border-glass-border">
+        <div 
+          ref={highlightsRef}
+          className={`max-w-6xl mx-auto transition-all duration-700 delay-400 ${
+            highlightsInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
+          <Card className="glass-panel border-glass-border hover-scale">
             <CardHeader>
               <WindowChrome className="mb-4" />
               <CardTitle className="text-3xl font-bold flex items-center gap-3">
@@ -423,7 +474,12 @@ export function Portfolio() {
 
       {/* Contact Section */}
       <section id="contact" className="py-20 px-4 bg-muted/30">
-        <div className="max-w-4xl mx-auto">
+        <div 
+          ref={contactRef}
+          className={`max-w-4xl mx-auto transition-all duration-700 delay-500 ${
+            contactInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <ContactForm />
         </div>
       </section>
@@ -437,7 +493,7 @@ export function Portfolio() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-colors"
+                className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale"
                 onClick={() => window.open('https://www.linkedin.com/in/devi-charan-1a8b49302', '_blank')}
                 aria-label="LinkedIn Profile"
               >
@@ -447,7 +503,7 @@ export function Portfolio() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-colors"
+                className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale"
                 onClick={() => window.open('https://www.instagram.com/imdvichrn', '_blank')}
                 aria-label="Instagram Profile"
               >
@@ -457,7 +513,7 @@ export function Portfolio() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-colors"
+                className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale"
                 onClick={() => window.open('https://www.facebook.com/userdead.610', '_blank')}
                 aria-label="Facebook Profile"
               >
