@@ -6,6 +6,7 @@ import { WindowChrome } from './WindowChrome';
 import { SiriOrb } from './SiriOrb';
 import { QuickActions } from './QuickActions';
 import { useToast } from '@/hooks/use-toast';
+import getResponse from './echoless.js';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -19,22 +20,17 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: `👋 Hello! I'm Devicharan's AI assistant with complete access to his portfolio, projects, and experience.
+      content: `👋 Hi! I'm Devicharan from Visakhapatnam, India.
 
-🎯 **What I can help with:**
-• Projects & technical work
-• Skills & expertise 
-• Education & background
-• Contact & collaboration
-• Real-time portfolio insights
+I'm pursuing B.Tech in Electrical & Electronics Engineering and I'm passionate about AI-assisted content creation, video editing, and digital tools.
 
-💬 **Pro tips:**
-• Ask specific questions for detailed answers
-• Try: "Tell me about your latest projects"
-• Try: "What technologies do you work with?"
-• Try: "How can I contact you?"
+Ask me about:
+• My skills and projects
+• How to contact me
+• My social media links
+• Ways to support my work
 
-Ready to explore? What would you like to know first?`,
+What would you like to know?`,
       timestamp: new Date()
     }
   ]);
@@ -71,83 +67,36 @@ Ready to explore? What would you like to know first?`,
     setMessages(prev => [...prev, newUserMessage]);
     setIsLoading(true);
 
-    // Check for social media queries
-    const socialMediaResponse = checkSocialMediaQuery(userMessage);
-    if (socialMediaResponse) {
-      const assistantMessage: Message = {
-        role: 'assistant',
-        content: socialMediaResponse,
-        timestamp: new Date()
-      };
-      setMessages(prev => [...prev, assistantMessage]);
-      setIsLoading(false);
-      return;
-    }
-
     try {
-      // Send to real backend API
-      console.log("[Chatbot] Sending message to backend:", userMessage);
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          messages: [...messages, newUserMessage].map(({ timestamp, ...msg }) => msg)
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      console.log("[Chatbot] Received response:", data);
-
-      // Enhanced response with sources and suggestions
-      let assistantContent = data.reply || "Sorry, I couldn't process that request.";
+      // Use local chatbot logic (echoless)
+      const reply = await getResponse(userMessage);
       
-      // Add conversation continuation suggestions
-      if (Math.random() > 0.7) { // 30% chance to add suggestions
-        const suggestions = [
-          "\n\n💡 **Want to know more?** Ask about specific projects or technologies!",
-          "\n\n🚀 **Next steps?** Check out my latest work or get in touch!",
-          "\n\n🔍 **Explore deeper:** Ask about my learning journey or future goals!",
-          "\n\n📈 **Curious about growth?** Ask how I'm developing new skills!",
-          "\n\n🤝 **Ready to collaborate?** Let's discuss how we can work together!"
-        ];
-        assistantContent += suggestions[Math.floor(Math.random() * suggestions.length)];
-      }
-
       const assistantMessage: Message = {
         role: 'assistant',
-        content: assistantContent,
-        sources: data.sources || [],
+        content: reply,
         timestamp: new Date()
       };
 
-      setMessages(prev => [...prev, assistantMessage]);
+      // Simulate a brief thinking delay
+      setTimeout(() => {
+        setMessages(prev => [...prev, assistantMessage]);
+        setIsLoading(false);
+      }, 500);
 
     } catch (error) {
       console.error('Chat error:', error);
-      toast({
-        title: "Connection Error",
-        description: "I'm having trouble connecting. Please try again or contact Devicharan directly.",
-        variant: "destructive",
-      });
       
       const errorMessage: Message = {
         role: 'assistant',
-        content: `🔧 **Connection Issue** - I'm temporarily unavailable, but you can reach Devicharan directly:
+        content: `I'm having a bit of trouble right now. But you can still reach me at:
 
-📧 **Email:** devicharangeddada@gmail.com
-📱 **Phone:** +91 6303468707
-📍 **Location:** Visakhapatnam, India
-
-I'll be back online soon with full portfolio insights!`,
+📧 Email: devicharangeddada@gmail.com
+📱 Phone: +91 6303468707
+📍 Location: Visakhapatnam, India`,
         timestamp: new Date()
       };
       
       setMessages(prev => [...prev, errorMessage]);
-    } finally {
       setIsLoading(false);
     }
   };
@@ -161,83 +110,6 @@ I'll be back online soon with full portfolio insights!`,
     sendMessage(event);
   };
 
-  const checkSocialMediaQuery = (message: string): string | null => {
-    const lowerMessage = message.toLowerCase();
-    
-    if (lowerMessage.includes('linkedin')) {
-      return `🔗 **LinkedIn Profile**
-
-📋 Connect with me on LinkedIn for professional updates and networking:
-👉 [www.linkedin.com/in/devi-charan-1a8b49302](https://www.linkedin.com/in/devi-charan-1a8b49302)
-
-Perfect for:
-• Professional discussions
-• Career opportunities  
-• Technical collaborations
-• Industry insights`;
-    }
-    
-    if (lowerMessage.includes('instagram')) {
-      return `📸 **Instagram Profile**
-
-🎨 Follow me on Instagram for behind-the-scenes content and personal updates:
-👉 [@imdvichrn](https://www.instagram.com/imdvichrn)
-
-You'll find:
-• Project highlights
-• Daily tech insights
-• Personal moments
-• Creative content`;
-    }
-    
-    if (lowerMessage.includes('facebook')) {
-      return `📘 **Facebook Profile**
-
-👥 Connect with me on Facebook for community interactions:
-👉 [Facebook Profile](https://www.facebook.com/userdead.610)
-
-Great for:
-• Community discussions
-• Event updates
-• Casual conversations
-• Networking`;
-    }
-    
-    if (lowerMessage.includes('social') || lowerMessage.includes('social media')) {
-      return `🌐 **All Social Media Links**
-
-Connect with me across platforms:
-
-🔗 **LinkedIn:** [Professional Profile](https://www.linkedin.com/in/devi-charan-1a8b49302)
-📸 **Instagram:** [@imdvichrn](https://www.instagram.com/imdvichrn)  
-📘 **Facebook:** [Personal Profile](https://www.facebook.com/userdead.610)
-
-Each platform offers different insights into my work and interests!`;
-    }
-    
-    return null;
-  };
-
-  const handleConversationEnd = () => {
-    const endMessage: Message = {
-      role: 'assistant',
-      content: `👋 **Thanks for chatting!** 
-
-🎯 **What we covered:** Portfolio insights, projects, and opportunities to connect
-
-📬 **Next steps:**
-• Email: devicharangeddada@gmail.com  
-• Phone: +91 6303468707
-• Based in: Visakhapatnam, India
-
-💡 **Come back anytime** for updated portfolio information and project details!
-
-*Hope to hear from you soon!* 🚀`,
-      timestamp: new Date()
-    };
-    
-    setMessages(prev => [...prev, endMessage]);
-  };
 
   return (
     <>
@@ -309,10 +181,10 @@ Each platform offers different insights into my work and interests!`;
                 }}
               />
               <div className="flex-1 text-center">
-                <h3 className="font-medium text-foreground">DevAssist AI</h3>
+                <h3 className="font-medium text-foreground">Echoless</h3>
                 <p className="text-sm text-muted-foreground flex items-center justify-center gap-1">
                   <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                  Live Portfolio Data
+                  Personal Assistant
                 </p>
               </div>
             </div>
@@ -334,19 +206,6 @@ Each platform offers different insights into my work and interests!`;
                 >
                   <div className="whitespace-pre-wrap">{message.content}</div>
                   
-                  {/* Sources */}
-                  {message.sources && message.sources.length > 0 && (
-                    <div className="mt-2 pt-2 border-t border-border/30">
-                      <div className="text-xs font-medium mb-1 text-muted-foreground/70">Sources:</div>
-                      <div className="flex flex-wrap gap-1">
-                        {message.sources.map((source, idx) => (
-                          <span key={idx} className="text-xs bg-background/50 text-foreground/60 px-2 py-1 rounded border border-border/30">
-                            📄 {source}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
 
                   {/* Timestamp */}
                   {message.timestamp && (
@@ -402,24 +261,6 @@ Each platform offers different insights into my work and interests!`;
                 <Send size={16} />
               </Button>
             </div>
-            
-            {/* Conversation controls */}
-            {messages.length > 6 && (
-              <div className="flex justify-between items-center mt-2">
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleConversationEnd}
-                  className="text-xs text-muted-foreground"
-                >
-                  End conversation
-                </Button>
-                <div className="text-xs text-muted-foreground">
-                  {messages.length} messages • Live data
-                </div>
-              </div>
-            )}
           </form>
 
           {/* Social Media Footer */}
