@@ -119,14 +119,14 @@ export function ContactForm() {
 
   return (
     <Card className="glass-panel border-glass-border hover-scale transition-all duration-300">
-      <CardHeader>
-        <div className="flex items-center justify-between mb-4">
+      <CardHeader className="px-4 md:px-6">
+        <div className="flex items-center justify-between mb-2 md:mb-4">
           <WindowChrome />
         </div>
-        <CardTitle className="text-2xl font-bold text-center">Get In Touch</CardTitle>
+        <CardTitle className="text-xl md:text-2xl font-bold text-center">Get In Touch</CardTitle>
       </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
+      <CardContent className="px-4 md:px-6">
+        <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
           {/* Honeypot field - hidden from users */}
           <input
             type="text"

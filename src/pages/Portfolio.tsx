@@ -204,7 +204,7 @@ export function Portfolio() {
       <Navigation />
       
       {/* Hero Section */}
-      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section id="home" className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden">
         <div 
           className="parallax-bg absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ 
@@ -215,69 +215,76 @@ export function Portfolio() {
           <div className="absolute inset-0 bg-background/20 backdrop-blur-sm"></div>
         </div>
         
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
+        <div className="relative z-10 text-center max-w-4xl mx-auto px-3 md:px-4">
           <Card className="glass-elevated border-glass-border animate-scale-in">
-            <CardHeader className="pb-6">
-              <WindowChrome className="mb-6" />
-              <div className="flex flex-col items-center space-y-6">
+            <CardHeader className="pb-4 md:pb-6 px-3 md:px-6">
+              <WindowChrome className="mb-3 md:mb-6" />
+              <div className="flex flex-col items-center space-y-3 md:space-y-6">
                 <div className="relative">
                   <img
                     src={profileImage}
                     alt="Geddada Devicharan"
-                    className="w-32 h-32 rounded-full object-cover border-4 border-primary/20 shadow-lg"
+                    className="w-20 h-20 md:w-32 md:h-32 rounded-full object-cover border-4 border-primary/20 shadow-lg"
                   />
                   <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 to-accent/20"></div>
                 </div>
                 
-                <div className="space-y-4">
-                  <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                <div className="space-y-2 md:space-y-4">
+                  <h1 className="text-2xl md:text-4xl lg:text-6xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                     Geddada Devicharan
                   </h1>
-                  <p className="text-xl md:text-2xl text-muted-foreground">
+                  <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground px-2">
                     Aspiring Digital Professional | Creative Learner | Problem Solver
                   </p>
                   
-                  <div className="flex flex-wrap justify-center items-center gap-4 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <MapPin size={16} />
-                      <span>Visakhapatnam, India</span>
+                  <div className="flex flex-wrap justify-center items-center gap-2 md:gap-4 text-xs md:text-sm text-muted-foreground">
+                    <div className="flex items-center gap-1 md:gap-2">
+                      <MapPin size={14} className="md:w-4 md:h-4" />
+                      <span className="hidden sm:inline">Visakhapatnam, India</span>
+                      <span className="sm:hidden">Vizag, India</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Phone size={16} />
-                      <span>+91 6303468707</span>
+                    <div className="flex items-center gap-1 md:gap-2">
+                      <Phone size={14} className="md:w-4 md:h-4" />
+                      <span className="hidden sm:inline">+91 6303468707</span>
+                      <span className="sm:hidden">+91 630...</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Mail size={16} />
-                      <span>devicharangeddada@gmail.com</span>
+                    <div className="flex items-center gap-1 md:gap-2 max-w-full">
+                      <Mail size={14} className="md:w-4 md:h-4 flex-shrink-0" />
+                      <span className="hidden md:inline truncate">devicharangeddada@gmail.com</span>
+                      <span className="md:hidden truncate text-xs">devicharan...</span>
                     </div>
                   </div>
                 </div>
                 
-                <div className="flex flex-wrap justify-center gap-4">
+                <div className="flex flex-wrap justify-center gap-2 md:gap-4">
                   <Button 
                     onClick={handleDownloadCV}
                     disabled={isDownloading}
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-50 hover-scale"
+                    size="sm"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-50 hover-scale text-xs md:text-sm"
                   >
                     {isDownloading ? (
                       <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Downloading...
+                        <Loader2 className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4 animate-spin" />
+                        <span className="hidden sm:inline">Downloading...</span>
+                        <span className="sm:hidden">Loading...</span>
                       </>
                     ) : (
                       <>
-                        <Download className="mr-2 h-4 w-4" />
-                        Download CV
+                        <Download className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" />
+                        <span className="hidden sm:inline">Download CV</span>
+                        <span className="sm:hidden">CV</span>
                       </>
                     )}
                   </Button>
                   <Button 
-                    variant="outline" 
+                    variant="outline"
+                    size="sm" 
                     onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="border-primary/20 hover:bg-primary/10 hover-scale"
+                    className="border-primary/20 hover:bg-primary/10 hover-scale text-xs md:text-sm"
                   >
-                    <Mail className="mr-2 h-4 w-4" />
-                    Contact Me
+                    <Mail className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" />
+                    Contact
                   </Button>
                 </div>
               </div>
@@ -287,7 +294,7 @@ export function Portfolio() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 px-4">
+      <section id="about" className="py-10 md:py-20 px-3 md:px-4">
         <div 
           ref={aboutRef}
           className={`max-w-6xl mx-auto transition-all duration-700 ${
@@ -295,21 +302,21 @@ export function Portfolio() {
           }`}
         >
           <Card className="glass-panel border-glass-border hover-scale">
-            <CardHeader>
-              <WindowChrome className="mb-4" />
-              <CardTitle className="text-3xl font-bold flex items-center gap-3">
-                <User className="text-primary" />
+            <CardHeader className="px-4 md:px-6">
+              <WindowChrome className="mb-2 md:mb-4" />
+              <CardTitle className="text-xl md:text-3xl font-bold flex items-center gap-2 md:gap-3">
+                <User className="text-primary w-5 h-5 md:w-6 md:h-6" />
                 About Me
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <p className="text-lg text-muted-foreground leading-relaxed">
+            <CardContent className="space-y-3 md:space-y-6 px-4 md:px-6">
+              <p className="text-sm md:text-lg text-muted-foreground leading-relaxed">
                 Motivated and growth-driven individual with a Diploma in Electrical & Electronics Engineering 
                 and currently pursuing a B.Tech in EEE. Skilled in video editing, graphic design, website building, 
                 and digital content planning. Self-taught in AI-assisted workflows and prompt engineering, with 
                 strong adaptability, collaboration, and problem-solving skills.
               </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-sm md:text-lg text-muted-foreground leading-relaxed">
                 I'm passionate about leveraging technology to create meaningful digital experiences. My journey 
                 combines technical engineering knowledge with creative digital skills, making me versatile in 
                 both analytical and creative problem-solving approaches.
@@ -320,7 +327,7 @@ export function Portfolio() {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="py-20 px-4 bg-muted/30">
+      <section id="skills" className="py-10 md:py-20 px-3 md:px-4 bg-muted/30">
         <div 
           ref={skillsRef}
           className={`max-w-6xl mx-auto transition-all duration-700 delay-100 ${
@@ -328,17 +335,17 @@ export function Portfolio() {
           }`}
         >
           <Card className="glass-panel border-glass-border hover-scale">
-            <CardHeader>
-              <WindowChrome className="mb-4" />
-              <CardTitle className="text-3xl font-bold flex items-center gap-3">
-                <Code className="text-primary" />
+            <CardHeader className="px-4 md:px-6">
+              <WindowChrome className="mb-2 md:mb-4" />
+              <CardTitle className="text-xl md:text-3xl font-bold flex items-center gap-2 md:gap-3">
+                <Code className="text-primary w-5 h-5 md:w-6 md:h-6" />
                 Skills & Expertise
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-8">
+            <CardContent className="space-y-4 md:space-y-8 px-4 md:px-6">
               {Object.entries(skills).map(([category, skillList]) => (
-                <div key={category} className="space-y-4">
-                  <h3 className="text-xl font-semibold text-foreground">{category}</h3>
+                <div key={category} className="space-y-2 md:space-y-4">
+                  <h3 className="text-base md:text-xl font-semibold text-foreground">{category}</h3>
                   <div className="flex flex-wrap gap-2">
                     {skillList.map((skill) => (
                       <Badge 
@@ -358,24 +365,24 @@ export function Portfolio() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 px-4">
+      <section id="projects" className="py-10 md:py-20 px-3 md:px-4">
         <div 
           ref={projectsRef}
           className={`max-w-6xl mx-auto transition-all duration-700 delay-200 ${
             projectsInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
         >
-          <Card className="glass-panel border-glass-border mb-8 hover-scale">
-            <CardHeader>
-              <WindowChrome className="mb-4" />
-              <CardTitle className="text-3xl font-bold flex items-center gap-3">
-                <Briefcase className="text-primary" />
+          <Card className="glass-panel border-glass-border mb-4 md:mb-8 hover-scale">
+            <CardHeader className="px-4 md:px-6">
+              <WindowChrome className="mb-2 md:mb-4" />
+              <CardTitle className="text-xl md:text-3xl font-bold flex items-center gap-2 md:gap-3">
+                <Briefcase className="text-primary w-5 h-5 md:w-6 md:h-6" />
                 Projects & Work
               </CardTitle>
             </CardHeader>
           </Card>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
             {projects.map((project, index) => (
               <Card 
                 key={index} 
@@ -419,7 +426,7 @@ export function Portfolio() {
       </section>
 
       {/* Education Section */}
-      <section id="education" className="py-20 px-4 bg-muted/30">
+      <section id="education" className="py-10 md:py-20 px-3 md:px-4 bg-muted/30">
         <div 
           ref={educationRef}
           className={`max-w-6xl mx-auto transition-all duration-700 delay-300 ${
@@ -427,18 +434,18 @@ export function Portfolio() {
           }`}
         >
           <Card className="glass-panel border-glass-border hover-scale">
-            <CardHeader>
-              <WindowChrome className="mb-4" />
-              <CardTitle className="text-3xl font-bold flex items-center gap-3">
-                <GraduationCap className="text-primary" />
+            <CardHeader className="px-4 md:px-6">
+              <WindowChrome className="mb-2 md:mb-4" />
+              <CardTitle className="text-xl md:text-3xl font-bold flex items-center gap-2 md:gap-3">
+                <GraduationCap className="text-primary w-5 h-5 md:w-6 md:h-6" />
                 Education
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-4 md:space-y-6 px-4 md:px-6">
               {education.map((edu, index) => (
-                <div key={index} className="border-l-4 border-primary/30 pl-6 pb-6 last:pb-0">
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className="text-xl font-semibold text-foreground">{edu.degree}</h3>
+                <div key={index} className="border-l-4 border-primary/30 pl-3 md:pl-6 pb-4 md:pb-6 last:pb-0">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-2 gap-2">
+                    <h3 className="text-base md:text-xl font-semibold text-foreground">{edu.degree}</h3>
                     <Badge 
                       variant={edu.status === 'In Progress' ? 'default' : 'secondary'}
                       className="ml-2"
@@ -446,7 +453,7 @@ export function Portfolio() {
                       {edu.status}
                     </Badge>
                   </div>
-                  <p className="text-muted-foreground font-medium">{edu.institution}</p>
+                  <p className="text-sm md:text-base text-muted-foreground font-medium">{edu.institution}</p>
                   <div className="flex items-center gap-2 mt-2 text-sm text-muted-foreground">
                     <Calendar size={14} />
                     <span>{edu.period}</span>
@@ -459,7 +466,7 @@ export function Portfolio() {
       </section>
 
       {/* Highlights Section */}
-      <section id="highlights" className="py-20 px-4">
+      <section id="highlights" className="py-10 md:py-20 px-3 md:px-4">
         <div 
           ref={highlightsRef}
           className={`max-w-6xl mx-auto transition-all duration-700 delay-400 ${
@@ -467,19 +474,19 @@ export function Portfolio() {
           }`}
         >
           <Card className="glass-panel border-glass-border hover-scale">
-            <CardHeader>
-              <WindowChrome className="mb-4" />
-              <CardTitle className="text-3xl font-bold flex items-center gap-3">
-                <Star className="text-primary" />
+            <CardHeader className="px-4 md:px-6">
+              <WindowChrome className="mb-2 md:mb-4" />
+              <CardTitle className="text-xl md:text-3xl font-bold flex items-center gap-2 md:gap-3">
+                <Star className="text-primary w-5 h-5 md:w-6 md:h-6" />
                 Key Highlights
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <CardContent className="px-4 md:px-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                 {highlights.map((highlight, index) => (
-                  <div key={index} className="flex items-start gap-3 p-4 rounded-lg bg-primary/5 border border-primary/10">
-                    <Star className="text-primary mt-0.5 flex-shrink-0" size={16} />
-                    <span className="text-muted-foreground">{highlight}</span>
+                  <div key={index} className="flex items-start gap-2 md:gap-3 p-3 md:p-4 rounded-lg bg-primary/5 border border-primary/10">
+                    <Star className="text-primary mt-0.5 flex-shrink-0" size={14} />
+                    <span className="text-sm md:text-base text-muted-foreground">{highlight}</span>
                   </div>
                 ))}
               </div>
@@ -489,7 +496,7 @@ export function Portfolio() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-4 bg-muted/30">
+      <section id="contact" className="py-10 md:py-20 px-3 md:px-4 bg-muted/30">
         <div 
           ref={contactRef}
           className={`max-w-4xl mx-auto transition-all duration-700 delay-500 ${

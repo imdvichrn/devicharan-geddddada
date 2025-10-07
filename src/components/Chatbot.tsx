@@ -171,7 +171,7 @@ What would you like to know?`,
       {/* Chatbot Toggle Button */}
       <Button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 w-14 h-14 rounded-full shadow-lg transition-all duration-200 hover:scale-110 z-50 overflow-hidden ${
+        className={`fixed bottom-4 right-4 md:bottom-6 md:right-6 w-12 h-12 md:w-14 md:h-14 rounded-full shadow-lg transition-all duration-200 hover:scale-110 z-50 overflow-hidden ${
           isOpen ? 'animate-scale-out' : 'animate-scale-in'
         }`}
         aria-label="Toggle chatbot"
@@ -203,11 +203,11 @@ What would you like to know?`,
 
       {/* Chatbot Panel */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 w-96 h-[500px] glass-elevated rounded-2xl shadow-2xl z-40 animate-slide-up overflow-hidden">
+        <div className="fixed bottom-16 right-2 left-2 md:bottom-24 md:right-6 md:left-auto md:w-96 h-[500px] md:h-[500px] glass-elevated rounded-2xl shadow-2xl z-40 animate-slide-up overflow-hidden">
           {/* Header */}
-          <div className="p-4 border-b border-glass-border">
+          <div className="p-3 md:p-4 border-b border-glass-border">
             <div className="flex items-center justify-between">
-              <WindowChrome 
+              <WindowChrome
                 onClose={() => setIsOpen(false)}
                 onMinimize={() => {
                   // Minimize animation
@@ -236,9 +236,9 @@ What would you like to know?`,
                 }}
               />
               <div className="flex-1 text-center">
-                <h3 className="font-medium text-foreground">Echoless</h3>
-                <p className="text-sm text-muted-foreground flex items-center justify-center gap-1">
-                  <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <h3 className="font-medium text-sm md:text-base text-foreground">Echoless</h3>
+                <p className="text-xs md:text-sm text-muted-foreground flex items-center justify-center gap-1">
+                  <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-500 rounded-full animate-pulse"></span>
                   Personal Assistant
                 </p>
               </div>
@@ -246,17 +246,17 @@ What would you like to know?`,
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 h-[340px]">
+          <div className="flex-1 overflow-y-auto p-3 md:p-4 space-y-3 md:space-y-4 h-[340px]">
             {messages.map((message, index) => (
               <div
                 key={index}
                 className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} group`}
               >
                 <div
-                  className={`max-w-[85%] p-3 rounded-2xl text-sm transition-all duration-200 group-hover:shadow-md ${
+                  className={`max-w-[90%] md:max-w-[85%] p-2.5 md:p-3 rounded-2xl text-xs md:text-sm transition-all duration-200 group-hover:shadow-md ${
                     message.role === 'user'
-                      ? 'bg-primary text-primary-foreground ml-4'
-                      : 'bg-muted text-muted-foreground mr-4 border border-border/50'
+                      ? 'bg-primary text-primary-foreground ml-2 md:ml-4'
+                      : 'bg-muted text-muted-foreground mr-2 md:mr-4 border border-border/50'
                   }`}
                 >
                   <div className="whitespace-pre-wrap">{message.content}</div>
@@ -300,13 +300,13 @@ What would you like to know?`,
           )}
 
           {/* Input */}
-          <form onSubmit={sendMessage} className="p-4 border-t border-glass-border">
+          <form onSubmit={sendMessage} className="p-3 md:p-4 border-t border-glass-border">
             <div className="flex gap-2">
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about projects, skills, experience..."
-                className="flex-1 bg-background/50 border-glass-border"
+                placeholder="Ask me anything..."
+                className="flex-1 bg-background/50 border-glass-border text-xs md:text-sm"
                 disabled={isLoading}
                 maxLength={2000}
                 onKeyDown={(e) => {
