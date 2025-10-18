@@ -1,6 +1,8 @@
-// ------------------------------
-// Echoless – Simple First-Person Chatbot Backend
-// ------------------------------
+import Fuse from 'fuse.js';
+
+// Enhanced chatbot with fuzzy matching, typing delays, and state memory
+let lastIntent = null;
+let conversationContext = [];
 
 const responses = {
   greeting: [
@@ -199,93 +201,153 @@ const responses = {
   ],
 };
 
+// Utility functions
 function randomChoice(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
+// Fuzzy matching with Fuse.js for better typo tolerance
 function matchKeywords(input, keywords) {
-  return keywords.some(keyword => input.includes(keyword));
+  const fuse = new Fuse(keywords.map(k => ({ keyword: k })), {
+    keys: ['keyword'],
+    threshold: 0.4,
+    includeScore: true
+  });
+  return fuse.search(input).length > 0;
 }
 
+// Simulate human typing delay
+async function typingDelay() {
+  const delay = 500 + Math.random() * 600;
+  await new Promise(resolve => setTimeout(resolve, delay));
+}
+
+// Main response logic
 async function getResponse(userInput) {
   const input = userInput.toLowerCase().trim();
-
-  // Greeting
-  if (matchKeywords(input, ['hi', 'hello', 'hey', 'greetings', 'hola'])) {
+  
+  // Add typing delay for realism
+  await typingDelay();
+  
+  // Store conversation context
+  conversationContext.push(input);
+  if (conversationContext.length > 5) conversationContext.shift();
+  
+  // Handle "tell me more" or follow-up questions
+  if ((input.includes('more') || input.includes('elaborate') || input.includes('explain') || input.includes('details')) && lastIntent) {
+    const expandedResponses = {
+      skills: [
+        "I'd love to! Beyond the basics, I'm really passionate about AI-assisted workflows. I use tools like ChatGPT and Claude for content ideation, and I've taught myself prompt engineering to get the best results. I also work with DaVinci Resolve for advanced color grading and CapCut for quick social media edits.",
+        "Sure thing! When it comes to design, I use Canva for quick mockups and social posts, but I also dive into Photoshop for more detailed work. I'm comfortable with data organization in Google Sheets and I'm always learning new tools—recently been exploring Figma and web animation.",
+        "Absolutely! My bilingual skills (Telugu and English) really help me create content for diverse audiences. I also focus on storytelling in my video work—matching music to emotion, pacing clips perfectly, and adding subtle effects that enhance without overwhelming.",
+      ],
+      projects: [
+        "Let me share more! My portfolio website was built using AI builders and Wix—I wanted something clean and professional that showcases my work effectively. For video projects, I've created everything from travel vlogs to product demos, focusing on smooth transitions and engaging pacing.",
+        "Great question! One project I'm proud of is a series of social media videos where I experimented with motion graphics and music sync. I also built mock databases for practice, organizing data efficiently and creating visual reports. Each project teaches me something new!",
+        "I'd be happy to elaborate! My design work includes posters, infographics, and social media content—always keeping the target audience in mind. I also practice web design fundamentals, making sure sites are responsive and user-friendly across devices.",
+      ],
+      about: [
+        "Thanks for asking! Beyond the basics, I'm someone who thrives on learning and adapting. I started with electrical engineering but discovered my passion for digital creation along the way. I love problem-solving, whether it's technical challenges or creative roadblocks.",
+        "I appreciate your interest! I'm from Visakhapatnam, a coastal city in India, and I balance my B.Tech studies with building practical digital skills. I believe in hands-on learning—I'd rather build something imperfect than wait for the 'perfect' moment to start.",
+        "Glad you want to know more! I'm motivated by growth and impact. I want to create content that resonates with people, tools that make life easier, and solutions that actually solve problems. I'm always open to feedback and new opportunities to learn.",
+      ]
+    };
+    
+    if (expandedResponses[lastIntent]) {
+      return { text: randomChoice(expandedResponses[lastIntent]) };
+    }
+  }
+  
+  // Check for greetings
+  if (matchKeywords(input, ['hi', 'hello', 'hey', 'sup', 'yo', 'greetings', 'hola', 'namaste', 'whats up'])) {
+    lastIntent = 'greeting';
     return { text: randomChoice(responses.greeting) };
   }
-
-  // About
-  if (matchKeywords(input, ['about', 'who are you', 'introduce yourself', 'tell me about yourself', 'background'])) {
+  
+  // Check for about/who questions
+  if (matchKeywords(input, ['who are you', 'about', 'tell me about yourself', 'introduce', 'who r u', 'yourself', 'background'])) {
+    lastIntent = 'about';
     return { text: randomChoice(responses.about) };
   }
-
-  // Skills
-  if (matchKeywords(input, ['skills', 'what can you do', 'expertise', 'abilities', 'technologies'])) {
+  
+  // Check for skills
+  if (matchKeywords(input, ['skills', 'what can you do', 'abilities', 'capable', 'expertise', 'good at', 'tools', 'software', 'proficient'])) {
+    lastIntent = 'skills';
     return { text: randomChoice(responses.skills) };
   }
-
-  // Projects - with buttons
-  if (matchKeywords(input, ['projects', 'work', 'portfolio', 'what have you built', 'showcase'])) {
+  
+  // Check for projects
+  if (matchKeywords(input, ['projects', 'work', 'portfolio', 'built', 'created', 'made', 'showcase', 'examples', 'show me'])) {
+    lastIntent = 'projects';
     return {
       text: randomChoice(responses.projects),
       buttons: responses.portfolio.buttons
     };
   }
-
-  // Portfolio - with buttons
-  if (matchKeywords(input, ['website', 'portfolio link', 'site', 'webpage'])) {
-    return {
-      text: randomChoice(responses.portfolio.text),
-      buttons: responses.portfolio.buttons
-    };
-  }
-
-  // Contact - with buttons
-  if (matchKeywords(input, ['contact', 'email', 'phone', 'reach', 'get in touch', 'location'])) {
+  
+  // Check for contact
+  if (matchKeywords(input, ['contact', 'email', 'phone', 'reach', 'call', 'message', 'mail', 'number', 'whatsapp', 'get in touch'])) {
+    lastIntent = 'contact';
     return {
       text: randomChoice(responses.contact.text),
       buttons: responses.contact.buttons
     };
   }
-
-  // Social Media - with buttons
-  if (matchKeywords(input, ['social', 'linkedin', 'instagram', 'facebook', 'follow', 'connect'])) {
+  
+  // Check for social media
+  if (matchKeywords(input, ['social', 'linkedin', 'instagram', 'facebook', 'follow', 'connect', 'insta', 'fb', 'socials'])) {
+    lastIntent = 'social';
     return {
       text: randomChoice(responses.social.text),
       buttons: responses.social.buttons
     };
   }
-
-  // Support - with buttons
-  if (matchKeywords(input, ['support', 'help you', 'contribute', 'share', 'promote'])) {
+  
+  // Check for portfolio site
+  if (matchKeywords(input, ['website', 'site', 'portfolio', 'link', 'url', 'web', 'page', 'cv', 'resume'])) {
+    lastIntent = 'portfolio';
+    return {
+      text: randomChoice(responses.portfolio.text),
+      buttons: responses.portfolio.buttons
+    };
+  }
+  
+  // Check for support
+  if (matchKeywords(input, ['support', 'help you', 'contribute', 'share', 'promote', 'assist', 'donate', 'sponsor'])) {
+    lastIntent = 'support';
     return {
       text: randomChoice(responses.support.text),
       buttons: responses.support.buttons
     };
   }
-
-  // Experience
-  if (matchKeywords(input, ['experience', 'work history', 'jobs', 'internship'])) {
+  
+  // Check for experience
+  if (matchKeywords(input, ['experience', 'work history', 'jobs', 'internship', 'career', 'worked', 'employment', 'job'])) {
+    lastIntent = 'experience';
     return { text: randomChoice(responses.experience) };
   }
-
-  // Education
-  if (matchKeywords(input, ['education', 'study', 'college', 'university', 'degree', 'diploma'])) {
+  
+  // Check for education
+  if (matchKeywords(input, ['education', 'degree', 'college', 'university', 'study', 'studied', 'school', 'diploma', 'btech'])) {
+    lastIntent = 'education';
     return { text: randomChoice(responses.education) };
   }
-
-  // Achievements
-  if (matchKeywords(input, ['achievement', 'accomplishment', 'certification', 'awards'])) {
+  
+  // Check for achievements
+  if (matchKeywords(input, ['achievements', 'accomplishments', 'awards', 'certifications', 'proud', 'certificates', 'certified'])) {
+    lastIntent = 'achievements';
     return { text: randomChoice(responses.achievements) };
   }
-
-  // Goodbye
-  if (matchKeywords(input, ['bye', 'goodbye', 'see you', 'later', 'thanks', 'thank you'])) {
+  
+  // Check for goodbye
+  if (matchKeywords(input, ['bye', 'goodbye', 'see you', 'later', 'thanks', 'thank you', 'cya', 'ttyl', 'take care'])) {
+    lastIntent = null;
+    conversationContext = [];
     return { text: randomChoice(responses.goodbye) };
   }
-
-  // Fallback
+  
+  // Fallback response
+  lastIntent = 'fallback';
   return { text: randomChoice(responses.fallback) };
 }
 
