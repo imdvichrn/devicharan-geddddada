@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { WindowChrome } from './WindowChrome';
 import { SiriOrb } from './SiriOrb';
-import { QuickActions } from './QuickActions';
+
 import { ActionButtons } from './ActionButtons';
 import { useToast } from '@/hooks/use-toast';
 import getResponse from './echoless.js';
@@ -156,14 +156,6 @@ What would you like to know?`,
     }
   };
 
-  const handleQuickAction = (question: string) => {
-    if (isLoading) return;
-    
-    setInput(question);
-    // Automatically send the message
-    const event = new Event('submit') as any;
-    sendMessage(event);
-  };
 
 
   return (
@@ -291,13 +283,6 @@ What would you like to know?`,
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick Actions */}
-          {messages.length <= 2 && (
-            <QuickActions 
-              onActionClick={handleQuickAction} 
-              disabled={isLoading}
-            />
-          )}
 
           {/* Input */}
           <form onSubmit={sendMessage} className="p-3 md:p-4 border-t border-glass-border">
