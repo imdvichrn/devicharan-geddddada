@@ -8,51 +8,51 @@ All colors MUST be HSL for proper theming.
 
 @layer base {
   :root {
-    /* Base colors - Warm & sophisticated theme */
-    --background: 49 62% 93%; /* Warm Beige #F8F4E3 */
-    --foreground: 76 47% 19%; /* Deep Olive #3C481A */
+    /* Base colors - Light theme inspired by macOS */
+    --background: 220 20% 97%;
+    --foreground: 220 20% 10%;
 
     /* Glass panel backgrounds */
-    --glass: 49 60% 95%;
-    --glass-border: 49 40% 75%;
-    --glass-shadow: 76 47% 19%;
+    --glass: 220 20% 98%;
+    --glass-border: 220 20% 85%;
+    --glass-shadow: 220 20% 20%;
 
     /* Card and surface colors */
-    --card: 49 55% 90%;
-    --card-foreground: 76 47% 19%;
+    --card: 220 20% 96%;
+    --card-foreground: 220 20% 15%;
 
-    --popover: 49 62% 93%;
-    --popover-foreground: 76 47% 19%;
+    --popover: 220 20% 98%;
+    --popover-foreground: 220 20% 10%;
 
-    /* Primary - Vibrant Coral for CTAs */
-    --primary: 0 100% 71%; /* Vibrant Coral #FF6B6B */
-    --primary-foreground: 49 62% 93%; /* Warm Beige on Coral */
-    --primary-glow: 0 100% 80%;
+    /* Primary - macOS blue accent */
+    --primary: 212 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 212 100% 70%;
 
-    /* Secondary - Deep Olive subtle */
-    --secondary: 76 35% 30%;
-    --secondary-foreground: 49 62% 93%;
+    /* Secondary - subtle gray */
+    --secondary: 220 15% 92%;
+    --secondary-foreground: 220 20% 20%;
 
     /* Muted backgrounds */
-    --muted: 49 50% 88%;
-    --muted-foreground: 213 14% 49%; /* Slate Gray #6B7B8E */
+    --muted: 220 15% 94%;
+    --muted-foreground: 220 10% 45%;
 
-    /* Accent - Complementary warm tone */
-    --accent: 25 85% 65%;
-    --accent-foreground: 76 47% 19%;
+    /* Accent - purple for highlights */
+    --accent: 270 95% 75%;
+    --accent-foreground: 270 95% 15%;
 
     /* Status colors */
     --destructive: 0 84% 60%;
-    --destructive-foreground: 49 62% 93%;
+    --destructive-foreground: 0 0% 100%;
     --success: 142 76% 36%;
-    --success-foreground: 49 62% 93%;
+    --success-foreground: 0 0% 100%;
     --warning: 38 92% 50%;
-    --warning-foreground: 76 47% 19%;
+    --warning-foreground: 0 0% 100%;
 
     /* Interactive elements */
-    --border: 213 14% 49%; /* Slate Gray #6B7B8E */
-    --input: 49 50% 88%;
-    --ring: 0 100% 71%;
+    --border: 220 15% 88%;
+    --input: 220 15% 92%;
+    --ring: 212 100% 50%;
 
     /* Window chrome colors */
     --window-red: 0 85% 60%;
@@ -100,51 +100,51 @@ All colors MUST be HSL for proper theming.
   }
 
   .dark {
-    /* Base colors - Warm & sophisticated dark theme */
-    --background: 76 40% 12%; /* Dark Olive base */
-    --foreground: 49 55% 88%; /* Light Beige text */
+    /* Base colors - Dark theme inspired by macOS dark mode */
+    --background: 220 25% 8%;
+    --foreground: 220 15% 95%;
 
     /* Glass panel backgrounds for dark mode */
-    --glass: 76 35% 15%;
-    --glass-border: 76 30% 25%;
-    --glass-shadow: 76 40% 8%;
+    --glass: 220 25% 10%;
+    --glass-border: 220 25% 20%;
+    --glass-shadow: 220 25% 5%;
 
     /* Card and surface colors */
-    --card: 76 35% 18%;
-    --card-foreground: 49 55% 88%;
+    --card: 220 25% 12%;
+    --card-foreground: 220 15% 90%;
 
-    --popover: 76 35% 15%;
-    --popover-foreground: 49 55% 88%;
+    --popover: 220 25% 10%;
+    --popover-foreground: 220 15% 95%;
 
-    /* Primary - Vibrant Coral for dark mode */
-    --primary: 0 100% 71%; /* Vibrant Coral #FF6B6B */
-    --primary-foreground: 76 40% 12%; /* Dark background on Coral */
-    --primary-glow: 0 100% 80%;
+    /* Primary - brighter blue for dark mode */
+    --primary: 212 100% 60%;
+    --primary-foreground: 220 25% 8%;
+    --primary-glow: 212 100% 80%;
 
-    /* Secondary - lighter olive */
-    --secondary: 76 30% 25%;
-    --secondary-foreground: 49 55% 88%;
+    /* Secondary - darker gray */
+    --secondary: 220 20% 18%;
+    --secondary-foreground: 220 15% 85%;
 
     /* Muted backgrounds */
-    --muted: 76 30% 20%;
-    --muted-foreground: 213 14% 65%; /* Lighter Slate Gray */
+    --muted: 220 20% 15%;
+    --muted-foreground: 220 10% 60%;
 
-    /* Accent - warm complementary */
-    --accent: 25 75% 60%;
-    --accent-foreground: 76 40% 12%;
+    /* Accent - brighter purple for dark mode */
+    --accent: 270 95% 80%;
+    --accent-foreground: 270 95% 10%;
 
     /* Status colors for dark mode */
     --destructive: 0 84% 65%;
-    --destructive-foreground: 76 40% 12%;
+    --destructive-foreground: 220 25% 8%;
     --success: 142 76% 45%;
-    --success-foreground: 76 40% 12%;
+    --success-foreground: 220 25% 8%;
     --warning: 38 92% 60%;
-    --warning-foreground: 76 40% 12%;
+    --warning-foreground: 220 25% 8%;
 
     /* Interactive elements */
-    --border: 213 14% 35%; /* Slate Gray border */
-    --input: 76 30% 20%;
-    --ring: 0 100% 71%;
+    --border: 220 20% 25%;
+    --input: 220 20% 18%;
+    --ring: 212 100% 60%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
