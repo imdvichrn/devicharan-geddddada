@@ -1,5 +1,5 @@
 
-his project is a modern web application developed and deployed through Lovable.dev, showcasing a full-stack-ready frontend architecture optimized for performance, scalability, and clean developer experience. Built using Vite, React, TypeScript, Tailwind CSS, and shadcn/ui, it leverages cutting-edge web technologies to ensure a fast, maintainable, and highly modular codebase.
+his project is a modern web application developed and deployed through Ai, showcasing a full-stack-ready frontend architecture optimized for performance, scalability, and clean developer experience. Built using Vite, React, TypeScript, Tailwind CSS, and shadcn/ui, it leverages cutting-edge web technologies to ensure a fast, maintainable, and highly modular codebase.
 
 The development workflow integrates seamlessly with Lovable’s AI-assisted environment, enabling real-time prompting, instant previews, and automated version control commits. The project can also be cloned and edited locally through any preferred IDE using Node.js and npm, supporting both rapid prototyping and structured development pipelines.
 
