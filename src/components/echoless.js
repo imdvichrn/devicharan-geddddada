@@ -259,25 +259,25 @@ async function getResponse(userInput) {
   }
   
   // Check for greetings
-  if (matchKeywords(input, ['hi', 'hello', 'hey', 'sup', 'yo', 'greetings', 'hola', 'namaste', 'whats up'])) {
+  if (matchKeywords(input, ['hi', 'hello', 'hey', 'sup', 'yo', 'greetings', 'hola', 'namaste', 'whats up', 'howdy', 'wassup', 'good morning', 'good evening', 'good afternoon', 'hii', 'hiii', 'heya', 'heyyy', 'heyy', 'hiiii', 'hy', 'helo', 'helloo', 'helloooo', 'hai', 'hallo', 'bonjour', 'salaam', 'vanakkam'])) {
     lastIntent = 'greeting';
     return { text: randomChoice(responses.greeting) };
   }
   
   // Check for about/who questions
-  if (matchKeywords(input, ['who are you', 'about', 'tell me about yourself', 'introduce', 'who r u', 'yourself', 'background'])) {
+  if (matchKeywords(input, ['who are you', 'about', 'tell me about yourself', 'introduce', 'who r u', 'yourself', 'background', 'who is devicharan', 'who is devi', 'about you', 'about yourself', 'describe yourself', 'what are you', 'who made this', 'who built this', 'creator', 'owner', 'whose portfolio', 'who owns', 'tell me about you', 'info about you', 'your story', 'your journey', 'bio', 'biography', 'profile', 'introduction', 'who dis', 'whos this'])) {
     lastIntent = 'about';
     return { text: randomChoice(responses.about) };
   }
   
   // Check for skills
-  if (matchKeywords(input, ['skills', 'what can you do', 'abilities', 'capable', 'expertise', 'good at', 'tools', 'software', 'proficient'])) {
+  if (matchKeywords(input, ['skills', 'what can you do', 'abilities', 'capable', 'expertise', 'good at', 'tools', 'software', 'proficient', 'tech stack', 'technologies', 'programming', 'languages', 'frameworks', 'what do you know', 'specialization', 'specialty', 'strengths', 'competencies', 'talents', 'qualifications', 'technical skills', 'soft skills', 'hard skills', 'skill set', 'skillset', 'what tools', 'which tools', 'can you code', 'coding', 'development', 'design skills', 'editing skills', 'video skills', 'ai skills', 'capabilities'])) {
     lastIntent = 'skills';
     return { text: randomChoice(responses.skills) };
   }
   
   // Check for projects
-  if (matchKeywords(input, ['projects', 'work', 'portfolio', 'built', 'created', 'made', 'showcase', 'examples', 'show me'])) {
+  if (matchKeywords(input, ['projects', 'work', 'portfolio', 'built', 'created', 'made', 'showcase', 'examples', 'show me', 'what have you done', 'your work', 'past work', 'previous work', 'samples', 'demos', 'case studies', 'things you made', 'stuff you built', 'show your work', 'works', 'creations', 'builds', 'accomplishment', 'what did you make', 'what did you create', 'your projects', 'project list', 'completed projects', 'finished projects'])) {
     lastIntent = 'projects';
     return {
       text: randomChoice(responses.projects),
@@ -286,7 +286,7 @@ async function getResponse(userInput) {
   }
   
   // Check for contact
-  if (matchKeywords(input, ['contact', 'email', 'phone', 'reach', 'call', 'message', 'mail', 'number', 'whatsapp', 'get in touch'])) {
+  if (matchKeywords(input, ['contact', 'email', 'phone', 'reach', 'call', 'message', 'mail', 'number', 'whatsapp', 'get in touch', 'reach out', 'connect with you', 'how to contact', 'contact info', 'contact details', 'your email', 'your phone', 'your number', 'mobile', 'cell', 'telephone', 'dm', 'direct message', 'text you', 'write to you', 'send message', 'talk to you', 'speak to you', 'chat with you', 'hire you', 'hiring', 'freelance', 'available', 'availability', 'book you', 'schedule', 'appointment', 'meeting', 'consultation'])) {
     lastIntent = 'contact';
     return {
       text: randomChoice(responses.contact.text),
@@ -295,7 +295,7 @@ async function getResponse(userInput) {
   }
   
   // Check for social media
-  if (matchKeywords(input, ['social', 'linkedin', 'instagram', 'facebook', 'follow', 'connect', 'insta', 'fb', 'socials'])) {
+  if (matchKeywords(input, ['social', 'linkedin', 'instagram', 'facebook', 'follow', 'connect', 'insta', 'fb', 'socials', 'social media', 'twitter', 'x', 'youtube', 'github', 'tiktok', 'snapchat', 'discord', 'telegram', 'online presence', 'social profiles', 'social links', 'follow you', 'where to follow', 'your socials', 'social accounts', 'social handles', 'handles', 'profiles', 'online profiles', 'networking', 'professional network'])) {
     lastIntent = 'social';
     return {
       text: randomChoice(responses.social.text),
@@ -304,7 +304,7 @@ async function getResponse(userInput) {
   }
   
   // Check for portfolio site
-  if (matchKeywords(input, ['website', 'site', 'portfolio', 'link', 'url', 'web', 'page', 'cv', 'resume'])) {
+  if (matchKeywords(input, ['website', 'site', 'portfolio', 'link', 'url', 'web', 'page', 'cv', 'resume', 'your website', 'your site', 'portfolio link', 'download cv', 'download resume', 'get cv', 'get resume', 'see portfolio', 'view portfolio', 'portfolio website', 'personal site', 'personal website', 'homepage', 'landing page', 'biodata', 'curriculum vitae'])) {
     lastIntent = 'portfolio';
     return {
       text: randomChoice(responses.portfolio.text),
@@ -313,7 +313,7 @@ async function getResponse(userInput) {
   }
   
   // Check for support
-  if (matchKeywords(input, ['support', 'help you', 'contribute', 'share', 'promote', 'assist', 'donate', 'sponsor'])) {
+  if (matchKeywords(input, ['support', 'help you', 'contribute', 'share', 'promote', 'assist', 'donate', 'sponsor', 'how can i help', 'support you', 'support your work', 'fund', 'funding', 'patronize', 'back you', 'boost', 'spread the word', 'recommend', 'recommend you', 'referral', 'refer', 'endorse', 'vouch', 'collaborate', 'collab', 'partnership', 'work together', 'team up', 'join forces'])) {
     lastIntent = 'support';
     return {
       text: randomChoice(responses.support.text),
@@ -322,25 +322,25 @@ async function getResponse(userInput) {
   }
   
   // Check for experience
-  if (matchKeywords(input, ['experience', 'work history', 'jobs', 'internship', 'career', 'worked', 'employment', 'job'])) {
+  if (matchKeywords(input, ['experience', 'work history', 'jobs', 'internship', 'career', 'worked', 'employment', 'job', 'work experience', 'professional experience', 'past jobs', 'previous jobs', 'companies', 'organizations', 'employers', 'where did you work', 'job history', 'career history', 'resume experience', 'cv experience', 'industry experience', 'years of experience', 'how long', 'freelance experience', 'client work'])) {
     lastIntent = 'experience';
     return { text: randomChoice(responses.experience) };
   }
   
   // Check for education
-  if (matchKeywords(input, ['education', 'degree', 'college', 'university', 'study', 'studied', 'school', 'diploma', 'btech'])) {
+  if (matchKeywords(input, ['education', 'degree', 'college', 'university', 'study', 'studied', 'school', 'diploma', 'btech', 'b.tech', 'engineering', 'qualification', 'academic', 'academics', 'where did you study', 'educational background', 'educational qualification', 'graduation', 'graduate', 'undergraduate', 'postgraduate', 'masters', 'bachelors', 'class', 'course', 'major', 'minor', 'gpa', 'grades', 'institution', 'alma mater', 'polytechnic', 'eee', 'electrical'])) {
     lastIntent = 'education';
     return { text: randomChoice(responses.education) };
   }
   
   // Check for achievements
-  if (matchKeywords(input, ['achievements', 'accomplishments', 'awards', 'certifications', 'proud', 'certificates', 'certified'])) {
+  if (matchKeywords(input, ['achievements', 'accomplishments', 'awards', 'certifications', 'proud', 'certificates', 'certified', 'recognition', 'honors', 'honours', 'accolades', 'medals', 'trophies', 'achievements list', 'what are you proud of', 'proud moments', 'best work', 'notable', 'highlights', 'milestones', 'success', 'wins', 'winning', 'badge', 'badges', 'credentials', 'accreditation'])) {
     lastIntent = 'achievements';
     return { text: randomChoice(responses.achievements) };
   }
   
   // Check for goodbye
-  if (matchKeywords(input, ['bye', 'goodbye', 'see you', 'later', 'thanks', 'thank you', 'cya', 'ttyl', 'take care'])) {
+  if (matchKeywords(input, ['bye', 'goodbye', 'see you', 'later', 'thanks', 'thank you', 'cya', 'ttyl', 'take care', 'see ya', 'catch you later', 'gotta go', 'got to go', 'leaving', 'peace', 'peace out', 'adios', 'ciao', 'farewell', 'goodnight', 'good night', 'have a nice day', 'have a good day', 'talk later', 'until next time', 'cheers', 'appreciate it', 'thx', 'thnx', 'tysm', 'ty', 'thankyou', 'thankss'])) {
     lastIntent = null;
     conversationContext = [];
     return { text: randomChoice(responses.goodbye) };
