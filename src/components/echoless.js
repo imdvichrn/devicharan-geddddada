@@ -1,8 +1,135 @@
 import Fuse from 'fuse.js';
 
-// Enhanced chatbot with fuzzy matching, typing delays, and state memory
+// Enhanced chatbot with intelligent matching, typo tolerance, and natural responses
 let lastIntent = null;
 let conversationContext = [];
+
+// ============= ALIAS/SYNONYM MAP FOR TYPO & VARIATION HANDLING =============
+const aliasMap = {
+  // LinkedIn variations
+  'linkdin': 'linkedin', 'linkin': 'linkedin', 'linkesin': 'linkedin', 'linkden': 'linkedin',
+  'linkedn': 'linkedin', 'linkdein': 'linkedin', 'likedin': 'linkedin', 'lnkdin': 'linkedin',
+  
+  // Professional/work variations
+  'profeshnal': 'professional', 'profesional': 'professional', 'proffessional': 'professional',
+  'professionl': 'professional', 'profesonal': 'professional',
+  
+  // Experience variations
+  'experiance': 'experience', 'expereince': 'experience', 'experince': 'experience',
+  'experiense': 'experience', 'exp': 'experience', 'xp': 'experience', 'work exp': 'experience',
+  
+  // Skills variations
+  'skils': 'skills', 'skilss': 'skills', 'skill': 'skills', 'skll': 'skills', 'sklls': 'skills',
+  
+  // Projects variations
+  'projet': 'projects', 'projcts': 'projects', 'projetcs': 'projects', 'prjects': 'projects',
+  'project': 'projects', 'projct': 'projects', 'wrk': 'projects',
+  
+  // Contact variations
+  'contct': 'contact', 'contat': 'contact', 'contac': 'contact', 'cntact': 'contact',
+  'kontact': 'contact', 'contakt': 'contact',
+  
+  // Email variations
+  'emal': 'email', 'emial': 'email', 'emil': 'email', 'e-mail': 'email', 'mail': 'email',
+  
+  // Education variations
+  'educaton': 'education', 'eduction': 'education', 'educatn': 'education', 'edu': 'education',
+  'studie': 'education', 'study': 'education', 'collge': 'college', 'colege': 'college',
+  
+  // Portfolio variations
+  'portfolo': 'portfolio', 'porfolio': 'portfolio', 'portflio': 'portfolio', 'folio': 'portfolio',
+  
+  // Resume/CV variations
+  'resum': 'resume', 'resumee': 'resume', 'resme': 'resume', 'cv': 'resume', 'curriculam': 'resume',
+  
+  // Instagram variations
+  'insta': 'instagram', 'ig': 'instagram', 'instagarm': 'instagram', 'instgram': 'instagram',
+  
+  // Facebook variations
+  'fb': 'facebook', 'facbook': 'facebook', 'facebok': 'facebook',
+  
+  // About/who variations
+  'abt': 'about', 'abut': 'about', 'abou': 'about', 'bout': 'about',
+  'urself': 'yourself', 'u': 'you', 'ur': 'your', 'r': 'are',
+  
+  // Hello variations
+  'helo': 'hello', 'hllo': 'hello', 'hii': 'hi', 'hiii': 'hi', 'hiiii': 'hi',
+  'heya': 'hey', 'heyy': 'hey', 'heyyy': 'hey', 'hai': 'hi', 'hy': 'hi',
+  
+  // Thanks variations
+  'thnks': 'thanks', 'thnx': 'thanks', 'thx': 'thanks', 'ty': 'thanks', 'tysm': 'thanks',
+  'thanx': 'thanks', 'thanku': 'thanks', 'thankss': 'thanks', 'tanx': 'thanks',
+  
+  // Common shortcuts
+  'pls': 'please', 'plz': 'please', 'msg': 'message', 'dm': 'message',
+  'info': 'information', 'b4': 'before', 'w8': 'wait', 'gr8': 'great',
+  'wat': 'what', 'wht': 'what', 'hw': 'how', 'y': 'why', 'n': 'and',
+  
+  // Achievements variations
+  'achivements': 'achievements', 'achievments': 'achievements', 'achivement': 'achievements',
+  'achievemnts': 'achievements', 'accompishments': 'accomplishments',
+  
+  // Social variations  
+  'socail': 'social', 'socials': 'social', 'socialmedia': 'social media',
+  
+  // Support variations
+  'suport': 'support', 'supprt': 'support', 'hlp': 'help',
+  
+  // Website variations
+  'websit': 'website', 'webiste': 'website', 'site': 'website', 'webpage': 'website',
+};
+
+// ============= INTENT KEYWORDS WITH SEMANTIC GROUPING =============
+const intentKeywords = {
+  greeting: {
+    keywords: ['hi', 'hello', 'hey', 'sup', 'yo', 'greetings', 'hola', 'namaste', 'whats up', 'howdy', 'wassup', 'good morning', 'good evening', 'good afternoon', 'bonjour', 'salaam', 'vanakkam', 'aloha', 'morning', 'evening', 'afternoon'],
+    patterns: [/^(hi+|hey+|hello+|yo+)$/i, /^what'?s? up/i, /^how are you/i, /^how r u/i, /^how's it going/i]
+  },
+  about: {
+    keywords: ['who are you', 'about', 'tell me about yourself', 'introduce', 'yourself', 'background', 'who is devicharan', 'who is devi', 'about you', 'describe yourself', 'who made this', 'who built this', 'creator', 'owner', 'whose portfolio', 'your story', 'your journey', 'bio', 'biography', 'profile', 'introduction', 'who dis', 'devicharan', 'devi charan'],
+    patterns: [/who (are|r) (you|u)/i, /tell (me )?about (you|yourself)/i, /introduce yourself/i, /your (story|background|journey)/i, /who('s| is) (this|devicharan|devi)/i]
+  },
+  skills: {
+    keywords: ['skills', 'what can you do', 'abilities', 'capable', 'expertise', 'good at', 'tools', 'software', 'proficient', 'tech stack', 'technologies', 'programming', 'frameworks', 'specialization', 'specialty', 'strengths', 'competencies', 'talents', 'qualifications', 'technical skills', 'soft skills', 'skill set', 'coding', 'development', 'design skills', 'editing skills', 'video skills', 'ai skills', 'capabilities', 'know how', 'what do you know', 'what you know', 'can do'],
+    patterns: [/what (can|do) you (do|know)/i, /your (skills|abilities|expertise)/i, /are you good at/i, /what tools/i, /tech stack/i]
+  },
+  projects: {
+    keywords: ['projects', 'work', 'portfolio work', 'built', 'created', 'made', 'showcase', 'examples', 'show me', 'what have you done', 'your work', 'past work', 'previous work', 'samples', 'demos', 'case studies', 'things you made', 'stuff you built', 'works', 'creations', 'builds', 'accomplishment', 'your projects', 'project list', 'show work', 'see work'],
+    patterns: [/show (me )?(your )?(work|projects)/i, /what (have|did) you (done|make|build|create)/i, /(your|the) projects/i, /see (your )?work/i]
+  },
+  contact: {
+    keywords: ['contact', 'email', 'phone', 'reach', 'call', 'message', 'number', 'whatsapp', 'get in touch', 'reach out', 'connect with you', 'contact info', 'contact details', 'your email', 'your phone', 'your number', 'mobile', 'cell', 'telephone', 'text you', 'write to you', 'talk to you', 'speak to you', 'chat with you', 'hire you', 'hiring', 'freelance', 'available', 'availability', 'book you', 'schedule', 'appointment', 'meeting', 'consultation', 'reach you', 'contact you'],
+    patterns: [/how (can|do) i (contact|reach|email|call)/i, /(your|the) (email|phone|number|contact)/i, /get in touch/i, /reach (you|out)/i, /hire you/i]
+  },
+  social: {
+    keywords: ['social', 'linkedin', 'instagram', 'facebook', 'follow', 'connect', 'socials', 'social media', 'twitter', 'x', 'youtube', 'github', 'tiktok', 'snapchat', 'discord', 'telegram', 'online presence', 'social profiles', 'social links', 'follow you', 'your socials', 'social accounts', 'handles', 'profiles', 'networking', 'professional network', 'where to follow'],
+    patterns: [/(your )?(social|linkedin|instagram|facebook|twitter|github)/i, /follow you/i, /where (can|do) i follow/i, /social (media|profiles|links|accounts)/i]
+  },
+  portfolio: {
+    keywords: ['website', 'portfolio', 'link', 'url', 'web', 'page', 'cv', 'resume', 'your website', 'your site', 'portfolio link', 'download cv', 'download resume', 'get cv', 'get resume', 'see portfolio', 'view portfolio', 'portfolio website', 'personal site', 'personal website', 'homepage', 'landing page', 'biodata', 'curriculum vitae', 'this site', 'this website'],
+    patterns: [/(your |this )?(website|portfolio|site)/i, /download (cv|resume)/i, /(cv|resume) (link|download)/i, /see (your )?portfolio/i]
+  },
+  support: {
+    keywords: ['support', 'help you', 'contribute', 'share', 'promote', 'assist', 'donate', 'sponsor', 'how can i help', 'support you', 'support your work', 'fund', 'funding', 'patronize', 'boost', 'spread the word', 'recommend', 'referral', 'refer', 'endorse', 'vouch', 'collaborate', 'collab', 'partnership', 'work together', 'team up', 'join forces'],
+    patterns: [/how (can|do) i (help|support)/i, /support (you|your work)/i, /(collab|collaborate|work together)/i, /spread the word/i]
+  },
+  experience: {
+    keywords: ['experience', 'work history', 'jobs', 'internship', 'career', 'worked', 'employment', 'job', 'work experience', 'professional experience', 'past jobs', 'previous jobs', 'companies', 'organizations', 'employers', 'where did you work', 'job history', 'career history', 'industry experience', 'years of experience', 'how long', 'freelance experience', 'client work', 'intern', 'worked where', 'job experience'],
+    patterns: [/(your |work )?experience/i, /where (have|did) you work/i, /(job|career|work) history/i, /years of experience/i, /internship/i]
+  },
+  education: {
+    keywords: ['education', 'degree', 'college', 'university', 'study', 'studied', 'school', 'diploma', 'btech', 'b.tech', 'engineering', 'qualification', 'academic', 'academics', 'where did you study', 'educational background', 'graduation', 'graduate', 'undergraduate', 'postgraduate', 'masters', 'bachelors', 'course', 'major', 'institution', 'alma mater', 'polytechnic', 'eee', 'electrical', 'studied where', 'which college', 'which university'],
+    patterns: [/(your )?education/i, /where (did|do) you stud/i, /(college|university|degree|diploma)/i, /(educational|academic) background/i, /b\.?tech/i]
+  },
+  achievements: {
+    keywords: ['achievements', 'accomplishments', 'awards', 'certifications', 'proud', 'certificates', 'certified', 'recognition', 'honors', 'honours', 'accolades', 'medals', 'trophies', 'proud moments', 'best work', 'notable', 'highlights', 'milestones', 'success', 'wins', 'winning', 'badges', 'credentials', 'accreditation', 'what are you proud of'],
+    patterns: [/(your )?achievements/i, /what (are you|r u) proud of/i, /(awards|certifications|certificates)/i, /proud (of|moments)/i]
+  },
+  goodbye: {
+    keywords: ['bye', 'goodbye', 'see you', 'later', 'thanks', 'thank you', 'cya', 'ttyl', 'take care', 'see ya', 'catch you later', 'gotta go', 'got to go', 'leaving', 'peace', 'peace out', 'adios', 'ciao', 'farewell', 'goodnight', 'good night', 'have a nice day', 'have a good day', 'talk later', 'until next time', 'cheers', 'appreciate it'],
+    patterns: [/^(bye+|goodbye|cya|ttyl|later|peace)$/i, /thank (you|u)/i, /take care/i, /see (you|ya|u)/i, /have a (nice|good|great) day/i]
+  }
+};
 
 const responses = {
   greeting: [
@@ -175,16 +302,16 @@ const responses = {
   ],
 
   fallback: [
-    "I'd love to help! I can tell you about my skills, projects, experience, education, or how to contact me. What interests you?",
-    "I'm not quite sure I understood that. Feel free to ask about my work, background, skills, or ways to get in touch!",
-    "Hmm, I didn't catch that. Try asking about my projects, skills, contact info, or social media links—I'm here to help!",
-    "I'm not sure what you're asking. I can share info about who I am, what I do, my projects, or how to reach me. What would you like to know?",
-    "That's a bit unclear for me. Ask me about my skills, experience, education, portfolio, or ways to connect—I'm happy to help!",
-    "I didn't quite get that. I can tell you about my background, projects, social media, or contact details. What are you curious about?",
-    "Not sure I followed that. Feel free to ask about my work, skills, education, achievements, or how to support me!",
-    "I'm a bit confused by that question. Try asking about my projects, experience, portfolio, or contact information instead!",
-    "I didn't understand that one. I can help with questions about my skills, background, social links, or ways to reach me. What would you like?",
-    "That stumped me! Ask me about who I am, what I've built, my skills, education, or how we can connect—I'm ready to help!",
+    "I think you're asking about something related to my background. I can tell you about my skills, projects, experience, education, or how to contact me—what interests you most?",
+    "Let me help you with that! Feel free to ask about my work, skills, projects, or ways to get in touch. I'm here to help!",
+    "I'd be happy to share more! You can ask about my background, what I do, my projects, or how to connect with me.",
+    "Great question! I can share info about who I am, what I do, my projects, social links, or how to reach me. What would you like to know?",
+    "I'm here to help! Ask me about my skills, experience, education, portfolio, or ways to connect—I'll do my best to answer!",
+    "Let me point you in the right direction! I can tell you about my background, projects, social media, or contact details.",
+    "I'm happy to help! Feel free to ask about my work, skills, education, achievements, or how to support me!",
+    "That's an interesting question! I can help with questions about my projects, experience, portfolio, or contact information.",
+    "I want to make sure I help you. Ask about my skills, background, social links, or ways to reach me—I'm ready!",
+    "Good question! I can share details about who I am, what I've built, my skills, education, or how we can connect.",
   ],
 
   goodbye: [
@@ -201,28 +328,129 @@ const responses = {
   ],
 };
 
-// Utility functions
+// ============= UTILITY FUNCTIONS =============
 function randomChoice(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-// Fuzzy matching with Fuse.js for better typo tolerance
-function matchKeywords(input, keywords) {
+// Normalize input: apply alias corrections and clean up
+function normalizeInput(input) {
+  let normalized = input.toLowerCase().trim();
+  
+  // Apply alias corrections
+  for (const [typo, correct] of Object.entries(aliasMap)) {
+    // Use word boundary matching for better accuracy
+    const regex = new RegExp(`\\b${typo}\\b`, 'gi');
+    normalized = normalized.replace(regex, correct);
+  }
+  
+  // Clean up extra spaces
+  normalized = normalized.replace(/\s+/g, ' ').trim();
+  
+  return normalized;
+}
+
+// Enhanced fuzzy matching with lower threshold for better typo tolerance
+function fuzzyMatch(input, keywords, threshold = 0.3) {
   const fuse = new Fuse(keywords.map(k => ({ keyword: k })), {
     keys: ['keyword'],
-    threshold: 0.4,
-    includeScore: true
+    threshold: threshold,
+    includeScore: true,
+    ignoreLocation: true,
+    minMatchCharLength: 2
   });
-  return fuse.search(input).length > 0;
+  
+  // Check each word in input
+  const words = input.split(' ');
+  for (const word of words) {
+    if (word.length < 2) continue;
+    const results = fuse.search(word);
+    if (results.length > 0 && results[0].score < threshold) {
+      return true;
+    }
+  }
+  
+  // Also check full input
+  const fullResults = fuse.search(input);
+  return fullResults.length > 0 && fullResults[0].score < threshold;
+}
+
+// Pattern matching for common phrases
+function matchPatterns(input, patterns) {
+  for (const pattern of patterns) {
+    if (pattern.test(input)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// Smart intent detection combining keywords, patterns, and fuzzy matching
+function detectIntent(input) {
+  const normalized = normalizeInput(input);
+  
+  // Check each intent
+  for (const [intent, config] of Object.entries(intentKeywords)) {
+    // 1. Check exact keyword matches first (fastest)
+    for (const keyword of config.keywords) {
+      if (normalized.includes(keyword)) {
+        return intent;
+      }
+    }
+    
+    // 2. Check regex patterns
+    if (config.patterns && matchPatterns(normalized, config.patterns)) {
+      return intent;
+    }
+    
+    // 3. Fuzzy matching for typos (with lower threshold = more lenient)
+    if (fuzzyMatch(normalized, config.keywords, 0.35)) {
+      return intent;
+    }
+  }
+  
+  return null;
+}
+
+// Find the most relevant fallback based on partial matches
+function getSmartFallback(input) {
+  const normalized = normalizeInput(input);
+  const words = normalized.split(' ').filter(w => w.length > 2);
+  
+  // Score each intent by partial matches
+  let bestIntent = null;
+  let bestScore = 0;
+  
+  for (const [intent, config] of Object.entries(intentKeywords)) {
+    let score = 0;
+    for (const word of words) {
+      for (const keyword of config.keywords) {
+        if (keyword.includes(word) || word.includes(keyword)) {
+          score += 1;
+        }
+      }
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestIntent = intent;
+    }
+  }
+  
+  // If we found a reasonable match, use it instead of generic fallback
+  if (bestScore > 0 && bestIntent) {
+    return bestIntent;
+  }
+  
+  return null;
 }
 
 // Simulate human typing delay
 async function typingDelay() {
-  const delay = 500 + Math.random() * 600;
+  const delay = 400 + Math.random() * 500;
   await new Promise(resolve => setTimeout(resolve, delay));
 }
 
-// Main response logic
+// ============= MAIN RESPONSE LOGIC =============
 async function getResponse(userInput) {
   const input = userInput.toLowerCase().trim();
   
@@ -234,7 +462,7 @@ async function getResponse(userInput) {
   if (conversationContext.length > 5) conversationContext.shift();
   
   // Handle "tell me more" or follow-up questions
-  if ((input.includes('more') || input.includes('elaborate') || input.includes('explain') || input.includes('details')) && lastIntent) {
+  if ((input.includes('more') || input.includes('elaborate') || input.includes('explain') || input.includes('details') || input.includes('expand')) && lastIntent) {
     const expandedResponses = {
       skills: [
         "I'd love to! Beyond the basics, I'm really passionate about AI-assisted workflows. I use tools like ChatGPT and Claude for content ideation, and I've taught myself prompt engineering to get the best results. I also work with DaVinci Resolve for advanced color grading and CapCut for quick social media edits.",
@@ -258,95 +486,75 @@ async function getResponse(userInput) {
     }
   }
   
-  // Check for greetings
-  if (matchKeywords(input, ['hi', 'hello', 'hey', 'sup', 'yo', 'greetings', 'hola', 'namaste', 'whats up', 'howdy', 'wassup', 'good morning', 'good evening', 'good afternoon', 'hii', 'hiii', 'heya', 'heyyy', 'heyy', 'hiiii', 'hy', 'helo', 'helloo', 'helloooo', 'hai', 'hallo', 'bonjour', 'salaam', 'vanakkam'])) {
-    lastIntent = 'greeting';
-    return { text: randomChoice(responses.greeting) };
+  // Detect intent using smart matching
+  let intent = detectIntent(input);
+  
+  // If no intent found, try smart fallback
+  if (!intent) {
+    intent = getSmartFallback(input);
   }
   
-  // Check for about/who questions
-  if (matchKeywords(input, ['who are you', 'about', 'tell me about yourself', 'introduce', 'who r u', 'yourself', 'background', 'who is devicharan', 'who is devi', 'about you', 'about yourself', 'describe yourself', 'what are you', 'who made this', 'who built this', 'creator', 'owner', 'whose portfolio', 'who owns', 'tell me about you', 'info about you', 'your story', 'your journey', 'bio', 'biography', 'profile', 'introduction', 'who dis', 'whos this'])) {
-    lastIntent = 'about';
-    return { text: randomChoice(responses.about) };
+  // Handle detected intent
+  if (intent) {
+    lastIntent = intent;
+    
+    switch (intent) {
+      case 'greeting':
+        return { text: randomChoice(responses.greeting) };
+      
+      case 'about':
+        return { text: randomChoice(responses.about) };
+      
+      case 'skills':
+        return { text: randomChoice(responses.skills) };
+      
+      case 'projects':
+        return {
+          text: randomChoice(responses.projects),
+          buttons: responses.portfolio.buttons
+        };
+      
+      case 'contact':
+        return {
+          text: randomChoice(responses.contact.text),
+          buttons: responses.contact.buttons
+        };
+      
+      case 'social':
+        return {
+          text: randomChoice(responses.social.text),
+          buttons: responses.social.buttons
+        };
+      
+      case 'portfolio':
+        return {
+          text: randomChoice(responses.portfolio.text),
+          buttons: responses.portfolio.buttons
+        };
+      
+      case 'support':
+        return {
+          text: randomChoice(responses.support.text),
+          buttons: responses.support.buttons
+        };
+      
+      case 'experience':
+        return { text: randomChoice(responses.experience) };
+      
+      case 'education':
+        return { text: randomChoice(responses.education) };
+      
+      case 'achievements':
+        return { text: randomChoice(responses.achievements) };
+      
+      case 'goodbye':
+        lastIntent = null;
+        conversationContext = [];
+        return { text: randomChoice(responses.goodbye) };
+    }
   }
   
-  // Check for skills
-  if (matchKeywords(input, ['skills', 'what can you do', 'abilities', 'capable', 'expertise', 'good at', 'tools', 'software', 'proficient', 'tech stack', 'technologies', 'programming', 'languages', 'frameworks', 'what do you know', 'specialization', 'specialty', 'strengths', 'competencies', 'talents', 'qualifications', 'technical skills', 'soft skills', 'hard skills', 'skill set', 'skillset', 'what tools', 'which tools', 'can you code', 'coding', 'development', 'design skills', 'editing skills', 'video skills', 'ai skills', 'capabilities'])) {
-    lastIntent = 'skills';
-    return { text: randomChoice(responses.skills) };
-  }
-  
-  // Check for projects
-  if (matchKeywords(input, ['projects', 'work', 'portfolio', 'built', 'created', 'made', 'showcase', 'examples', 'show me', 'what have you done', 'your work', 'past work', 'previous work', 'samples', 'demos', 'case studies', 'things you made', 'stuff you built', 'show your work', 'works', 'creations', 'builds', 'accomplishment', 'what did you make', 'what did you create', 'your projects', 'project list', 'completed projects', 'finished projects'])) {
-    lastIntent = 'projects';
-    return {
-      text: randomChoice(responses.projects),
-      buttons: responses.portfolio.buttons
-    };
-  }
-  
-  // Check for contact
-  if (matchKeywords(input, ['contact', 'email', 'phone', 'reach', 'call', 'message', 'mail', 'number', 'whatsapp', 'get in touch', 'reach out', 'connect with you', 'how to contact', 'contact info', 'contact details', 'your email', 'your phone', 'your number', 'mobile', 'cell', 'telephone', 'dm', 'direct message', 'text you', 'write to you', 'send message', 'talk to you', 'speak to you', 'chat with you', 'hire you', 'hiring', 'freelance', 'available', 'availability', 'book you', 'schedule', 'appointment', 'meeting', 'consultation'])) {
-    lastIntent = 'contact';
-    return {
-      text: randomChoice(responses.contact.text),
-      buttons: responses.contact.buttons
-    };
-  }
-  
-  // Check for social media
-  if (matchKeywords(input, ['social', 'linkedin', 'instagram', 'facebook', 'follow', 'connect', 'insta', 'fb', 'socials', 'social media', 'twitter', 'x', 'youtube', 'github', 'tiktok', 'snapchat', 'discord', 'telegram', 'online presence', 'social profiles', 'social links', 'follow you', 'where to follow', 'your socials', 'social accounts', 'social handles', 'handles', 'profiles', 'online profiles', 'networking', 'professional network'])) {
-    lastIntent = 'social';
-    return {
-      text: randomChoice(responses.social.text),
-      buttons: responses.social.buttons
-    };
-  }
-  
-  // Check for portfolio site
-  if (matchKeywords(input, ['website', 'site', 'portfolio', 'link', 'url', 'web', 'page', 'cv', 'resume', 'your website', 'your site', 'portfolio link', 'download cv', 'download resume', 'get cv', 'get resume', 'see portfolio', 'view portfolio', 'portfolio website', 'personal site', 'personal website', 'homepage', 'landing page', 'biodata', 'curriculum vitae'])) {
-    lastIntent = 'portfolio';
-    return {
-      text: randomChoice(responses.portfolio.text),
-      buttons: responses.portfolio.buttons
-    };
-  }
-  
-  // Check for support
-  if (matchKeywords(input, ['support', 'help you', 'contribute', 'share', 'promote', 'assist', 'donate', 'sponsor', 'how can i help', 'support you', 'support your work', 'fund', 'funding', 'patronize', 'back you', 'boost', 'spread the word', 'recommend', 'recommend you', 'referral', 'refer', 'endorse', 'vouch', 'collaborate', 'collab', 'partnership', 'work together', 'team up', 'join forces'])) {
-    lastIntent = 'support';
-    return {
-      text: randomChoice(responses.support.text),
-      buttons: responses.support.buttons
-    };
-  }
-  
-  // Check for experience
-  if (matchKeywords(input, ['experience', 'work history', 'jobs', 'internship', 'career', 'worked', 'employment', 'job', 'work experience', 'professional experience', 'past jobs', 'previous jobs', 'companies', 'organizations', 'employers', 'where did you work', 'job history', 'career history', 'resume experience', 'cv experience', 'industry experience', 'years of experience', 'how long', 'freelance experience', 'client work'])) {
-    lastIntent = 'experience';
-    return { text: randomChoice(responses.experience) };
-  }
-  
-  // Check for education
-  if (matchKeywords(input, ['education', 'degree', 'college', 'university', 'study', 'studied', 'school', 'diploma', 'btech', 'b.tech', 'engineering', 'qualification', 'academic', 'academics', 'where did you study', 'educational background', 'educational qualification', 'graduation', 'graduate', 'undergraduate', 'postgraduate', 'masters', 'bachelors', 'class', 'course', 'major', 'minor', 'gpa', 'grades', 'institution', 'alma mater', 'polytechnic', 'eee', 'electrical'])) {
-    lastIntent = 'education';
-    return { text: randomChoice(responses.education) };
-  }
-  
-  // Check for achievements
-  if (matchKeywords(input, ['achievements', 'accomplishments', 'awards', 'certifications', 'proud', 'certificates', 'certified', 'recognition', 'honors', 'honours', 'accolades', 'medals', 'trophies', 'achievements list', 'what are you proud of', 'proud moments', 'best work', 'notable', 'highlights', 'milestones', 'success', 'wins', 'winning', 'badge', 'badges', 'credentials', 'accreditation'])) {
-    lastIntent = 'achievements';
-    return { text: randomChoice(responses.achievements) };
-  }
-  
-  // Check for goodbye
-  if (matchKeywords(input, ['bye', 'goodbye', 'see you', 'later', 'thanks', 'thank you', 'cya', 'ttyl', 'take care', 'see ya', 'catch you later', 'gotta go', 'got to go', 'leaving', 'peace', 'peace out', 'adios', 'ciao', 'farewell', 'goodnight', 'good night', 'have a nice day', 'have a good day', 'talk later', 'until next time', 'cheers', 'appreciate it', 'thx', 'thnx', 'tysm', 'ty', 'thankyou', 'thankss'])) {
-    lastIntent = null;
-    conversationContext = [];
-    return { text: randomChoice(responses.goodbye) };
-  }
-  
-  // Fallback response
+  // Fallback with helpful guidance
   lastIntent = 'fallback';
   return { text: randomChoice(responses.fallback) };
 }
