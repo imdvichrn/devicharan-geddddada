@@ -517,7 +517,7 @@ export function Portfolio() {
                 variant="ghost"
                 size="sm"
                 className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale"
-                onClick={() => window.open('https://www.linkedin.com/in/devi-charan-1a8b49302', '_blank')}
+                onClick={() => window.open('https://www.linkedin.com/in/geddadadevicharan', '_blank')}
                 aria-label="LinkedIn Profile"
               >
                 <Linkedin size={20} className="text-muted-foreground hover:text-primary transition-colors" />

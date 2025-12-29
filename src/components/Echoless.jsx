@@ -167,7 +167,7 @@ function getResponse(userInput, context) {
 function displaySocialLinks() {
   return (
     <div className="echoless-socials flex gap-4 mt-4">
-      <a href="https://linkedin.com/in/devicharan" target="_blank" rel="noopener" className="echoless-btn linkedin">
+      <a href="https://www.linkedin.com/in/geddadadevicharan" target="_blank" rel="noopener" className="echoless-btn linkedin">
         <span className="icon">🔗</span> LinkedIn
       </a>
       <a href="https://github.com/imdvichrn" target="_blank" rel="noopener" className="echoless-btn github">
