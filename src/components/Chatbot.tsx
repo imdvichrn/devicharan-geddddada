@@ -116,7 +116,7 @@ What would you like to know?`,
         window.location.href = 'mailto:devicharangeddada@gmail.com';
         break;
       case 'linkedin':
-        window.open('https://www.linkedin.com/in/devi-charan-1a8b49302', '_blank');
+        window.open('https://www.linkedin.com/in/geddadadevicharan', '_blank');
         break;
       case 'instagram':
         window.open('https://www.instagram.com/imdvichrn', '_blank');
@@ -319,7 +319,7 @@ What would you like to know?`,
                 variant="ghost"
                 size="sm"
                 className="p-2 h-8 w-8 rounded-full hover:bg-muted/50 transition-colors"
-                onClick={() => window.open('https://www.linkedin.com/in/devi-charan-1a8b49302', '_blank')}
+                onClick={() => window.open('https://www.linkedin.com/in/geddadadevicharan', '_blank')}
                 aria-label="LinkedIn Profile"
               >
                 <Linkedin size={16} className="text-muted-foreground hover:text-primary transition-colors" />
