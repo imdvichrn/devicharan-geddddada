@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 const stars = [
   { top: '5%', left: '10%', delay: '0s', size: 2 },
   { top: '12%', left: '85%', delay: '1.5s', size: 1.5 },
@@ -22,34 +24,51 @@ const stars = [
 ];
 
 export const AnimatedBackground = () => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      // Normalize mouse position to -1 to 1 range
+      const x = (e.clientX / window.innerWidth - 0.5) * 2;
+      const y = (e.clientY / window.innerHeight - 0.5) * 2;
+      setMousePosition({ x, y });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
     <div className="absolute inset-0 overflow-hidden bg-background">
       {/* Base gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
       
-      {/* Floating orbs with smooth infinite animations */}
+      {/* Floating orbs with mouse parallax */}
       <div 
-        className="absolute w-[500px] h-[500px] rounded-full opacity-20 blur-3xl animate-float-slow"
+        className="absolute w-[500px] h-[500px] rounded-full opacity-20 blur-3xl animate-float-slow transition-transform duration-300 ease-out"
         style={{
           background: 'radial-gradient(circle, hsl(var(--primary)) 0%, transparent 70%)',
           top: '10%',
           left: '10%',
+          transform: `translate(${mousePosition.x * 30}px, ${mousePosition.y * 30}px)`,
         }}
       />
       <div 
-        className="absolute w-[400px] h-[400px] rounded-full opacity-15 blur-3xl animate-float-medium"
+        className="absolute w-[400px] h-[400px] rounded-full opacity-15 blur-3xl animate-float-medium transition-transform duration-300 ease-out"
         style={{
           background: 'radial-gradient(circle, hsl(var(--accent)) 0%, transparent 70%)',
           top: '50%',
           right: '10%',
+          transform: `translate(${mousePosition.x * -20}px, ${mousePosition.y * -20}px)`,
         }}
       />
       <div 
-        className="absolute w-[300px] h-[300px] rounded-full opacity-10 blur-3xl animate-float-fast"
+        className="absolute w-[300px] h-[300px] rounded-full opacity-10 blur-3xl animate-float-fast transition-transform duration-300 ease-out"
         style={{
           background: 'radial-gradient(circle, hsl(212, 100%, 70%) 0%, transparent 70%)',
           bottom: '20%',
           left: '30%',
+          transform: `translate(${mousePosition.x * 15}px, ${mousePosition.y * 15}px)`,
         }}
       />
 
