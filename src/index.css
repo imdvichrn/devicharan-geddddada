@@ -347,6 +347,22 @@ All colors MUST be HSL for proper theming.
     animation: float-fast 10s ease-in-out infinite;
   }
 
+  /* Twinkling star animation */
+  @keyframes twinkle {
+    0%, 100% { 
+      opacity: 0.2;
+      transform: scale(1);
+    }
+    50% { 
+      opacity: 0.8;
+      transform: scale(1.2);
+    }
+  }
+
+  .animate-twinkle {
+    animation: twinkle 3s ease-in-out infinite;
+  }
+
   /* Utility animation classes */
   .animate-gentle-float {
     animation: gentle-float 3s ease-in-out infinite;
