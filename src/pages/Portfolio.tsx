@@ -2,6 +2,7 @@ import { Navigation } from '@/components/Navigation';
 import { Chatbot } from '@/components/Chatbot';
 import { ContactForm } from '@/components/ContactForm';
 import { WindowChrome } from '@/components/WindowChrome';
+import { AnimatedBackground } from '@/components/AnimatedBackground';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -25,7 +26,6 @@ import {
   Instagram,
   Facebook
 } from 'lucide-react';
-import heroImage from '@/assets/hero-bg.jpg';
 import profileImage from '@/assets/profile-avatar.jpg';
 
 const skills = {
@@ -113,31 +113,6 @@ export function Portfolio() {
   const [highlightsRef, highlightsInView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [contactRef, contactInView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
-  // Parallax effect for hero - optimized for smooth scrolling
-  useEffect(() => {
-    let rafId: number;
-    const handleScroll = () => {
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-      }
-      
-      rafId = requestAnimationFrame(() => {
-        const scrolled = window.scrollY;
-        const parallaxElement = document.querySelector('.parallax-bg') as HTMLElement;
-        if (parallaxElement) {
-          parallaxElement.style.transform = `translate3d(0, ${scrolled * 0.5}px, 0)`;
-        }
-      });
-    };
-    
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-      }
-    };
-  }, []);
 
   const handleDownloadCV = async () => {
     try {
@@ -205,15 +180,7 @@ export function Portfolio() {
       
       {/* Hero Section */}
       <section id="home" className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden">
-        <div 
-          className="parallax-bg absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ 
-            backgroundImage: `url(${heroImage})`,
-            willChange: 'transform',
-          }}
-        >
-          <div className="absolute inset-0 bg-background/20 backdrop-blur-sm"></div>
-        </div>
+        <AnimatedBackground />
         
         <div className="relative z-10 text-center max-w-4xl mx-auto px-3 md:px-4">
           <Card className="glass-elevated border-glass-border animate-scale-in">
