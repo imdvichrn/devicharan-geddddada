@@ -76,11 +76,35 @@ export function Portfolio() {
   }, []);
 
   useEffect(() => {
-    // Prioritize video loading
-    if (videoRef.current) {
-      videoRef.current.load();
+    const video = videoRef.current;
+    if (video) {
+      // Prioritize video loading and ensure seamless looping
+      video.load();
+      
+      // Handle seamless loop restart
+      const handleEnded = () => {
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      };
+      
+      // Ensure video keeps playing if paused
+      const handleVisibilityChange = () => {
+        if (!document.hidden && video.paused) {
+          video.play().catch(() => {});
+        }
+      };
+      
+      video.addEventListener('ended', handleEnded);
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+      
+      return () => {
+        video.removeEventListener('ended', handleEnded);
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+      };
     }
-    
+  }, []);
+
+  useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
