@@ -77,31 +77,56 @@ export function Portfolio() {
 
   useEffect(() => {
     const video = videoRef.current;
-    if (video) {
-      // Prioritize video loading and ensure seamless looping
-      video.load();
-      
-      // Handle seamless loop restart
-      const handleEnded = () => {
-        video.currentTime = 0;
+    if (!video) return;
+
+    // Force play immediately - don't call load() as it interrupts autoplay
+    const playVideo = () => {
+      video.play().catch(() => {
+        // If autoplay blocked, try muted (should already be muted, but ensure)
+        video.muted = true;
         video.play().catch(() => {});
-      };
-      
-      // Ensure video keeps playing if paused
-      const handleVisibilityChange = () => {
-        if (!document.hidden && video.paused) {
-          video.play().catch(() => {});
-        }
-      };
-      
-      video.addEventListener('ended', handleEnded);
-      document.addEventListener('visibilitychange', handleVisibilityChange);
-      
-      return () => {
-        video.removeEventListener('ended', handleEnded);
-        document.removeEventListener('visibilitychange', handleVisibilityChange);
-      };
-    }
+      });
+    };
+
+    // Play on mount
+    playVideo();
+
+    // Handle seamless loop restart (backup for loop attribute)
+    const handleEnded = () => {
+      video.currentTime = 0;
+      playVideo();
+    };
+
+    // Handle timeupdate to prevent stalling near end
+    const handleTimeUpdate = () => {
+      if (video.duration && video.currentTime >= video.duration - 0.1) {
+        video.currentTime = 0;
+      }
+    };
+
+    // Ensure video keeps playing when tab becomes visible
+    const handleVisibilityChange = () => {
+      if (!document.hidden && video.paused) {
+        playVideo();
+      }
+    };
+
+    // Handle canplaythrough to ensure smooth playback
+    const handleCanPlay = () => {
+      playVideo();
+    };
+
+    video.addEventListener('ended', handleEnded);
+    video.addEventListener('timeupdate', handleTimeUpdate);
+    video.addEventListener('canplaythrough', handleCanPlay);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      video.removeEventListener('ended', handleEnded);
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+      video.removeEventListener('canplaythrough', handleCanPlay);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, []);
 
   useEffect(() => {
