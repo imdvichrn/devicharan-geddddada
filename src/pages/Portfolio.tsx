@@ -58,7 +58,7 @@ const education = [{
   period: "Completed",
   status: "Completed"
 }];
-const highlights = ["Self-taught in Prompt Engineering & AI Tools", "Bilingual (Telugu & English)", "Interest in Digital Marketing & Creative Design", "Reliable and motivated professional", "Strong adaptability and continuous learning mindset"];
+const highlights = ["Self-taught in Prompt Engineering & AI Tools", "Bilingual (Telugu & English)", "Interest in Digital Marketing & Creative Design", "Professional video editor", "Strong adaptability and continuous learning mindset"];
 export function Portfolio() {
   const [isDownloading, setIsDownloading] = useState(false);
   const chatbotRef = useRef<{
