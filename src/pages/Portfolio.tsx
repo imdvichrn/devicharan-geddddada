@@ -7,10 +7,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Mail, Phone, MapPin, Download, ExternalLink, User, Code, Briefcase, GraduationCap, Star, Calendar, Loader2, Linkedin, Instagram, Facebook } from 'lucide-react';
-import profileImage from '@/assets/profile-avatar.jpg';
+import profileImage from '@/assets/profile-avatar.png';
 import backgroundVideo from '@/assets/background-video.mp4';
 const skills = {
   "Creative & Technical Tools": ["Adobe Photoshop", "Canva", "CapCut", "DaVinci Resolve", "Wix", "No-code AI Platforms"],
@@ -62,9 +62,28 @@ const education = [{
 const highlights = ["Self-taught in Prompt Engineering & AI Tools", "Bilingual (Telugu & English)", "Interest in Digital Marketing & Creative Design", "Professional video editor", "Strong adaptability and continuous learning mindset"];
 export function Portfolio() {
   const [isDownloading, setIsDownloading] = useState(false);
+  const [parallaxOffset, setParallaxOffset] = useState(0);
   const chatbotRef = useRef<{
     toggleChat: () => void;
   }>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Parallax scroll effect for background video
+  const handleScroll = useCallback(() => {
+    const scrollY = window.scrollY;
+    const offset = scrollY * 0.4; // Subtle parallax multiplier
+    setParallaxOffset(offset);
+  }, []);
+
+  useEffect(() => {
+    // Prioritize video loading
+    if (videoRef.current) {
+      videoRef.current.load();
+    }
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
 
   // Intersection observers for scroll animations
   const [aboutRef, aboutInView] = useInView({
@@ -165,13 +184,17 @@ export function Portfolio() {
           }}
         >
           <video
+            ref={videoRef}
             autoPlay
             loop
             muted
             playsInline
             preload="auto"
-            className="absolute inset-0 w-full h-full object-cover will-change-transform"
-            style={{ transform: 'translateZ(0)' }}
+            className="absolute w-full h-[120%] object-cover will-change-transform"
+            style={{ 
+              transform: `translate3d(0, ${-parallaxOffset}px, 0)`,
+              top: '-10%'
+            }}
           >
             <source src={backgroundVideo} type="video/mp4" />
           </video>
@@ -183,9 +206,15 @@ export function Portfolio() {
             <CardHeader className="pb-4 md:pb-6 px-3 md:px-6">
               <WindowChrome className="mb-3 md:mb-6" />
               <div className="flex flex-col items-center space-y-3 md:space-y-6">
-                <div className="relative">
-                  <img src={profileImage} alt="Geddada Devicharan" className="w-20 h-20 md:w-32 md:h-32 rounded-full object-cover border-4 border-primary/20 shadow-lg" />
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 to-accent/20"></div>
+                <div className="relative w-24 h-24 md:w-36 md:h-36">
+                  <img 
+                    src={profileImage} 
+                    alt="Geddada Devicharan" 
+                    className="w-full h-full rounded-full object-cover object-top border-4 border-primary/30 shadow-2xl ring-2 ring-primary/10 ring-offset-2 ring-offset-background" 
+                    loading="eager"
+                    fetchPriority="high"
+                  />
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/10 via-transparent to-accent/10 pointer-events-none"></div>
                 </div>
                 
                 <div className="space-y-2 md:space-y-4">
