@@ -156,16 +156,26 @@ export function Portfolio() {
       
       {/* Hero Section */}
       <section id="home" className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ zIndex: 0 }}
+        <div 
+          className="absolute inset-0"
+          style={{ 
+            zIndex: 0,
+            maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)'
+          }}
         >
-          <source src={backgroundVideo} type="video/mp4" />
-        </video>
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            className="absolute inset-0 w-full h-full object-cover will-change-transform"
+            style={{ transform: 'translateZ(0)' }}
+          >
+            <source src={backgroundVideo} type="video/mp4" />
+          </video>
+        </div>
         <div className="absolute inset-0 bg-background/60" style={{ zIndex: 1 }} />
         
         <div className="relative z-10 text-center max-w-4xl mx-auto px-3 md:px-4" style={{ zIndex: 2 }}>
