@@ -11,6 +11,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Mail, Phone, MapPin, Download, ExternalLink, User, Code, Briefcase, GraduationCap, Star, Calendar, Loader2, Linkedin, Instagram, Facebook } from 'lucide-react';
 import profileImage from '@/assets/profile-avatar.jpg';
+import backgroundVideo from '@/assets/background-video.mp4';
 const skills = {
   "Creative & Technical Tools": ["Adobe Photoshop", "Canva", "CapCut", "DaVinci Resolve", "Wix", "No-code AI Platforms"],
   "Professional Skills": ["Data Entry", "Research", "Content Design", "Bilingual Communication (Telugu ↔ English)"],
@@ -155,9 +156,19 @@ export function Portfolio() {
       
       {/* Hero Section */}
       <section id="home" className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden">
-        <AnimatedBackground />
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ zIndex: 0 }}
+        >
+          <source src={backgroundVideo} type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-background/60" style={{ zIndex: 1 }} />
         
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-3 md:px-4">
+        <div className="relative z-10 text-center max-w-4xl mx-auto px-3 md:px-4" style={{ zIndex: 2 }}>
           <Card className="glass-elevated border-glass-border animate-scale-in">
             <CardHeader className="pb-4 md:pb-6 px-3 md:px-6">
               <WindowChrome className="mb-3 md:mb-6" />
