@@ -1,7 +1,5 @@
 
-his project is a modern web application developed and deployed through Ai, showcasing a full-stack-ready frontend architecture optimized for performance, scalability, and clean developer experience. Built using Vite, React, TypeScript, Tailwind CSS, and shadcn/ui, it leverages cutting-edge web technologies to ensure a fast, maintainable, and highly modular codebase.
-
-The development workflow integrates seamlessly with Lovable’s AI-assisted environment, enabling real-time prompting, instant previews, and automated version control commits. The project can also be cloned and edited locally through any preferred IDE using Node.js and npm, supporting both rapid prototyping and structured development pipelines.
+This project is a modern web application showcasing a full-stack-ready frontend architecture optimized for performance, scalability, and clean developer experience. Built using Vite, React, TypeScript, Tailwind CSS, and shadcn/ui, it leverages cutting-edge web technologies to ensure a fast, maintainable, and highly modular codebase.
 
 Key Highlights:
 
@@ -11,9 +9,9 @@ Key Highlights:
 
 🎨 Tailwind CSS & shadcn/ui for a consistent, responsive, and professional UI system.
 
-🔄 Cross-platform flexibility, allowing edits via Lovable, GitHub, or local IDEs with instant synchronization.
+🔄 Cross-platform flexibility, allowing edits via GitHub or local IDEs with instant synchronization.
 
-🚀 One-click deployment directly from Lovable with built-in support for custom domains and live publishing.
+🚀 One-click deployment with built-in support for custom domains and live publishing.
 
 This project reflects my expertise in modern frontend development, UI engineering, and efficient DevOps practices, demonstrating how to integrate AI-driven development tools with robust design systems to produce elegant, high-performance web applications.
 Created and maintained by imdvichrn.

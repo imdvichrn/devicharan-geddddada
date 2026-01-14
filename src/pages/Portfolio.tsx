@@ -22,7 +22,7 @@ const projects = [{
   description: "Built using Wix/AI Builder with modern design principles and responsive layout",
   year: "2024",
   technologies: ["Wix", "AI Builder", "Web Design"],
-  link: "https://demo-project0045.lovable.app/"
+  link: "#"
 }, {
   title: "Video Editing Demos",
   description: "Professional video editing projects showcasing creative storytelling and technical skills",
