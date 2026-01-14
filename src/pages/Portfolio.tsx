@@ -234,6 +234,7 @@ export function Portfolio() {
         >
           <video
             ref={videoRef}
+            poster="/src/assets/profile-avatar.png"
             autoPlay
             loop
             muted
@@ -270,6 +271,9 @@ export function Portfolio() {
                   <h1 className="text-2xl md:text-4xl lg:text-6xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                     Geddada Devicharan
                   </h1>
+                  <div className="mt-1">
+                    <span className="inline-block text-sm md:text-base text-primary font-medium">@imdvichrn</span>
+                  </div>
                   <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground px-2">
                     Aspiring Digital Professional | Creative Learner | Problem Solver
                   </p>
@@ -405,10 +409,19 @@ export function Portfolio() {
                         {tech}
                       </Badge>)}
                   </div>
-                  <Button variant="outline" size="sm" className="w-full hover-scale" onClick={() => window.open(project.link, '_blank')} disabled={project.link === '#'}>
-                    <ExternalLink className="mr-2 h-3 w-3" />
-                    View Project
-                  </Button>
+                  {project.link !== '#' ? (
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="w-full block">
+                      <Button variant="outline" size="sm" className="w-full hover-scale">
+                        <ExternalLink className="mr-2 h-3 w-3" />
+                        View Project
+                      </Button>
+                    </a>
+                  ) : (
+                    <Button variant="outline" size="sm" className="w-full hover-scale" disabled>
+                      <ExternalLink className="mr-2 h-3 w-3" />
+                      View Project
+                    </Button>
+                  )}
                 </CardContent>
               </Card>)}
           </div>
@@ -481,20 +494,26 @@ export function Portfolio() {
           <div className="text-center space-y-4">
             {/* Social Media Links */}
             <div className="flex justify-center items-center gap-6">
-              <Button variant="ghost" size="sm" className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale" onClick={() => window.open('https://www.linkedin.com/in/geddadadevicharan', '_blank')} aria-label="LinkedIn Profile">
-                <Linkedin size={20} className="text-muted-foreground hover:text-primary transition-colors" />
-              </Button>
-              
-              <Button variant="ghost" size="sm" className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale" onClick={() => window.open('https://www.instagram.com/imdvichrn', '_blank')} aria-label="Instagram Profile">
-                <Instagram size={20} className="text-muted-foreground hover:text-primary transition-colors" />
-              </Button>
-              
-              <Button variant="ghost" size="sm" className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale" onClick={() => window.open('https://www.facebook.com/userdead.610', '_blank')} aria-label="Facebook Profile">
-                <Facebook size={20} className="text-muted-foreground hover:text-primary transition-colors" />
-              </Button>
+              <a href="https://www.linkedin.com/in/geddadadevicharan" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+                <Button variant="ghost" size="sm" className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale">
+                  <Linkedin size={20} className="text-muted-foreground hover:text-primary transition-colors" />
+                </Button>
+              </a>
+
+              <a href="https://www.instagram.com/imdvichrn" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile">
+                <Button variant="ghost" size="sm" className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale">
+                  <Instagram size={20} className="text-muted-foreground hover:text-primary transition-colors" />
+                </Button>
+              </a>
+
+              <a href="https://www.facebook.com/userdead.610" target="_blank" rel="noopener noreferrer" aria-label="Facebook Profile">
+                <Button variant="ghost" size="sm" className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale">
+                  <Facebook size={20} className="text-muted-foreground hover:text-primary transition-colors" />
+                </Button>
+              </a>
             </div>
             
-            <p className="text-muted-foreground">© 2026 Geddada Devicharan. All rights reserved.</p>
+            <p className="text-muted-foreground">© 2026 Geddada Devicharan (@imdvichrn). All rights reserved.</p>
           </div>
         </div>
       </footer>
