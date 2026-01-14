@@ -3,6 +3,8 @@ import { Send, Loader2, Linkedin, Instagram, Facebook } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { WindowChrome } from './WindowChrome';
+import { SiriOrb } from './SiriOrb';
+
 import { ActionButtons } from './ActionButtons';
 import { useToast } from '@/hooks/use-toast';
 import getResponse from './echoless.js';
@@ -193,7 +195,7 @@ What would you like to know?`,
 
       {/* Chatbot Panel */}
       {isOpen && (
-        <div data-chatbot-panel className="fixed bottom-16 right-2 left-2 md:bottom-24 md:right-6 md:left-auto md:w-96 h-[500px] md:h-[500px] glass-elevated rounded-2xl shadow-2xl z-40 animate-slide-up overflow-hidden">
+        <div className="fixed bottom-16 right-2 left-2 md:bottom-24 md:right-6 md:left-auto md:w-96 h-[500px] md:h-[500px] glass-elevated rounded-2xl shadow-2xl z-40 animate-slide-up overflow-hidden">
           {/* Header */}
           <div className="p-3 md:p-4 border-b border-glass-border">
             <div className="flex items-center justify-between">
@@ -201,7 +203,7 @@ What would you like to know?`,
                 onClose={() => setIsOpen(false)}
                 onMinimize={() => {
                   // Minimize animation
-                  const panel = document.querySelector('[data-chatbot-panel]') as HTMLElement;
+                  const panel = document.querySelector('.fixed.bottom-24.right-6') as HTMLElement;
                   if (panel) {
                     panel.style.transform = 'scale(0.1)';
                     panel.style.opacity = '0';
@@ -210,7 +212,7 @@ What would you like to know?`,
                 }}
                 onZoom={() => {
                   // Toggle between normal and expanded view
-                  const panel = document.querySelector('[data-chatbot-panel]') as HTMLElement;
+                  const panel = document.querySelector('.fixed.bottom-24.right-6') as HTMLElement;
                   if (panel) {
                     const isExpanded = panel.classList.contains('expanded');
                     if (isExpanded) {
@@ -263,7 +265,7 @@ What would you like to know?`,
 
                   {/* Timestamp */}
                   {message.timestamp && (
-                    <div className="text-xs text-muted-foreground/80 mt-1">
+                    <div className="text-xs text-muted-foreground/50 mt-1">
                       {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </div>
                   )}
@@ -285,9 +287,7 @@ What would you like to know?`,
           {/* Input */}
           <form onSubmit={sendMessage} className="p-3 md:p-4 border-t border-glass-border">
             <div className="flex gap-2">
-              <label htmlFor="chat-input" className="sr-only">Chat message</label>
               <Input
-                id="chat-input"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask me anything..."
@@ -306,7 +306,6 @@ What would you like to know?`,
                 size="sm" 
                 disabled={!input.trim() || isLoading}
                 className="bg-primary hover:bg-primary/90"
-                aria-label="Send message"
               >
                 <Send size={16} />
               </Button>

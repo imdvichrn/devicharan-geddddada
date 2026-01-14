@@ -2,16 +2,16 @@ import { Navigation } from '@/components/Navigation';
 import { Chatbot } from '@/components/Chatbot';
 import { ContactForm } from '@/components/ContactForm';
 import { WindowChrome } from '@/components/WindowChrome';
+import { AnimatedBackground } from '@/components/AnimatedBackground';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Mail, Phone, MapPin, Download, ExternalLink, User, Code, Briefcase, GraduationCap, Star, Calendar, Loader2, Linkedin, Instagram, Facebook } from 'lucide-react';
 import profileImage from '@/assets/profile-avatar.png';
 import backgroundVideo from '@/assets/background-video.mp4';
-import heroFallback from '@/assets/hero-bg.jpg';
 const skills = {
   "Creative & Technical Tools": ["Adobe Photoshop", "Canva", "CapCut", "DaVinci Resolve", "Wix", "No-code AI Platforms"],
   "Professional Skills": ["Data Entry", "Research", "Content Design", "Bilingual Communication (Telugu ↔ English)"],
@@ -63,63 +63,76 @@ const highlights = ["Self-taught in Prompt Engineering & AI Tools", "Bilingual (
 export function Portfolio() {
   const [isDownloading, setIsDownloading] = useState(false);
   const [parallaxOffset, setParallaxOffset] = useState(0);
-  const [videoCanPlay, setVideoCanPlay] = useState(false);
   const chatbotRef = useRef<{
     toggleChat: () => void;
   }>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Video autoplay with fallback
+  // Parallax scroll effect for background video
+  const handleScroll = useCallback(() => {
+    const scrollY = window.scrollY;
+    const offset = scrollY * 0.4; // Subtle parallax multiplier
+    setParallaxOffset(offset);
+  }, []);
+
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    video.muted = true;
-    video.playsInline = true;
+    // Force play immediately - don't call load() as it interrupts autoplay
+    const playVideo = () => {
+      video.play().catch(() => {
+        // If autoplay blocked, try muted (should already be muted, but ensure)
+        video.muted = true;
+        video.play().catch(() => {});
+      });
+    };
 
-    video.play()
-      .then(() => setVideoCanPlay(true))
-      .catch(() => setVideoCanPlay(false));
+    // Play on mount
+    playVideo();
 
-    // Handle seamless loop restart
+    // Handle seamless loop restart (backup for loop attribute)
     const handleEnded = () => {
       video.currentTime = 0;
-      video.play().catch(() => {});
+      playVideo();
+    };
+
+    // Handle timeupdate to prevent stalling near end
+    const handleTimeUpdate = () => {
+      if (video.duration && video.currentTime >= video.duration - 0.1) {
+        video.currentTime = 0;
+      }
     };
 
     // Ensure video keeps playing when tab becomes visible
     const handleVisibilityChange = () => {
       if (!document.hidden && video.paused) {
-        video.play().catch(() => {});
+        playVideo();
       }
     };
 
+    // Handle canplaythrough to ensure smooth playback
+    const handleCanPlay = () => {
+      playVideo();
+    };
+
     video.addEventListener('ended', handleEnded);
+    video.addEventListener('timeupdate', handleTimeUpdate);
+    video.addEventListener('canplaythrough', handleCanPlay);
     document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
       video.removeEventListener('ended', handleEnded);
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+      video.removeEventListener('canplaythrough', handleCanPlay);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 
-  // Throttled parallax scroll effect
   useEffect(() => {
-    let ticking = false;
-
-    const onScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          setParallaxOffset(window.scrollY * 0.4);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
 
   // Intersection observers for scroll animations
   const [aboutRef, aboutInView] = useInView({
@@ -207,10 +220,6 @@ export function Portfolio() {
     }
   };
   return <div className="min-h-screen bg-background">
-      {/* Skip to content for accessibility */}
-      <a href="#about" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md">
-        Skip to content
-      </a>
       <Navigation />
       
       {/* Hero Section */}
@@ -223,27 +232,17 @@ export function Portfolio() {
             WebkitMaskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)'
           }}
         >
-          {/* Fallback image when video can't play */}
-          {!videoCanPlay && (
-            <img 
-              src={heroFallback} 
-              alt="" 
-              className="absolute w-full h-[120%] object-cover"
-              style={{ top: '-10%' }}
-            />
-          )}
           <video
             ref={videoRef}
             autoPlay
             loop
             muted
             playsInline
-            preload="metadata"
+            preload="auto"
             className="absolute w-full h-[120%] object-cover will-change-transform"
             style={{ 
               transform: `translate3d(0, ${-parallaxOffset}px, 0)`,
-              top: '-10%',
-              display: videoCanPlay ? 'block' : 'none'
+              top: '-10%'
             }}
           >
             <source src={backgroundVideo} type="video/mp4" />
@@ -284,7 +283,7 @@ export function Portfolio() {
                     <div className="flex items-center gap-1 md:gap-2">
                       <Phone size={14} className="md:w-4 md:h-4" />
                       <span className="hidden sm:inline">+91 6303468707</span>
-                      <span className="sm:hidden">+91 630•••••</span>
+                      <span className="sm:hidden">+91 630...</span>
                     </div>
                     <div className="flex items-center gap-1 md:gap-2 max-w-full">
                       <Mail size={14} className="md:w-4 md:h-4 flex-shrink-0" />
@@ -406,12 +405,10 @@ export function Portfolio() {
                         {tech}
                       </Badge>)}
                   </div>
-                  {project.link && project.link !== '#' && (
-                    <Button variant="outline" size="sm" className="w-full hover-scale" onClick={() => window.open(project.link, '_blank')}>
-                      <ExternalLink className="mr-2 h-3 w-3" />
-                      View Project
-                    </Button>
-                  )}
+                  <Button variant="outline" size="sm" className="w-full hover-scale" onClick={() => window.open(project.link, '_blank')} disabled={project.link === '#'}>
+                    <ExternalLink className="mr-2 h-3 w-3" />
+                    View Project
+                  </Button>
                 </CardContent>
               </Card>)}
           </div>
@@ -497,7 +494,7 @@ export function Portfolio() {
               </Button>
             </div>
             
-            <p className="text-muted-foreground">© {new Date().getFullYear()} Geddada Devicharan. All rights reserved.</p>
+            <p className="text-muted-foreground">© 2026 Geddada Devicharan. All rights reserved.</p>
           </div>
         </div>
       </footer>
