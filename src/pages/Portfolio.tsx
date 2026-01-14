@@ -12,6 +12,7 @@ import { useInView } from 'react-intersection-observer';
 import { Mail, Phone, MapPin, Download, ExternalLink, User, Code, Briefcase, GraduationCap, Star, Calendar, Loader2, Linkedin, Instagram, Facebook } from 'lucide-react';
 import profileImage from '@/assets/profile-avatar.png';
 import backgroundVideo from '@/assets/background-video.mp4';
+import heroBg from '@/assets/hero-bg.png';
 const skills = {
   "Creative & Technical Tools": ["Adobe Photoshop", "Canva", "CapCut", "DaVinci Resolve", "Wix", "No-code AI Platforms"],
   "Professional Skills": ["Data Entry", "Research", "Content Design", "Bilingual Communication (Telugu ↔ English)"],
@@ -234,7 +235,7 @@ export function Portfolio() {
         >
           <video
             ref={videoRef}
-            poster="/src/assets/profile-avatar.png"
+            poster={heroBg}
             autoPlay
             loop
             muted
