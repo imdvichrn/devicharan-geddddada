@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Download, ExternalLink, User, Code, Briefcase, GraduationCap, Star, Calendar, Loader2, Linkedin, Instagram, Facebook } from 'lucide-react';
 import profileImage from '@/assets/profile-avatar.png';
 import backgroundVideo from '@/assets/background-video.mp4';
@@ -19,35 +20,33 @@ const skills = {
   "Soft Skills": ["Problem-Solving", "Teamwork", "Adaptability", "Continuous Learning"]
 };
 const projects = [{
-  title: "Portfolio Website",
-  description: "Built using Wix/AI Builder with modern design principles and responsive layout",
+  title: "Web Portfolio",
+  description: "A modern, responsive personal portfolio with glassmorphism design and smooth animations",
   year: "2024",
-  technologies: ["Wix", "AI Builder", "Web Design"],
-  link: "#"
+  technologies: ["React", "TypeScript", "Tailwind CSS"],
+  link: "/projects/web-portfolio",
+  isInternal: true
 }, {
-  title: "Video Editing Demos",
-  description: "Professional video editing projects showcasing creative storytelling and technical skills",
+  title: "SceneSync Edits",
+  description: "Professional video editing showcasing creative storytelling and cinematic effects",
   year: "2024",
   technologies: ["CapCut", "DaVinci Resolve", "Video Production"],
-  link: "https://youtube.com/@scenesyncclips?si=xx0J30hHGUVaoY82"
+  link: "/projects/scenesync-edits",
+  isInternal: true
 }, {
-  title: "Content & Design",
-  description: "Visual content creation for digital marketing and brand communications",
+  title: "Visual Design",
+  description: "Creative graphic design including posters, infographics, and brand materials",
   year: "2024",
   technologies: ["Photoshop", "Canva", "Graphic Design"],
-  link: "#"
+  link: "/projects/visual-design",
+  isInternal: true
 }, {
-  title: "Marketing & Planning Practice",
-  description: "Strategic planning and execution of digital marketing campaigns",
+  title: "Growth Strategy",
+  description: "Strategic digital marketing and growth planning with data-driven insights",
   year: "2024",
   technologies: ["Digital Marketing", "Content Strategy", "Analytics"],
-  link: "#"
-}, {
-  title: "Team Collaboration Project",
-  description: "Cross-functional team project demonstrating leadership and collaboration skills",
-  year: "2023",
-  technologies: ["Project Management", "Team Leadership", "Communication"],
-  link: "#"
+  link: "/projects/growth-strategy",
+  isInternal: true
 }];
 const education = [{
   degree: "B.Tech in Electrical & Electronics Engineering",
@@ -410,19 +409,21 @@ export function Portfolio() {
                         {tech}
                       </Badge>)}
                   </div>
-                  {project.link !== '#' ? (
+                  {project.isInternal ? (
+                    <Link to={project.link} className="w-full block">
+                      <Button variant="outline" size="sm" className="w-full hover-scale">
+                        <ExternalLink className="mr-2 h-3 w-3" />
+                        View Project
+                      </Button>
+                    </Link>
+                  ) : project.link !== '#' ? (
                     <a href={project.link} target="_blank" rel="noopener noreferrer" className="w-full block">
                       <Button variant="outline" size="sm" className="w-full hover-scale">
                         <ExternalLink className="mr-2 h-3 w-3" />
                         View Project
                       </Button>
                     </a>
-                  ) : (
-                    <Button variant="outline" size="sm" className="w-full hover-scale" disabled>
-                      <ExternalLink className="mr-2 h-3 w-3" />
-                      View Project
-                    </Button>
-                  )}
+                  ) : null}
                 </CardContent>
               </Card>)}
           </div>
