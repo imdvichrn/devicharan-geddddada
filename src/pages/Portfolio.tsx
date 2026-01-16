@@ -3,6 +3,7 @@ import { Chatbot } from '@/components/Chatbot';
 import { ContactForm } from '@/components/ContactForm';
 import { WindowChrome } from '@/components/WindowChrome';
 import { AnimatedBackground } from '@/components/AnimatedBackground';
+import { LiveProjectsButton } from '@/components/LiveProjectsButton';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -381,10 +382,16 @@ export function Portfolio() {
           <Card className="glass-panel border-glass-border mb-4 md:mb-8 hover-scale">
             <CardHeader className="px-4 md:px-6">
               <WindowChrome className="mb-2 md:mb-4" />
-              <CardTitle className="text-xl md:text-3xl font-bold flex items-center gap-2 md:gap-3">
-                <Briefcase className="text-primary w-5 h-5 md:w-6 md:h-6" />
-                Projects & Work
-              </CardTitle>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <CardTitle className="text-xl md:text-3xl font-bold flex items-center gap-2 md:gap-3">
+                  <Briefcase className="text-primary w-5 h-5 md:w-6 md:h-6" />
+                  Projects & Work
+                </CardTitle>
+                <LiveProjectsButton 
+                  href="https://github.com/yourusername" 
+                  label="View Live Projects"
+                />
+              </div>
             </CardHeader>
           </Card>
           
