@@ -388,7 +388,7 @@ export function Portfolio() {
                   Projects & Work
                 </CardTitle>
                 <LiveProjectsButton 
-                  href="https://github.com/yourusername" 
+                  href="https://github.com/imdvichrn" 
                   label="View Live Projects"
                 />
               </div>
