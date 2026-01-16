@@ -2,9 +2,11 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
+import { AnimatePresence } from "framer-motion";
 import { ThemeProvider } from "@/hooks/useTheme";
+import { PageTransition } from "@/components/PageTransition";
 import { Portfolio } from "./pages/Portfolio";
 import NotFound from "./pages/NotFound";
 import WebPortfolio from "./pages/projects/WebPortfolio";
@@ -14,6 +16,23 @@ import GrowthStrategy from "./pages/projects/GrowthStrategy";
 
 const queryClient = new QueryClient();
 
+function AnimatedRoutes() {
+  const location = useLocation();
+  
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageTransition><Portfolio /></PageTransition>} />
+        <Route path="/projects/web-portfolio" element={<PageTransition><WebPortfolio /></PageTransition>} />
+        <Route path="/projects/scenesync-edits" element={<PageTransition><SceneSyncEdits /></PageTransition>} />
+        <Route path="/projects/visual-design" element={<PageTransition><VisualDesign /></PageTransition>} />
+        <Route path="/projects/growth-strategy" element={<PageTransition><GrowthStrategy /></PageTransition>} />
+        <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+      </Routes>
+    </AnimatePresence>
+  );
+}
+
 const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
@@ -22,15 +41,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Portfolio />} />
-              <Route path="/projects/web-portfolio" element={<WebPortfolio />} />
-              <Route path="/projects/scenesync-edits" element={<SceneSyncEdits />} />
-              <Route path="/projects/visual-design" element={<VisualDesign />} />
-              <Route path="/projects/growth-strategy" element={<GrowthStrategy />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <AnimatedRoutes />
           </BrowserRouter>
         </TooltipProvider>
       </ThemeProvider>
