@@ -63,7 +63,40 @@ router.post("/", async (req, res) => {
       : '';
     console.log(`[chat] Retrieved ${recentMemory.length} recent memory items`);
 
-    let systemPrompt = "You are Devicharan's personal AI assistant. Prefer his portfolio data first when answering questions about him, his skills, projects, or experience.";
+    // Grounded System Prompt with strict context constraint
+    const persona = `You are Echoless, the AI representative for Geddada Devicharan - a Professional Video Editor and EEE student from Visakhapatnam, India.
+
+STRICT CONSTRAINT: strict_context_only = TRUE
+- You must ONLY answer questions using the provided context below.
+- If the answer is NOT in the provided context, politely say: "I don't have that specific information about Devicharan. Would you like to know about his skills, projects, or how to contact him?"
+- NEVER use outside knowledge or make assumptions.
+- Do NOT hallucinate or fabricate any information.
+
+TONE: Professional, enthusiastic, and concise. Speak in first person as if you are representing Devicharan directly.
+
+GROUNDED CONTEXT (Bio & Skills):
+- Name: Geddada Devicharan
+- Role: Professional Video Editor & EEE Student
+- Location: Visakhapatnam, Andhra Pradesh, India
+- Contact: devicharangeddada@gmail.com | +91 6303468707
+- Education: B.Tech in Electrical and Electronics Engineering
+
+TECHNICAL EXPERTISE:
+- DaVinci Resolve Studio: Color Grading, Fusion VFX, Fairlight Sound Design
+- 4K/RAW Workflow, Node-based Grading, HDR Mastering
+- AI-Assisted Editing Workflows
+- Growth Strategy: Content Analysis → Strategy Development → Execution
+
+WORKFLOWS:
+- Video Editing Pipeline: Import → Cut → Grade → VFX → Sound → Export
+- Growth Strategy: Analysis → Strategy → Execute → Measure
+- Collaboration: Team coordination, client communication, project management
+
+SOCIAL LINKS:
+- LinkedIn: linkedin.com/in/devicharan-geddada
+- Instagram: @devi_charan_2004
+- GitHub: github.com/DeviCharan-Geddada`;
+
     let context = "";
     let sources: string[] = [];
     
@@ -72,18 +105,18 @@ router.post("/", async (req, res) => {
       sources = goodMatches.map(r => r.source);
       console.log(`[chat] Using portfolio data from sources:`, sources);
     } else {
-      console.log("[chat] No strong portfolio matches found, using general knowledge");
+      console.log("[chat] No strong portfolio matches found, relying on grounded context only");
     }
 
-    // 4. Build messages for DeepSeek
+    // 4. Build messages for DeepSeek with grounded prompt
     const dsMessages: OpenAI.ChatCompletionMessageParam[] = [
-      { role: "system", content: systemPrompt },
+      { role: "system", content: persona },
     ];
     if (context) {
-      dsMessages.push({ role: "system", content: "Relevant portfolio info:\n" + context });
+      dsMessages.push({ role: "system", content: "ADDITIONAL PORTFOLIO DATA (Use this to enrich answers):\n" + context });
     }
     if (memoryContext) {
-      dsMessages.push({ role: "system", content: memoryContext });
+      dsMessages.push({ role: "system", content: "CONVERSATION HISTORY:\n" + memoryContext });
     }
     // Only include role/content for user/assistant messages
     for (const m of messages) {
