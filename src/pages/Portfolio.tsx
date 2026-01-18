@@ -11,44 +11,16 @@ import { toast } from '@/hooks/use-toast';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Download, ExternalLink, User, Code, Briefcase, GraduationCap, Star, Calendar, Loader2, Linkedin, Instagram, Facebook } from 'lucide-react';
+import { Mail, Phone, MapPin, Download, User, Code, Briefcase, GraduationCap, Star, Calendar, Loader2, Linkedin, Instagram, Facebook, Workflow } from 'lucide-react';
+import { WorkflowsGrid } from '@/components/WorkflowsGrid';
 import profileImage from '@/assets/profile-avatar.png';
 import backgroundVideo from '@/assets/background-video.mp4';
 import heroBg from '@/assets/hero-bg.png';
 const skills = {
-  "Creative & Technical Tools": ["Adobe Photoshop", "Canva", "CapCut", "DaVinci Resolve", "Wix", "No-code AI Platforms"],
+  "Creative & Technical Tools": ["Adobe Photoshop", "Canva", "DaVinci Resolve Studio", "Wix", "No-code AI Platforms"],
   "Professional Skills": ["Data Entry", "Research", "Content Design", "Bilingual Communication (Telugu ↔ English)"],
   "Soft Skills": ["Problem-Solving", "Teamwork", "Adaptability", "Continuous Learning"]
 };
-const projects = [{
-  title: "Web Portfolio",
-  description: "A modern, responsive personal portfolio with glassmorphism design and smooth animations",
-  year: "2024",
-  technologies: ["React", "TypeScript", "Tailwind CSS"],
-  link: "/projects/web-portfolio",
-  isInternal: true
-}, {
-  title: "SceneSync Edits",
-  description: "Professional video editing showcasing creative storytelling and cinematic effects",
-  year: "2024",
-  technologies: ["CapCut", "DaVinci Resolve", "Video Production"],
-  link: "/projects/scenesync-edits",
-  isInternal: true
-}, {
-  title: "Visual Design",
-  description: "Creative graphic design including posters, infographics, and brand materials",
-  year: "2024",
-  technologies: ["Photoshop", "Canva", "Graphic Design"],
-  link: "/projects/visual-design",
-  isInternal: true
-}, {
-  title: "Growth Strategy",
-  description: "Strategic digital marketing and growth planning with data-driven insights",
-  year: "2024",
-  technologies: ["Digital Marketing", "Content Strategy", "Analytics"],
-  link: "/projects/growth-strategy",
-  isInternal: true
-}];
 const education = [{
   degree: "B.Tech in Electrical & Electronics Engineering",
   institution: "Currently Pursuing",
@@ -376,7 +348,7 @@ export function Portfolio() {
         </div>
       </section>
 
-      {/* Projects Section */}
+      {/* Workflows & Capabilities Section */}
       <section id="projects" className="py-10 md:py-20 px-3 md:px-4">
         <div ref={projectsRef} className={`max-w-6xl mx-auto transition-all duration-700 delay-200 ${projectsInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <Card className="glass-panel border-glass-border mb-4 md:mb-8 hover-scale">
@@ -384,8 +356,8 @@ export function Portfolio() {
               <WindowChrome className="mb-2 md:mb-4" />
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <CardTitle className="text-xl md:text-3xl font-bold flex items-center gap-2 md:gap-3">
-                  <Briefcase className="text-primary w-5 h-5 md:w-6 md:h-6" />
-                  Projects & Work
+                  <Workflow className="text-primary w-5 h-5 md:w-6 md:h-6" />
+                  Workflows & Capabilities
                 </CardTitle>
                 <LiveProjectsButton 
                   href="https://github.com/imdvichrn" 
@@ -395,45 +367,7 @@ export function Portfolio() {
             </CardHeader>
           </Card>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
-            {projects.map((project, index) => <Card key={index} className="glass-panel border-glass-border hover-scale transition-all duration-300" style={{
-            animationDelay: `${index * 100}ms`
-          }}>
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg">{project.title}</CardTitle>
-                    <Badge variant="outline" className="text-xs">
-                      {project.year}
-                    </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-muted-foreground text-sm">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-1">
-                    {project.technologies.map(tech => <Badge key={tech} variant="secondary" className="text-xs">
-                        {tech}
-                      </Badge>)}
-                  </div>
-                  {project.isInternal ? (
-                    <Link to={project.link} className="w-full block">
-                      <Button variant="outline" size="sm" className="w-full hover-scale">
-                        <ExternalLink className="mr-2 h-3 w-3" />
-                        View Project
-                      </Button>
-                    </Link>
-                  ) : project.link !== '#' ? (
-                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="w-full block">
-                      <Button variant="outline" size="sm" className="w-full hover-scale">
-                        <ExternalLink className="mr-2 h-3 w-3" />
-                        View Project
-                      </Button>
-                    </a>
-                  ) : null}
-                </CardContent>
-              </Card>)}
-          </div>
+          <WorkflowsGrid />
         </div>
       </section>
 
