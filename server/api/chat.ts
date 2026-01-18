@@ -33,22 +33,48 @@ router.post("/", async (req, res) => {
   }
   const userQuery = lastUserMsg.content;
 
+  // Keyword expansion for better fuzzy matching
+  const keywordExpansions: Record<string, string> = {
+    'editing': 'DaVinci Resolve video production color grading',
+    'video': 'DaVinci Resolve editing production VFX',
+    'color': 'color grading DaVinci Resolve node-based',
+    'vfx': 'Fusion VFX visual effects DaVinci',
+    'sound': 'Fairlight sound design audio mixing',
+    'strategy': 'growth strategy content analysis marketing',
+    'growth': 'growth strategy audience engagement analytics',
+    'skills': 'DaVinci Resolve Fusion Fairlight video editing',
+    'contact': 'email phone linkedin instagram github',
+    'projects': 'portfolio work video editing growth strategy',
+    'education': 'B.Tech EEE Visakhapatnam engineering student',
+    'experience': 'video editor freelance professional',
+  };
+
+  // Expand query with related keywords for better matching
+  let expandedQuery = userQuery;
+  for (const [keyword, expansion] of Object.entries(keywordExpansions)) {
+    if (userQuery.toLowerCase().includes(keyword)) {
+      expandedQuery = `${userQuery} ${expansion}`;
+      break;
+    }
+  }
+
   try {
     console.log(`[chat] Processing user query: "${userQuery}"`);
+    console.log(`[chat] Expanded query for search: "${expandedQuery}"`);
     
-    // 1. Embed the query
-    console.log("[chat] Creating embedding for user query...");
+    // 1. Embed the expanded query for better matching
+    console.log("[chat] Creating embedding for expanded query...");
     const embedResp = await client.embeddings.create({
       model: "text-embedding-3-small",
-      input: userQuery,
+      input: expandedQuery,
     });
     const queryEmbedding = embedResp.data[0].embedding;
     console.log(`[chat] Generated embedding with ${queryEmbedding.length} dimensions`);
 
-    // 2. Search vector store
+    // 2. Search vector store with lower threshold for fuzzy matching
     console.log("[chat] Searching vector store for relevant content...");
     const topMatches = search(queryEmbedding, 5);
-    const threshold = 0.65;
+    const threshold = 0.45; // Lowered from 0.65 for fuzzy matching (typos like 'davnci')
     const goodMatches = topMatches.filter(m => m.score > threshold);
     
     console.log(`[chat] Found ${topMatches.length} total matches, ${goodMatches.length} above threshold (${threshold})`);
@@ -63,8 +89,14 @@ router.post("/", async (req, res) => {
       : '';
     console.log(`[chat] Retrieved ${recentMemory.length} recent memory items`);
 
+    // SAFETY KNOWLEDGE - Always injected regardless of search results
+    const safetyKnowledge = `CORE IDENTITY (Always Available):
+User is Geddada Devicharan, a B.Tech EEE student in Vizag. He is a video editor (DaVinci Resolve Studio) and web developer. He built this portfolio. Contact: devicharangeddada@gmail.com | +91 6303468707.`;
+
     // Grounded System Prompt with strict context constraint
-    const persona = `You are Echoless, the AI representative for Geddada Devicharan - a Professional Video Editor and EEE student from Visakhapatnam, India.
+    const persona = `You are Echoless, the AI assistant for Geddada Devicharan - a Professional Video Editor and EEE student from Visakhapatnam, India.
+
+IDENTITY: Your name is Echoless. When asked who you are, introduce yourself as "Hi, I'm Echoless, Devicharan's AI assistant!"
 
 STRICT CONSTRAINT: strict_context_only = TRUE
 - You must ONLY answer questions using the provided context below.
@@ -73,6 +105,8 @@ STRICT CONSTRAINT: strict_context_only = TRUE
 - Do NOT hallucinate or fabricate any information.
 
 TONE: Professional, enthusiastic, and concise. Speak in first person as if you are representing Devicharan directly.
+
+${safetyKnowledge}
 
 GROUNDED CONTEXT (Bio & Skills):
 - Name: Geddada Devicharan
