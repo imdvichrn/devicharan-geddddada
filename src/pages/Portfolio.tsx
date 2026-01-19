@@ -13,6 +13,7 @@ import { useInView } from 'react-intersection-observer';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Download, User, Code, Briefcase, GraduationCap, Star, Calendar, Loader2, Linkedin, Instagram, Facebook, Workflow } from 'lucide-react';
 import { WorkflowsGrid } from '@/components/WorkflowsGrid';
+import { Helmet } from 'react-helmet-async';
 import profileImage from '@/assets/profile-avatar.png';
 import backgroundVideo from '@/assets/background-video.mp4';
 import heroBg from '@/assets/hero-bg.png';
@@ -193,6 +194,21 @@ export function Portfolio() {
     }
   };
   return <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Geddada Devicharan - Video Editor & B.Tech EEE Student | Portfolio</title>
+        <meta name="description" content="Portfolio of Geddada Devicharan - Video Editor & B.Tech EEE Student specializing in DaVinci Resolve and Growth Strategy. Based in Visakhapatnam, India." />
+        <meta name="keywords" content="Video Editor, DaVinci Resolve, Vizag, EEE Student, React Developer, Geddada Devicharan, imdvichrn" />
+        <meta property="og:title" content="Geddada Devicharan - Video Editor & Digital Professional" />
+        <meta property="og:description" content="Portfolio of Geddada Devicharan - Video Editor & B.Tech EEE Student specializing in DaVinci Resolve and Growth Strategy." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://geddadadevicharan.netlify.app/" />
+        <meta property="og:image" content="https://geddadadevicharan.netlify.app/assets/profile-avatar.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Geddada Devicharan (@imdvichrn)" />
+        <meta name="twitter:description" content="Video Editor & B.Tech EEE Student specializing in DaVinci Resolve and Growth Strategy." />
+        <link rel="canonical" href="https://geddadadevicharan.netlify.app/" />
+      </Helmet>
+      
       <Navigation />
       
       {/* Hero Section */}
@@ -212,7 +228,7 @@ export function Portfolio() {
             loop
             muted
             playsInline
-            preload="auto"
+            preload="none"
             className="absolute w-full h-[120%] object-cover will-change-transform"
             style={{ 
               transform: `translate3d(0, ${-parallaxOffset}px, 0)`,
@@ -232,10 +248,13 @@ export function Portfolio() {
                 <div className="relative w-24 h-24 md:w-36 md:h-36">
                   <img 
                     src={profileImage} 
-                    alt="Geddada Devicharan" 
+                    alt="Geddada Devicharan - Video Editor and Digital Professional" 
+                    width={144}
+                    height={144}
                     className="w-full h-full rounded-full object-cover object-top border-4 border-primary/30 shadow-2xl ring-2 ring-primary/10 ring-offset-2 ring-offset-background" 
                     loading="eager"
                     fetchPriority="high"
+                    decoding="async"
                   />
                   <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/10 via-transparent to-accent/10 pointer-events-none"></div>
                 </div>
@@ -253,17 +272,17 @@ export function Portfolio() {
                   
                   <div className="flex flex-wrap justify-center items-center gap-2 md:gap-4 text-xs md:text-sm text-muted-foreground">
                     <div className="flex items-center gap-1 md:gap-2">
-                      <MapPin size={14} className="md:w-4 md:h-4" />
+                      <MapPin size={14} className="md:w-4 md:h-4" aria-hidden="true" />
                       <span className="hidden sm:inline">Visakhapatnam, India</span>
                       <span className="sm:hidden">Vizag, India</span>
                     </div>
                     <div className="flex items-center gap-1 md:gap-2">
-                      <Phone size={14} className="md:w-4 md:h-4" />
+                      <Phone size={14} className="md:w-4 md:h-4" aria-hidden="true" />
                       <span className="hidden sm:inline">+91 6303468707</span>
                       <span className="sm:hidden">+91 630...</span>
                     </div>
                     <div className="flex items-center gap-1 md:gap-2 max-w-full">
-                      <Mail size={14} className="md:w-4 md:h-4 flex-shrink-0" />
+                      <Mail size={14} className="md:w-4 md:h-4 flex-shrink-0" aria-hidden="true" />
                       <span className="hidden md:inline truncate">devicharangeddada@gmail.com</span>
                       <span className="md:hidden truncate text-xs">devicharan...</span>
                     </div>
@@ -271,21 +290,21 @@ export function Portfolio() {
                 </div>
                 
                 <div className="flex flex-wrap justify-center gap-2 md:gap-4">
-                  <Button onClick={handleDownloadCV} disabled={isDownloading} size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-50 hover-scale text-xs md:text-sm">
+                  <Button onClick={handleDownloadCV} disabled={isDownloading} size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-50 hover-scale text-xs md:text-sm" aria-label="Download CV">
                     {isDownloading ? <>
-                        <Loader2 className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4 animate-spin" />
+                        <Loader2 className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4 animate-spin" aria-hidden="true" />
                         <span className="hidden sm:inline">Downloading...</span>
                         <span className="sm:hidden">Loading...</span>
                       </> : <>
-                        <Download className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" />
+                        <Download className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" aria-hidden="true" />
                         <span className="hidden sm:inline">Download CV</span>
                         <span className="sm:hidden">CV</span>
                       </>}
                   </Button>
                   <Button variant="outline" size="sm" onClick={() => document.getElementById('contact')?.scrollIntoView({
                   behavior: 'smooth'
-                })} className="border-primary/20 hover:bg-primary/10 hover-scale text-xs md:text-sm">
-                    <Mail className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" />
+                })} className="border-primary/20 hover:bg-primary/10 hover-scale text-xs md:text-sm" aria-label="Contact Geddada Devicharan">
+                    <Mail className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" aria-hidden="true" />
                     Contact
                   </Button>
                 </div>
@@ -436,27 +455,39 @@ export function Portfolio() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center space-y-4">
             {/* Social Media Links */}
-            <div className="flex justify-center items-center gap-6">
-              <a href="https://www.linkedin.com/in/geddadadevicharan" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
-                <Button variant="ghost" size="sm" className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale">
-                  <Linkedin size={20} className="text-muted-foreground hover:text-primary transition-colors" />
-                </Button>
+            <nav className="flex justify-center items-center gap-6" aria-label="Social media links">
+              <a 
+                href="https://www.linkedin.com/in/geddadadevicharan" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="Visit LinkedIn Profile"
+                className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale inline-flex items-center justify-center"
+              >
+                <Linkedin size={20} className="text-foreground/70 hover:text-primary transition-colors" aria-hidden="true" />
               </a>
 
-              <a href="https://www.instagram.com/imdvichrn" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile">
-                <Button variant="ghost" size="sm" className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale">
-                  <Instagram size={20} className="text-muted-foreground hover:text-primary transition-colors" />
-                </Button>
+              <a 
+                href="https://www.instagram.com/imdvichrn" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="Visit Instagram Profile"
+                className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale inline-flex items-center justify-center"
+              >
+                <Instagram size={20} className="text-foreground/70 hover:text-primary transition-colors" aria-hidden="true" />
               </a>
 
-              <a href="https://www.facebook.com/userdead.610" target="_blank" rel="noopener noreferrer" aria-label="Facebook Profile">
-                <Button variant="ghost" size="sm" className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale">
-                  <Facebook size={20} className="text-muted-foreground hover:text-primary transition-colors" />
-                </Button>
+              <a 
+                href="https://www.facebook.com/userdead.610" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="Visit Facebook Profile"
+                className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale inline-flex items-center justify-center"
+              >
+                <Facebook size={20} className="text-foreground/70 hover:text-primary transition-colors" aria-hidden="true" />
               </a>
-            </div>
+            </nav>
             
-            <p className="text-muted-foreground">© 2026 Geddada Devicharan (@imdvichrn). All rights reserved.</p>
+            <p className="text-foreground/70">© 2026 Geddada Devicharan (@imdvichrn). All rights reserved.</p>
           </div>
         </div>
       </footer>
