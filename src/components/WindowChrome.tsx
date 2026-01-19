@@ -1,31 +1,30 @@
-import Echoless from "./Echoless";
-  <Echoless />
+import profileAvatar from '@/assets/profile-avatar.png';
+
 interface WindowChromeProps {
   className?: string;
-}
-
-import { useContext } from 'react';
-// We'll use a context to control the chatbot panel from the window chrome
-// but fallback to window events if not available
-
-export function WindowChrome({ className = "", onClose, onMinimize, onZoom }: WindowChromeProps & {
+  showAvatar?: boolean;
   onClose?: () => void;
   onMinimize?: () => void;
   onZoom?: () => void;
-}) {
+}
+
+export function WindowChrome({ 
+  className = "", 
+  showAvatar = true,
+  onClose, 
+  onMinimize, 
+  onZoom 
+}: WindowChromeProps) {
   const handleClose = () => {
     if (onClose) {
       onClose();
     } else {
-      // Close current window/tab or minimize if that fails
       try {
         window.close();
       } catch (e) {
-        // If window.close() fails, try to minimize to taskbar
         if ('minimize' in window && typeof (window as any).minimize === 'function') {
           (window as any).minimize();
         } else {
-          // Fallback: blur/unfocus the window
           window.blur();
         }
       }
@@ -36,14 +35,12 @@ export function WindowChrome({ className = "", onClose, onMinimize, onZoom }: Wi
     if (onMinimize) {
       onMinimize();
     } else {
-      // Try different minimize approaches
       try {
         if ('minimize' in window && typeof (window as any).minimize === 'function') {
           (window as any).minimize();
         } else if (document.fullscreenElement) {
           document.exitFullscreen();
         } else {
-          // Simulate minimize by blurring and reducing visibility
           window.blur();
           document.body.style.visibility = 'hidden';
           setTimeout(() => {
@@ -61,7 +58,6 @@ export function WindowChrome({ className = "", onClose, onMinimize, onZoom }: Wi
     if (onZoom) {
       onZoom();
     } else {
-      // Toggle fullscreen mode
       try {
         if (document.fullscreenElement) {
           document.exitFullscreen();
@@ -69,7 +65,6 @@ export function WindowChrome({ className = "", onClose, onMinimize, onZoom }: Wi
           document.documentElement.requestFullscreen();
         }
       } catch (e) {
-        // Fallback: toggle between normal and maximized viewport
         if (document.body.style.transform === 'scale(1.1)') {
           document.body.style.transform = 'scale(1)';
           document.body.style.transformOrigin = 'top left';
@@ -85,34 +80,51 @@ export function WindowChrome({ className = "", onClose, onMinimize, onZoom }: Wi
   };
 
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      <button
-        type="button"
-        className="window-dot red focus:outline-none hover:scale-110 active:scale-95 transition-transform"
-        title="Close"
-        tabIndex={0}
-        onClick={handleClose}
-        aria-label="Close"
-        style={{ cursor: 'pointer' }}
-      />
-      <button
-        type="button"
-        className="window-dot yellow focus:outline-none hover:scale-110 active:scale-95 transition-transform"
-        title="Minimize"
-        tabIndex={0}
-        onClick={handleMinimize}
-        aria-label="Minimize"
-        style={{ cursor: 'pointer' }}
-      />
-      <button
-        type="button"
-        className="window-dot green focus:outline-none hover:scale-110 active:scale-95 transition-transform"
-        title="Fullscreen"
-        tabIndex={0}
-        onClick={handleZoom}
-        aria-label="Toggle Fullscreen"
-        style={{ cursor: 'pointer' }}
-      />
+    <div className={`flex items-center gap-3 ${className}`}>
+      {/* Traffic Light Buttons */}
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          className="window-dot red focus:outline-none hover:scale-110 active:scale-95 transition-transform"
+          title="Close"
+          tabIndex={0}
+          onClick={handleClose}
+          aria-label="Close"
+          style={{ cursor: 'pointer' }}
+        />
+        <button
+          type="button"
+          className="window-dot yellow focus:outline-none hover:scale-110 active:scale-95 transition-transform"
+          title="Minimize"
+          tabIndex={0}
+          onClick={handleMinimize}
+          aria-label="Minimize"
+          style={{ cursor: 'pointer' }}
+        />
+        <button
+          type="button"
+          className="window-dot green focus:outline-none hover:scale-110 active:scale-95 transition-transform"
+          title="Fullscreen"
+          tabIndex={0}
+          onClick={handleZoom}
+          aria-label="Toggle Fullscreen"
+          style={{ cursor: 'pointer' }}
+        />
+      </div>
+      
+      {/* Personal Brand Avatar */}
+      {showAvatar && (
+        <div className="flex items-center gap-2 ml-1">
+          <img 
+            src={profileAvatar} 
+            alt="Devicharan" 
+            className="w-6 h-6 rounded-full object-cover object-top border border-primary/30 shadow-sm ring-1 ring-primary/10"
+          />
+          <span className="text-xs font-medium text-muted-foreground hidden sm:inline">
+            Portfolio
+          </span>
+        </div>
+      )}
     </div>
   );
 }

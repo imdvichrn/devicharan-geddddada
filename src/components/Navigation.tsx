@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Moon, Sun, Menu, X } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
+import profileAvatar from '@/assets/profile-avatar.png';
 
 const navItems = [
   { id: 'home', label: 'Home' },
@@ -32,7 +33,7 @@ export function Navigation() {
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Call once to set initial state
+    handleScroll();
     
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -49,16 +50,31 @@ export function Navigation() {
     <nav className="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-glass-border">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="flex items-center justify-between h-12 md:h-16">
-          {/* Logo */}
+          {/* Logo - Netflix-inspired bold branding */}
           <div className="flex-shrink-0">
             <button
               onClick={() => scrollToSection('home')}
-              className="text-base md:text-xl font-bold text-foreground hover:text-primary transition-all duration-300 hover-scale relative group"
+              className="flex items-center gap-2 hover-scale transition-all duration-300 group"
+              aria-label="Go to home"
             >
-              <span className="relative z-10 bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent bg-[length:200%_100%] group-hover:animate-gradient-shift drop-shadow-[0_0_8px_hsl(var(--primary)/0.3)]">
-                Devicharan
+              {/* Profile Avatar */}
+              <img 
+                src={profileAvatar} 
+                alt="" 
+                aria-hidden="true"
+                className="w-8 h-8 md:w-9 md:h-9 rounded-full object-cover object-top border-2 border-primary/40 shadow-lg ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all duration-300"
+              />
+              {/* Netflix-style Bold Text */}
+              <span 
+                className="text-lg md:text-2xl font-black tracking-tight text-primary drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] group-hover:drop-shadow-[0_2px_8px_hsl(var(--primary)/0.5)] transition-all duration-300"
+                style={{ 
+                  fontFamily: "'Inter', system-ui, sans-serif",
+                  fontWeight: 900,
+                  letterSpacing: '-0.02em'
+                }}
+              >
+                DEVICHARAN
               </span>
-              <span className="absolute inset-0 blur-lg opacity-0 group-hover:opacity-40 bg-gradient-to-r from-primary/50 to-accent/50 transition-opacity duration-300 rounded-lg" />
             </button>
           </div>
 
