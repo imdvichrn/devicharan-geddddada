@@ -43,9 +43,9 @@ All colors MUST be HSL for proper theming.
     --secondary: 220 15% 92%;
     --secondary-foreground: 220 20% 20%;
 
-    /* Muted backgrounds */
+    /* Muted backgrounds - improved contrast for accessibility */
     --muted: 220 15% 94%;
-    --muted-foreground: 220 10% 45%;
+    --muted-foreground: 220 10% 40%;
 
     /* Accent - purple for highlights */
     --accent: 270 95% 75%;
@@ -135,9 +135,9 @@ All colors MUST be HSL for proper theming.
     --secondary: 220 20% 18%;
     --secondary-foreground: 220 15% 85%;
 
-    /* Muted backgrounds */
+    /* Muted backgrounds - improved contrast for accessibility */
     --muted: 220 20% 15%;
-    --muted-foreground: 220 10% 60%;
+    --muted-foreground: 220 10% 70%;
 
     /* Accent - brighter purple for dark mode */
     --accent: 270 95% 80%;
