@@ -30,7 +30,7 @@ const projectsData: Record<string, {
   'scenesync-edits': {
     title: 'SceneSync Edits',
     description: 'Synchronized video edits with music and visual effects, creating immersive viewing experiences.',
-    youtubeId: 'dQw4w9WgXcQ',
+    youtubeId: 'mDFBTdLKwEw',
     year: '2024',
     tools: ['DaVinci Resolve', 'Adobe After Effects'],
     roles: ['Video Editor', 'Sound Designer']
@@ -38,7 +38,7 @@ const projectsData: Record<string, {
   'visual-design': {
     title: 'Visual Design Portfolio',
     description: 'Collection of visual design work including thumbnails, social media graphics, and brand assets.',
-    youtubeId: 'dQw4w9WgXcQ',
+    youtubeId: 'nKVGh6yXfWw',
     year: '2024',
     tools: ['Adobe Photoshop', 'Canva', 'Figma'],
     roles: ['Graphic Designer', 'Brand Designer']
@@ -46,7 +46,7 @@ const projectsData: Record<string, {
   'growth-strategy': {
     title: 'Growth Strategy Case Studies',
     description: 'Digital marketing and growth strategy implementations for various projects and brands.',
-    youtubeId: 'dQw4w9WgXcQ',
+    youtubeId: 'G8EW0uAJJ3k',
     year: '2024',
     tools: ['Analytics Tools', 'Social Media Platforms'],
     roles: ['Growth Strategist', 'Content Planner']
