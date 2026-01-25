@@ -7,6 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
 import { ThemeProvider } from "@/hooks/useTheme";
 import { PageTransition } from "@/components/PageTransition";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { Portfolio } from "./pages/Portfolio";
 import NotFound from "./pages/NotFound";
 import WebPortfolio from "./pages/projects/WebPortfolio";
@@ -23,18 +24,21 @@ function AnimatedRoutes() {
   const location = useLocation();
   
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageTransition><Portfolio /></PageTransition>} />
-        <Route path="/project/:projectId" element={<PageTransition><ProjectPage /></PageTransition>} />
-        <Route path="/projects/web-portfolio" element={<PageTransition><WebPortfolio /></PageTransition>} />
-        <Route path="/projects/scenesync-edits" element={<PageTransition><SceneSyncEdits /></PageTransition>} />
-        <Route path="/projects/visual-design" element={<PageTransition><VisualDesign /></PageTransition>} />
-        <Route path="/projects/growth-strategy" element={<PageTransition><GrowthStrategy /></PageTransition>} />
-        <Route path="/projects/video-editing-post-production" element={<PageTransition><VideoEditingPostProduction /></PageTransition>} />
-        <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
-      </Routes>
-    </AnimatePresence>
+    <>
+      <ScrollToTop />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<PageTransition><Portfolio /></PageTransition>} />
+          <Route path="/project/:projectId" element={<PageTransition><ProjectPage /></PageTransition>} />
+          <Route path="/projects/web-portfolio" element={<PageTransition><WebPortfolio /></PageTransition>} />
+          <Route path="/projects/scenesync-edits" element={<PageTransition><SceneSyncEdits /></PageTransition>} />
+          <Route path="/projects/visual-design" element={<PageTransition><VisualDesign /></PageTransition>} />
+          <Route path="/projects/growth-strategy" element={<PageTransition><GrowthStrategy /></PageTransition>} />
+          <Route path="/projects/video-editing-post-production" element={<PageTransition><VideoEditingPostProduction /></PageTransition>} />
+          <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+        </Routes>
+      </AnimatePresence>
+    </>
   );
 }
 

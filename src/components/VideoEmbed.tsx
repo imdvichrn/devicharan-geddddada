@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Play } from 'lucide-react';
 
 interface VideoEmbedProps {
@@ -9,9 +9,25 @@ interface VideoEmbedProps {
 
 export function VideoEmbed({ youtubeId, title = "Video player", className = "" }: VideoEmbedProps) {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [thumbnailUrl, setThumbnailUrl] = useState(
+    `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`
+  );
+  const [thumbnailError, setThumbnailError] = useState(false);
+
+  /**
+   * Thumbnail Fallback Strategy
+   * If maxresdefault.jpg fails to load, automatically fall back to hqdefault.jpg
+   * This ensures reliable thumbnail loading for all YouTube videos
+   */
+  const handleThumbnailError = () => {
+    if (!thumbnailError) {
+      setThumbnailError(true);
+      setThumbnailUrl(`https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`);
+    }
+  };
 
   return (
-    <div className={`relative w-full aspect-video rounded-lg overflow-hidden shadow-xl bg-black ${className}`}>
+    <div className={`relative w-full aspect-video min-h-[300px] rounded-lg overflow-hidden shadow-xl bg-black ${className}`}>
       {!isLoaded ? (
         // Facade: Show thumbnail with play button until clicked
         <button
@@ -19,12 +35,14 @@ export function VideoEmbed({ youtubeId, title = "Video player", className = "" }
           className="absolute inset-0 w-full h-full group cursor-pointer"
           aria-label={`Play ${title}`}
         >
-          {/* YouTube Thumbnail (Higher quality) */}
+          {/* YouTube Thumbnail with Fallback Strategy */}
           <img
-            src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
+            src={thumbnailUrl}
             alt={title}
+            onError={handleThumbnailError}
             className="absolute inset-0 w-full h-full object-cover"
             loading="lazy"
+            decoding="async"
           />
           
           {/* Dark overlay on hover */}
