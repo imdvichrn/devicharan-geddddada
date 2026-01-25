@@ -83,6 +83,20 @@ export const projects: Project[] = [
     roles: ['Data Researcher', 'Analyst'],
     technicalDetails: ['Data Entry', 'Market Research', 'Documentation', 'Quality Assurance'],
     category: 'strategy'
+  },
+  {
+    id: 'video-editing-post-production',
+    title: 'Video Editing & Post-Production',
+    shortDescription: 'Professional post-production showcase featuring advanced editing techniques, color correction, and seamless transitions.',
+    longDescription: 'A comprehensive post-production portfolio demonstrating professional video editing, advanced color grading techniques, and seamless transition design. This project showcases expertise in utilizing industry-standard tools for creating polished final deliverables with cinema-quality visuals and sound design.',
+    challenge: 'Managing complex timelines with multiple video layers, achieving consistent color grading across diverse source material, and seamlessly integrating audio with visual elements while maintaining professional pacing and visual flow.',
+    outcome: 'Created a portfolio of professionally edited videos with industry-standard color correction, smooth transitions, and synchronized audio design. The projects demonstrate technical proficiency in post-production workflows and creative visual storytelling.',
+    youtubeEmbedId: 'N68iysGT2DU',
+    year: '2025',
+    tools: ['DaVinci Resolve', 'CapCut', 'Color Grading', 'Sound Design'],
+    roles: ['Video Editor', 'Colorist', 'Audio Engineer'],
+    technicalDetails: ['Color Correction', 'Transition Design', 'Audio Synchronization', 'Timeline Optimization'],
+    category: 'video'
   }
 ];
 

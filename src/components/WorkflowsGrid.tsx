@@ -404,7 +404,7 @@ export function WorkflowsGrid() {
       tools: ['DaVinci Resolve Studio', 'Fusion VFX', 'Fairlight Audio'],
       specs: ['4K Workflow', 'RAW Processing', 'Node-based Grading', 'HDR Mastering'],
       modalContent: <VideoEditingDetails />,
-      projectLink: '/project/video-production',
+      projectLink: '/projects/video-editing-post-production',
       size: 'large' as const,
     },
     {

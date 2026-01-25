@@ -13,6 +13,7 @@ import WebPortfolio from "./pages/projects/WebPortfolio";
 import SceneSyncEdits from "./pages/projects/SceneSyncEdits";
 import VisualDesign from "./pages/projects/VisualDesign";
 import GrowthStrategy from "./pages/projects/GrowthStrategy";
+import VideoEditingPostProduction from "./pages/projects/VideoEditingPostProduction";
 import ProjectDetail from "./pages/ProjectDetail";
 import ProjectPage from "./pages/ProjectPage";
 
@@ -30,6 +31,7 @@ function AnimatedRoutes() {
         <Route path="/projects/scenesync-edits" element={<PageTransition><SceneSyncEdits /></PageTransition>} />
         <Route path="/projects/visual-design" element={<PageTransition><VisualDesign /></PageTransition>} />
         <Route path="/projects/growth-strategy" element={<PageTransition><GrowthStrategy /></PageTransition>} />
+        <Route path="/projects/video-editing-post-production" element={<PageTransition><VideoEditingPostProduction /></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
     </AnimatePresence>
