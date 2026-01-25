@@ -14,6 +14,7 @@ import SceneSyncEdits from "./pages/projects/SceneSyncEdits";
 import VisualDesign from "./pages/projects/VisualDesign";
 import GrowthStrategy from "./pages/projects/GrowthStrategy";
 import ProjectDetail from "./pages/ProjectDetail";
+import ProjectPage from "./pages/ProjectPage";
 
 const queryClient = new QueryClient();
 
@@ -24,7 +25,7 @@ function AnimatedRoutes() {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<PageTransition><Portfolio /></PageTransition>} />
-        <Route path="/project/:id" element={<PageTransition><ProjectDetail /></PageTransition>} />
+        <Route path="/project/:projectId" element={<PageTransition><ProjectPage /></PageTransition>} />
         <Route path="/projects/web-portfolio" element={<PageTransition><WebPortfolio /></PageTransition>} />
         <Route path="/projects/scenesync-edits" element={<PageTransition><SceneSyncEdits /></PageTransition>} />
         <Route path="/projects/visual-design" element={<PageTransition><VisualDesign /></PageTransition>} />
