@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -22,7 +23,8 @@ import {
   Lightbulb,
   Rocket,
   MessageSquare,
-  Clock
+  Clock,
+  ExternalLink
 } from 'lucide-react';
 
 // Video Editing Timeline Visual Component
@@ -184,6 +186,7 @@ interface WorkflowCardProps {
   tools?: string[];
   isComingSoon?: boolean;
   modalContent?: React.ReactNode;
+  projectLink?: string;
   className?: string;
   size?: 'normal' | 'large' | 'tall';
   style?: React.CSSProperties;
@@ -197,6 +200,7 @@ const WorkflowCard = ({
   tools,
   isComingSoon,
   modalContent,
+  projectLink,
   className = '',
   size = 'normal',
   style
@@ -258,29 +262,43 @@ const WorkflowCard = ({
           </div>
         )}
         
-        {/* Action button */}
-        {!isComingSoon && modalContent && (
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="w-full mt-2 group-hover:bg-primary/10 group-hover:border-primary/30 transition-all"
-              >
-                <Layers size={14} className="mr-2" />
-                View Process
-                <ArrowRight size={14} className="ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="glass-elevated border-glass-border max-w-2xl">
-              <DialogHeader>
-                <DialogTitle className="text-xl">{title} - Detailed Workflow</DialogTitle>
-              </DialogHeader>
-              <div className="space-y-4 pt-4">
-                {modalContent}
-              </div>
-            </DialogContent>
-          </Dialog>
+        {/* Action buttons */}
+        {!isComingSoon && (
+          <div className="flex gap-2 mt-2">
+            {modalContent && (
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="flex-1 group-hover:bg-primary/10 group-hover:border-primary/30 transition-all"
+                  >
+                    <Layers size={14} className="mr-2" />
+                    View Process
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="glass-elevated border-glass-border max-w-2xl">
+                  <DialogHeader>
+                    <DialogTitle className="text-xl">{title} - Detailed Workflow</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-4 pt-4">
+                    {modalContent}
+                  </div>
+                </DialogContent>
+              </Dialog>
+            )}
+            {projectLink && (
+              <Link to={projectLink} className="flex-1">
+                <Button 
+                  size="sm" 
+                  className="w-full bg-primary hover:bg-primary/90"
+                >
+                  <ExternalLink size={14} className="mr-2" />
+                  View Project
+                </Button>
+              </Link>
+            )}
+          </div>
         )}
       </CardContent>
     </Card>
@@ -386,6 +404,7 @@ export function WorkflowsGrid() {
       tools: ['DaVinci Resolve Studio', 'Fusion VFX', 'Fairlight Audio'],
       specs: ['4K Workflow', 'RAW Processing', 'Node-based Grading', 'HDR Mastering'],
       modalContent: <VideoEditingDetails />,
+      projectLink: '/project/video-production',
       size: 'large' as const,
     },
     {
@@ -400,6 +419,7 @@ export function WorkflowsGrid() {
       tools: ['Analytics', 'Content Strategy', 'SEO'],
       specs: ['Market Analysis', 'KPI Tracking'],
       modalContent: <GrowthStrategyDetails />,
+      projectLink: '/project/growth-strategy',
       size: 'normal' as const,
     },
     {
@@ -420,6 +440,7 @@ export function WorkflowsGrid() {
       tools: ['Photoshop', 'Canva', 'Figma'],
       specs: ['Brand Identity', 'Print & Digital'],
       modalContent: <VisualDesignDetails />,
+      projectLink: '/project/visual-design',
       size: 'normal' as const,
     },
     {
