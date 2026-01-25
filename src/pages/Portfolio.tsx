@@ -13,7 +13,6 @@ import { useInView } from 'react-intersection-observer';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Download, User, Code, Briefcase, GraduationCap, Star, Calendar, Loader2, Linkedin, Instagram, Facebook, Workflow } from 'lucide-react';
 import { WorkflowsGrid } from '@/components/WorkflowsGrid';
-import { Helmet } from 'react-helmet-async';
 import profileImage from '@/assets/profile-avatar.png';
 import backgroundVideo from '@/assets/background-video.mp4';
 import heroBg from '@/assets/hero-bg.png';
@@ -196,21 +195,6 @@ export function Portfolio() {
     }
   };
   return <div className="min-h-screen bg-background">
-      <Helmet>
-        <title>Geddada Devicharan - Video Editor & B.Tech EEE Student | Portfolio</title>
-        <meta name="description" content="Portfolio of Geddada Devicharan - Video Editor & B.Tech EEE Student specializing in DaVinci Resolve and Growth Strategy. Based in Visakhapatnam, India." />
-        <meta name="keywords" content="Video Editor, DaVinci Resolve, Vizag, EEE Student, React Developer, Geddada Devicharan, imdvichrn" />
-        <meta property="og:title" content="Geddada Devicharan - Video Editor & Digital Professional" />
-        <meta property="og:description" content="Portfolio of Geddada Devicharan - Video Editor & B.Tech EEE Student specializing in DaVinci Resolve and Growth Strategy." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://geddadadevicharan.netlify.app/" />
-        <meta property="og:image" content="https://geddadadevicharan.netlify.app/assets/profile-avatar.png" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Geddada Devicharan (@imdvichrn)" />
-        <meta name="twitter:description" content="Video Editor & B.Tech EEE Student specializing in DaVinci Resolve and Growth Strategy." />
-        <link rel="canonical" href="https://geddadadevicharan.netlify.app/" />
-      </Helmet>
-      
       <Navigation />
       
       {/* Hero Section */}
@@ -230,7 +214,7 @@ export function Portfolio() {
             loop
             muted
             playsInline
-            preload="none"
+            preload="metadata"
             className="absolute w-full h-[120%] object-cover will-change-transform"
             style={{ 
               transform: `translate3d(0, ${-parallaxOffset}px, 0)`,

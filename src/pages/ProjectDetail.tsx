@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { WindowChrome } from '@/components/WindowChrome';
 import { ArrowLeft, Play, Calendar, User } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
+import { generateBreadcrumbSchema, generateVideoObjectSchema, generateCreativeWorkSchema } from '@/lib/structuredData';
 
 // Project data with YouTube IDs
 const projectsData: Record<string, {
@@ -85,7 +86,35 @@ export default function ProjectDetail() {
         <meta name="description" content={project.description} />
         <meta property="og:title" content={`${project.title} - Geddada Devicharan`} />
         <meta property="og:description" content={project.description} />
-        <link rel="canonical" href={`https://devicharangeddada.lovable.app/project/${id}`} />
+        <link rel="canonical" href={`https://geddadadevicharan.netlify.app/project/${id}`} />
+        
+        {/* Breadcrumb Schema - Shows "Home > Projects > [Project Name]" in search results */}
+        <script type="application/ld+json">
+          {JSON.stringify(generateBreadcrumbSchema([
+            { name: "Home", url: "https://geddadadevicharan.netlify.app" },
+            { name: "Projects", url: "https://geddadadevicharan.netlify.app/#projects" },
+            { name: project.title, url: `https://geddadadevicharan.netlify.app/project/${id}` }
+          ]))}
+        </script>
+        
+        {/* VideoObject Schema - Helps videos appear in Google Videos search */}
+        <script type="application/ld+json">
+          {JSON.stringify(generateVideoObjectSchema({
+            title: project.title,
+            description: project.description,
+            youtubeId: project.youtubeId
+          }))}
+        </script>
+        
+        {/* CreativeWork Schema - Provides structured info about the project */}
+        <script type="application/ld+json">
+          {JSON.stringify(generateCreativeWorkSchema({
+            title: project.title,
+            description: project.description,
+            tools: project.tools,
+            roles: project.roles
+          }))}
+        </script>
       </Helmet>
 
       <Navigation />

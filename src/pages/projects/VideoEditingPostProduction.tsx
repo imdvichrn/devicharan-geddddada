@@ -9,6 +9,7 @@ import { ArrowLeft, Calendar, Wrench, Target, Layers, Linkedin, Instagram, Faceb
 import { Link } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { Helmet } from 'react-helmet-async';
+import { generateBreadcrumbSchema, generateVideoObjectSchema, generateCreativeWorkSchema } from '@/lib/structuredData';
 
 export default function VideoEditingPostProduction() {
   const [heroRef, heroInView] = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -67,7 +68,37 @@ export default function VideoEditingPostProduction() {
       <Helmet>
         <title>{title} | Geddada Devicharan</title>
         <meta name="description" content="Video Editing & Post-Production - Professional post-production portfolio by Geddada Devicharan featuring color grading, audio design, and cinematic editing techniques." />
-        <link rel="canonical" href="https://devicharangeddada.lovable.app/projects/video-editing-post-production" />
+        <link rel="canonical" href="https://geddadadevicharan.netlify.app/projects/video-editing-post-production" />
+        
+        {/* Breadcrumb Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify(generateBreadcrumbSchema([
+            { name: "Home", url: "https://geddadadevicharan.netlify.app" },
+            { name: "Projects", url: "https://geddadadevicharan.netlify.app/#projects" },
+            { name: title, url: "https://geddadadevicharan.netlify.app/projects/video-editing-post-production" }
+          ]))}
+        </script>
+        
+        {/* VideoObject Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify(generateVideoObjectSchema({
+            title: title,
+            description: description,
+            youtubeId: youtubeId,
+            uploadDate: "2025-01-01"
+          }))}
+        </script>
+        
+        {/* CreativeWork Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify(generateCreativeWorkSchema({
+            title: title,
+            description: description,
+            tools: tools,
+            roles: roles,
+            year: year
+          }))}
+        </script>
       </Helmet>
       
       <div className="min-h-screen bg-background">
