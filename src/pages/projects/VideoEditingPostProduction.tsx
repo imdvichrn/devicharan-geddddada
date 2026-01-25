@@ -17,23 +17,25 @@ export default function VideoEditingPostProduction() {
   const [processRef, processInView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   const title = "Video Editing & Post-Production";
-  const description = "Professional post-production showcase featuring advanced editing techniques, color correction, and seamless transitions. This portfolio demonstrates expertise in utilizing industry-standard post-production tools to create polished, cinema-quality final deliverables with synchronized audio design.";
+  const description = "Professional post-production showcase featuring advanced editing techniques, color correction, and seamless transitions. This portfolio demonstrates expertise in utilizing industry-standard tools like Adobe Premiere Pro and DaVinci Resolve to create polished, cinema-quality final deliverables with professional sound design and advanced 3D workflows.";
   const year = "2025";
   const youtubeId = "N68iysGT2DU";
   
   const tools = [
+    "Adobe Premiere Pro",
     "DaVinci Resolve",
-    "CapCut",
+    "3D Modeling",
     "Color Grading",
-    "Sound Design",
+    "Professional Sound Design",
+    "Fusion-Oriented Motion Graphics",
     "Audio Synchronization"
   ];
   
   const roles = [
-    "Video Editor",
+    "Lead Video Editor & Post-Production Specialist",
+    "Sound Engineer",
     "Colorist",
-    "Audio Engineer",
-    "Post-Production Specialist"
+    "Audio Engineer"
   ];
 
   const process = [

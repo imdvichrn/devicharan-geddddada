@@ -18,7 +18,7 @@ import backgroundVideo from '@/assets/background-video.mp4';
 import heroBg from '@/assets/hero-bg.png';
 const skills = {
   "Creative & Technical Tools": ["Adobe Photoshop", "Canva", "DaVinci Resolve Studio", "Wix", "No-code AI Platforms"],
-  "Professional Skills": ["Data Entry", "Research", "Content Design", "Bilingual Communication (Telugu ↔ English)"],
+  "Professional Skills": ["Data Entry", "Research", "Fusion-Oriented Motion Graphics & 3D Modeling", "Bilingual Communication (Telugu ↔ English)"],
   "Soft Skills": ["Problem-Solving", "Teamwork", "Adaptability", "Continuous Learning"]
 };
 const education = [{

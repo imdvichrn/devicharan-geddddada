@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
-import { Send, Loader2, Linkedin, Instagram, Facebook } from 'lucide-react';
+import { Send, Loader2, Linkedin, Instagram, Facebook, Sparkles, Film, Zap, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { WindowChrome } from './WindowChrome';
 import { SiriOrb } from './SiriOrb';
-
+import { useNavigate } from 'react-router-dom';
 import { ActionButtons } from './ActionButtons';
 import { useToast } from '@/hooks/use-toast';
-import getResponse from './echoless.js';
+import { sendChatMessage, getUserNameFromStorage, saveUserNameToStorage, parseUserNameFromMessage } from '@/services/chatService';
 
 interface ActionButton {
   label: string;
@@ -19,33 +19,77 @@ interface Message {
   role: 'user' | 'assistant';
   content: string;
   sources?: string[];
+  projectLink?: string;
   timestamp?: Date;
   buttons?: ActionButton[];
 }
 
+interface QuickAction {
+  id: string;
+  label: string;
+  icon: React.ReactNode;
+  description: string;
+  action: () => void;
+}
+
 export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
+  const initialMessages: Message[] = [
     {
       role: 'assistant',
-      content: `👋 Hi! I'm Devicharan from Visakhapatnam, India.
+      content: `👋 Hi! I'm Devicharan, a Lead Video Editor, Sound Engineer, and Post-Production Specialist based in Visakhapatnam.
 
-I'm pursuing B.Tech in Electrical & Electronics Engineering and I'm passionate about AI-assisted content creation, video editing, and digital tools.
+I specialize in:
+• Advanced Video Editing with Adobe Premiere Pro & DaVinci Resolve
+• Professional Sound Design & Audio Engineering
+• 3D Modeling & Fusion-Oriented Motion Graphics
+• Complete Post-Production Workflows
 
-Ask me about:
-• My skills and projects
-• How to contact me
-• My social media links
-• Ways to support my work
-
-What would you like to know?`,
+Ask me about my projects, services, or how we can work together! 🎬`,
       timestamp: new Date()
     }
-  ]);
+  ];
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [userName, setUserName] = useState<string | null>(() => getUserNameFromStorage());
+  const [messages, setMessages] = useState<Message[]>(initialMessages);
+  const [showQuickActions, setShowQuickActions] = useState(messages.length === 1);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  const navigate = useNavigate();
+
+  // Quick Actions Configuration
+  const quickActions: QuickAction[] = [
+    {
+      id: 'modeling-work',
+      label: 'View 3D Modeling Work',
+      icon: <Sparkles size={16} className="text-accent" />,
+      description: 'See my advanced 3D modeling projects',
+      action: () => {
+        setInput('Show me your 3D modeling and motion graphics work');
+        navigate('/#projects');
+      }
+    },
+    {
+      id: 'editing-process',
+      label: 'Video Editing Process',
+      icon: <Film size={16} className="text-primary" />,
+      description: 'Learn about my post-production workflow',
+      action: () => {
+        setInput('Tell me about your video editing and post-production process');
+      }
+    },
+    {
+      id: 'hire',
+      label: 'Hire for Post-Production',
+      icon: <Zap size={16} className="text-cyan-400" />,
+      description: 'Discuss freelance opportunities',
+      action: () => {
+        setInput('I\'d like to hire you for a project');
+      }
+    }
+  ];
 
   useImperativeHandle(ref, () => ({
     toggleChat: () => setIsOpen(!isOpen)
@@ -65,6 +109,14 @@ What would you like to know?`,
 
     const userMessage = input.trim();
     setInput('');
+    setShowQuickActions(false);
+    
+    // Check for user name in message
+    const extractedName = parseUserNameFromMessage(userMessage);
+    if (extractedName && !userName) {
+      setUserName(extractedName);
+      saveUserNameToStorage(extractedName);
+    }
     
     // Add user message with timestamp
     const newUserMessage: Message = { 
@@ -76,14 +128,20 @@ What would you like to know?`,
     setIsLoading(true);
 
     try {
-      // Use local chatbot logic (echoless)
-      const reply = await getResponse(userMessage);
+      // Use enhanced chatService with Digital Twin logic
+      const response = await sendChatMessage([...messages, newUserMessage]);
       
       const assistantMessage: Message = {
         role: 'assistant',
-        content: reply.text,
+        content: response.text,
+        sources: response.sources,
+        projectLink: response.projectLink,
         timestamp: new Date(),
-        buttons: reply.buttons
+        buttons: response.sources?.map(source => ({
+          label: `Learn More`,
+          icon: 'link' as const,
+          action: `project-${source}`
+        }))
       };
 
       // Simulate a brief thinking delay
@@ -97,11 +155,13 @@ What would you like to know?`,
       
       const errorMessage: Message = {
         role: 'assistant',
-        content: `I'm having a bit of trouble right now. But you can still reach me at:
+        content: `I'm processing your message... In the meantime, you can reach me at:
 
 📧 Email: devicharangeddada@gmail.com
-📱 Phone: +91 6303468707
-📍 Location: Visakhapatnam, India`,
+📱 WhatsApp: +91 6303468707
+📍 Location: Visakhapatnam, India
+
+Let's connect directly! 🚀`,
         timestamp: new Date()
       };
       
@@ -124,6 +184,9 @@ What would you like to know?`,
       case 'facebook':
         window.open('https://www.facebook.com/userdead.610', '_blank');
         break;
+      case 'whatsapp':
+        window.open('https://wa.me/916303468707', '_blank');
+        break;
       case 'projects':
         document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
         setIsOpen(false);
@@ -142,7 +205,7 @@ What would you like to know?`,
         if (navigator.share) {
           navigator.share({
             title: 'Devicharan Portfolio',
-            text: 'Check out Devicharan\'s portfolio!',
+            text: 'Check out Devicharan\'s post-production portfolio!',
             url: window.location.href
           }).catch(console.error);
         } else {
@@ -153,6 +216,18 @@ What would you like to know?`,
           });
         }
         break;
+      // Handle project links
+      default:
+        if (action.startsWith('project-')) {
+          const projectLink = action.replace('project-', '');
+          // Route to project based on link
+          if (projectLink.includes('video')) {
+            navigate('/projects/video-editing-post-production');
+          } else if (projectLink.includes('scenesync')) {
+            navigate('/project/scenesync-edits');
+          }
+          setIsOpen(false);
+        }
     }
   };
 
@@ -239,6 +314,30 @@ What would you like to know?`,
 
           {/* Messages */}
           <div className="flex-1 overflow-y-auto p-3 md:p-4 space-y-3 md:space-y-4 h-[340px]">
+            {/* Quick Actions Display */}
+            {showQuickActions && messages.length === 1 && (
+              <div className="space-y-2 mb-4">
+                <p className="text-xs md:text-sm font-medium text-muted-foreground px-2">Quick Actions:</p>
+                {quickActions.map(action => (
+                  <button
+                    key={action.id}
+                    onClick={() => {
+                      action.action();
+                      // Simulate sending the message
+                      setTimeout(() => sendMessage({ preventDefault: () => {} } as any), 100);
+                    }}
+                    className="w-full text-left p-2 md:p-3 rounded-lg border border-glass-border hover:bg-muted/50 transition-all duration-200 hover:border-primary/50 group"
+                  >
+                    <div className="flex items-center gap-2 mb-1">
+                      {action.icon}
+                      <span className="text-xs md:text-sm font-medium group-hover:text-primary transition-colors">{action.label}</span>
+                    </div>
+                    <p className="text-xs text-muted-foreground ml-6">{action.description}</p>
+                  </button>
+                ))}
+              </div>
+            )}
+
             {messages.map((message, index) => (
               <div
                 key={index}
@@ -251,16 +350,34 @@ What would you like to know?`,
                       : 'bg-muted text-muted-foreground mr-2 md:mr-4 border border-border/50'
                   }`}
                 >
-                  <div className="whitespace-pre-wrap">{message.content}</div>
+                  <div className="whitespace-pre-wrap leading-relaxed">{message.content}</div>
                   
+                  {/* Source Reference Link */}
+                  {message.projectLink && (
+                    <button
+                      onClick={() => {
+                        navigate(message.projectLink!);
+                        setIsOpen(false);
+                      }}
+                      className="mt-2 text-xs font-medium bg-primary/20 hover:bg-primary/30 text-primary px-2.5 py-1 rounded-full transition-colors inline-block"
+                    >
+                      View Project →
+                    </button>
+                  )}
+
                   {/* Action Buttons */}
                   {message.buttons && message.buttons.length > 0 && (
-                    <ActionButtons 
-                      buttons={message.buttons.map(btn => ({
-                        ...btn,
-                        action: () => handleButtonAction(btn.action)
-                      }))}
-                    />
+                    <div className="mt-2 flex gap-2">
+                      {message.buttons.map((btn, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => handleButtonAction(btn.action)}
+                          className="text-xs bg-primary/20 hover:bg-primary/30 text-primary px-2.5 py-1 rounded-full transition-colors"
+                        >
+                          {btn.label}
+                        </button>
+                      ))}
+                    </div>
                   )}
 
                   {/* Timestamp */}
@@ -272,11 +389,18 @@ What would you like to know?`,
                 </div>
               </div>
             ))}
+            
+            {/* Thinking Animation */}
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-muted text-muted-foreground p-3 rounded-2xl flex items-center gap-2">
-                  <Loader2 className="animate-spin w-4 h-4" />
-                  <span>Thinking...</span>
+                <div className="bg-muted text-muted-foreground p-3 rounded-2xl flex items-center gap-2 border border-cyan-400/30">
+                  {/* Turquoise & Silver Thinking Animation */}
+                  <div className="flex gap-1">
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 animate-bounce" style={{ animationDelay: '0s' }}></div>
+                    <div className="w-2 h-2 rounded-full bg-cyan-300 animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                    <div className="w-2 h-2 rounded-full bg-cyan-200 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                  </div>
+                  <span className="ml-1 text-xs md:text-sm">Thinking...</span>
                 </div>
               </div>
             )}

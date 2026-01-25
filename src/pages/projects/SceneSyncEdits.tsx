@@ -4,22 +4,23 @@ export default function SceneSyncEdits() {
   return (
     <ProjectLayout
       title="SceneSync Edits"
-      description="Professional video editing portfolio showcasing creative storytelling through dynamic transitions, synchronized audio, and cinematic effects. Specialized in social media content, short-form videos, and engaging visual narratives."
+      description="Professional video editing portfolio showcasing creative storytelling through dynamic transitions, professional sound design, and cinematic effects. Specialized in social media content, short-form videos, engaging visual narratives, and advanced 3D motion graphics."
       year="2024"
       tools={[
-        "CapCut",
-        "DaVinci Resolve",
         "Adobe Premiere Pro",
+        "DaVinci Resolve",
+        "3D Modeling",
+        "Fusion-Oriented Motion Graphics",
+        "Professional Sound Design",
         "After Effects",
-        "Audacity",
-        "Canva"
+        "Audacity"
       ]}
       roles={[
-        "Video Editor",
-        "Motion Graphics",
-        "Color Grading",
-        "Audio Synchronization",
-        "Content Creator"
+        "Lead Video Editor & Post-Production Specialist",
+        "Sound Engineer",
+        "Motion Graphics Designer",
+        "Audio Specialist",
+        "Creative Director"
       ]}
       process={[
         {

@@ -23,9 +23,9 @@ export const projects: Project[] = [
     outcome: 'Delivered a polished final product with cinema-quality color grading, seamless VFX integration, and professional audio mixing. The project received positive feedback for its visual consistency and smooth pacing, demonstrating mastery of the DaVinci Resolve ecosystem.',
     youtubeEmbedId: 'xx0J30hHGUVaoY82',
     year: '2024',
-    tools: ['DaVinci Resolve Studio', 'Fusion VFX', 'Fairlight Audio'],
-    roles: ['Video Editor', 'Colorist', 'Motion Designer'],
-    technicalDetails: ['4K Workflow', 'RAW Processing', 'Node-based Grading', 'HDR Mastering'],
+    tools: ['DaVinci Resolve Studio', 'Adobe Premiere Pro', 'Fusion VFX', 'Fairlight Audio', '3D Modeling'],
+    roles: ['Lead Video Editor & Post-Production Specialist', 'Colorist', 'Motion Designer', 'Sound Engineer'],
+    technicalDetails: ['4K Workflow', 'RAW Processing', 'Node-based Grading', 'HDR Mastering', 'Professional Sound Design', '3D Modeling', 'CGI Integration'],
     category: 'video'
   },
   {
@@ -37,8 +37,8 @@ export const projects: Project[] = [
     outcome: 'Created a portfolio of beat-synced edits that demonstrate precise timing and creative transition design. These projects have been well-received for their rhythmic flow and engaging visual dynamics.',
     youtubeEmbedId: 'mDFBTdLKwEw',
     year: '2024',
-    tools: ['DaVinci Resolve', 'Fairlight Audio', 'Fusion'],
-    roles: ['Video Editor', 'Sound Designer'],
+    tools: ['DaVinci Resolve', 'Adobe Premiere Pro', 'Fairlight Audio', 'Fusion', '3D Modeling'],
+    roles: ['Lead Video Editor & Post-Production Specialist', 'Sound Engineer', 'Sound Designer'],
     technicalDetails: ['Beat Mapping', 'Audio Waveform Analysis', 'Dynamic Transitions', 'VFX Sync'],
     category: 'video'
   },
@@ -93,9 +93,9 @@ export const projects: Project[] = [
     outcome: 'Created a portfolio of professionally edited videos with industry-standard color correction, smooth transitions, and synchronized audio design. The projects demonstrate technical proficiency in post-production workflows and creative visual storytelling.',
     youtubeEmbedId: 'N68iysGT2DU',
     year: '2025',
-    tools: ['DaVinci Resolve', 'CapCut', 'Color Grading', 'Sound Design'],
-    roles: ['Video Editor', 'Colorist', 'Audio Engineer'],
-    technicalDetails: ['Color Correction', 'Transition Design', 'Audio Synchronization', 'Timeline Optimization'],
+    tools: ['DaVinci Resolve', 'Adobe Premiere Pro', '3D Modeling', 'Color Grading', 'Sound Design'],
+    roles: ['Lead Video Editor & Post-Production Specialist', 'Colorist', 'Sound Engineer', 'Audio Engineer'],
+    technicalDetails: ['Color Correction', 'Transition Design', 'Audio Synchronization', 'Timeline Optimization', 'Sound Design', 'Fusion-Oriented Motion Graphics', '3D Modeling', 'CGI Integration'],
     category: 'video'
   }
 ];
