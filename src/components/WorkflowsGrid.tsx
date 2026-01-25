@@ -419,7 +419,7 @@ export function WorkflowsGrid() {
       tools: ['Analytics', 'Content Strategy', 'SEO'],
       specs: ['Market Analysis', 'KPI Tracking'],
       modalContent: <GrowthStrategyDetails />,
-      projectLink: '/project/growth-strategy',
+      projectLink: '/projects/growth-strategy',
       size: 'normal' as const,
     },
     {
@@ -440,7 +440,7 @@ export function WorkflowsGrid() {
       tools: ['Photoshop', 'Canva', 'Figma'],
       specs: ['Brand Identity', 'Print & Digital'],
       modalContent: <VisualDesignDetails />,
-      projectLink: '/project/visual-design',
+      projectLink: '/projects/visual-design',
       size: 'normal' as const,
     },
     {
