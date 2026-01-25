@@ -176,12 +176,14 @@ export function Portfolio() {
   };
   const scrollToContact = () => {
     document.getElementById('contact')?.scrollIntoView({
-      behavior: 'smooth'
+      behavior: 'smooth',
+      block: 'start'
     });
   };
   const scrollToProjects = () => {
     document.getElementById('projects')?.scrollIntoView({
-      behavior: 'smooth'
+      behavior: 'smooth',
+      block: 'start'
     });
   };
 
@@ -302,7 +304,8 @@ export function Portfolio() {
                       </>}
                   </Button>
                   <Button variant="outline" size="sm" onClick={() => document.getElementById('contact')?.scrollIntoView({
-                  behavior: 'smooth'
+                  behavior: 'smooth',
+                  block: 'start'
                 })} className="border-primary/20 hover:bg-primary/10 hover-scale text-xs md:text-sm" aria-label="Contact Geddada Devicharan">
                     <Mail className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" aria-hidden="true" />
                     Contact

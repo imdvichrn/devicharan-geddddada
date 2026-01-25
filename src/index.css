@@ -173,14 +173,12 @@ All colors MUST be HSL for proper theming.
   }
   
   html {
-    scroll-behavior: smooth;
-    overflow-x: hidden;
+    scroll-behavior: smooth !important;
   }
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
     transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
-    overflow-x: hidden;
     overscroll-behavior: none;
   }
 
