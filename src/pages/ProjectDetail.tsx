@@ -21,7 +21,7 @@ const projectsData: Record<string, {
   'video-editing': {
     title: 'Video Editing Showcase',
     description: 'Professional video editing projects created using DaVinci Resolve Studio, featuring color grading, motion graphics, and seamless transitions.',
-    youtubeId: 'xx0J30hHGUVaoY82',
+    youtubeId: 'N68iysGT2DU',
     year: '2024',
     tools: ['DaVinci Resolve Studio', 'Fusion', 'Fairlight'],
     roles: ['Video Editor', 'Colorist', 'Motion Designer']
