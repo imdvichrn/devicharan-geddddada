@@ -19,10 +19,10 @@ const projectsData: Record<string, {
   roles: string[];
 }> = {
   'video-editing': {
-    title: 'Video Editing Showcase',
+    title: 'Create Cinematic 3D Titles in DaVinci Resolve Fusion',
     description: 'Professional video editing projects created using DaVinci Resolve Studio, featuring color grading, motion graphics, and seamless transitions.',
     youtubeId: 'N68iysGT2DU',
-    year: '2024',
+    year: '2025',
     tools: ['DaVinci Resolve Studio', 'Fusion', 'Fairlight'],
     roles: ['Video Editor', 'Colorist', 'Motion Designer']
   },
