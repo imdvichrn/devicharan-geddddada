@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
-import { Send, Loader2, Linkedin, Instagram, Facebook, Sparkles, Film, Zap, Download, PlayCircle, Phone } from 'lucide-react';
+import { Send, Loader2, Linkedin, Instagram, Facebook, Sparkles, Film, Zap, Download, PlayCircle, Phone, Github, Twitter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { WindowChrome } from './WindowChrome';
 import { SiriOrb } from './SiriOrb';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ActionButtons } from './ActionButtons';
 import { useToast } from '@/hooks/use-toast';
 import { sendChatMessage, getUserNameFromStorage, saveUserNameToStorage, parseUserNameFromMessage } from '@/services/chatService';
@@ -34,16 +34,34 @@ interface QuickAction {
 }
 
 export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
+  const location = useLocation();
+  
+  // Scroll to section helper
+  const scrollToSection = (sectionId: string) => {
+    setIsOpen(false);
+    // If not on home page, navigate first
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    } else {
+      const element = document.getElementById(sectionId);
+      element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   const initialMessages: Message[] = [
     {
       role: 'assistant',
-      content: `✨ Hi! I'm Echo Less, your AI-powered creative assistant. I'm here to help you explore Devicharan's post-production expertise and find the perfect solution for your video projects.
+      content: `Hey there! 👋 I'm Echoless, Devicharan's AI assistant. 
 
-What can I help you with today?`,
+I can tell you about his video editing work, skills, or help you get in touch. What would you like to know?`,
       timestamp: new Date(),
       buttons: [
-        { label: 'See My Work', icon: 'play' as const, action: 'view-portfolio' },
-        { label: 'Get a Quote', icon: 'link' as const, action: 'contact-page' }
+        { label: '🎬 See My Work', icon: 'play' as const, action: 'scroll-projects' },
+        { label: '💬 Get in Touch', icon: 'mail' as const, action: 'contact-page' }
       ]
     }
   ];
@@ -108,23 +126,26 @@ What can I help you with today?`,
     scrollToBottom();
   }, [messages]);
 
-  // Link Detection System - Detect when user asks for social media
+  // Link Detection System - Detect when user asks for social media or GitHub
   const detectSocialMediaRequest = (userInput: string): string | null => {
     const lowerInput = userInput.toLowerCase();
     
-    if (lowerInput.includes('linkedin') || lowerInput.includes('linked in')) {
+    if (lowerInput.includes('linkedin') || lowerInput.includes('linked in') || lowerInput.includes('linkdin')) {
       return 'linkedin';
     }
-    if (lowerInput.includes('instagram') || lowerInput.includes('insta')) {
+    if (lowerInput.includes('instagram') || lowerInput.includes('insta') || lowerInput.includes('ig')) {
       return 'instagram';
     }
     if (lowerInput.includes('facebook') || lowerInput.includes('fb')) {
       return 'facebook';
     }
-    if (lowerInput.includes('twitter') || lowerInput.includes('x.com')) {
+    if (lowerInput.includes('twitter') || lowerInput.includes('x.com') || lowerInput.includes('tweet')) {
       return 'twitter';
     }
-    if (lowerInput.includes('email') || lowerInput.includes('contact') || lowerInput.includes('reach')) {
+    if (lowerInput.includes('github') || lowerInput.includes('git hub') || lowerInput.includes('git')) {
+      return 'github';
+    }
+    if (lowerInput.includes('email') || lowerInput.includes('mail') || lowerInput.includes('contact') || lowerInput.includes('reach')) {
       return 'email';
     }
     
@@ -162,34 +183,40 @@ What can I help you with today?`,
       // Social media detected - respond with button-based redirect
       const socialResponses: Record<string, { text: string; buttons: ActionButton[] }> = {
         linkedin: {
-          text: '🔗 Connect with me on LinkedIn! I share insights about video editing, post-production workflows, and industry trends.',
+          text: `Sure thing! Here's Devicharan's LinkedIn — he shares editing tips and industry insights there. Feel free to connect! 🤝`,
           buttons: [
-            { label: 'Open LinkedIn Profile', icon: 'link' as const, action: 'linkedin' }
+            { label: '🔗 Open LinkedIn', icon: 'link' as const, action: 'linkedin' }
           ]
         },
         instagram: {
-          text: '📸 Follow me on Instagram! I post behind-the-scenes content, editing tips, and portfolio highlights.',
+          text: `Great choice! You'll find behind-the-scenes content and portfolio highlights on his Instagram. Check it out! 📸`,
           buttons: [
-            { label: 'Open Instagram Profile', icon: 'link' as const, action: 'instagram' }
+            { label: '📸 Open Instagram', icon: 'link' as const, action: 'instagram' }
           ]
         },
         facebook: {
-          text: '👥 Find me on Facebook! Let\'s connect and share more about creative projects.',
+          text: `Here's the Facebook page! Drop a message or follow for updates on creative projects. 👋`,
           buttons: [
-            { label: 'Open Facebook Profile', icon: 'link' as const, action: 'facebook' }
+            { label: '👥 Open Facebook', icon: 'link' as const, action: 'facebook' }
           ]
         },
         twitter: {
-          text: '🐦 Follow me on X/Twitter for daily insights about video editing and creative tech!',
+          text: `Nice! Devicharan shares quick tips and creative thoughts on X/Twitter. Give it a follow! 🐦`,
           buttons: [
-            { label: 'Open Twitter Profile', icon: 'link' as const, action: 'twitter' }
+            { label: '🐦 Open Twitter/X', icon: 'link' as const, action: 'twitter' }
+          ]
+        },
+        github: {
+          text: `Looking for code? Here's the GitHub profile with all the projects and repositories! 💻`,
+          buttons: [
+            { label: '💻 Open GitHub', icon: 'link' as const, action: 'github' }
           ]
         },
         email: {
-          text: '📧 You can reach me directly via email or WhatsApp! Choose your preferred contact method below.',
+          text: `Want to get in touch? No problem! Pick your preferred way to reach out below. I'll make sure Devicharan gets back to you! 📬`,
           buttons: [
-            { label: 'Send Email', icon: 'mail' as const, action: 'email' },
-            { label: 'WhatsApp Message', icon: 'phone' as const, action: 'whatsapp' }
+            { label: '📧 Send Email', icon: 'mail' as const, action: 'email' },
+            { label: '💬 WhatsApp', icon: 'phone' as const, action: 'whatsapp' }
           ]
         }
       };
@@ -262,9 +289,11 @@ Let's connect directly! 🚀`,
         navigate('/projects/scenesync-edits');
         setIsOpen(false);
         break;
+      case 'scroll-projects':
+        scrollToSection('projects');
+        break;
       case 'view-portfolio':
-        navigate('/projects');
-        setIsOpen(false);
+        scrollToSection('projects');
         break;
       case 'download-cv':
         const link = document.createElement('a');
@@ -290,16 +319,17 @@ Let's connect directly! 🚀`,
       case 'twitter':
         window.open('https://twitter.com/imdvichrn', '_blank');
         break;
+      case 'github':
+        window.open('https://github.com/DeviCharan-Geddada', '_blank');
+        break;
       case 'whatsapp':
         window.open('https://wa.me/916303468707', '_blank');
         break;
       case 'projects':
-        document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
-        setIsOpen(false);
+        scrollToSection('projects');
         break;
       case 'contact-page':
-        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-        setIsOpen(false);
+        scrollToSection('contact');
         break;
       case 'share':
         if (navigator.share) {
@@ -345,7 +375,7 @@ Let's connect directly! 🚀`,
           onClick={() => setIsOpen(!isOpen)}
           className="w-16 h-16 rounded-full shadow-2xl transition-all duration-200 z-50 overflow-hidden bg-transparent hover:bg-transparent border-0 outline-none ring-0 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:outline-none flex items-center justify-center p-0"
           style={{ border: 'none', outline: 'none' }}
-          aria-label="Chat Support - Click to talk with Echo Less"
+          aria-label="Chat Support - Click to talk with Echoless"
         >
           {/* Continuous looping Siri Orb - runs regardless of chat state */}
           <motion.div
@@ -386,10 +416,10 @@ Let's connect directly! 🚀`,
                       className="w-3 h-3 rounded-full bg-gradient-to-r from-indigo-400 to-blue-400"
                     />
                     <div>
-                      <h3 className="font-semibold text-sm text-white">Echo Less</h3>
+                      <h3 className="font-semibold text-sm text-white">Echoless</h3>
                       <p className="text-xs text-indigo-300 flex items-center gap-1">
                         <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
-                        Always Ready
+                        Online • Ready to help
                       </p>
                     </div>
                   </div>
@@ -465,24 +495,34 @@ Let's connect directly! 🚀`,
                           className="mt-3 flex flex-col gap-2"
                         >
                           {message.buttons.map((btn, idx) => {
-                            // Map button types to icons and colors
-                            const iconMap: Record<string, React.ReactNode> = {
-                              'download': <Download className="w-4 h-4" />,
-                              'play': <PlayCircle className="w-4 h-4" />,
-                              'phone': <Phone className="w-4 h-4" />,
-                              'mail': <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>,
-                              'link': <Sparkles className="w-4 h-4" />,
+                            // Check if this is a social media button for special glow styling
+                            const isSocialButton = ['linkedin', 'instagram', 'facebook', 'twitter', 'github', 'email', 'whatsapp'].some(
+                              social => btn.action.includes(social)
+                            );
+                            
+                            // Get platform-specific colors for glow effect
+                            const getGlowColor = (action: string) => {
+                              if (action.includes('linkedin')) return 'from-blue-500 to-blue-600 shadow-blue-500/50';
+                              if (action.includes('instagram')) return 'from-pink-500 to-purple-600 shadow-pink-500/50';
+                              if (action.includes('facebook')) return 'from-blue-600 to-blue-700 shadow-blue-600/50';
+                              if (action.includes('twitter')) return 'from-sky-400 to-sky-600 shadow-sky-500/50';
+                              if (action.includes('github')) return 'from-gray-600 to-gray-800 shadow-gray-500/50';
+                              if (action.includes('email') || action.includes('whatsapp')) return 'from-emerald-500 to-teal-600 shadow-emerald-500/50';
+                              return 'from-indigo-500 to-blue-600 shadow-indigo-500/50';
                             };
 
                             return (
                               <motion.button
                                 key={idx}
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
+                                whileHover={{ scale: 1.03, boxShadow: isSocialButton ? '0 0 20px rgba(99, 102, 241, 0.6)' : undefined }}
+                                whileTap={{ scale: 0.97 }}
                                 onClick={() => handleButtonAction(btn.action)}
-                                className="w-full px-3 py-2 rounded-lg border border-indigo-400/50 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-200 hover:text-indigo-100 transition-all duration-200 text-xs font-medium flex items-center justify-center gap-2"
+                                className={`w-full px-4 py-2.5 rounded-xl font-medium text-sm flex items-center justify-center gap-2 transition-all duration-300 ${
+                                  isSocialButton 
+                                    ? `bg-gradient-to-r ${getGlowColor(btn.action)} text-white shadow-lg hover:shadow-xl`
+                                    : 'border border-indigo-400/50 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-200 hover:text-indigo-100'
+                                }`}
                               >
-                                {iconMap[btn.icon] || <Sparkles className="w-4 h-4" />}
                                 {btn.label}
                               </motion.button>
                             );
