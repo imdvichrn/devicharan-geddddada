@@ -350,7 +350,7 @@ Let's connect directly! 🚀`,
           <motion.div
             animate={{ scale: [1, 1.1, 1] }}
             transition={{ duration: 2, repeat: Infinity, repeatType: 'loop' }}
-            className="w-8 h-8 rounded-full overflow-hidden"
+            className="w-12 h-12 rounded-full overflow-hidden"
             style={{ borderRadius: '50%' }}
           >
             <SiriOrb className="w-full h-full" />
