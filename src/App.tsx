@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
 import { ThemeProvider } from "@/hooks/useTheme";
@@ -29,6 +29,7 @@ function AnimatedRoutes() {
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<PageTransition><Portfolio /></PageTransition>} />
+          <Route path="/projects" element={<Navigate to="/#projects" replace />} />
           <Route path="/project/:projectId" element={<PageTransition><ProjectPage /></PageTransition>} />
           <Route path="/projects/web-portfolio" element={<PageTransition><WebPortfolio /></PageTransition>} />
           <Route path="/projects/scenesync-edits" element={<PageTransition><SceneSyncEdits /></PageTransition>} />
