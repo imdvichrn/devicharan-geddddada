@@ -413,4 +413,99 @@ All colors MUST be HSL for proper theming.
     transform: scaleX(1);
     transform-origin: bottom left;
   }
+
+  /* Scrollbar hide utility */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Glass panel styling for obsidian theme */
+  .glass-panel {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+  }
+
+  .glass-elevated {
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+  }
+
+  /* Animations for Echo Less */
+  @keyframes fluid-bubble-in {
+    0% {
+      opacity: 0;
+      transform: scale(0.8) translateY(10px);
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .animate-fluid-bubble {
+    animation: fluid-bubble-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Magnetic button effect */
+  @keyframes magnetic-pull {
+    0% {
+      transform: translate(0, 0);
+    }
+  }
+
+  /* Scale animations */
+  @keyframes animate-scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes animate-scale-out {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+  }
+
+  .animate-scale-in {
+    animation: animate-scale-in 0.3s ease-out;
+  }
+
+  .animate-scale-out {
+    animation: animate-scale-out 0.3s ease-in;
+  }
+
+  @keyframes animate-slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-up {
+    animation: animate-slide-up 0.3s ease-out;
+  }
 }
