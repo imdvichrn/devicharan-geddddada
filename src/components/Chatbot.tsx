@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
-import { Send, Loader2, Linkedin, Instagram, Facebook, Sparkles, Film, Zap, MessageSquare, Download, PlayCircle, Phone } from 'lucide-react';
+import { Send, Loader2, Linkedin, Instagram, Facebook, Sparkles, Film, Zap, Download, PlayCircle, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { WindowChrome } from './WindowChrome';
@@ -40,7 +40,11 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
       content: `✨ Hi! I'm Echo Less, your AI-powered creative assistant. I'm here to help you explore Devicharan's post-production expertise and find the perfect solution for your video projects.
 
 What can I help you with today?`,
-      timestamp: new Date()
+      timestamp: new Date(),
+      buttons: [
+        { label: 'See My Work', icon: 'play' as const, action: 'view-portfolio' },
+        { label: 'Get a Quote', icon: 'link' as const, action: 'contact-page' }
+      ]
     }
   ];
 
@@ -104,6 +108,29 @@ What can I help you with today?`,
     scrollToBottom();
   }, [messages]);
 
+  // Link Detection System - Detect when user asks for social media
+  const detectSocialMediaRequest = (userInput: string): string | null => {
+    const lowerInput = userInput.toLowerCase();
+    
+    if (lowerInput.includes('linkedin') || lowerInput.includes('linked in')) {
+      return 'linkedin';
+    }
+    if (lowerInput.includes('instagram') || lowerInput.includes('insta')) {
+      return 'instagram';
+    }
+    if (lowerInput.includes('facebook') || lowerInput.includes('fb')) {
+      return 'facebook';
+    }
+    if (lowerInput.includes('twitter') || lowerInput.includes('x.com')) {
+      return 'twitter';
+    }
+    if (lowerInput.includes('email') || lowerInput.includes('contact') || lowerInput.includes('reach')) {
+      return 'email';
+    }
+    
+    return null;
+  };
+
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
@@ -127,6 +154,60 @@ What can I help you with today?`,
     };
     setMessages(prev => [...prev, newUserMessage]);
     setIsLoading(true);
+
+    // Check for social media link requests
+    const detectedSocial = detectSocialMediaRequest(userMessage);
+    
+    if (detectedSocial) {
+      // Social media detected - respond with button-based redirect
+      const socialResponses: Record<string, { text: string; buttons: ActionButton[] }> = {
+        linkedin: {
+          text: '🔗 Connect with me on LinkedIn! I share insights about video editing, post-production workflows, and industry trends.',
+          buttons: [
+            { label: 'Open LinkedIn Profile', icon: 'link' as const, action: 'linkedin' }
+          ]
+        },
+        instagram: {
+          text: '📸 Follow me on Instagram! I post behind-the-scenes content, editing tips, and portfolio highlights.',
+          buttons: [
+            { label: 'Open Instagram Profile', icon: 'link' as const, action: 'instagram' }
+          ]
+        },
+        facebook: {
+          text: '👥 Find me on Facebook! Let\'s connect and share more about creative projects.',
+          buttons: [
+            { label: 'Open Facebook Profile', icon: 'link' as const, action: 'facebook' }
+          ]
+        },
+        twitter: {
+          text: '🐦 Follow me on X/Twitter for daily insights about video editing and creative tech!',
+          buttons: [
+            { label: 'Open Twitter Profile', icon: 'link' as const, action: 'twitter' }
+          ]
+        },
+        email: {
+          text: '📧 You can reach me directly via email or WhatsApp! Choose your preferred contact method below.',
+          buttons: [
+            { label: 'Send Email', icon: 'mail' as const, action: 'email' },
+            { label: 'WhatsApp Message', icon: 'phone' as const, action: 'whatsapp' }
+          ]
+        }
+      };
+
+      const response = socialResponses[detectedSocial];
+      const assistantMessage: Message = {
+        role: 'assistant',
+        content: response.text,
+        buttons: response.buttons,
+        timestamp: new Date()
+      };
+
+      setTimeout(() => {
+        setMessages(prev => [...prev, assistantMessage]);
+        setIsLoading(false);
+      }, 500);
+      return;
+    }
 
     try {
       // Use enhanced chatService with Digital Twin logic
@@ -163,6 +244,10 @@ What can I help you with today?`,
 📍 Location: Visakhapatnam, India
 
 Let's connect directly! 🚀`,
+        buttons: [
+          { label: 'Send Email', icon: 'mail' as const, action: 'email' },
+          { label: 'WhatsApp Message', icon: 'phone' as const, action: 'whatsapp' }
+        ],
         timestamp: new Date()
       };
       
@@ -175,6 +260,10 @@ Let's connect directly! 🚀`,
     switch (action) {
       case 'view-showreel':
         navigate('/projects/scenesync-edits');
+        setIsOpen(false);
+        break;
+      case 'view-portfolio':
+        navigate('/projects');
         setIsOpen(false);
         break;
       case 'download-cv':
@@ -197,6 +286,9 @@ Let's connect directly! 🚀`,
         break;
       case 'facebook':
         window.open('https://www.facebook.com/userdead.610', '_blank');
+        break;
+      case 'twitter':
+        window.open('https://twitter.com/imdvichrn', '_blank');
         break;
       case 'whatsapp':
         window.open('https://wa.me/916303468707', '_blank');
@@ -243,7 +335,7 @@ Let's connect directly! 🚀`,
 
   return (
     <>
-      {/* Echo Less Toggle Button - Floating Orb */}
+      {/* Echo Less Toggle Button - Continuous Siri Orb Loop */}
       <motion.div
         className="fixed bottom-6 right-6 z-50"
         whileHover={{ scale: 1.15 }}
@@ -251,16 +343,16 @@ Let's connect directly! 🚀`,
       >
         <Button
           onClick={() => setIsOpen(!isOpen)}
-          className={`w-14 h-14 rounded-full shadow-lg transition-all duration-200 z-50 overflow-hidden bg-gradient-to-br from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 border border-indigo-400/50`}
+          className={`w-14 h-14 rounded-full shadow-lg transition-all duration-200 z-50 overflow-hidden bg-gradient-to-br from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 border border-indigo-400/50 flex items-center justify-center p-0`}
           aria-label="Toggle Echo Less chatbot"
-          style={{ padding: 0 }}
         >
+          {/* Continuous looping Siri Orb - runs regardless of chat state */}
           <motion.div
             animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
+            transition={{ duration: 2, repeat: Infinity, repeatType: 'loop' }}
             className="w-full h-full flex items-center justify-center"
           >
-            <MessageSquare className="w-6 h-6 text-white" />
+            <SiriOrb className="w-6 h-6" />
           </motion.div>
         </Button>
       </motion.div>
@@ -376,6 +468,7 @@ Let's connect directly! 🚀`,
                               'download': <Download className="w-4 h-4" />,
                               'play': <PlayCircle className="w-4 h-4" />,
                               'phone': <Phone className="w-4 h-4" />,
+                              'mail': <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>,
                               'link': <Sparkles className="w-4 h-4" />,
                             };
 
