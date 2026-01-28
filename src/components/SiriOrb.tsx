@@ -8,8 +8,15 @@ interface SiriOrbProps {
 export function SiriOrb({ className }: SiriOrbProps) {
   return (
     <div
-      className={cn("w-6 h-6 relative overflow-hidden", className)}
-      style={{ background: 'none', padding: 0, margin: 0 }}
+      className={cn("relative overflow-hidden rounded-full", className)}
+      style={{ 
+        width: '100%', 
+        height: '100%', 
+        background: 'none', 
+        padding: 0, 
+        margin: 0,
+        borderRadius: '50%'
+      }}
     >
       <video
         src="/siri-wave.webm"
@@ -19,13 +26,11 @@ export function SiriOrb({ className }: SiriOrbProps) {
         playsInline
         preload="auto"
         onLoadedData={(e) => {
-          // Ensure video loops continuously
           const video = e.currentTarget;
           video.currentTime = 0;
           video.play().catch(console.error);
         }}
         onEnded={(e) => {
-          // Force restart if loop fails
           const video = e.currentTarget;
           video.currentTime = 0;
           video.play().catch(console.error);
@@ -35,7 +40,8 @@ export function SiriOrb({ className }: SiriOrbProps) {
           height: '100%', 
           borderRadius: '50%', 
           objectFit: 'cover', 
-          display: 'block' 
+          display: 'block',
+          clipPath: 'circle(50%)'
         }}
       />
     </div>
