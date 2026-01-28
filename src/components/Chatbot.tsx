@@ -343,15 +343,16 @@ Let's connect directly! 🚀`,
       >
         <Button
           onClick={() => setIsOpen(!isOpen)}
-          className={`w-14 h-14 rounded-full shadow-lg transition-all duration-200 z-50 overflow-hidden bg-gradient-to-br from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 border border-indigo-400/50 flex items-center justify-center p-0`}
-          aria-label="Toggle Echo Less chatbot"
+          className="w-16 h-16 rounded-full shadow-2xl transition-all duration-200 z-50 overflow-hidden bg-transparent hover:bg-transparent border-0 outline-none ring-0 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:outline-none flex items-center justify-center p-0"
+          style={{ border: 'none', outline: 'none' }}
+          aria-label="Chat Support - Click to talk with Echo Less"
         >
           {/* Continuous looping Siri Orb - runs regardless of chat state */}
           <motion.div
             animate={{ scale: [1, 1.1, 1] }}
             transition={{ duration: 2, repeat: Infinity, repeatType: 'loop' }}
-            className="w-12 h-12 rounded-full overflow-hidden"
-            style={{ borderRadius: '50%' }}
+            className="w-14 h-14 rounded-full overflow-hidden"
+            style={{ borderRadius: '50%', border: 'none', outline: 'none' }}
           >
             <SiriOrb className="w-full h-full" />
           </motion.div>
