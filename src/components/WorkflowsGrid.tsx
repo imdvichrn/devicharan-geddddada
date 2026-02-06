@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { VideoWindow } from '@/components/VideoWindow';
 import { 
   Film, 
   Palette, 
@@ -187,6 +188,7 @@ interface WorkflowCardProps {
   isComingSoon?: boolean;
   modalContent?: React.ReactNode;
   projectLink?: string;
+  youtubeId?: string;
   className?: string;
   size?: 'normal' | 'large' | 'tall';
   style?: React.CSSProperties;
@@ -201,6 +203,7 @@ const WorkflowCard = ({
   isComingSoon,
   modalContent,
   projectLink,
+  youtubeId,
   className = '',
   size = 'normal',
   style
@@ -227,10 +230,20 @@ const WorkflowCard = ({
       </CardHeader>
       
       <CardContent className="space-y-4">
-        {/* Visual representation */}
-        <div className="rounded-lg overflow-hidden">
-          {visual}
-        </div>
+        {/* Video embed in macOS Safari window */}
+        {youtubeId && (
+          <VideoWindow 
+            youtubeId={youtubeId} 
+            title={title}
+          />
+        )}
+        
+        {/* Visual representation (only show if no video) */}
+        {!youtubeId && (
+          <div className="rounded-lg overflow-hidden">
+            {visual}
+          </div>
+        )}
         
         {/* Tools badges */}
         {tools && tools.length > 0 && (
@@ -401,6 +414,7 @@ export function WorkflowsGrid() {
       title: 'Video Editing & Post-Production',
       description: 'Professional video editing with industry-standard color grading, VFX compositing, and cinematic sound design.',
       visual: <VideoTimeline />,
+      youtubeId: 'N68iysGT2DU',
       tools: ['DaVinci Resolve Studio', 'Fusion VFX', 'Fairlight Audio'],
       specs: ['4K Workflow', 'RAW Processing', 'Node-based Grading', 'HDR Mastering'],
       modalContent: <VideoEditingDetails />,
@@ -416,6 +430,7 @@ export function WorkflowsGrid() {
           <MiniBarChart />
         </div>
       ),
+      youtubeId: 'G8EW0uAJJ3k',
       tools: ['Analytics', 'Content Strategy', 'SEO'],
       specs: ['Market Analysis', 'KPI Tracking'],
       modalContent: <GrowthStrategyDetails />,
@@ -437,6 +452,7 @@ export function WorkflowsGrid() {
           <Sparkles size={18} className="text-warning relative z-10" />
         </div>
       ),
+      youtubeId: 'nKVGh6yXfWw',
       tools: ['Photoshop', 'Canva', 'Figma'],
       specs: ['Brand Identity', 'Print & Digital'],
       modalContent: <VisualDesignDetails />,
