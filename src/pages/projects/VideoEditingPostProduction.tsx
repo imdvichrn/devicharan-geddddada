@@ -192,15 +192,33 @@ export default function VideoEditingPostProduction() {
               <CardHeader className="px-4 md:px-8">
                 <WindowChrome className="mb-4" />
                 <CardTitle className="text-xl md:text-2xl font-bold">
-                  Video Player
+                  Project Showcase
                 </CardTitle>
               </CardHeader>
-              <CardContent className="px-4 md:px-8 pb-8">
-                <VideoEmbed 
-                  youtubeId={youtubeId} 
-                  title="Video Editing & Post-Production Showcase"
-                  className="shadow-lg"
-                />
+              <CardContent className="px-4 md:px-8 pb-8 space-y-8">
+                {/* Primary Video */}
+                <div className="space-y-3">
+                  <h3 className="text-base md:text-lg font-medium text-foreground">
+                    Main Showcase
+                  </h3>
+                  <VideoEmbed 
+                    youtubeId={youtubeId} 
+                    title="Video Editing & Post-Production Showcase"
+                    className="shadow-lg"
+                  />
+                </div>
+                
+                {/* Secondary Video */}
+                <div className="space-y-3">
+                  <h3 className="text-base md:text-lg font-medium text-foreground">
+                    Additional Work
+                  </h3>
+                  <VideoEmbed 
+                    youtubeId="fkniR6CZWsY" 
+                    title="Additional Post-Production Showcase"
+                    className="shadow-lg"
+                  />
+                </div>
               </CardContent>
             </Card>
           </div>
