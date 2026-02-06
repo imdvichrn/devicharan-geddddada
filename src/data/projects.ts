@@ -6,6 +6,7 @@ export interface Project {
   challenge: string;
   outcome: string;
   youtubeEmbedId: string;
+  additionalVideos?: { id: string; title: string }[];
   year: string;
   tools: string[];
   roles: string[];
@@ -92,6 +93,9 @@ export const projects: Project[] = [
     challenge: 'Managing complex timelines with multiple video layers, achieving consistent color grading across diverse source material, and seamlessly integrating audio with visual elements while maintaining professional pacing and visual flow.',
     outcome: 'Created a portfolio of professionally edited videos with industry-standard color correction, smooth transitions, and synchronized audio design. The projects demonstrate technical proficiency in post-production workflows and creative visual storytelling.',
     youtubeEmbedId: 'N68iysGT2DU',
+    additionalVideos: [
+      { id: 'fkniR6CZWsY', title: 'Additional Post-Production Showcase' }
+    ],
     year: '2025',
     tools: ['DaVinci Resolve', 'Adobe Premiere Pro', '3D Modeling', 'Color Grading', 'Sound Design'],
     roles: ['Lead Video Editor & Post-Production Specialist', 'Colorist', 'Sound Engineer', 'Audio Engineer'],

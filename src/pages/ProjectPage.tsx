@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { Navigation } from '@/components/Navigation';
 import { Chatbot } from '@/components/Chatbot';
-import { VideoPlayer } from '@/components/VideoPlayer';
+import { VideoEmbed } from '@/components/VideoEmbed';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -108,11 +108,28 @@ export default function ProjectPage() {
                 Project Video
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <VideoPlayer 
-                videoId={project.youtubeEmbedId} 
+            <CardContent className="space-y-6">
+              <VideoEmbed 
+                youtubeId={project.youtubeEmbedId} 
                 title={project.title}
               />
+              
+              {/* Additional Videos */}
+              {project.additionalVideos && project.additionalVideos.length > 0 && (
+                <div className="space-y-4">
+                  {project.additionalVideos.map((video, index) => (
+                    <div key={video.id} className="space-y-2">
+                      <h3 className="text-sm font-medium text-muted-foreground">
+                        {video.title}
+                      </h3>
+                      <VideoEmbed 
+                        youtubeId={video.id} 
+                        title={video.title}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </CardContent>
           </Card>
 
