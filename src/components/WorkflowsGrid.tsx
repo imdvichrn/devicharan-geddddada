@@ -84,6 +84,7 @@ const VideoTimeline = () => {
       <button 
         onClick={() => setIsPlaying(!isPlaying)}
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-primary/20 hover:bg-primary/30 flex items-center justify-center transition-all opacity-0 hover:opacity-100"
+        aria-label={isPlaying ? 'Pause video production timeline' : 'Play video production timeline'}
       >
         {isPlaying ? <Pause size={14} /> : <Play size={14} />}
       </button>
@@ -285,6 +286,7 @@ const WorkflowCard = ({
                     variant="outline" 
                     size="sm" 
                     className="flex-1 group-hover:bg-primary/10 group-hover:border-primary/30 transition-all"
+                    aria-label={`View DaVinci Resolve workflow process for ${title}`}
                   >
                     <Layers size={14} className="mr-2" />
                     View Process
@@ -305,6 +307,7 @@ const WorkflowCard = ({
                 <Button 
                   size="sm" 
                   className="w-full bg-primary hover:bg-primary/90"
+                  aria-label={`View ${title} video production project`}
                 >
                   <ExternalLink size={14} className="mr-2" />
                   View Project

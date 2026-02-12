@@ -508,4 +508,18 @@ All colors MUST be HSL for proper theming.
   .animate-slide-up {
     animation: animate-slide-up 0.3s ease-out;
   }
+
+  /* Glassmorphism glow button effect */
+  .btn-glow-hover {
+    @apply relative overflow-hidden transition-all duration-300;
+    background: hsla(var(--glass), 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid hsla(var(--glass-border), 0.1);
+  }
+
+  .btn-glow-hover:hover {
+    box-shadow: 0 0 15px hsla(var(--primary), 0.4);
+    border-color: hsla(var(--primary), 0.6);
+    transform: translateY(-2px);
+  }
 }

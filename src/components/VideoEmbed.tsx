@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Play } from 'lucide-react';
 
 interface VideoEmbedProps {
@@ -43,6 +43,7 @@ export function VideoEmbed({ youtubeId, title = "Video player", className = "" }
             className="absolute inset-0 w-full h-full object-cover"
             loading="lazy"
             decoding="async"
+            {...({ importance: 'low', fetchPriority: 'low' } as React.ImgHTMLAttributes<HTMLImageElement>)}
           />
           
           {/* Dark overlay on hover */}

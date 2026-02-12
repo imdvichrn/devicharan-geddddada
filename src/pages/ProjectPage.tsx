@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { getProjectById } from '@/data/projects';
+import { generateProductSchema } from '@/lib/structuredData';
 
 export default function ProjectPage() {
   const { projectId } = useParams<{ projectId: string }>();
@@ -55,6 +56,16 @@ export default function ProjectPage() {
         <meta property="og:title" content={`${project.title} - Geddada Devicharan`} />
         <meta property="og:description" content={project.shortDescription} />
         <link rel="canonical" href={`https://devicharangeddada.lovable.app/project/${projectId}`} />
+        {project.id === 'davinci-workflow-plugin' && (
+          <script type="application/ld+json">
+            {JSON.stringify(generateProductSchema({
+              name: 'DaVinci Resolve Pro-Stream Plugin',
+              description: 'Boost your editing speed by 30% with this custom DaVinci Resolve workflow utility.',
+              price: '10.00',
+              currency: 'USD',
+            }))}
+          </script>
+        )}
       </Helmet>
 
       <Navigation />

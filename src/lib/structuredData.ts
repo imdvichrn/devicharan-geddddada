@@ -61,3 +61,35 @@ export const generateCreativeWorkSchema = (data: {
     "keywords": [...data.tools, ...data.roles].join(", ")
   };
 };
+
+export const generateProductSchema = (data: {
+  name: string;
+  description: string;
+  price: string;
+  currency?: string;
+  url?: string;
+  image?: string;
+}) => {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": data.name,
+    "description": data.description,
+    "image": data.image || "https://geddadadevicharan.netlify.app/profile-avatar.png",
+    "brand": {
+      "@type": "Brand",
+      "name": "Geddada Devicharan"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": data.price,
+      "priceCurrency": data.currency || "USD",
+      "availability": "https://schema.org/InStock",
+      "url": data.url || "https://geddadadevicharan.netlify.app/project/davinci-workflow-plugin",
+      "seller": {
+        "@type": "Person",
+        "name": "Geddada Devicharan"
+      }
+    }
+  };
+};
