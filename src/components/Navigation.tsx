@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Moon, Sun, Menu, X } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
@@ -11,6 +12,12 @@ const navItems = [
   { id: 'education', label: 'Education' },
   { id: 'contact', label: 'Contact' },
 ];
+
+const productLink = {
+  label: 'Perfect Pack',
+  path: '/project/perfect-pack-plugin',
+  isProduct: true
+};
 
 export function Navigation() {
   const [activeSection, setActiveSection] = useState('home');
@@ -73,10 +80,23 @@ export function Navigation() {
                       ? 'text-primary bg-primary/10'
                       : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                   }`}
+                  aria-label={`Navigate to ${item.label}`}
                 >
                   {item.label}
                 </button>
               ))}
+              
+              {/* Perfect Pack Product Link with New Badge */}
+              <Link 
+                to={productLink.path}
+                className="relative group px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover-scale text-muted-foreground hover:text-primary hover:bg-muted/50"
+                aria-label="View Perfect Pack All-In-One Creative Assets - Drag & Drop Integration for Professional Editors"
+              >
+                {productLink.label}
+                <span className="absolute -top-3 -right-4 px-1.5 py-0.5 text-[10px] font-bold bg-primary text-white rounded-full animate-pulse whitespace-nowrap">
+                  New
+                </span>
+              </Link>
             </div>
           </div>
 
@@ -134,6 +154,19 @@ export function Navigation() {
                   {item.label}
                 </button>
               ))}
+              
+              {/* Perfect Pack Product Link - Mobile */}
+              <Link 
+                to={productLink.path}
+                onClick={() => setIsMenuOpen(false)}
+                className="relative block w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors text-muted-foreground hover:text-primary hover:bg-muted/50"
+                aria-label="View Perfect Pack All-In-One Creative Assets - Drag & Drop Integration for Professional Editors"
+              >
+                {productLink.label}
+                <span className="absolute -top-2 right-3 px-1.5 py-0.5 text-[10px] font-bold bg-primary text-white rounded-full animate-pulse whitespace-nowrap">
+                  New
+                </span>
+              </Link>
             </div>
           </div>
         )}
