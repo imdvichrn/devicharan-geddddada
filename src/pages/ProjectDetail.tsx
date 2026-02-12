@@ -1,4 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Navigation } from '@/components/Navigation';
 import { Chatbot } from '@/components/Chatbot';
 import { VideoEmbed } from '@/components/VideoEmbed';
@@ -6,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { WindowChrome } from '@/components/WindowChrome';
-import { ArrowLeft, Play, Calendar, User } from 'lucide-react';
+import { ArrowLeft, Play, Calendar, User, ShoppingBag, Zap, Layers, Cpu, ShieldCheck } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { generateBreadcrumbSchema, generateVideoObjectSchema, generateCreativeWorkSchema } from '@/lib/structuredData';
 
@@ -52,6 +53,67 @@ const projectsData: Record<string, {
     roles: ['Growth Strategist', 'Content Planner']
   }
 };
+
+/* 3D-Interactive Product Section Component */
+function ProductSection() {
+  return (
+    <section className="grid lg:grid-cols-2 gap-12 items-center py-20 px-6 perspective-container">
+      {/* 3D Tilted Video Card */}
+      <motion.div 
+        whileHover={{ rotateY: -10, rotateX: 5, scale: 1.02 }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        className="card-3d-tilt glass-elevated rounded-[2.5rem] p-3 shadow-2xl overflow-hidden"
+      >
+        <VideoEmbed youtubeId="YOUR_VIDEO_ID" title="PERFECT PACK Demonstration" />
+      </motion.div>
+
+      <div className="space-y-8 preserve-3d-content">
+        <div className="space-y-4">
+          <motion.span className="text-primary font-bold tracking-widest text-xs uppercase bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
+            imdvichrn's Official Release
+          </motion.span>
+          <h1 className="text-7xl font-black bg-gradient-to-br from-white to-white/40 bg-clip-text text-transparent leading-tight">
+            PERFECT PACK
+          </h1>
+          <h2 className="text-xl font-bold text-primary tracking-tight">ALL-IN-ONE CREATIVE ASSETS</h2>
+          <p className="text-xl text-muted-foreground leading-relaxed">
+            The PERFECT PACK is the industry secret for elite colorists who demand Drag & Drop Integration and High-Resolution Textures in their post-production pipeline.
+          </p>
+        </div>
+
+        {/* Feature Grid */}
+        <div className="grid grid-cols-2 gap-4">
+          {[
+            { icon: <Zap />, text: "Drag & Drop" },
+            { icon: <Layers />, text: "High-Res Textures" },
+            { icon: <Cpu />, text: "Major NLE Support" },
+            { icon: <ShieldCheck />, text: "Secure Access" }
+          ].map((item, i) => (
+            <div key={i} className="flex items-center gap-3 glass-panel p-3 rounded-xl border border-white/5">
+              <span className="text-primary w-5 h-5">{item.icon}</span>
+              <span className="text-sm font-medium">{item.text}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Secure Buy Button with Shimmer and Glow */}
+        <motion.button 
+          whileHover={{ y: -5, boxShadow: "0 20px 40px -10px hsla(var(--primary), 0.5)" }}
+          whileTap={{ scale: 0.98 }}
+          className="product-premium-btn w-full py-6 rounded-2xl flex items-center justify-center gap-4 text-white font-black text-xl"
+          aria-label="Securely purchase the PERFECT PACK All-In-One Creative Assets for $10.00"
+        >
+          <ShoppingBag className="w-6 h-6" />
+          Get PERFECT PACK — $10.00
+        </motion.button>
+        
+        <p className="text-center text-xs text-muted-foreground/60 italic">
+          Optimized for All Major Editors. Unique download link generated after payment.
+        </p>
+      </div>
+    </section>
+  );
+}
 
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
@@ -197,3 +259,5 @@ export default function ProjectDetail() {
     </div>
   );
 }
+
+export { ProductSection };

@@ -103,17 +103,17 @@ export const projects: Project[] = [
     category: 'video'
   },
   {
-    id: 'davinci-workflow-plugin',
-    title: 'DaVinci Resolve Pro-Stream Plugin',
-    shortDescription: 'Boost your editing speed by 30% with this custom workflow utility.',
-    longDescription: 'A high-performance plugin for DaVinci Resolve that automates scene-cut detection and node-based color grading setups. Built with the DaVinci Resolve API for seamless integration.',
-    challenge: 'Optimizing real-time performance within the DaVinci Resolve engine.',
-    outcome: 'A lightweight utility that reduces manual repetitive tasks.',
-    youtubeEmbedId: 'PLACEHOLDER_VIDEO_ID',
+    id: 'perfect-pack-plugin',
+    title: 'PERFECT PACK - All-In-One Creative Assets',
+    shortDescription: 'The PERFECT PACK by imdvichrn is an elite $10 automation utility designed to accelerate post-production workflows by 30%.',
+    longDescription: 'The PERFECT PACK by imdvichrn transforms manual color grading into a streamlined, one-click operation. Built for professional editors, it integrates High-Resolution Textures & Elements into the Fusion engine to automate complex node-tree generation and timeline synchronization.',
+    challenge: 'The PERFECT PACK required a custom API bridge within the DaVinci Resolve Studio environment to handle real-time 4K playback without latency.',
+    outcome: 'The PERFECT PACK successfully reduces repetitive workflow tasks using Drag & Drop Integration, saving professional editors hours of manual labor per project.',
+    youtubeEmbedId: 'YOUR_VIDEO_ID',
     year: '2026',
-    tools: ['Lua', 'DaVinci Resolve API', 'Python'],
-    roles: ['Lead Developer', 'UX Designer'],
-    technicalDetails: ['Custom API Bridge', 'Unique License Validation', 'Secure Checkout via LemonSqueezy'],
+    tools: ['DaVinci Resolve API', 'Python', 'Lua', 'High-Res Textures'],
+    roles: ['Lead Developer', 'UI Designer'],
+    technicalDetails: ['Drag & Drop Integration', 'Optimized for All Major NLEs', 'Secure License Validation'],
     category: 'web'
   }
 ];

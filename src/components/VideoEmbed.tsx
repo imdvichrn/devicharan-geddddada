@@ -7,63 +7,37 @@ interface VideoEmbedProps {
   className?: string;
 }
 
-export function VideoEmbed({ youtubeId, title = "Video player", className = "" }: VideoEmbedProps) {
+export function VideoEmbed({ youtubeId, title = "Pro-Stream Plugin Demo", className = "" }: VideoEmbedProps) {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [thumbnailUrl, setThumbnailUrl] = useState(
-    `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`
-  );
-  const [thumbnailError, setThumbnailError] = useState(false);
-
-  /**
-   * Thumbnail Fallback Strategy
-   * If maxresdefault.jpg fails to load, automatically fall back to hqdefault.jpg
-   * This ensures reliable thumbnail loading for all YouTube videos
-   */
-  const handleThumbnailError = () => {
-    if (!thumbnailError) {
-      setThumbnailError(true);
-      setThumbnailUrl(`https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`);
-    }
-  };
+  const thumb = `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
 
   return (
-    <div className={`relative w-full aspect-video min-h-[300px] rounded-lg overflow-hidden shadow-xl bg-black ${className}`}>
+    <div className={`relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl bg-black/20 border border-white/5 ${className}`}>
       {!isLoaded ? (
-        // Facade: Show thumbnail with play button until clicked
         <button
           onClick={() => setIsLoaded(true)}
-          className="absolute inset-0 w-full h-full group cursor-pointer"
-          aria-label={`Play ${title} — DaVinci Resolve Workflow Plugin Demo`}
+          className="absolute inset-0 w-full h-full group"
+          aria-label={`Watch the Pro-Stream DaVinci Resolve Plugin workflow demonstration by Geddada Devicharan`}
         >
-          {/* YouTube Thumbnail with Fallback Strategy */}
-          <img
-            src={thumbnailUrl}
-            alt={title}
-            onError={handleThumbnailError}
-            className="absolute inset-0 w-full h-full object-cover"
-            loading="lazy"
-            decoding="async"
-            {...({ importance: 'low', fetchPriority: 'low' } as React.ImgHTMLAttributes<HTMLImageElement>)}
+          <img 
+            src={thumb} 
+            loading="lazy" 
+            fetchPriority="low" 
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+            alt={`${title} - Video Production Workflow`} 
           />
-          
-          {/* Dark overlay on hover */}
-          <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors duration-300" />
-          
-          {/* Play button */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
-              <Play className="w-8 h-8 text-white fill-white ml-1" />
+            <div className="w-20 h-20 bg-primary/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(var(--primary),0.5)] shadow-xl">
+              <Play className="w-10 h-10 text-white fill-white ml-1" />
             </div>
           </div>
         </button>
       ) : (
-        // Lazy-loaded iframe only after click
-        <iframe
-          src={`https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1&autoplay=1`}
-          title={title}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-          className="absolute inset-0 w-full h-full border-0"
+        <iframe 
+          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&modestbranding=1&rel=0`} 
+          title={title} 
+          className="absolute inset-0 w-full h-full border-0" 
+          allowFullScreen 
         />
       )}
     </div>
