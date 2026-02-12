@@ -20,9 +20,16 @@ import {
 import { Helmet } from 'react-helmet-async';
 import { getProjectById } from '@/data/projects';
 import { generateProductSchema, generatePluginSchema } from '@/lib/structuredData';
+import PerfectPackPage from './PerfectPackPage';
 
 export default function ProjectPage() {
   const { projectId } = useParams<{ projectId: string }>();
+  
+  // Render Perfect Pack product page for specific route
+  if (projectId === 'perfect-pack-plugin') {
+    return <PerfectPackPage />;
+  }
+  
   const project = projectId ? getProjectById(projectId) : null;
 
   if (!project) {

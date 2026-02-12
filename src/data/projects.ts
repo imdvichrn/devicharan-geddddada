@@ -103,6 +103,23 @@ export const projects: Project[] = [
     category: 'video'
   },
   {
+    id: 'perfect-pack',
+    title: 'PERFECT PACK',
+    shortDescription: 'ALL-IN-ONE CREATIVE ASSETS by imdvichrn',
+    longDescription: 'The PERFECT PACK is a high-performance collection of creative assets designed for professional editors. It features High-Resolution Textures, Drag & Drop Integration, and is fully optimized for all major editors including DaVinci Resolve and Premiere Pro.',
+    youtubeEmbedId: 'YOUR_VIDEO_ID',
+    year: '2026',
+    tools: ['DaVinci Resolve', 'All Major Editors', 'High-Res Textures'],
+    roles: ['Product Designer', 'Lead Developer'],
+    technicalDetails: [
+      'Drag & Drop Integration',
+      'High-Resolution Elements',
+      'Professional Grade Textures',
+      'Universal Compatibility'
+    ],
+    category: 'web'
+  },
+  {
     id: 'perfect-pack-plugin',
     title: 'PERFECT PACK - All-In-One Creative Assets',
     shortDescription: 'The PERFECT PACK by imdvichrn is an elite $10 automation utility designed to accelerate post-production workflows by 30%.',
