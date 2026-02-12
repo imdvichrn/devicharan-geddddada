@@ -33,7 +33,7 @@ export function VideoEmbed({ youtubeId, title = "Video player", className = "" }
         <button
           onClick={() => setIsLoaded(true)}
           className="absolute inset-0 w-full h-full group cursor-pointer"
-          aria-label={`Play ${title}`}
+          aria-label={`Play ${title} — DaVinci Resolve Workflow Plugin Demo`}
         >
           {/* YouTube Thumbnail with Fallback Strategy */}
           <img

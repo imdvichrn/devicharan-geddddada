@@ -48,7 +48,7 @@ export function VideoWindow({ youtubeId, title, className = '' }: VideoWindowPro
           <button
             onClick={() => setIsLoaded(true)}
             className="absolute inset-0 w-full h-full group cursor-pointer"
-            aria-label={`Play ${title}`}
+            aria-label={`Play ${title} — DaVinci Resolve Video Production`}
           >
             {/* YouTube Thumbnail */}
             <img
