@@ -58,6 +58,7 @@ export function VideoWindow({ youtubeId, title, className = '' }: VideoWindowPro
               className="absolute inset-0 w-full h-full object-cover"
               loading="lazy"
               decoding="async"
+              {...({ importance: 'low', fetchPriority: 'low' } as React.ImgHTMLAttributes<HTMLImageElement>)}
             />
             
             {/* Dark overlay on hover */}

@@ -101,6 +101,20 @@ export const projects: Project[] = [
     roles: ['Lead Video Editor & Post-Production Specialist', 'Colorist', 'Sound Engineer', 'Audio Engineer'],
     technicalDetails: ['Color Correction', 'Transition Design', 'Audio Synchronization', 'Timeline Optimization', 'Sound Design', 'Fusion-Oriented Motion Graphics', '3D Modeling', 'CGI Integration'],
     category: 'video'
+  },
+  {
+    id: 'davinci-workflow-plugin',
+    title: 'DaVinci Resolve Pro-Stream Plugin',
+    shortDescription: 'Boost your editing speed by 30% with this custom workflow utility.',
+    longDescription: 'A high-performance plugin for DaVinci Resolve that automates scene-cut detection and node-based color grading setups. Built with the DaVinci Resolve API for seamless integration.',
+    challenge: 'Optimizing real-time performance within the DaVinci Resolve engine.',
+    outcome: 'A lightweight utility that reduces manual repetitive tasks.',
+    youtubeEmbedId: 'PLACEHOLDER_VIDEO_ID',
+    year: '2026',
+    tools: ['Lua', 'DaVinci Resolve API', 'Python'],
+    roles: ['Lead Developer', 'UX Designer'],
+    technicalDetails: ['Custom API Bridge', 'Unique License Validation', 'Secure Checkout via LemonSqueezy'],
+    category: 'web'
   }
 ];
 
