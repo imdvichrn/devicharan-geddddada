@@ -84,7 +84,40 @@ export function ContactForm() {
 
     setIsSubmitting(true);
 
+    // small helper: fallback to WebAudio beep if audio file missing/blocked
+    const playFallbackBeep = () => {
+      try {
+        const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = 'sine';
+        o.frequency.value = 880;
+        g.gain.value = 0.02;
+        o.connect(g);
+        g.connect(ctx.destination);
+        o.start();
+        setTimeout(() => { o.stop(); ctx.close(); }, 300);
+      } catch (err) {
+        // no-op
+      }
+    };
+
     try {
+      // 1. Play the professional sound effect (non-blocking)
+      try {
+        const audio = new Audio('/message-sent.mp3');
+        audio.volume = 0.4;
+        audio.play().catch(() => playFallbackBeep());
+      } catch (err) {
+        playFallbackBeep();
+      }
+
+      // 2. Show the World-Class visual feedback
+      toast({
+        title: "Message Sent Successfully!",
+        description: "Geddada Devicharan will get back to you shortly.",
+        className: "bg-primary text-black font-bold",
+      });
       const templateParams = {
         from_name: formData.name,
         from_email: formData.email,
@@ -99,11 +132,7 @@ export function ContactForm() {
         templateParams
       );
 
-      toast({
-        title: "Message sent!",
-        description: "Thank you for your message. I'll get back to you soon!",
-      });
-      
+      // Keep the success toast (already shown) and reset form
       setFormData(initialFormData);
     } catch (error) {
       console.error('EmailJS error:', error);
@@ -206,6 +235,7 @@ export function ContactForm() {
             type="submit"
             className="w-full bg-primary hover:bg-primary/90 text-primary-foreground hover-scale"
             disabled={isSubmitting}
+            aria-label="Send a professional inquiry message to Geddada Devicharan"
           >
             {isSubmitting ? (
               <>

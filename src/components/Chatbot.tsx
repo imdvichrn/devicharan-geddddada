@@ -156,6 +156,32 @@ I can tell you about his video editing work, skills, or help you get in touch. W
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
+    // try to play message-sent audio, fallback to WebAudio beep if blocked/missing
+    const playFallbackBeep = () => {
+      try {
+        const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = 'sine';
+        o.frequency.value = 880;
+        g.gain.value = 0.02;
+        o.connect(g);
+        g.connect(ctx.destination);
+        o.start();
+        setTimeout(() => { o.stop(); ctx.close(); }, 300);
+      } catch (err) {
+        // no-op
+      }
+    };
+
+    try {
+      const audio = new Audio('/message-sent.mp3');
+      audio.volume = 0.4;
+      audio.play().catch(() => playFallbackBeep());
+    } catch (err) {
+      playFallbackBeep();
+    }
+
     const userMessage = input.trim();
     setInput('');
     setShowQuickActions(false);

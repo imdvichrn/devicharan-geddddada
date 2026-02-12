@@ -1,0 +1,7 @@
+Place a short, clean 'Message Sent' MP3 here and name it exactly:
+
+message-sent.mp3
+
+Recommended: ~0.8–1.2s short click or chime, CC0 or your own sound.
+
+This repository currently provides a WebAudio fallback if the file is missing or blocked, but adding a proper MP3 will ensure consistent playback across browsers.
