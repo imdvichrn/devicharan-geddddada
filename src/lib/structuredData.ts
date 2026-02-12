@@ -93,3 +93,21 @@ export const generateProductSchema = (data: {
     }
   };
 };
+
+export const generatePluginSchema = () => ({
+  "@context": "https://schema.org/",
+  "@type": "SoftwareApplication",
+  "name": "Pro-Stream DaVinci Resolve Plugin",
+  "operatingSystem": "Windows, macOS",
+  "applicationCategory": "MultimediaApplication",
+  "offers": {
+    "@type": "Offer",
+    "price": "10.00",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Geddada Devicharan",
+    "url": "https://geddadadevicharan.netlify.app"
+  }
+});
