@@ -7,6 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
 import { ThemeProvider } from "@/hooks/useTheme";
 import { PageTransition } from "@/components/PageTransition";
+import { Navigation } from "@/components/Navigation";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { Portfolio } from "./pages/Portfolio";
 import NotFound from "./pages/NotFound";
@@ -51,6 +52,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <Navigation />
             <AnimatedRoutes />
           </BrowserRouter>
         </TooltipProvider>

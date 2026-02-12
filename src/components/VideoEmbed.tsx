@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Play } from 'lucide-react';
+import { getYoutubeThumbnailFallbacks } from '@/lib/video';
 
 interface VideoEmbedProps {
   youtubeId: string;
@@ -9,7 +10,14 @@ interface VideoEmbedProps {
 
 export function VideoEmbed({ youtubeId, title = "Pro-Stream Plugin Demo", className = "" }: VideoEmbedProps) {
   const [isLoaded, setIsLoaded] = useState(false);
-  const thumb = `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
+  const [thumb, setThumb] = useState(getYoutubeThumbnailFallbacks(youtubeId)[0]);
+  const fallbacks = getYoutubeThumbnailFallbacks(youtubeId);
+
+  const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const img = e.currentTarget;
+    const next = fallbacks.find((u) => u !== img.src);
+    if (next) setThumb(next);
+  };
 
   return (
     <div className={`relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl bg-black/20 border border-white/5 ${className}`}>
@@ -23,6 +31,7 @@ export function VideoEmbed({ youtubeId, title = "Pro-Stream Plugin Demo", classN
             src={thumb} 
             loading="lazy" 
             fetchPriority="low" 
+            onError={handleImgError}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
             alt={`${title} - Video Production Workflow`} 
           />

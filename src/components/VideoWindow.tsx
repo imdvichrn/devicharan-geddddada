@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Play } from 'lucide-react';
+import { getYoutubeThumbnailFallbacks } from '@/lib/video';
 import { WindowChrome } from '@/components/WindowChrome';
 
 interface VideoWindowProps {
@@ -14,16 +15,15 @@ interface VideoWindowProps {
  */
 export function VideoWindow({ youtubeId, title, className = '' }: VideoWindowProps) {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [thumbnailUrl, setThumbnailUrl] = useState(
-    `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`
-  );
-  const [thumbnailError, setThumbnailError] = useState(false);
+  const fallbacks = getYoutubeThumbnailFallbacks(youtubeId);
+  const [thumbnailUrl, setThumbnailUrl] = useState(fallbacks[0]);
+  const [thumbnailIndex, setThumbnailIndex] = useState(0);
 
-  // Fallback to hqdefault if maxresdefault fails
   const handleThumbnailError = () => {
-    if (!thumbnailError) {
-      setThumbnailError(true);
-      setThumbnailUrl(`https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`);
+    const nextIndex = thumbnailIndex + 1;
+    if (nextIndex < fallbacks.length) {
+      setThumbnailIndex(nextIndex);
+      setThumbnailUrl(fallbacks[nextIndex]);
     }
   };
 
