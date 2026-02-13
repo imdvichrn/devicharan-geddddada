@@ -79,16 +79,17 @@ export function Navigation() {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               {navItems.map((item) => (
-                <a
+                <button
                   key={item.id}
-                  href={`/#${item.id}`}
-                  onClick={(e) => {
+                  onClick={() => {
                     if (isHomePage) {
-                      e.preventDefault();
                       const element = document.getElementById(item.id);
                       if (element) {
                         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                       }
+                    } else {
+                      // Navigate to home with hash for smooth scroll
+                      window.location.href = `/#${item.id}`;
                     }
                     setIsMenuOpen(false);
                   }}
@@ -100,7 +101,7 @@ export function Navigation() {
                   aria-label={`Go to Geddada Devicharan's ${item.label} section`}
                 >
                   {item.label}
-                </a>
+                </button>
               ))}
               
               {/* Perfect Pack Product Link with New Badge */}
@@ -159,16 +160,17 @@ export function Navigation() {
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 border-t border-glass-border">
               {navItems.map((item) => (
-                <a
+                <button
                   key={item.id}
-                  href={`/#${item.id}`}
-                  onClick={(e) => {
+                  onClick={() => {
                     if (isHomePage) {
-                      e.preventDefault();
                       const element = document.getElementById(item.id);
                       if (element) {
                         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                       }
+                    } else {
+                      // Navigate to home with hash for smooth scroll
+                      window.location.href = `/#${item.id}`;
                     }
                     setIsMenuOpen(false);
                   }}
@@ -180,7 +182,7 @@ export function Navigation() {
                   aria-label={`Go to Geddada Devicharan's ${item.label} section`}
                 >
                   {item.label}
-                </a>
+                </button>
               ))}
               
               {/* Perfect Pack Product Link - Mobile */}
