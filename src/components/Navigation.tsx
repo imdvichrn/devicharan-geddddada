@@ -79,11 +79,21 @@ export function Navigation() {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               {navItems.map((item) => (
-                <Link
+                <button
                   key={item.id}
-                  to={isHomePage ? item.href : `/${item.href}`}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover-scale ${
+                  onClick={() => {
+                    if (isHomePage) {
+                      const element = document.getElementById(item.id);
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }
+                    } else {
+                      // Navigate to home with hash for smooth scroll
+                      window.location.href = `/#${item.id}`;
+                    }
+                    setIsMenuOpen(false);
+                  }}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover-scale cursor-pointer ${
                     activeSection === item.id
                       ? 'text-primary bg-primary/10'
                       : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
@@ -91,7 +101,7 @@ export function Navigation() {
                   aria-label={`Go to Geddada Devicharan's ${item.label} section`}
                 >
                   {item.label}
-                </Link>
+                </button>
               ))}
               
               {/* Perfect Pack Product Link with New Badge */}
@@ -150,11 +160,21 @@ export function Navigation() {
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 border-t border-glass-border">
               {navItems.map((item) => (
-                <Link
+                <button
                   key={item.id}
-                  to={isHomePage ? item.href : `/${item.href}`}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                  onClick={() => {
+                    if (isHomePage) {
+                      const element = document.getElementById(item.id);
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }
+                    } else {
+                      // Navigate to home with hash for smooth scroll
+                      window.location.href = `/#${item.id}`;
+                    }
+                    setIsMenuOpen(false);
+                  }}
+                  className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer ${
                     activeSection === item.id
                       ? 'text-primary bg-primary/10'
                       : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
@@ -162,7 +182,7 @@ export function Navigation() {
                   aria-label={`Go to Geddada Devicharan's ${item.label} section`}
                 >
                   {item.label}
-                </Link>
+                </button>
               ))}
               
               {/* Perfect Pack Product Link - Mobile */}
