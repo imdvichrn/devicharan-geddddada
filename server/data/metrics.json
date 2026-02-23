@@ -1,0 +1,16 @@
+[
+  { "timestamp": "2024-01-01", "value": 1200, "category": "views", "metric": "views" },
+  { "timestamp": "2024-02-01", "value": 1500, "category": "views", "metric": "views" },
+  { "timestamp": "2024-03-01", "value": 1700, "category": "views", "metric": "views" },
+  { "timestamp": "2024-04-01", "value": 2100, "category": "views", "metric": "views" },
+
+  { "timestamp": "2024-01-01", "value": 12, "category": "project_time_days", "metric": "completion_time" },
+  { "timestamp": "2024-02-01", "value": 11, "category": "project_time_days", "metric": "completion_time" },
+  { "timestamp": "2024-03-01", "value": 9, "category": "project_time_days", "metric": "completion_time" },
+  { "timestamp": "2024-04-01", "value": 8, "category": "project_time_days", "metric": "completion_time" },
+
+  { "timestamp": "2024-01-01", "value": 200, "category": "engagement", "metric": "engagement" },
+  { "timestamp": "2024-02-01", "value": 240, "category": "engagement", "metric": "engagement" },
+  { "timestamp": "2024-03-01", "value": 260, "category": "engagement", "metric": "engagement" },
+  { "timestamp": "2024-04-01", "value": 300, "category": "engagement", "metric": "engagement" }
+]
