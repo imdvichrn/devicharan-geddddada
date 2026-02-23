@@ -29,6 +29,110 @@ function detectIntent(text: string) {
   return 'chat';
 }
 
+function mapToEcholessIntent(userQuery: string, detected: string) {
+  const q = userQuery.toLowerCase();
+  // direct mappings
+  if (detected === 'about') return 'ABOUT_INTENT';
+  if (detected === 'projects') return 'PROJECTS_INTENT';
+  if (detected === 'social') return 'SOCIAL_INTENT';
+  if (detected === 'chat') {
+    if (q.includes('skill') || q.includes('languages') || q.includes('framework')) return 'SKILLS_INTENT';
+    if (q.includes('contact') || q.includes('email') || q.includes('reach')) return 'CONTACT_INTENT';
+    if (q.includes('hire') || q.includes('freelance') || q.includes('available') || q.includes('open to work')) return 'HIRING_INTENT';
+    if (q.includes('chart bot') || q.includes('chartbot') || q.includes('ai chart') || q.includes('forecasting')) return 'AI_CHART_BOT_INTENT';
+    return 'FALLBACK_INTENT';
+  }
+  if (detected === 'chart' || detected === 'predict' || detected === 'analyze') return 'AI_CHART_BOT_INTENT';
+  return 'FALLBACK_INTENT';
+}
+
+function buildEcholessResponse(intentType: string, userQuery: string, extras: any) {
+  // extras may contain projects, about, skills, analytics, links, core
+  switch (intentType) {
+    case 'ABOUT_INTENT': {
+      const about = extras.about || ContentParser.getSection('about');
+      const core = extras.core || ContentParser.getCoreIdentity();
+      const summary = about?.value ? (Array.isArray(about.value) ? about.value.slice(0,3).join(' ') : about.value.join(' ')) : '';
+      return {
+        intent: 'ABOUT_INTENT',
+        chartSpec: null,
+        insights: [ `Name: ${core.name}. Role: Digital entrepreneur, Professional Video Editor & Web Developer in ${core.location || 'Visakhapatnam'}.`, summary ],
+        forecast: {},
+        confidence: 1,
+        meta: { timestamp: new Date().toISOString() }
+      };
+    }
+    case 'PROJECTS_INTENT': {
+      const projects = extras.projects || ContentParser.getProjects();
+      const list = projects.slice(0,5).map(p => `- ${p.title}: ${p.description}`);
+      return {
+        intent: 'PROJECTS_INTENT',
+        chartSpec: null,
+        insights: list,
+        forecast: {},
+        confidence: 1,
+        meta: { count: projects.length, timestamp: new Date().toISOString() }
+      };
+    }
+    case 'SKILLS_INTENT': {
+      const skills = extras.skills || ContentParser.getSection('skills');
+      const bullets = skills?.value?.slice(0,8) || ['JavaScript, TypeScript, Python, React, Node.js'];
+      return {
+        intent: 'SKILLS_INTENT',
+        chartSpec: null,
+        insights: bullets,
+        forecast: {},
+        confidence: 1,
+        meta: { timestamp: new Date().toISOString() }
+      };
+    }
+    case 'AI_CHART_BOT_INTENT': {
+      return {
+        intent: 'AI_CHART_BOT_INTENT',
+        chartSpec: null,
+        insights: ['The AI Chart Bot performs deterministic analytics first (trends, moving averages, z-scores) and optionally summarizes results with a local model. Supports line/bar charts and 3-period linear forecasts.'],
+        forecast: {},
+        confidence: 0.95,
+        meta: { timestamp: new Date().toISOString() }
+      };
+    }
+    case 'CONTACT_INTENT': {
+      const core = extras.core || ContentParser.getCoreIdentity();
+      const contact = extras.contact || (ContentParser.getSocialLinks().find(l => l.platform === 'Email')?.handle || core.contact);
+      return {
+        intent: 'CONTACT_INTENT',
+        chartSpec: null,
+        insights: [ contact || 'No contact email found.' ],
+        forecast: {},
+        confidence: 1,
+        meta: { timestamp: new Date().toISOString() }
+      };
+    }
+    case 'SOCIAL_INTENT': {
+      // If user asked for a specific platform, return only that handle
+      const links = extras.links || ContentParser.getSocialLinks();
+      const q = userQuery.toLowerCase();
+      const platformOrder = ['instagram','linkedin','github'];
+      for (const p of platformOrder) {
+        if (q.includes(p)) {
+          const found = links.find(l => l.platform.toLowerCase() === (p === 'github' ? 'github' : p === 'linkedin' ? 'linkedin' : 'instagram'));
+          if (found) return { intent: 'SOCIAL_INTENT', chartSpec: null, insights: [found.handle || found.url], forecast: {}, confidence: 1, meta: { platform: found.platform } };
+        }
+      }
+      // otherwise return all links as concise handles
+      const handles = links.map(l => `${l.platform}: ${l.handle || l.url}`);
+      return { intent: 'SOCIAL_INTENT', chartSpec: null, insights: handles, forecast: {}, confidence: 1, meta: { count: links.length } };
+    }
+    case 'HIRING_INTENT': {
+      // Always be explicit
+      return { intent: 'HIRING_INTENT', chartSpec: null, insights: ['Open to internships and entry-level work; available for freelance/entry roles. Contact via email for availability.'], forecast: {}, confidence: 0.95, meta: {} };
+    }
+    case 'FALLBACK_INTENT':
+    default:
+      return { intent: 'FALLBACK_INTENT', chartSpec: null, insights: ['I didn\'t catch that. Try: "show projects", "skills", "contact", or "/chart views"'], forecast: {}, confidence: 0.5, meta: {} };
+  }
+}
+
 router.post('/', async (req, res) => {
   try {
     let messages = req.body.messages;
@@ -54,6 +158,23 @@ router.post('/', async (req, res) => {
       return res.json({ ...cached, meta: { cached: true, ts: new Date().toISOString(), latency: `${latencyMs}ms` } });
     }
 
+    // Map to Echoless intent and short-circuit deterministic responses
+    const echIntent = mapToEcholessIntent(userQuery, intent);
+    // handle deterministic intents without running analytics
+    if (echIntent !== 'AI_CHART_BOT_INTENT') {
+      const extras: any = { core: ContentParser.getCoreIdentity(), projects: ContentParser.getProjects(), links: ContentParser.getSocialLinks(), about: ContentParser.getSection('about'), skills: ContentParser.getSection('skills') };
+      const resp = buildEcholessResponse(echIntent, userQuery, extras);
+      // attach latency
+      const elapsed2 = process.hrtime(start);
+      const latencyMs2 = Math.round((elapsed2[0] * 1e3) + (elapsed2[1] / 1e6));
+      resp.meta = resp.meta || {};
+      resp.meta.latency = `${latencyMs2}ms`;
+      setCache(cacheKey, resp);
+      addMemory({ role: 'assistant', content: JSON.stringify(resp.insights), timestamp: new Date() });
+      return res.json(resp);
+    }
+
+    // Proceed with analytics for AI_CHART_BOT_INTENT
     // Load analytics dataset (source of truth)
     if (!fs.existsSync(ANALYTICS_PATH)) {
       return res.status(500).json({ error: 'Analytics dataset missing', code: 'INSUFFICIENT_DATA' });
@@ -85,67 +206,6 @@ router.post('/', async (req, res) => {
     // If selected metric has no data, return structured error
     if (!chartSpec.data || chartSpec.data.length === 0) {
       return res.status(422).json({ error: 'No data for selected metric', code: 'INSUFFICIENT_DATA' });
-    }
-
-    // If intent was projects/about/social, short-circuit with deterministic content
-    if (intent === 'social') {
-      const links = ContentParser.getSocialLinks();
-      if (!links || links.length === 0) return res.status(422).json({ error: 'No social links found', code: 'PARSE_FAILURE' });
-      const core = ContentParser.getCoreIdentity();
-      const elapsed2 = process.hrtime(start);
-      const latencyMs2 = Math.round((elapsed2[0] * 1e3) + (elapsed2[1] / 1e6));
-      const resp = {
-        intent: 'social',
-        chartSpec: null,
-        insights: [`Found ${links.length} social links.`],
-        forecast: {},
-        confidence: 1,
-        data: { links },
-        meta: { coreIdentity: core, timestamp: new Date().toISOString(), latency: `${latencyMs2}ms` }
-      };
-      setCache(cacheKey, resp);
-      addMemory({ role: 'assistant', content: JSON.stringify(resp.data), timestamp: new Date() });
-      return res.json(resp);
-    }
-
-    if (intent === 'projects') {
-      const projects = ContentParser.getProjects();
-      if (!projects || projects.length === 0) return res.status(422).json({ error: 'No projects found', code: 'PARSE_FAILURE' });
-      const core = ContentParser.getCoreIdentity();
-      const elapsed2 = process.hrtime(start);
-      const latencyMs2 = Math.round((elapsed2[0] * 1e3) + (elapsed2[1] / 1e6));
-      const resp = {
-        intent: 'projects',
-        chartSpec: null,
-        insights: [`Returning ${projects.length} projects.`],
-        forecast: {},
-        confidence: 1,
-        data: { projects },
-        meta: { coreIdentity: core, timestamp: new Date().toISOString(), latency: `${latencyMs2}ms` }
-      };
-      setCache(cacheKey, resp);
-      addMemory({ role: 'assistant', content: `projects:${projects.length}`, timestamp: new Date() });
-      return res.json(resp);
-    }
-
-    if (intent === 'about') {
-      const about = ContentParser.getSection('about');
-      if (!about) return res.status(422).json({ error: 'No about section found', code: 'PARSE_FAILURE' });
-      const core = ContentParser.getCoreIdentity();
-      const elapsed2 = process.hrtime(start);
-      const latencyMs2 = Math.round((elapsed2[0] * 1e3) + (elapsed2[1] / 1e6));
-      const resp = {
-        intent: 'about',
-        chartSpec: null,
-        insights: ['Returning about section.'],
-        forecast: {},
-        confidence: 1,
-        data: { about },
-        meta: { coreIdentity: core, timestamp: new Date().toISOString(), latency: `${latencyMs2}ms` }
-      };
-      setCache(cacheKey, resp);
-      addMemory({ role: 'assistant', content: JSON.stringify(about), timestamp: new Date() });
-      return res.json(resp);
     }
 
     // Call Local AI to turn stats into human insight (optional)
