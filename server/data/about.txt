@@ -1,5 +1,18 @@
-Hi! I’m Geddada Devicharan, an aspiring digital professional from Visakhapatnam, India.  
-I hold a Diploma in Electrical & Electronics Engineering and am currently pursuing a B.Tech in EEE.  
+Name: Geddada Devicharan
+Role: Digital entrepreneur, Professional Video Editor, and Web Developer
+Location: Visakhapatnam (Vizag), Andhra Pradesh, India
 
-I’m passionate about AI-assisted content creation, data research, video editing, and digital tools.  
-With strong adaptability, bilingual communication skills (Telugu ↔ English), and a growth-focused mindset, I aim to bring value to every project I take on.
+Mission: Aiming to bring value to projects through strong adaptability, bilingual communication, and a growth-focused mindset.
+
+Education: B.Tech in Electrical & Electronics Engineering (EEE) — 3rd Year (Ongoing). Previously: Diploma in EEE from M.R.A.G.R. Government Polytechnic, Vizianagaram.
+
+Expertise & Focus:
+- AI-assisted content creation and workflow automation
+- Data research and analytics for growth strategy
+- Professional video editing and web development
+
+DaVinci Resolve Studio (Professional Pipeline):
+- Color Grading (Color Page): Node-based grading, 4K/RAW workflows, HDR mastering.
+- Visual Effects (Fusion Page): Compositing, motion graphics, Fusion workflows.
+- Sound Design (Fairlight Page): Professional audio mixing and broadcast-quality sound.
+- Professional Edit (Cut/Edit Pages): Efficient import → edit → grade → VFX → sound → export pipeline.

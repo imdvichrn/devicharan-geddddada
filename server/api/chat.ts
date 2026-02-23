@@ -4,6 +4,7 @@ import fs from "fs";
 import path from "path";
 import AnalyticsEngine from "../lib/AnalyticsEngine";
 import LocalAI from "../lib/LocalAI";
+import ContentParser from "../lib/ContentParser";
 import { addMemory, getMemory, setCache, getCache, recordMathLatency, recordAILatency } from "../memory";
 
 const router = express.Router();
@@ -15,13 +16,16 @@ function detectIntent(text: string) {
   const t = text.trim();
   if (t.startsWith("/")) {
     const cmd = t.split(/\s+/)[0].slice(1).toLowerCase();
-    if (['chart', 'analyze', 'predict', 'forecast'].includes(cmd)) return cmd;
+    if (['chart', 'analyze', 'predict', 'forecast', 'projects', 'about', 'social', 'contact', 'links'].includes(cmd)) return cmd;
     return 'command';
   }
   const lowered = t.toLowerCase();
   if (lowered.includes('chart') || lowered.includes('graph') || lowered.includes('plot')) return 'chart';
   if (lowered.includes('predict') || lowered.includes('forecast')) return 'predict';
   if (lowered.includes('trend') || lowered.includes('growth') || lowered.includes('analyze')) return 'analyze';
+  if (lowered.includes('social') || lowered.includes('instagram') || lowered.includes('linkedin') || lowered.includes('github') || lowered.includes('contact') || lowered.includes('links')) return 'social';
+  if (lowered.includes('project') || lowered.includes('projects')) return 'projects';
+  if (lowered.includes('about') || lowered.includes('bio')) return 'about';
   return 'chat';
 }
 
@@ -81,6 +85,67 @@ router.post('/', async (req, res) => {
     // If selected metric has no data, return structured error
     if (!chartSpec.data || chartSpec.data.length === 0) {
       return res.status(422).json({ error: 'No data for selected metric', code: 'INSUFFICIENT_DATA' });
+    }
+
+    // If intent was projects/about/social, short-circuit with deterministic content
+    if (intent === 'social') {
+      const links = ContentParser.getSocialLinks();
+      if (!links || links.length === 0) return res.status(422).json({ error: 'No social links found', code: 'PARSE_FAILURE' });
+      const core = ContentParser.getCoreIdentity();
+      const elapsed2 = process.hrtime(start);
+      const latencyMs2 = Math.round((elapsed2[0] * 1e3) + (elapsed2[1] / 1e6));
+      const resp = {
+        intent: 'social',
+        chartSpec: null,
+        insights: [`Found ${links.length} social links.`],
+        forecast: {},
+        confidence: 1,
+        data: { links },
+        meta: { coreIdentity: core, timestamp: new Date().toISOString(), latency: `${latencyMs2}ms` }
+      };
+      setCache(cacheKey, resp);
+      addMemory({ role: 'assistant', content: JSON.stringify(resp.data), timestamp: new Date() });
+      return res.json(resp);
+    }
+
+    if (intent === 'projects') {
+      const projects = ContentParser.getProjects();
+      if (!projects || projects.length === 0) return res.status(422).json({ error: 'No projects found', code: 'PARSE_FAILURE' });
+      const core = ContentParser.getCoreIdentity();
+      const elapsed2 = process.hrtime(start);
+      const latencyMs2 = Math.round((elapsed2[0] * 1e3) + (elapsed2[1] / 1e6));
+      const resp = {
+        intent: 'projects',
+        chartSpec: null,
+        insights: [`Returning ${projects.length} projects.`],
+        forecast: {},
+        confidence: 1,
+        data: { projects },
+        meta: { coreIdentity: core, timestamp: new Date().toISOString(), latency: `${latencyMs2}ms` }
+      };
+      setCache(cacheKey, resp);
+      addMemory({ role: 'assistant', content: `projects:${projects.length}`, timestamp: new Date() });
+      return res.json(resp);
+    }
+
+    if (intent === 'about') {
+      const about = ContentParser.getSection('about');
+      if (!about) return res.status(422).json({ error: 'No about section found', code: 'PARSE_FAILURE' });
+      const core = ContentParser.getCoreIdentity();
+      const elapsed2 = process.hrtime(start);
+      const latencyMs2 = Math.round((elapsed2[0] * 1e3) + (elapsed2[1] / 1e6));
+      const resp = {
+        intent: 'about',
+        chartSpec: null,
+        insights: ['Returning about section.'],
+        forecast: {},
+        confidence: 1,
+        data: { about },
+        meta: { coreIdentity: core, timestamp: new Date().toISOString(), latency: `${latencyMs2}ms` }
+      };
+      setCache(cacheKey, resp);
+      addMemory({ role: 'assistant', content: JSON.stringify(about), timestamp: new Date() });
+      return res.json(resp);
     }
 
     // Call Local AI to turn stats into human insight (optional)

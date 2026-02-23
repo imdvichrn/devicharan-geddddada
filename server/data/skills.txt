@@ -1,19 +1,19 @@
-Skills:
-- JavaScript, TypeScript, React
-- Node.js, Express
-- Python
-- Embedded Systems
-- Problem Solving
-🛠 Technical Skills
-- Data Entry & Research (Google Sheets, Docs)
-- Content Creation & Design (Canva, AI Writing)
-- Video Editing (CapCut, DaVinci Resolve)
-- Web Tools (Wix, No-code AI Platforms)
-- Prompt Engineering (Basic Level)
+Technical Expertise:
+- Languages: JavaScript, TypeScript, Python
+- Frameworks & Tools: React, Node.js, Express
+- Web: Wix, React, modern JS toolchain
+- Video: DaVinci Resolve Studio (Color, Fusion, Fairlight, Edit/Cut)
+- Embedded Systems: basic experience
 
-🤝 Soft Skills
-- Adaptability & Continuous Learning
-- Attention to Detail
-- Problem-Solving
-- Bilingual Communication (Telugu & English)
-- Customer Support (Chat & Email)
+Specializations:
+- Growth Strategy: content analysis → strategy → execution
+- AI-assisted workflows and prompt engineering (practical)
+
+Tools & Workflows:
+- DaVinci Resolve (node-based grading, Fusion VFX, Fairlight audio)
+- Data & Research: Google Sheets, structured datasets, analytics
+- Design: Canva, motion graphics, posters
+
+Soft Skills:
+- Adaptability, continuous learning, bilingual communication (Telugu & English)
+- Attention to detail, problem-solving, client communication

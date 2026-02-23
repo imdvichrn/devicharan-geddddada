@@ -1,5 +1,7 @@
 📂 Projects
-- Portfolio Website (2024): Built a personal site using Wix & AI builders to showcase work and skills.
-- Video Editing Demos (2024): Edited social media-style clips with transitions, overlays, and music.
-- Data Entry & Research Practice (2024): Created mock databases, applied formulas, and structured datasets.
-- Content Design (2024): Designed posters & infographics in Canva, experimented with AI-assisted copywriting.
+- Portfolio Website (2024): Personal site showcasing work and skills. Tech: Wix, React prototypes, AI content tooling.
+- Video Editing Demos (2024): Short-form edits, color grading, VFX snippets, and sound design.
+- Analytics & Data Projects (2024): Structured datasets for testing analytics, forecasting, and visualization.
+- Content Design (2024): Posters & infographics, motion graphics, and AI-assisted copy experiments.
+
+For detailed queries about any project, ask: "Show projects" or "/projects".

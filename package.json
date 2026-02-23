@@ -6,7 +6,7 @@
   "scripts": {
     "dev:server": "NODE_OPTIONS='--loader ts-node/esm --no-warnings' ts-node-esm server/index.ts",
     "dev": "vite",
-    "build": "vite build && tsc -p tsconfig.node.json",
+    "build": "vite build && tsc -p tsconfig.server.json",
     "start": "node dist/server/index.js",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",

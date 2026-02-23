@@ -1,4 +1,5 @@
-import fetch from "node-fetch";
+// Use global fetch when available (Node 18+). Do not import node-fetch to remain offline-friendly.
+
 
 export type SummarizeInput = { intent: string; stats: any; forecast: any };
 
@@ -25,8 +26,10 @@ export class LocalAI {
     try {
       const controller = new AbortController();
       const id = setTimeout(() => controller.abort(), this.timeoutMs);
+      const fetchFn = (globalThis as any).fetch;
+      if (!fetchFn) throw new Error('Fetch not available in runtime; install node >=18 or provide fetch polyfill');
       // Ollama v1/generic payload: send model and prompt; be tolerant of responses
-      const resp = await fetch(this.baseUrl, {
+      const resp = await fetchFn(this.baseUrl, {
         method: "POST",
         signal: controller.signal,
         headers: { "Content-Type": "application/json" },

@@ -5,7 +5,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import path from "path";
-import chatRouter from "./api/chat.ts";
+import chatRouter from "./api/chat";
 import { getMetrics } from "./memory";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
