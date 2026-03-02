@@ -123,7 +123,7 @@ const Index = () => {
         <title>Geddada Devicharan | Lead Video Editor & Post-Production Specialist</title>
         <meta
           name="description"
-          content="Specialized video editor and post-production specialist. Advanced editing, color grading, VFX, and audio engineering. Based in Visakhapatnam. Ready for your next project."
+          content="Lead video editor and post-production specialist delivering advanced editing, color grading, VFX, and audio engineering. Based in Visakhapatnam."
         />
         <meta name="keywords" content="video editing, post-production, DaVinci Resolve, color grading, VFX, audio engineering, Visakhapatnam" />
         <meta property="og:title" content="Geddada Devicharan | Lead Video Editor & Post-Production Specialist" />
@@ -345,7 +345,7 @@ const Index = () => {
                 </span>
               </h2>
               <p className="text-indigo-200/70 text-lg max-w-2xl mx-auto">
-                Every project I touch receives meticulous attention to detail, cutting-edge techniques, and creative problem-solving to deliver cinema-quality results.
+                Every project I deliver combines meticulous attention to detail with cutting-edge techniques for cinema-quality results.
               </p>
             </motion.div>
 

@@ -19,7 +19,7 @@ import heroBg from '@/assets/hero-bg.png';
 const skills = {
   "Creative & Technical Tools": ["Adobe Photoshop", "Canva", "DaVinci Resolve Studio", "Wix", "No-code AI Platforms"],
   "Professional Skills": ["Data Entry", "Research", "Fusion-Oriented Motion Graphics & 3D Modeling", "Bilingual Communication (Telugu ↔ English)"],
-  "Soft Skills": ["Problem-Solving", "Teamwork", "Adaptability", "Continuous Learning"]
+  "Soft Skills": ["Strategic Thinking", "Teamwork", "Adaptability", "Continuous Learning"]
 };
 const education = [{
   degree: "B.Tech in Electrical & Electronics Engineering",
@@ -32,7 +32,7 @@ const education = [{
   period: "Completed",
   status: "Completed"
 }];
-const highlights = ["Self-taught in Prompt Engineering & AI Tools", "Bilingual (Telugu & English)", "Interest in Digital Marketing & Creative Design", "Professional video editor", "Strong adaptability and continuous learning mindset"];
+const highlights = ["Self-taught in Prompt Engineering & AI Tools", "Bilingual (Telugu & English)", "Digital Marketing & Creative Design", "Professional Video Editor & Colorist", "Full Post-Production Pipeline Expertise"];
 export function Portfolio() {
   const [isDownloading, setIsDownloading] = useState(false);
   const [parallaxOffset, setParallaxOffset] = useState(0);
@@ -253,7 +253,7 @@ export function Portfolio() {
                     <span className="inline-block text-sm md:text-base text-primary font-medium">@imdvichrn</span>
                   </div>
                   <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground px-2">
-                    Aspiring Digital Professional | Creative Learner | Problem Solver
+                    Video Editor & Post-Production Specialist | Digital Creator | Developer
                   </p>
                   
                   <div className="flex flex-wrap justify-center items-center gap-2 md:gap-4 text-xs md:text-sm text-muted-foreground">
@@ -314,15 +314,14 @@ export function Portfolio() {
             </CardHeader>
             <CardContent className="space-y-3 md:space-y-6 px-4 md:px-6">
               <p className="text-sm md:text-lg text-muted-foreground leading-relaxed">
-                Motivated and growth-driven individual with a Diploma in Electrical & Electronics Engineering 
-                and currently pursuing a B.Tech in EEE. Skilled in video editing, graphic design, website building, 
-                and digital content planning. Self-taught in AI-assisted workflows and prompt engineering, with 
-                strong adaptability, collaboration, and problem-solving skills.
+                Video editor and post-production specialist with a Diploma in Electrical & Electronics Engineering, 
+                currently completing a B.Tech in EEE. I deliver professional video editing, graphic design, web development, 
+                and digital content strategy. Self-taught in AI-assisted workflows and prompt engineering, with 
+                proven adaptability and technical precision.
               </p>
               <p className="text-sm md:text-lg text-muted-foreground leading-relaxed">
-                I'm passionate about leveraging technology to create meaningful digital experiences. My journey 
-                combines technical engineering knowledge with creative digital skills, making me versatile in 
-                both analytical and creative problem-solving approaches.
+                I build digital experiences that combine engineering discipline with creative execution. My work 
+                spans the full post-production pipeline — from color grading and VFX to sound design and delivery optimization.
               </p>
             </CardContent>
           </Card>
