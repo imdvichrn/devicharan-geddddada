@@ -1,8 +1,8 @@
 💼 Experience
-Currently focused on building a digital portfolio with applied projects in video editing, analytics, and web development.
+Building and shipping digital projects across video editing, analytics, and web development.
 
-Open to internships and entry-level opportunities in:
-- Data Research
+Available for freelance and contract work in:
+- Data Research & Analytics
 - Content Creation & Video Editing
 - AI-assisted workflows and tooling
 - Frontend / Fullstack development (React / Node)
