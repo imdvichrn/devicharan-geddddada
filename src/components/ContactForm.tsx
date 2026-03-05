@@ -7,7 +7,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { WindowChrome } from './WindowChrome';
 import { useToast } from '@/hooks/use-toast';
 import { Send, Loader2 } from 'lucide-react';
-import emailjs from '@emailjs/browser';
 
 interface FormData {
   name: string;
@@ -30,11 +29,6 @@ export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Partial<FormData>>({});
   const { toast } = useToast();
-
-  // Initialize EmailJS
-  useState(() => {
-    emailjs.init('yxDgR_bWBnh9BXZpr');
-  });
 
   const validateForm = (): boolean => {
     const newErrors: Partial<FormData> = {};
@@ -118,27 +112,34 @@ export function ContactForm() {
         description: "Geddada Devicharan will get back to you shortly.",
         className: "bg-primary text-black font-bold",
       });
-      const templateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
-        subject: formData.subject,
-        message: formData.message,
-        to_name: 'Geddada Devicharan',
-      };
 
-      await emailjs.send(
-        'service_20azq4s',
-        'template_fqtiorc',
-        templateParams
-      );
+      // 3. Send form data to backend API
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          honeypot: formData.honeypot
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to send message');
+      }
 
       // Keep the success toast (already shown) and reset form
       setFormData(initialFormData);
     } catch (error) {
-      console.error('EmailJS error:', error);
+      console.error('Contact form error:', error);
       toast({
         title: "Failed to send",
-        description: "Please try again or contact me directly at devicharangeddada@gmail.com",
+        description: error instanceof Error ? error.message : "Please try again or contact me directly at devicharangeddada@gmail.com",
         variant: "destructive",
       });
     } finally {

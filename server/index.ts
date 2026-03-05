@@ -33,6 +33,8 @@ import { fileURLToPath } from "url";
 import mongoose from "mongoose";
 import { Resend } from "resend";
 import { Subscriber } from "./models/Subscriber";
+import { Contact } from "./models/Contact";
+import { Contact } from "./models/Contact";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -156,6 +158,79 @@ app.post("/api/subscribe", async (req, res) => {
   } catch (error) {
     console.error("[subscribe] Error:", error);
     res.status(500).json({ error: "Failed to subscribe. Please try again." });
+  }
+});
+
+// Contact endpoint - handles contact form submissions
+app.post("/api/contact", async (req, res) => {
+  try {
+    console.log("[contact] Received request:", req.body);
+    const { name, email, subject, message, honeypot } = req.body;
+
+    // Check honeypot for spam
+    if (honeypot) {
+      return res.status(400).json({ error: "Spam detected" });
+    }
+
+    // Validate required fields
+    if (!name || !email || !subject || !message) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: "Invalid email address" });
+    }
+
+    // Validate field lengths
+    if (name.trim().length < 2 || subject.trim().length < 3 || message.trim().length < 10) {
+      return res.status(400).json({ error: "Please provide more detailed information" });
+    }
+
+    // Try to save to database (don't fail if database is down)
+    try {
+      console.log("[contact] Attempting to save to database...");
+      const contact = new Contact({
+        name: name.trim(),
+        email: email.toLowerCase().trim(),
+        subject: subject.trim(),
+        message: message.trim()
+      });
+      await contact.save();
+      console.log("[contact] Saved to database successfully");
+    } catch (dbError) {
+      console.error("[contact] Database save failed:", dbError);
+      // Continue anyway - the contact form should work even if database is down
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Message sent successfully! Geddada Devicharan will get back to you shortly."
+    });
+  } catch (error) {
+    console.error("[contact] Error:", error);
+    res.status(500).json({ error: "Failed to send message. Please try again." });
+  }
+});
+
+// Admin endpoint - get all contacts (requires authentication)
+app.get("/api/admin/contacts", async (req, res) => {
+  try {
+    const secret = req.headers["x-admin-secret"];
+
+    if (secret !== process.env.ADMIN_SECRET) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const contacts = await Contact.find({}).sort({ submittedAt: -1 });
+    res.json({ 
+      count: contacts.length,
+      contacts 
+    });
+  } catch (error) {
+    console.error("[admin] Error:", error);
+    res.status(500).json({ error: "Failed to fetch contacts" });
   }
 });
 
