@@ -1,5 +1,4 @@
 import { Navigation } from '@/components/Navigation';
-import { Chatbot } from '@/components/Chatbot';
 import { ContactForm } from '@/components/ContactForm';
 import { WindowChrome } from '@/components/WindowChrome';
 import { AnimatedBackground } from '@/components/AnimatedBackground';
@@ -8,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, Suspense, lazy } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Download, User, Code, Briefcase, GraduationCap, Star, Calendar, Loader2, Linkedin, Instagram, Facebook, Workflow } from 'lucide-react';
@@ -16,6 +15,9 @@ import { WorkflowsGrid } from '@/components/WorkflowsGrid';
 import profileImage from '@/assets/profile-avatar.png';
 import backgroundVideo from '@/assets/background-video.mp4';
 import heroBg from '@/assets/hero-bg.png';
+
+// Lazy load Chatbot to reduce initial bundle size
+const Chatbot = lazy(() => import('@/components/Chatbot').then(mod => ({ default: mod.Chatbot } as any)));
 const skills = {
   "Creative & Technical Tools": ["DaVinci Resolve Studio", "Fusion VFX", "VLSI Design", "React", "Node.js", "TypeScript"],
   "Professional Skills": ["Sound Design & Audio Engineering", "Fusion Mastery & Motion Graphics", "Professional Web Development", "VLSI Circuit Design"],
@@ -479,7 +481,9 @@ export function Portfolio() {
       </footer>
 
       {/* Chatbot */}
-      <Chatbot ref={chatbotRef} />
+      <Suspense fallback={null}>
+        <Chatbot ref={chatbotRef} />
+      </Suspense>
       
     </div>;
 }

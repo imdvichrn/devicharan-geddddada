@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Suspense, lazy } from 'react';
 import { Navigation } from '@/components/Navigation';
-import { Chatbot } from '@/components/Chatbot';
 import { VideoEmbed } from '@/components/VideoEmbed';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -10,6 +10,9 @@ import { WindowChrome } from '@/components/WindowChrome';
 import { ArrowLeft, Play, Calendar, User, ShoppingBag, Zap, Layers, Cpu, ShieldCheck } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { generateBreadcrumbSchema, generateVideoObjectSchema, generateCreativeWorkSchema } from '@/lib/structuredData';
+
+// Lazy load Chatbot to reduce initial bundle size
+const Chatbot = lazy(() => import('@/components/Chatbot').then(mod => ({ default: mod.Chatbot } as any)));
 
 // Project data with YouTube IDs
 const projectsData: Record<string, {
@@ -255,7 +258,9 @@ export default function ProjectDetail() {
         </div>
       </section>
 
-      <Chatbot />
+      <Suspense fallback={null}>
+        <Chatbot />
+      </Suspense>
     </div>
   );
 }

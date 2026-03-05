@@ -1,5 +1,4 @@
 import { Navigation } from '@/components/Navigation';
-import { Chatbot } from '@/components/Chatbot';
 import { WindowChrome } from '@/components/WindowChrome';
 import { VideoEmbed } from '@/components/VideoEmbed';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,7 +8,11 @@ import { ArrowLeft, Calendar, Wrench, Target, Layers, Linkedin, Instagram, Faceb
 import { Link } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { Helmet } from 'react-helmet-async';
+import { Suspense, lazy } from 'react';
 import { generateBreadcrumbSchema, generateVideoObjectSchema, generateCreativeWorkSchema } from '@/lib/structuredData';
+
+// Lazy load Chatbot to reduce initial bundle size
+const Chatbot = lazy(() => import('@/components/Chatbot').then(mod => ({ default: mod.Chatbot } as any)));
 
 export default function VideoEditingPostProduction() {
   const [heroRef, heroInView] = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -283,7 +286,9 @@ export default function VideoEditingPostProduction() {
           </div>
         </footer>
 
-        <Chatbot />
+        <Suspense fallback={null}>
+          <Chatbot />
+        </Suspense>
       </div>
     </>
   );

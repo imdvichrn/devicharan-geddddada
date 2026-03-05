@@ -11,6 +11,7 @@ import { Navigation } from "@/components/Navigation";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { Portfolio } from "./pages/Portfolio";
 import NotFound from "./pages/NotFound";
+import Admin from "./pages/Admin";
 import WebPortfolio from "./pages/projects/WebPortfolio";
 import SceneSyncEdits from "./pages/projects/SceneSyncEdits";
 import VisualDesign from "./pages/projects/VisualDesign";
@@ -30,6 +31,7 @@ function AnimatedRoutes() {
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<PageTransition><Portfolio /></PageTransition>} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="/projects" element={<Navigate to="/#projects" replace />} />
           <Route path="/project/:projectId" element={<PageTransition><ProjectPage /></PageTransition>} />
           <Route path="/projects/web-portfolio" element={<PageTransition><WebPortfolio /></PageTransition>} />
