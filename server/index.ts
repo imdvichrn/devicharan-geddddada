@@ -1,9 +1,30 @@
 // DO NOT COMMIT .env
 // Express server entry for chat API and static serving
 
+// Add global error handlers FIRST
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('[FATAL] Unhandled Rejection at:', promise, 'reason:', reason);
+  if (reason instanceof Error) {
+    console.error('[FATAL] Error message:', reason.message);
+    console.error('[FATAL] Stack:', reason.stack);
+  }
+  process.exit(1);
+});
+
+process.on('uncaughtException', (error) => {
+  console.error('[FATAL] Uncaught Exception:', error);
+  if (error instanceof Error) {
+    console.error('[FATAL] Message:', error.message);
+    console.error('[FATAL] Stack:', error.stack);
+  }
+  process.exit(1);
+});
+
+// MUST be first - before any other imports
+import dotenv from "dotenv";
+dotenv.config();
 
 import express from "express";
-import dotenv from "dotenv";
 import path from "path";
 import chatRouter from "./api/chat";
 import { getMetrics } from "./memory";
@@ -14,8 +35,6 @@ import { Resend } from "resend";
 import { Subscriber } from "./models/Subscriber";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-
-dotenv.config();
 
 // Environment validation
 if (!process.env.MONGODB_URI) {
@@ -38,16 +57,25 @@ if (!process.env.ADMIN_SECRET) {
 
 const app = express();
 const PORT = process.env.PORT || 5174;
-const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Initialize Resend with error handling
+let resend: any = null;
+try {
+  resend = new Resend(process.env.RESEND_API_KEY);
+  console.log("[email] Resend initialized successfully");
+} catch (error) {
+  console.error("[email] Failed to initialize Resend:", error);
+}
 
 // MongoDB Connection Configuration
 const uri = process.env.MONGODB_URI;
 
-// Connect to MongoDB with proper error handling
+// Connect to MongoDB with proper error handling (non-blocking)
 async function connectDB() {
   try {
     if (!uri) {
-      throw new Error("MONGODB_URI is missing in .env - please add your MongoDB connection string");
+      console.warn("[db] MONGODB_URI not set - database features will be disabled");
+      return;
     }
 
     console.log("[db] Attempting to connect to MongoDB...");
@@ -57,17 +85,16 @@ async function connectDB() {
     console.error("[db] MongoDB connection error:", error);
     if (error instanceof Error) {
       console.error("[db] Error message:", error.message);
-      console.error("[db] Error stack:", error.stack);
     }
     console.error("[db] Please check your MONGODB_URI in .env and ensure your IP is whitelisted in MongoDB Atlas");
-    throw error; // Re-throw to be caught by the .catch() handler
+    // Don't throw - allow server to start anyway
   }
 }
 
-// Initialize database connection
+// Initialize database connection asynchronously (non-blocking)
 connectDB().catch((error) => {
-  console.error("[db] Failed to initialize database connection:", error);
-  process.exit(1);
+  console.error("[db] Unexpected error during connection:", error);
+  // Still don't exit - let server run
 });
 
 app.use(express.json({ limit: "2mb" }));

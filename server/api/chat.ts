@@ -1,12 +1,14 @@
 // Orchestrator: deterministic analytics -> local AI summarization -> structured JSON response
 import express from "express";
 import fs from "fs";
-import path from "path";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
 import AnalyticsEngine from "../lib/AnalyticsEngine";
 import LocalAI from "../lib/LocalAI";
 import ContentParser from "../lib/ContentParser";
 import { addMemory, getMemory, setCache, getCache, recordMathLatency, recordAILatency } from "../memory";
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const router = express.Router();
 
 const ANALYTICS_PATH = path.join(__dirname, "../data/analytics.json");

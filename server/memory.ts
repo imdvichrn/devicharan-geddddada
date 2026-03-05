@@ -1,8 +1,10 @@
 // DO NOT COMMIT .env
 // Simple file-based memory helpers
 import fs from "fs";
-import path from "path";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const MEMORY_PATH = path.join(__dirname, "memory.json");
 const MAX_ITEMS = 100;
 

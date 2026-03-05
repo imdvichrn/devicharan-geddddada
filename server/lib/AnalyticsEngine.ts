@@ -1,4 +1,6 @@
 // Pure TypeScript analytics utilities — no external math libs
+import fs from 'fs';
+
 export type MetricPoint = { timestamp: string; value: number; category?: string; metric?: string; unit?: string };
 
 export class AnalyticsEngine {
@@ -8,10 +10,8 @@ export class AnalyticsEngine {
   }
 
   // Load from server/data/analytics.json
-  static loadFromFile(path: string) {
-    // Lazy import to keep module side-effects minimal
-    const fs = require('fs');
-    const raw = fs.readFileSync(path, 'utf8');
+  static loadFromFile(filePath: string) {
+    const raw = fs.readFileSync(filePath, 'utf8');
     const parsed = JSON.parse(raw);
     const metrics: MetricPoint[] = parsed.metrics || [];
     return new AnalyticsEngine(metrics);
