@@ -1,19 +1,21 @@
 Technical Expertise:
-- Languages: JavaScript, TypeScript, Python
+- Languages: JavaScript, TypeScript, Python, Verilog/VHDL
 - Frameworks & Tools: React, Node.js, Express
-- Web: Wix, React, modern JS toolchain
+- Web Development: React, modern JS toolchain, full-stack development
 - Video: DaVinci Resolve Studio (Color, Fusion, Fairlight, Edit/Cut)
-- Embedded Systems: basic experience
+- VLSI Design: Digital circuit design, RTL synthesis, simulation
 
 Specializations:
-- Growth Strategy: content analysis → strategy → execution
-- AI-assisted workflows and prompt engineering (practical)
+- VLSI Design: Digital logic, FPGA workflows, hardware description languages
+- DaVinci Resolve Fusion Mastery: Node-based compositing, motion graphics, VFX pipelines
+- Sound Design: Professional audio engineering, Fairlight mixing, broadcast-quality sound
+- Professional Web Development: React, TypeScript, full-stack applications
 
 Tools & Workflows:
 - DaVinci Resolve (node-based grading, Fusion VFX, Fairlight audio)
-- Data & Research: Google Sheets, structured datasets, analytics
-- Design: Canva, motion graphics, posters
+- VLSI: Xilinx Vivado, ModelSim, circuit simulation
+- Web: VS Code, Git, modern deployment pipelines
 
 Soft Skills:
-- Adaptability, continuous learning, bilingual communication (Telugu & English)
-- Attention to detail, strategic thinking, client communication
+- Adaptability, continuous learning
+- Attention to detail, strategic thinking

@@ -17,8 +17,8 @@ import profileImage from '@/assets/profile-avatar.png';
 import backgroundVideo from '@/assets/background-video.mp4';
 import heroBg from '@/assets/hero-bg.png';
 const skills = {
-  "Creative & Technical Tools": ["Adobe Photoshop", "Canva", "DaVinci Resolve Studio", "Wix", "No-code AI Platforms"],
-  "Professional Skills": ["Data Entry", "Research", "Fusion-Oriented Motion Graphics & 3D Modeling", "Bilingual Communication (Telugu ↔ English)"],
+  "Creative & Technical Tools": ["DaVinci Resolve Studio", "Fusion VFX", "VLSI Design", "React", "Node.js", "TypeScript"],
+  "Professional Skills": ["Sound Design & Audio Engineering", "Fusion Mastery & Motion Graphics", "Professional Web Development", "VLSI Circuit Design"],
   "Soft Skills": ["Strategic Thinking", "Teamwork", "Adaptability", "Continuous Learning"]
 };
 const education = [{

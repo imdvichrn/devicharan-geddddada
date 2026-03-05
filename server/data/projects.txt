@@ -1,5 +1,5 @@
 📂 Projects
-- Portfolio Website (2024): Personal site showcasing work and skills. Tech: Wix, React prototypes, AI content tooling.
+- Portfolio Website (2024): Professional portfolio built with React, TypeScript, and modern web technologies.
 - Video Editing Demos (2024): Short-form edits, color grading, VFX snippets, and sound design.
 - Analytics & Data Projects (2024): Structured datasets for testing analytics, forecasting, and visualization.
 - Content Design (2024): Posters & infographics, motion graphics, and AI-assisted copy experiments.

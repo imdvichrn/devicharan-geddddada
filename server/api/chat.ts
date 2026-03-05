@@ -124,8 +124,7 @@ function buildEcholessResponse(intentType: string, userQuery: string, extras: an
       return { intent: 'SOCIAL_INTENT', chartSpec: null, insights: handles, forecast: {}, confidence: 1, meta: { count: links.length } };
     }
     case 'HIRING_INTENT': {
-      // Always be explicit
-      return { intent: 'HIRING_INTENT', chartSpec: null, insights: ['Open to internships and entry-level work; available for freelance/entry roles. Contact via email for availability.'], forecast: {}, confidence: 0.95, meta: {} };
+      return { intent: 'HIRING_INTENT', chartSpec: null, insights: ['Available for freelance and contract work in video post-production, VLSI design, and web development. Contact via email for availability.'], forecast: {}, confidence: 0.95, meta: {} };
     }
     case 'FALLBACK_INTENT':
     default:
@@ -167,8 +166,8 @@ router.post('/', async (req, res) => {
       // attach latency
       const elapsed2 = process.hrtime(start);
       const latencyMs2 = Math.round((elapsed2[0] * 1e3) + (elapsed2[1] / 1e6));
-      resp.meta = resp.meta || {};
-      resp.meta.latency = `${latencyMs2}ms`;
+      resp.meta = resp.meta || {} as any;
+      (resp.meta as any).latency = `${latencyMs2}ms`;
       setCache(cacheKey, resp);
       addMemory({ role: 'assistant', content: JSON.stringify(resp.insights), timestamp: new Date() });
       return res.json(resp);
