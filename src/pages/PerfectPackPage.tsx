@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
-import { Bell, ArrowLeft, CheckCircle, Sparkles } from 'lucide-react';
+import { Bell, ArrowLeft, CheckCircle, Sparkles, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useToast } from "@/hooks/use-toast";
 import { useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 const pulseRing = {
   animate: {
@@ -30,15 +31,57 @@ const floatAnimation = {
 export default function PerfectPackPage() {
   const { toast } = useToast();
   const [registered, setRegistered] = useState(false);
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleRegister = () => {
-    if (registered) return;
-    setRegistered(true);
-    toast({
-      title: "You're on the list!",
-      description: "We'll notify you the moment Perfect Pack drops.",
-      className: "bg-primary text-black font-bold",
-    });
+  const handleRegister = async () => {
+    if (registered || isSubmitting) return;
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.trim() || !emailRegex.test(email)) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const { error } = await supabase
+        .from('launch_registrations')
+        .insert({ email: email.trim().toLowerCase() });
+
+      if (error) {
+        if (error.code === '23505') {
+          // Already registered
+          setRegistered(true);
+          toast({
+            title: "Already registered!",
+            description: "This email is already on the list.",
+            className: "bg-primary text-black font-bold",
+          });
+        } else {
+          throw error;
+        }
+      } else {
+        setRegistered(true);
+        toast({
+          title: "You're on the list!",
+          description: "We'll notify you the moment Perfect Pack drops.",
+          className: "bg-primary text-black font-bold",
+        });
+      }
+    } catch (err) {
+      toast({
+        title: "Something went wrong",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -143,22 +186,35 @@ export default function PerfectPackPage() {
 
               <div className="space-y-1">
                 <p className="text-xs text-muted-foreground uppercase tracking-widest">Starting at</p>
-                <div className="text-6xl font-black text-white">$10</div>
+                <div className="text-6xl font-black text-foreground">$10</div>
               </div>
+
+              {/* Email Input */}
+              {!registered && (
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="w-full px-4 py-3 rounded-xl bg-background/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                  onKeyDown={(e) => e.key === 'Enter' && handleRegister()}
+                />
+              )}
               
               {/* Register / Notify Button */}
               <motion.button
                 onClick={handleRegister}
                 whileHover={{ scale: registered ? 1 : 1.05 }}
                 whileTap={{ scale: registered ? 1 : 0.95 }}
+                disabled={isSubmitting}
                 className={`w-full py-5 font-black rounded-2xl transition-all flex items-center justify-center gap-3 relative overflow-hidden ${
                   registered 
-                    ? 'bg-white/10 text-primary border border-primary/30 cursor-default' 
-                    : 'bg-primary text-black shadow-[0_0_30px_hsl(var(--primary)/0.4)] hover:shadow-[0_0_50px_hsl(var(--primary)/0.6)]'
-                }`}
+                    ? 'bg-muted text-primary border border-primary/30 cursor-default' 
+                    : 'bg-primary text-primary-foreground shadow-[0_0_30px_hsl(var(--primary)/0.4)] hover:shadow-[0_0_50px_hsl(var(--primary)/0.6)]'
+                } ${isSubmitting ? 'opacity-70 cursor-wait' : ''}`}
                 aria-label={registered ? "Registered for PERFECT PACK launch notification" : "Register for PERFECT PACK launch notification by imdvichrn"}
               >
-                {!registered && (
+                {!registered && !isSubmitting && (
                   <motion.span
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
                     animate={{ x: ['-100%', '200%'] }}
@@ -166,8 +222,12 @@ export default function PerfectPackPage() {
                   />
                 )}
                 <span className="relative z-10 flex items-center gap-3">
-                  <Bell className="w-5 h-5" />
-                  {registered ? 'REGISTERED ✓' : 'NOTIFY ME AT LAUNCH'}
+                  {isSubmitting ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <Bell className="w-5 h-5" />
+                  )}
+                  {isSubmitting ? 'REGISTERING...' : registered ? 'REGISTERED ✓' : 'NOTIFY ME AT LAUNCH'}
                 </span>
               </motion.button>
               
