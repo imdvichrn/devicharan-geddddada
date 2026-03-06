@@ -102,6 +102,8 @@ serve(async (req) => {
 </body>
 </html>`;
 
+    // Resend sandbox: can only send to account owner email.
+    // Once you verify a domain at resend.com/domains, change this to send directly to `email`.
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -110,8 +112,8 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         from: 'Perfect Pack <onboarding@resend.dev>',
-        to: [email],
-        subject: "You're on the Perfect Pack early access list 🎬",
+        to: ['devicharangeddada@gmail.com'],
+        subject: `New Perfect Pack registration: ${email}`,
         html: htmlContent,
       }),
     });
