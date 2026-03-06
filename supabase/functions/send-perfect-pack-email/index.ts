@@ -27,86 +27,73 @@ serve(async (req) => {
     const htmlContent = `
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-  @media only screen and (max-width: 620px) {
-    .outer-table { width: 100% !important; padding: 16px !important; }
-    .inner-table { width: 100% !important; padding: 24px 20px !important; border-radius: 8px !important; }
-    .header-img { width: 80px !important; }
-    .header-title { font-size: 22px !important; }
-    .header-sub { font-size: 11px !important; letter-spacing: 2px !important; }
-    .body-text { font-size: 14px !important; }
-    .feature-item { font-size: 13px !important; padding: 5px 0 !important; }
-    .price-text { font-size: 36px !important; }
-    .cta-btn { padding: 12px 24px !important; font-size: 14px !important; }
-    .social-link { font-size: 12px !important; }
-    .footer-text { font-size: 11px !important; }
-    .features-box { padding: 18px !important; }
-  }
-</style>
-</head>
-<body style="margin:0;padding:0;background:#0f0f0f;font-family:Arial,Helvetica,sans-serif;">
-<table class="outer-table" width="100%" cellpadding="0" cellspacing="0" style="background:#0f0f0f;padding:40px 0;">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background:#0a0a0a;font-family:'Helvetica Neue',Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a0a;padding:40px 20px;">
 <tr><td align="center">
-<table class="inner-table" width="600" cellpadding="0" cellspacing="0" style="background:#111111;border-radius:10px;padding:40px;color:#ffffff;">
+<table width="600" cellpadding="0" cellspacing="0" style="background:#111111;border-radius:16px;overflow:hidden;border:1px solid #222;">
 
-<!-- HEADER -->
-<tr><td align="center" style="padding-bottom:30px;">
-  <img class="header-img" src="https://geddadadevicharan.netlify.app/assets/profile-avatar-p_BCAhrx.png" alt="Devicharan Logo" style="width:120px;margin-bottom:10px;">
-  <h2 class="header-title" style="margin:0;font-weight:900;font-size:28px;color:#ffffff;letter-spacing:-1px;">PERFECT PACK</h2>
-  <p class="header-sub" style="margin:8px 0 0 0;color:#c8ff00;font-size:13px;letter-spacing:3px;font-weight:600;">ALL-IN-ONE CREATIVE ASSETS</p>
+<!-- Header -->
+<tr><td style="padding:40px 40px 20px;text-align:center;">
+  <h1 style="margin:0;font-size:32px;font-weight:900;color:#ffffff;letter-spacing:-1px;">PERFECT PACK</h1>
+  <p style="margin:8px 0 0;font-size:13px;color:#c8ff00;letter-spacing:3px;font-weight:600;">ALL-IN-ONE CREATIVE ASSETS</p>
 </td></tr>
 
-<!-- MESSAGE -->
-<tr><td class="body-text" style="font-size:16px;line-height:1.6;padding-bottom:25px;color:#cccccc;">
-  <p style="margin:0 0 12px;">Hi <strong style="color:#ffffff;">Creator</strong>,</p>
-  <p style="margin:0 0 12px;">You're officially on the <strong style="color:#c8ff00;">early access list</strong> for Perfect Pack.</p>
-  <p style="margin:0;">When Perfect Pack launches, you'll be among the first to know. Stay tuned!</p>
+<!-- Divider -->
+<tr><td style="padding:0 40px;"><div style="height:1px;background:linear-gradient(to right,transparent,#333,transparent);"></div></td></tr>
+
+<!-- Main Content -->
+<tr><td style="padding:30px 40px;">
+  <p style="margin:0 0 20px;font-size:18px;color:#ffffff;font-weight:600;">Hi Creator,</p>
+  <p style="margin:0 0 16px;font-size:15px;color:#aaaaaa;line-height:1.7;">You're officially on the <strong style="color:#c8ff00;">early access list</strong>.</p>
+  <p style="margin:0 0 24px;font-size:15px;color:#aaaaaa;line-height:1.7;">When Perfect Pack launches, you'll be among the first to know.</p>
 </td></tr>
 
-<!-- WHAT'S INSIDE -->
-<tr><td style="padding-bottom:25px;">
-  <div class="features-box" style="background:#1a1a1a;border-radius:8px;padding:24px;border:1px solid #2a2a2a;">
-    <p style="margin:0 0 14px;font-size:14px;color:#ffffff;font-weight:700;letter-spacing:1px;">WHAT'S INSIDE:</p>
+<!-- What's Inside -->
+<tr><td style="padding:0 40px 30px;">
+  <div style="background:#1a1a1a;border-radius:12px;padding:24px;border:1px solid #2a2a2a;">
+    <p style="margin:0 0 16px;font-size:14px;color:#ffffff;font-weight:700;letter-spacing:1px;">WHAT'S INSIDE:</p>
     <table cellpadding="0" cellspacing="0" width="100%">
-      <tr><td class="feature-item" style="padding:6px 0;font-size:14px;color:#cccccc;">🎬 Cinematic sound effects</td></tr>
-      <tr><td class="feature-item" style="padding:6px 0;font-size:14px;color:#cccccc;">✨ DRFX effects &amp; presets</td></tr>
-      <tr><td class="feature-item" style="padding:6px 0;font-size:14px;color:#cccccc;">🎞️ Motion animations</td></tr>
-      <tr><td class="feature-item" style="padding:6px 0;font-size:14px;color:#cccccc;">🔤 Modern typography &amp; text assets</td></tr>
-      <tr><td class="feature-item" style="padding:6px 0;font-size:14px;color:#cccccc;">⚡ Editing tools for faster workflows</td></tr>
+      <tr><td style="padding:6px 0;font-size:14px;color:#cccccc;">🎬 Cinematic sound effects</td></tr>
+      <tr><td style="padding:6px 0;font-size:14px;color:#cccccc;">✨ DRFX effects &amp; presets</td></tr>
+      <tr><td style="padding:6px 0;font-size:14px;color:#cccccc;">🎞️ Motion animations</td></tr>
+      <tr><td style="padding:6px 0;font-size:14px;color:#cccccc;">🔤 Modern typography &amp; text assets</td></tr>
+      <tr><td style="padding:6px 0;font-size:14px;color:#cccccc;">⚡ Editing tools for faster workflows</td></tr>
     </table>
   </div>
 </td></tr>
 
-<!-- PRICE -->
-<tr><td align="center" style="padding-bottom:25px;">
-  <p style="margin:0;font-size:13px;color:#888;letter-spacing:1px;">LAUNCH PRICE STARTS AT</p>
-  <p class="price-text" style="margin:4px 0 0;font-size:48px;font-weight:900;color:#ffffff;">$10</p>
+<!-- Price -->
+<tr><td style="padding:0 40px 30px;text-align:center;">
+  <p style="margin:0;font-size:13px;color:#777777;letter-spacing:1px;">LAUNCH PRICE STARTS AT</p>
+  <p style="margin:4px 0 0;font-size:48px;font-weight:900;color:#ffffff;">$10</p>
 </td></tr>
 
-<!-- BUTTON -->
-<tr><td align="center" style="padding:25px 0;">
-  <a class="cta-btn" href="https://devicharangeddada.lovable.app/project/perfect-pack-plugin" style="background:#ffffff;color:#000000;text-decoration:none;padding:14px 28px;border-radius:6px;font-weight:bold;font-size:15px;display:inline-block;">VISIT PERFECT PACK</a>
+<!-- CTA Button -->
+<tr><td style="padding:0 40px 30px;text-align:center;">
+  <a href="https://devicharangeddada.lovable.app/project/perfect-pack-plugin"
+     style="display:inline-block;background:#c8ff00;color:#000000;padding:16px 40px;border-radius:12px;text-decoration:none;font-weight:800;font-size:15px;letter-spacing:1px;">
+    VISIT PERFECT PACK
+  </a>
 </td></tr>
 
-<!-- SOCIAL -->
-<tr><td style="border-top:1px solid #2a2a2a;padding-top:25px;text-align:center;">
-  <p style="margin:0 0 12px;font-size:12px;color:#555;letter-spacing:2px;">FOLLOW FOR UPDATES</p>
-  <a class="social-link" href="https://instagram.com/devi_charan_2004" style="color:#c8ff00;text-decoration:none;font-size:13px;margin:0 6px;">Instagram</a>
+<!-- Divider -->
+<tr><td style="padding:0 40px;"><div style="height:1px;background:linear-gradient(to right,transparent,#333,transparent);"></div></td></tr>
+
+<!-- Social -->
+<tr><td style="padding:24px 40px;text-align:center;">
+  <p style="margin:0 0 12px;font-size:12px;color:#555555;letter-spacing:2px;">FOLLOW FOR UPDATES</p>
+  <a href="https://instagram.com/devi_charan_2004" style="color:#c8ff00;text-decoration:none;font-size:13px;margin:0 8px;">Instagram</a>
   <span style="color:#333;">|</span>
-  <a class="social-link" href="https://linkedin.com/in/devicharan-geddada" style="color:#c8ff00;text-decoration:none;font-size:13px;margin:0 6px;">LinkedIn</a>
+  <a href="https://linkedin.com/in/devicharan-geddada" style="color:#c8ff00;text-decoration:none;font-size:13px;margin:0 8px;">LinkedIn</a>
   <span style="color:#333;">|</span>
-  <a class="social-link" href="https://github.com/DeviCharan-Geddada" style="color:#c8ff00;text-decoration:none;font-size:13px;margin:0 6px;">GitHub</a>
+  <a href="https://github.com/DeviCharan-Geddada" style="color:#c8ff00;text-decoration:none;font-size:13px;margin:0 8px;">GitHub</a>
 </td></tr>
 
-<!-- FOOTER -->
-<tr><td style="padding-top:20px;font-size:13px;color:#888;text-align:center;">
-  <p class="footer-text" style="margin:0;">Devicharan Geddada</p>
-  <p class="footer-text" style="margin:6px 0;">Professional Video Editing • Cinematic Content</p>
-  <p style="margin-top:16px;font-size:12px;color:#ffffff;letter-spacing:2px;">ECHOLESS</p>
-  <p style="margin-top:4px;font-size:12px;color:#ffffff;">This is an automated confirmation email.</p>
+<!-- Footer -->
+<tr><td style="padding:20px 40px 30px;text-align:center;">
+  <p style="margin:0 0 4px;font-size:11px;color:#444444;">Created by <strong style="color:#666;">imdvichrn</strong></p>
+  <p style="margin:0;font-size:11px;color:#333333;">You received this because you registered for Perfect Pack early access.</p>
 </td></tr>
 
 </table>
@@ -115,7 +102,8 @@ serve(async (req) => {
 </body>
 </html>`;
 
-    // Resend sandbox: route to owner email until domain is verified
+    // Resend sandbox: can only send to account owner email.
+    // Once you verify a domain at resend.com/domains, change this to send directly to `email`.
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
