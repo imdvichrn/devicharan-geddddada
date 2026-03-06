@@ -115,18 +115,17 @@ export function ContactForm() {
       });
 
       // 3. Send form data to backend API
-      const { data, error: fnError } = await supabase.functions.invoke('send-contact-email', {
-        body: {
-          name: formData.name,
-          email: formData.email,
+      await emailjs.send(
+        'service_20azq4s',
+        'template_689lfji',
+        {
+          from_name: formData.name,
+          from_email: formData.email,
           subject: formData.subject,
           message: formData.message,
         },
-      });
-
-      if (fnError) {
-        throw new Error(fnError.message || 'Failed to send message');
-      }
+        'yxDgR_bWBnh9BXZpr'
+      );
 
       // Keep the success toast (already shown) and reset form
       setFormData(initialFormData);
