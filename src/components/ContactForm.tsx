@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import emailjs from '@emailjs/browser';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -14,7 +14,7 @@ interface FormData {
   email: string;
   subject: string;
   message: string;
-  honeypot: string; // Hidden field for spam protection
+  honeypot: string;
 }
 
 const initialFormData: FormData = {
@@ -58,8 +58,6 @@ export function ContactForm() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    
-    // Clear error for this field when user starts typing
     if (errors[name as keyof FormData]) {
       setErrors(prev => ({ ...prev, [name]: undefined }));
     }
@@ -67,19 +65,12 @@ export function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Check honeypot for spam
-    if (formData.honeypot) {
-      return; // Silent fail for spam
-    }
 
-    if (!validateForm()) {
-      return;
-    }
+    if (formData.honeypot) return;
+    if (!validateForm()) return;
 
     setIsSubmitting(true);
 
-    // small helper: fallback to WebAudio beep if audio file missing/blocked
     const playFallbackBeep = () => {
       try {
         const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
@@ -92,42 +83,35 @@ export function ContactForm() {
         g.connect(ctx.destination);
         o.start();
         setTimeout(() => { o.stop(); ctx.close(); }, 300);
-      } catch (err) {
-        // no-op
-      }
+      } catch (_) { /* no-op */ }
     };
 
     try {
-      // 1. Play the professional sound effect (non-blocking)
       try {
         const audio = new Audio('/message-sent.mp3');
         audio.volume = 0.4;
         audio.play().catch(() => playFallbackBeep());
-      } catch (err) {
+      } catch (_) {
         playFallbackBeep();
       }
 
-      // 2. Show the World-Class visual feedback
       toast({
         title: "Message Sent Successfully!",
         description: "Geddada Devicharan will get back to you shortly.",
         className: "bg-primary text-black font-bold",
       });
 
-      // 3. Send form data to backend API
-      await emailjs.send(
-        'service_20azq4s',
-        'template_689lfji',
-        {
-          from_name: formData.name,
-          from_email: formData.email,
+      const { error } = await supabase.functions.invoke('send-contact-email', {
+        body: {
+          name: formData.name,
+          email: formData.email,
           subject: formData.subject,
           message: formData.message,
         },
-        'yxDgR_bWBnh9BXZpr'
-      );
+      });
 
-      // Keep the success toast (already shown) and reset form
+      if (error) throw error;
+
       setFormData(initialFormData);
     } catch (error) {
       console.error('Contact form error:', error);
@@ -151,7 +135,6 @@ export function ContactForm() {
       </CardHeader>
       <CardContent className="px-4 md:px-6">
         <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-          {/* Honeypot field - hidden from users */}
           <input
             type="text"
             name="honeypot"
@@ -173,9 +156,7 @@ export function ContactForm() {
                 className={`bg-transparent border-glass-border ${errors.name ? 'border-destructive' : ''}`}
                 required
               />
-              {errors.name && (
-                <p className="text-sm text-destructive">{errors.name}</p>
-              )}
+              {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
             </div>
 
             <div className="space-y-2">
@@ -189,9 +170,7 @@ export function ContactForm() {
                 className={`bg-transparent border-glass-border ${errors.email ? 'border-destructive' : ''}`}
                 required
               />
-              {errors.email && (
-                <p className="text-sm text-destructive">{errors.email}</p>
-              )}
+              {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
             </div>
           </div>
 
@@ -205,9 +184,7 @@ export function ContactForm() {
               className={`bg-transparent border-glass-border ${errors.subject ? 'border-destructive' : ''}`}
               required
             />
-            {errors.subject && (
-              <p className="text-sm text-destructive">{errors.subject}</p>
-            )}
+            {errors.subject && <p className="text-sm text-destructive">{errors.subject}</p>}
           </div>
 
           <div className="space-y-2">
@@ -221,9 +198,7 @@ export function ContactForm() {
               className={`bg-transparent border-glass-border resize-none ${errors.message ? 'border-destructive' : ''}`}
               required
             />
-            {errors.message && (
-              <p className="text-sm text-destructive">{errors.message}</p>
-            )}
+            {errors.message && <p className="text-sm text-destructive">{errors.message}</p>}
           </div>
 
           <Button
