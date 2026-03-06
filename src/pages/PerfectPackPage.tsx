@@ -69,9 +69,13 @@ export default function PerfectPackPage() {
         setRegistered(true);
         toast({
           title: "You're on the list!",
-          description: "We'll notify you the moment Perfect Pack drops.",
+          description: "We'll notify you the moment Perfect Pack drops. Check your inbox!",
           className: "bg-primary text-black font-bold",
         });
+        // Send confirmation email (non-blocking)
+        supabase.functions.invoke('send-perfect-pack-email', {
+          body: { email: email.trim().toLowerCase() },
+        }).catch(console.error);
       }
     } catch (err) {
       toast({
