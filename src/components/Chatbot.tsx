@@ -7,7 +7,7 @@ import { SiriOrb } from './SiriOrb';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ActionButtons } from './ActionButtons';
 import { useToast } from '@/hooks/use-toast';
-import { sendChatMessage, getUserNameFromStorage, saveUserNameToStorage, parseUserNameFromMessage } from '@/services/chatService';
+import { streamChatMessage, sendChatMessage, getUserNameFromStorage, saveUserNameToStorage, parseUserNameFromMessage } from '@/services/chatService';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ActionButton {
@@ -263,48 +263,72 @@ I can tell you about his video editing work, skills, or help you get in touch. W
     }
 
     try {
-      // Use enhanced chatService with Digital Twin logic
-      const response = await sendChatMessage([...messages, newUserMessage]);
-      
-      const assistantMessage: Message = {
-        role: 'assistant',
-        content: response.text,
-        sources: response.sources,
-        projectLink: response.projectLink,
-        timestamp: new Date(),
-        buttons: response.sources?.map(source => ({
-          label: `Learn More`,
-          icon: 'link' as const,
-          action: `project-${source}`
-        }))
+      // Build API messages from conversation history
+      const apiMessages = [...messages, newUserMessage].map(m => ({
+        role: m.role,
+        content: m.content,
+      }));
+
+      let assistantSoFar = "";
+
+      const upsertAssistant = (nextChunk: string) => {
+        assistantSoFar += nextChunk;
+        setMessages(prev => {
+          const last = prev[prev.length - 1];
+          if (last?.role === "assistant" && !last.buttons) {
+            return prev.map((m, i) =>
+              i === prev.length - 1
+                ? { ...m, content: assistantSoFar }
+                : m
+            );
+          }
+          return [
+            ...prev,
+            { role: "assistant" as const, content: assistantSoFar, timestamp: new Date() },
+          ];
+        });
       };
 
-      // Simulate a brief thinking delay
-      setTimeout(() => {
-        setMessages(prev => [...prev, assistantMessage]);
-        setIsLoading(false);
-      }, 500);
-
+      await streamChatMessage({
+        messages: apiMessages,
+        onDelta: (chunk) => {
+          setIsLoading(false);
+          upsertAssistant(chunk);
+        },
+        onDone: () => {
+          setIsLoading(false);
+        },
+        onError: (error) => {
+          console.error("Chat stream error:", error);
+          setMessages(prev => [
+            ...prev,
+            {
+              role: "assistant" as const,
+              content: `I'm having a moment — please try again! In the meantime:\n\n📧 devicharangeddada@gmail.com\n📱 +91 6303468707`,
+              buttons: [
+                { label: "Send Email", icon: "mail" as const, action: "email" },
+                { label: "WhatsApp", icon: "phone" as const, action: "whatsapp" },
+              ],
+              timestamp: new Date(),
+            },
+          ]);
+          setIsLoading(false);
+        },
+      });
     } catch (error) {
       console.error('Chat error:', error);
-      
-      const errorMessage: Message = {
-        role: 'assistant',
-        content: `I'm processing your message... In the meantime, you can reach me at:
-
-📧 Email: devicharangeddada@gmail.com
-📱 WhatsApp: +91 6303468707
-📍 Location: Visakhapatnam, India
-
-Let's connect directly! 🚀`,
-        buttons: [
-          { label: 'Send Email', icon: 'mail' as const, action: 'email' },
-          { label: 'WhatsApp Message', icon: 'phone' as const, action: 'whatsapp' }
-        ],
-        timestamp: new Date()
-      };
-      
-      setMessages(prev => [...prev, errorMessage]);
+      setMessages(prev => [
+        ...prev,
+        {
+          role: 'assistant' as const,
+          content: `Something went wrong. You can reach Devicharan at:\n\n📧 devicharangeddada@gmail.com\n📱 +91 6303468707`,
+          buttons: [
+            { label: 'Send Email', icon: 'mail' as const, action: 'email' },
+            { label: 'WhatsApp', icon: 'phone' as const, action: 'whatsapp' }
+          ],
+          timestamp: new Date()
+        }
+      ]);
       setIsLoading(false);
     }
   };
