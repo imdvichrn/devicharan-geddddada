@@ -7,7 +7,7 @@ import { SiriOrb } from './SiriOrb';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ActionButtons } from './ActionButtons';
 import { useToast } from '@/hooks/use-toast';
-import { sendChatMessage, getUserNameFromStorage, saveUserNameToStorage, parseUserNameFromMessage } from '@/services/chatService';
+import { streamChatMessage, sendChatMessage, getUserNameFromStorage, saveUserNameToStorage, parseUserNameFromMessage } from '@/services/chatService';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ActionButton {
