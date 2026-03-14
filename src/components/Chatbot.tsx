@@ -411,9 +411,65 @@ I can tell you about his video editing work, skills, or help you get in touch. W
     }
   };
 
+  // --- Link extraction & rendering helpers ---
+  const extractLinks = (text: string): { url: string; label: string; isInternal: boolean }[] => {
+    const links: { url: string; label: string; isInternal: boolean }[] = [];
+    const seen = new Set<string>();
+
+    // Match markdown links [label](url)
+    const mdRegex = /\[([^\]]+)\]\(((?:https?:\/\/[^\s)]+|\/[^\s)]+))\)/g;
+    let match;
+    while ((match = mdRegex.exec(text)) !== null) {
+      if (!seen.has(match[2])) {
+        seen.add(match[2]);
+        links.push({ url: match[2], label: match[1], isInternal: match[2].startsWith('/') });
+      }
+    }
+
+    // Match bare URLs not already captured
+    const urlRegex = /(?<!\]\()https?:\/\/[^\s)<>]+/g;
+    while ((match = urlRegex.exec(text)) !== null) {
+      const url = match[0].replace(/[.,;:!?)]+$/, '');
+      if (!seen.has(url)) {
+        seen.add(url);
+        const label = url.replace(/https?:\/\/(www\.)?/, '').split('/')[0];
+        links.push({ url, label, isInternal: false });
+      }
+    }
+
+    // Match internal paths like /projects/something
+    const pathRegex = /(?:^|\s)(\/[a-zA-Z0-9_/-]+)/gm;
+    while ((match = pathRegex.exec(text)) !== null) {
+      const path = match[1];
+      if (!seen.has(path) && path.length > 1) {
+        seen.add(path);
+        const label = path.split('/').filter(Boolean).pop()?.replace(/-/g, ' ') || path;
+        links.push({ url: path, label: label.charAt(0).toUpperCase() + label.slice(1), isInternal: true });
+      }
+    }
+
+    return links;
+  };
+
+  const getLinkGlowColor = (url: string): string => {
+    if (url.includes('linkedin')) return 'from-blue-500 to-blue-600 shadow-blue-500/50';
+    if (url.includes('instagram')) return 'from-pink-500 to-purple-600 shadow-pink-500/50';
+    if (url.includes('facebook')) return 'from-blue-600 to-blue-700 shadow-blue-600/50';
+    if (url.includes('twitter') || url.includes('x.com')) return 'from-sky-400 to-sky-600 shadow-sky-500/50';
+    if (url.includes('github')) return 'from-gray-600 to-gray-800 shadow-gray-500/50';
+    if (url.includes('wa.me') || url.includes('whatsapp')) return 'from-emerald-500 to-teal-600 shadow-emerald-500/50';
+    if (url.startsWith('/')) return 'from-indigo-500 to-purple-600 shadow-indigo-500/50';
+    return 'from-indigo-500 to-blue-600 shadow-indigo-500/50';
+  };
+
+  const renderContentWithLinks = (content: string): string => {
+    // Strip markdown link syntax and bare URLs from display text (buttons handle them)
+    let cleaned = content.replace(/\[([^\]]+)\]\((?:https?:\/\/[^\s)]+|\/[^\s)]+)\)/g, '$1');
+    return cleaned;
+  };
 
 
-  return (
+
     <>
       {/* Echo Less Toggle Button - Continuous Siri Orb Loop */}
       <motion.div
