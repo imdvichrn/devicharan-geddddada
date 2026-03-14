@@ -468,8 +468,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
     return cleaned;
   };
 
-
-
+  return (
     <>
       {/* Echo Less Toggle Button - Continuous Siri Orb Loop */}
       <motion.div
