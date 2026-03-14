@@ -534,7 +534,47 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                           : 'bg-indigo-500/20 border border-indigo-500/30 text-indigo-100 rounded-bl-none backdrop-blur-sm'
                       }`}
                     >
-                      <div className="whitespace-pre-wrap leading-relaxed text-sm">{message.content}</div>
+                      <div className="whitespace-pre-wrap leading-relaxed text-sm">
+                        {message.role === 'assistant' ? renderContentWithLinks(message.content) : message.content}
+                      </div>
+
+                      {/* Auto-detected link buttons from content */}
+                      {message.role === 'assistant' && (() => {
+                        const links = extractLinks(message.content);
+                        if (links.length === 0) return null;
+                        return (
+                          <motion.div
+                            initial={{ opacity: 0, y: 5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.3 }}
+                            className="mt-3 flex flex-col gap-2"
+                          >
+                            {links.map((link, idx) => {
+                              const glowClass = getLinkGlowColor(link.url);
+                              return (
+                                <motion.button
+                                  key={idx}
+                                  whileHover={{ scale: 1.03, boxShadow: '0 0 20px rgba(99, 102, 241, 0.5)' }}
+                                  whileTap={{ scale: 0.97 }}
+                                  onClick={() => {
+                                    if (link.isInternal) {
+                                      navigate(link.url);
+                                      setIsOpen(false);
+                                    } else {
+                                      window.open(link.url, '_blank', 'noopener,noreferrer');
+                                    }
+                                  }}
+                                  className={`w-full px-4 py-2.5 rounded-xl font-medium text-sm flex items-center justify-center gap-2 transition-all duration-300 bg-gradient-to-r ${glowClass} text-white shadow-lg hover:shadow-xl`}
+                                >
+                                  <Sparkles size={14} />
+                                  {link.label}
+                                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                                </motion.button>
+                              );
+                            })}
+                          </motion.div>
+                        );
+                      })()}
 
                       {/* Quick Reply Buttons - Full Width Secondary Style */}
                       {message.buttons && message.buttons.length > 0 && (
