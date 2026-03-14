@@ -411,7 +411,62 @@ I can tell you about his video editing work, skills, or help you get in touch. W
     }
   };
 
+  // --- Link extraction & rendering helpers ---
+  const extractLinks = (text: string): { url: string; label: string; isInternal: boolean }[] => {
+    const links: { url: string; label: string; isInternal: boolean }[] = [];
+    const seen = new Set<string>();
 
+    // Match markdown links [label](url)
+    const mdRegex = /\[([^\]]+)\]\(((?:https?:\/\/[^\s)]+|\/[^\s)]+))\)/g;
+    let match;
+    while ((match = mdRegex.exec(text)) !== null) {
+      if (!seen.has(match[2])) {
+        seen.add(match[2]);
+        links.push({ url: match[2], label: match[1], isInternal: match[2].startsWith('/') });
+      }
+    }
+
+    // Match bare URLs not already captured
+    const urlRegex = /(?<!\]\()https?:\/\/[^\s)<>]+/g;
+    while ((match = urlRegex.exec(text)) !== null) {
+      const url = match[0].replace(/[.,;:!?)]+$/, '');
+      if (!seen.has(url)) {
+        seen.add(url);
+        const label = url.replace(/https?:\/\/(www\.)?/, '').split('/')[0];
+        links.push({ url, label, isInternal: false });
+      }
+    }
+
+    // Match internal paths like /projects/something
+    const pathRegex = /(?:^|\s)(\/[a-zA-Z0-9_/-]+)/gm;
+    while ((match = pathRegex.exec(text)) !== null) {
+      const path = match[1];
+      if (!seen.has(path) && path.length > 1) {
+        seen.add(path);
+        const label = path.split('/').filter(Boolean).pop()?.replace(/-/g, ' ') || path;
+        links.push({ url: path, label: label.charAt(0).toUpperCase() + label.slice(1), isInternal: true });
+      }
+    }
+
+    return links;
+  };
+
+  const getLinkGlowColor = (url: string): string => {
+    if (url.includes('linkedin')) return 'from-blue-500 to-blue-600 shadow-blue-500/50';
+    if (url.includes('instagram')) return 'from-pink-500 to-purple-600 shadow-pink-500/50';
+    if (url.includes('facebook')) return 'from-blue-600 to-blue-700 shadow-blue-600/50';
+    if (url.includes('twitter') || url.includes('x.com')) return 'from-sky-400 to-sky-600 shadow-sky-500/50';
+    if (url.includes('github')) return 'from-gray-600 to-gray-800 shadow-gray-500/50';
+    if (url.includes('wa.me') || url.includes('whatsapp')) return 'from-emerald-500 to-teal-600 shadow-emerald-500/50';
+    if (url.startsWith('/')) return 'from-indigo-500 to-purple-600 shadow-indigo-500/50';
+    return 'from-indigo-500 to-blue-600 shadow-indigo-500/50';
+  };
+
+  const renderContentWithLinks = (content: string): string => {
+    // Strip markdown link syntax and bare URLs from display text (buttons handle them)
+    let cleaned = content.replace(/\[([^\]]+)\]\((?:https?:\/\/[^\s)]+|\/[^\s)]+)\)/g, '$1');
+    return cleaned;
+  };
 
   return (
     <>
@@ -534,7 +589,47 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                           : 'bg-indigo-500/20 border border-indigo-500/30 text-indigo-100 rounded-bl-none backdrop-blur-sm'
                       }`}
                     >
-                      <div className="whitespace-pre-wrap leading-relaxed text-sm">{message.content}</div>
+                      <div className="whitespace-pre-wrap leading-relaxed text-sm">
+                        {message.role === 'assistant' ? renderContentWithLinks(message.content) : message.content}
+                      </div>
+
+                      {/* Auto-detected link buttons from content */}
+                      {message.role === 'assistant' && (() => {
+                        const links = extractLinks(message.content);
+                        if (links.length === 0) return null;
+                        return (
+                          <motion.div
+                            initial={{ opacity: 0, y: 5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.3 }}
+                            className="mt-3 flex flex-col gap-2"
+                          >
+                            {links.map((link, idx) => {
+                              const glowClass = getLinkGlowColor(link.url);
+                              return (
+                                <motion.button
+                                  key={idx}
+                                  whileHover={{ scale: 1.03, boxShadow: '0 0 20px rgba(99, 102, 241, 0.5)' }}
+                                  whileTap={{ scale: 0.97 }}
+                                  onClick={() => {
+                                    if (link.isInternal) {
+                                      navigate(link.url);
+                                      setIsOpen(false);
+                                    } else {
+                                      window.open(link.url, '_blank', 'noopener,noreferrer');
+                                    }
+                                  }}
+                                  className={`w-full px-4 py-2.5 rounded-xl font-medium text-sm flex items-center justify-center gap-2 transition-all duration-300 bg-gradient-to-r ${glowClass} text-white shadow-lg hover:shadow-xl`}
+                                >
+                                  <Sparkles size={14} />
+                                  {link.label}
+                                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                                </motion.button>
+                              );
+                            })}
+                          </motion.div>
+                        );
+                      })()}
 
                       {/* Quick Reply Buttons - Full Width Secondary Style */}
                       {message.buttons && message.buttons.length > 0 && (
