@@ -34,7 +34,6 @@ import mongoose from "mongoose";
 import { Resend } from "resend";
 import { Subscriber } from "./models/Subscriber";
 import { Contact } from "./models/Contact";
-import { Contact } from "./models/Contact";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
