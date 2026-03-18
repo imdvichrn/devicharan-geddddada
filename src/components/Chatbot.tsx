@@ -349,7 +349,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
         window.location.href = 'mailto:devicharangeddada@gmail.com';
         break;
       case 'linkedin':
-        window.open('https://www.linkedin.com/in/geddadadevicharan', '_blank');
+        window.open('https://www.linkedin.com/in/devicharan-geddada', '_blank');
         break;
       case 'instagram':
         window.open('https://www.instagram.com/imdvichrn', '_blank');
