@@ -79,15 +79,6 @@ I can tell you about his video editing work, skills, or help you get in touch. W
   // Quick Actions Configuration with new button types
   const quickActions: QuickAction[] = [
     {
-      id: 'showreel',
-      label: 'View My Showreel',
-      icon: <PlayCircle size={16} className="text-indigo-400" />,
-      description: 'Watch my professional video editing showreel',
-      action: () => {
-        setInput('Show me your video editing showreel');
-      }
-    },
-    {
       id: 'download-cv',
       label: 'Download CV',
       icon: <Download size={16} className="text-blue-400" />,
@@ -358,16 +349,16 @@ I can tell you about his video editing work, skills, or help you get in touch. W
         window.location.href = 'mailto:devicharangeddada@gmail.com';
         break;
       case 'linkedin':
-        window.open('https://www.linkedin.com/in/geddadadevicharan', '_blank');
+        window.open('https://www.linkedin.com/in/devicharan-geddada', '_blank');
         break;
       case 'instagram':
-        window.open('https://www.instagram.com/imdvichrn', '_blank');
+        window.open('https://www.instagram.com/devi_charan_2004', '_blank');
         break;
       case 'facebook':
         window.open('https://www.facebook.com/userdead.610', '_blank');
         break;
       case 'twitter':
-        window.open('https://twitter.com/imdvichrn', '_blank');
+        window.open('https://x.com/devi_charan_2004', '_blank');
         break;
       case 'github':
         window.open('https://github.com/DeviCharan-Geddada', '_blank');
@@ -754,9 +745,9 @@ I can tell you about his video editing work, skills, or help you get in touch. W
               {/* Social Links Footer */}
               <div className="relative z-10 px-4 py-3 border-t border-indigo-500/20 flex justify-center items-center gap-3">
                 {[
-                  { icon: Linkedin, url: 'https://www.linkedin.com/in/geddadadevicharan', label: 'LinkedIn' },
-                  { icon: Instagram, url: 'https://www.instagram.com/imdvichrn', label: 'Instagram' },
-                  { icon: Facebook, url: 'https://www.facebook.com/userdead.610', label: 'Facebook' },
+                  { icon: Linkedin, url: 'https://www.linkedin.com/in/devicharan-geddada', label: 'LinkedIn' },
+                  { icon: Instagram, url: 'https://www.instagram.com/devi_charan_2004', label: 'Instagram' },
+                  { icon: Github, url: 'https://github.com/DeviCharan-Geddada', label: 'GitHub' },
                 ].map((social, idx) => (
                   <motion.button
                     key={idx}
