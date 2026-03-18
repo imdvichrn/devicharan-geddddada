@@ -358,7 +358,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
         window.open('https://www.facebook.com/userdead.610', '_blank');
         break;
       case 'twitter':
-        window.open('https://twitter.com/imdvichrn', '_blank');
+        window.open('https://x.com/devi_charan_2004', '_blank');
         break;
       case 'github':
         window.open('https://github.com/DeviCharan-Geddada', '_blank');
