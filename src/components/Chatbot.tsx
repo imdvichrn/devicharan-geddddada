@@ -79,15 +79,6 @@ I can tell you about his video editing work, skills, or help you get in touch. W
   // Quick Actions Configuration with new button types
   const quickActions: QuickAction[] = [
     {
-      id: 'showreel',
-      label: 'View My Showreel',
-      icon: <PlayCircle size={16} className="text-indigo-400" />,
-      description: 'Watch my professional video editing showreel',
-      action: () => {
-        setInput('Show me your video editing showreel');
-      }
-    },
-    {
       id: 'download-cv',
       label: 'Download CV',
       icon: <Download size={16} className="text-blue-400" />,
