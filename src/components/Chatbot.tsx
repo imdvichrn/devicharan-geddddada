@@ -352,7 +352,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
         window.open('https://www.linkedin.com/in/devicharan-geddada', '_blank');
         break;
       case 'instagram':
-        window.open('https://www.instagram.com/imdvichrn', '_blank');
+        window.open('https://www.instagram.com/devi_charan_2004', '_blank');
         break;
       case 'facebook':
         window.open('https://www.facebook.com/userdead.610', '_blank');
