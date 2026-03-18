@@ -745,9 +745,9 @@ I can tell you about his video editing work, skills, or help you get in touch. W
               {/* Social Links Footer */}
               <div className="relative z-10 px-4 py-3 border-t border-indigo-500/20 flex justify-center items-center gap-3">
                 {[
-                  { icon: Linkedin, url: 'https://www.linkedin.com/in/geddadadevicharan', label: 'LinkedIn' },
-                  { icon: Instagram, url: 'https://www.instagram.com/imdvichrn', label: 'Instagram' },
-                  { icon: Facebook, url: 'https://www.facebook.com/userdead.610', label: 'Facebook' },
+                  { icon: Linkedin, url: 'https://www.linkedin.com/in/devicharan-geddada', label: 'LinkedIn' },
+                  { icon: Instagram, url: 'https://www.instagram.com/devi_charan_2004', label: 'Instagram' },
+                  { icon: Github, url: 'https://github.com/DeviCharan-Geddada', label: 'GitHub' },
                 ].map((social, idx) => (
                   <motion.button
                     key={idx}
