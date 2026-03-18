@@ -349,10 +349,10 @@ I can tell you about his video editing work, skills, or help you get in touch. W
         window.location.href = 'mailto:devicharangeddada@gmail.com';
         break;
       case 'linkedin':
-        window.open('https://www.linkedin.com/in/devicharan-geddada', '_blank');
+        window.open('https://www.linkedin.com/in/devi-charan-1a8b49302', '_blank');
         break;
       case 'instagram':
-        window.open('https://www.instagram.com/devi_charan_2004', '_blank');
+        window.open('https://www.instagram.com/imdvichrn', '_blank');
         break;
       case 'facebook':
         window.open('https://www.facebook.com/userdead.610', '_blank');
@@ -745,9 +745,9 @@ I can tell you about his video editing work, skills, or help you get in touch. W
               {/* Social Links Footer */}
               <div className="relative z-10 px-4 py-3 border-t border-indigo-500/20 flex justify-center items-center gap-3">
                 {[
-                  { icon: Linkedin, url: 'https://www.linkedin.com/in/devicharan-geddada', label: 'LinkedIn' },
-                  { icon: Instagram, url: 'https://www.instagram.com/devi_charan_2004', label: 'Instagram' },
-                  { icon: Github, url: 'https://github.com/DeviCharan-Geddada', label: 'GitHub' },
+                  { icon: Linkedin, url: 'https://www.linkedin.com/in/devi-charan-1a8b49302', label: 'LinkedIn' },
+                  { icon: Instagram, url: 'https://www.instagram.com/imdvichrn', label: 'Instagram' },
+                  { icon: Facebook, url: 'https://www.facebook.com/userdead.610', label: 'Facebook' },
                 ].map((social, idx) => (
                   <motion.button
                     key={idx}
