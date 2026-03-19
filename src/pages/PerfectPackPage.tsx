@@ -55,12 +55,10 @@ export default function PerfectPackPage() {
 
       if (error) {
         if (error.code === '23505') {
-          // Already registered
           setRegistered(true);
           toast({
             title: "Already registered!",
             description: "This email is already on the list.",
-            className: "bg-primary text-black font-bold",
           });
         } else {
           throw error;
@@ -70,9 +68,7 @@ export default function PerfectPackPage() {
         toast({
           title: "You're on the list!",
           description: "We'll notify you the moment Perfect Pack drops. Check your inbox!",
-          className: "bg-primary text-black font-bold",
         });
-        // Send confirmation email (non-blocking)
         supabase.functions.invoke('send-perfect-pack-email', {
           body: { email: email.trim().toLowerCase() },
         }).catch(console.error);
@@ -89,7 +85,7 @@ export default function PerfectPackPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black pt-24 pb-20 px-6">
+    <div className="min-h-screen bg-background pt-24 pb-20 px-6 transition-colors duration-300">
       <div className="max-w-7xl mx-auto space-y-12">
         
         {/* Navigation back */}
@@ -107,7 +103,7 @@ export default function PerfectPackPage() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6 }}
-          className="w-full aspect-video rounded-[2rem] overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] bg-zinc-900"
+          className="w-full aspect-video rounded-[2rem] overflow-hidden border border-border shadow-2xl bg-card"
         >
           <video 
             src="/assets/perfect-pack-demo.mp4"
@@ -129,10 +125,10 @@ export default function PerfectPackPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="lg:col-span-2 space-y-8"
           >
-            <h1 className="text-7xl font-black tracking-tighter uppercase leading-none">
+            <h1 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-none text-foreground">
               Perfect Pack
             </h1>
-            <p className="text-3xl text-primary font-bold tracking-[0.2em]">
+            <p className="text-2xl md:text-3xl text-primary font-bold tracking-[0.2em]">
               ALL-IN-ONE CREATIVE ASSETS
             </p>
             
@@ -143,7 +139,7 @@ export default function PerfectPackPage() {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
                 {['High-Res Textures', 'Drag & Drop', 'Optimized', 'Universal'].map((feature) => (
-                  <div key={feature} className="flex items-center gap-3 text-white/90 bg-white/5 p-4 rounded-xl border border-white/10">
+                  <div key={feature} className="flex items-center gap-3 text-foreground/90 bg-muted/50 p-4 rounded-xl border border-border">
                     <CheckCircle className="text-primary w-5 h-5 flex-shrink-0" /> 
                     {feature}
                   </div>
@@ -157,7 +153,7 @@ export default function PerfectPackPage() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col items-center p-8 rounded-[2rem] bg-zinc-900/50 backdrop-blur-xl border border-white/10 h-fit sticky top-24 shadow-2xl"
+            className="flex flex-col items-center p-8 rounded-[2rem] glass-elevated border-glass-border h-fit sticky top-24 shadow-2xl"
           >
             {/* BRAND LOGO with animated glow */}
             <div className="relative mb-8">
@@ -220,7 +216,7 @@ export default function PerfectPackPage() {
               >
                 {!registered && !isSubmitting && (
                   <motion.span
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-foreground/10 to-transparent"
                     animate={{ x: ['-100%', '200%'] }}
                     transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
                   />
@@ -235,7 +231,7 @@ export default function PerfectPackPage() {
                 </span>
               </motion.button>
               
-              <p className="text-xs text-zinc-500">
+              <p className="text-xs text-muted-foreground">
                 {registered 
                   ? "You'll be first to know when it drops." 
                   : "Be the first to access exclusive launch pricing."}
