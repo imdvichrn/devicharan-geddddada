@@ -1,7 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Suspense, lazy } from 'react';
-import { Navigation } from '@/components/Navigation';
 import { VideoEmbed } from '@/components/VideoEmbed';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -125,7 +124,6 @@ export default function ProjectDetail() {
   if (!project) {
     return (
       <div className="min-h-screen bg-background">
-        <Navigation />
         <div className="pt-20 px-4 flex items-center justify-center min-h-[60vh]">
           <Card className="glass-panel border-glass-border max-w-md">
             <CardContent className="p-8 text-center">
@@ -181,8 +179,6 @@ export default function ProjectDetail() {
           }))}
         </script>
       </Helmet>
-
-      <Navigation />
 
       {/* Hero Section */}
       <section className="pt-20 md:pt-28 pb-12 px-4">

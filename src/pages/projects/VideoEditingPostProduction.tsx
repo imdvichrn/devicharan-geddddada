@@ -1,4 +1,3 @@
-import { Navigation } from '@/components/Navigation';
 import { WindowChrome } from '@/components/WindowChrome';
 import { VideoEmbed } from '@/components/VideoEmbed';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -107,7 +106,6 @@ export default function VideoEditingPostProduction() {
       </Helmet>
       
       <div className="min-h-screen bg-background">
-        <Navigation />
         
         {/* Hero Section */}
         <section className="pt-20 md:pt-28 pb-10 md:pb-16 px-3 md:px-4">

@@ -1,4 +1,3 @@
-import { Navigation } from '@/components/Navigation';
 import { ContactForm } from '@/components/ContactForm';
 import { WindowChrome } from '@/components/WindowChrome';
 import { AnimatedBackground } from '@/components/AnimatedBackground';
@@ -197,8 +196,6 @@ export function Portfolio() {
     }
   };
   return <div className="min-h-screen bg-background">
-      <Navigation />
-      
       {/* Hero Section */}
       <section id="home" className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden">
         <div 

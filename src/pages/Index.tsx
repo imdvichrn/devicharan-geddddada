@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
-import { Navigation } from '@/components/Navigation';
 import { Chatbot } from '@/components/Chatbot';
 import { WindowChrome } from '@/components/WindowChrome';
 import { Button } from '@/components/ui/button';
@@ -131,8 +130,6 @@ const Index = () => {
         <meta property="og:image" content="/og-image.png" />
         <meta property="og:type" content="website" />
       </Helmet>
-
-      <Navigation />
 
       {/* Hero Section - Split Screen */}
       <motion.section

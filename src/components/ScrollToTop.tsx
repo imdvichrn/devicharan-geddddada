@@ -10,15 +10,24 @@ import { useLocation } from 'react-router-dom';
  * Usage: Place <ScrollToTop /> in your App.tsx router setup
  */
 export function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    // Scroll to top smoothly on route change
+    if (hash) {
+      const sectionId = hash.replace('#', '');
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+    }
+
+    // Scroll to top smoothly on route change (or when no matching section)
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
-  }, [pathname]);
+  }, [pathname, hash]);
 
   return null;
 }

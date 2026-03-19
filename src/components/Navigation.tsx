@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Moon, Sun, Menu, X } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
@@ -24,6 +24,7 @@ export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
+  const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
 
   useEffect(() => {
@@ -52,9 +53,11 @@ export function Navigation() {
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
+      // Update hash without causing full reload
+      window.history.replaceState({}, '', `#${sectionId}`);
     } else {
-      // If not on home page, navigate to home with hash
-      window.location.href = '/#' + sectionId;
+      // Remote page navigation through React Router to preserve state and transitions
+      navigate(`/#${sectionId}`);
     }
     setIsMenuOpen(false);
   };
@@ -66,7 +69,16 @@ export function Navigation() {
           {/* Logo */}
           <div className="flex-shrink-0">
             <button
-              onClick={() => scrollToSection('home')}
+              onClick={() => {
+                if (!isHomePage) {
+                  navigate('/');
+                } else {
+                  window.history.replaceState({}, '', '/');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+                setActiveSection('home');
+                setIsMenuOpen(false);
+              }}
               className="text-base md:text-xl font-bold text-foreground hover:text-primary transition-all duration-300 hover-scale relative group"
             >
               <span className="relative z-10 bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent bg-[length:200%_100%] group-hover:animate-gradient-shift drop-shadow-[0_0_8px_hsl(var(--primary)/0.3)]">
@@ -81,18 +93,7 @@ export function Navigation() {
               {navItems.map((item) => (
                 <button
                   key={item.id}
-                  onClick={() => {
-                    if (isHomePage) {
-                      const element = document.getElementById(item.id);
-                      if (element) {
-                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                      }
-                    } else {
-                      // Navigate to home with hash for smooth scroll
-                      window.location.href = `/#${item.id}`;
-                    }
-                    setIsMenuOpen(false);
-                  }}
+                  onClick={() => scrollToSection(item.id)}
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover-scale cursor-pointer ${
                     activeSection === item.id
                       ? 'text-primary bg-primary/10'
@@ -162,18 +163,7 @@ export function Navigation() {
               {navItems.map((item) => (
                 <button
                   key={item.id}
-                  onClick={() => {
-                    if (isHomePage) {
-                      const element = document.getElementById(item.id);
-                      if (element) {
-                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                      }
-                    } else {
-                      // Navigate to home with hash for smooth scroll
-                      window.location.href = `/#${item.id}`;
-                    }
-                    setIsMenuOpen(false);
-                  }}
+                  onClick={() => scrollToSection(item.id)}
                   className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer ${
                     activeSection === item.id
                       ? 'text-primary bg-primary/10'
