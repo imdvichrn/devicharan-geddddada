@@ -445,7 +445,7 @@ export function Portfolio() {
             {/* Social Media Links */}
             <nav className="flex justify-center items-center gap-6" aria-label="Social media links">
               <a 
-                href="https://www.linkedin.com/in/geddadadevicharan" 
+                href="https://www.linkedin.com/in/devi-charan-1a8b49302" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 aria-label="Visit LinkedIn Profile"
