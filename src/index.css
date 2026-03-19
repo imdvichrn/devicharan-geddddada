@@ -424,18 +424,7 @@ All colors MUST be HSL for proper theming.
     scrollbar-width: none;
   }
 
-  /* Glass panel styling for obsidian theme */
-  .glass-panel {
-    background: rgba(15, 23, 42, 0.8);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(99, 102, 241, 0.2);
-  }
-
-  .glass-elevated {
-    background: rgba(15, 23, 42, 0.9);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(99, 102, 241, 0.25);
-  }
+  /* Glass panel styling - uses themed CSS variables for both light and dark modes */
 
   /* Animations for Echo Less */
   @keyframes fluid-bubble-in {
