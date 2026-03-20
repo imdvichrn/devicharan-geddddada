@@ -716,7 +716,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Ask anything..."
-                    className="flex-1 text-sm bg-indigo-500/10 border-indigo-500/20 text-indigo-100 placeholder:text-indigo-400/50 rounded-lg focus:border-indigo-500/50 focus:ring-indigo-500/20"
+                    className="flex-1 text-sm bg-chat-input-bg border-chat-border/50 text-chat-text placeholder:text-chat-text-muted/50 rounded-lg focus:border-primary/50 focus:ring-primary/20"
                     disabled={isLoading}
                     maxLength={2000}
                     onKeyDown={(e) => {
