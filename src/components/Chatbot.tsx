@@ -509,7 +509,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                     <motion.div
                       animate={{ rotate: 360 }}
                       transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                      className="w-3 h-3 rounded-full bg-gradient-to-r from-indigo-400 to-blue-400"
+                      className="w-3 h-3 rounded-full bg-gradient-to-r from-primary to-accent"
                     />
                     <div>
                       <h3 className="font-semibold text-sm text-white">Echoless</h3>
