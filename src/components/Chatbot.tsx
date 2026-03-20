@@ -555,7 +555,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                       >
                         <div className="flex items-center gap-2 mb-1">
                           {action.icon}
-                          <span className="text-sm font-medium text-indigo-200 group-hover:text-indigo-100 transition-colors">{action.label}</span>
+                          <span className="text-sm font-medium text-chat-text group-hover:text-primary-foreground transition-colors">{action.label}</span>
                         </div>
                         <p className="text-xs text-indigo-300/70 ml-6">{action.description}</p>
                       </motion.button>
