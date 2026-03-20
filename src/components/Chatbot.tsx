@@ -521,7 +521,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                   </div>
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="text-indigo-400 hover:text-indigo-300 transition-colors"
+                    className="text-chat-text-muted hover:text-chat-text transition-colors"
                     aria-label="Close chat"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
