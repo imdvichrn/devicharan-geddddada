@@ -734,7 +734,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                       type="submit"
                       size="sm"
                       disabled={!input.trim() || isLoading}
-                      className="bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 text-white rounded-lg"
+                      className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground rounded-lg"
                     >
                       <Send size={16} />
                     </Button>
