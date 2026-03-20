@@ -512,8 +512,8 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                       className="w-3 h-3 rounded-full bg-gradient-to-r from-primary to-accent"
                     />
                     <div>
-                      <h3 className="font-semibold text-sm text-white">Echoless</h3>
-                      <p className="text-xs text-indigo-300 flex items-center gap-1">
+                      <h3 className="font-semibold text-sm text-chat-text">Echoless</h3>
+                      <p className="text-xs text-chat-text-muted flex items-center gap-1">
                         <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
                         Online • Ready to help
                       </p>
