@@ -496,7 +496,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
             className="fixed bottom-24 right-6 w-96 h-[500px] z-40 flex flex-col"
           >
             {/* Glass Panel Container */}
-            <div className="relative h-full rounded-2xl overflow-hidden shadow-2xl border border-indigo-400/30 bg-gradient-to-br from-black/60 via-black/50 to-black/60 backdrop-blur-xl flex flex-col">
+            <div className="relative h-full rounded-2xl overflow-hidden shadow-2xl border border-chat-border bg-chat-bg/95 backdrop-blur-xl flex flex-col">
               {/* Animated background gradient */}
               <div className="absolute inset-0 opacity-20">
                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-transparent" />
