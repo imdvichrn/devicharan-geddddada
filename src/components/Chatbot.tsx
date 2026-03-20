@@ -743,7 +743,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
               </form>
 
               {/* Social Links Footer */}
-              <div className="relative z-10 px-4 py-3 border-t border-indigo-500/20 flex justify-center items-center gap-3">
+              <div className="relative z-10 px-4 py-3 border-t border-chat-border/50 flex justify-center items-center gap-3">
                 {[
                   { icon: Linkedin, url: 'https://www.linkedin.com/in/devi-charan-1a8b49302', label: 'LinkedIn' },
                   { icon: Instagram, url: 'https://www.instagram.com/imdvichrn', label: 'Instagram' },
