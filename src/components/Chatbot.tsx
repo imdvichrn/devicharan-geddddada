@@ -710,7 +710,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
               </div>
 
               {/* Input Area */}
-              <form onSubmit={sendMessage} className="relative z-10 p-4 border-t border-indigo-500/20 flex-shrink-0">
+              <form onSubmit={sendMessage} className="relative z-10 p-4 border-t border-chat-border/50 flex-shrink-0">
                 <div className="flex gap-2">
                   <Input
                     value={input}
