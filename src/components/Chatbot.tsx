@@ -683,22 +683,22 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                     animate={{ opacity: 1, scale: 1 }}
                     className="flex justify-start"
                   >
-                    <div className="bg-indigo-500/20 border border-indigo-500/30 text-indigo-200 p-3 rounded-2xl rounded-bl-none backdrop-blur-sm flex items-center gap-2">
+                    <div className="bg-chat-bubble-bot border border-chat-border/50 text-chat-text p-3 rounded-2xl rounded-bl-none backdrop-blur-sm flex items-center gap-2">
                       <div className="flex gap-1">
                         <motion.div
                           animate={{ y: [0, -4, 0] }}
                           transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
-                          className="w-2 h-2 rounded-full bg-indigo-400"
+                          className="w-2 h-2 rounded-full bg-primary"
                         />
                         <motion.div
                           animate={{ y: [0, -4, 0] }}
                           transition={{ duration: 0.6, repeat: Infinity, delay: 0.1 }}
-                          className="w-2 h-2 rounded-full bg-indigo-400"
+                          className="w-2 h-2 rounded-full bg-primary"
                         />
                         <motion.div
                           animate={{ y: [0, -4, 0] }}
                           transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
-                          className="w-2 h-2 rounded-full bg-indigo-400"
+                          className="w-2 h-2 rounded-full bg-primary"
                         />
                       </div>
                       <span className="ml-1 text-xs">Thinking...</span>
