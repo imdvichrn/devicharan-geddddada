@@ -111,7 +111,7 @@ export function Navigation() {
                 aria-label="View Perfect Pack All-In-One Creative Assets - Drag & Drop Integration for Professional Editors"
               >
                 {productLink.label}
-                <span className="absolute -top-3 -right-4 px-1.5 py-0.5 text-[10px] font-bold bg-primary text-white rounded-full animate-pulse whitespace-nowrap">
+                <span className="absolute -top-3 -right-4 px-1.5 py-0.5 text-[10px] font-bold bg-primary text-primary-foreground rounded-full animate-pulse whitespace-nowrap">
                   New
                 </span>
               </Link>
@@ -193,7 +193,7 @@ export function Navigation() {
                 aria-label="View Perfect Pack All-In-One Creative Assets - Drag & Drop Integration for Professional Editors"
               >
                 {productLink.label}
-                <span className="absolute -top-2 right-3 px-1.5 py-0.5 text-[10px] font-bold bg-primary text-white rounded-full animate-pulse whitespace-nowrap">
+                <span className="absolute -top-2 right-3 px-1.5 py-0.5 text-[10px] font-bold bg-primary text-primary-foreground rounded-full animate-pulse whitespace-nowrap">
                   New
                 </span>
               </Link>

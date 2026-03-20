@@ -66,6 +66,23 @@ export default {
           yellow: "hsl(var(--window-yellow))",
           green: "hsl(var(--window-green))",
         },
+        hero: {
+          bg: "hsl(var(--hero-bg))",
+          "bg-mid": "hsl(var(--hero-bg-mid))",
+          text: "hsl(var(--hero-text))",
+          "text-muted": "hsl(var(--hero-text-muted))",
+          accent: "hsl(var(--hero-accent))",
+          "accent-muted": "hsl(var(--hero-accent-muted))",
+        },
+        chat: {
+          bg: "hsl(var(--chat-bg))",
+          border: "hsl(var(--chat-border))",
+          text: "hsl(var(--chat-text))",
+          "text-muted": "hsl(var(--chat-text-muted))",
+          "bubble-user": "hsl(var(--chat-bubble-user))",
+          "bubble-bot": "hsl(var(--chat-bubble-bot))",
+          "input-bg": "hsl(var(--chat-input-bg))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

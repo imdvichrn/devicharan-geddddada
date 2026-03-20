@@ -496,24 +496,24 @@ I can tell you about his video editing work, skills, or help you get in touch. W
             className="fixed bottom-24 right-6 w-96 h-[500px] z-40 flex flex-col"
           >
             {/* Glass Panel Container */}
-            <div className="relative h-full rounded-2xl overflow-hidden shadow-2xl border border-indigo-400/30 bg-gradient-to-br from-black/60 via-black/50 to-black/60 backdrop-blur-xl flex flex-col">
+            <div className="relative h-full rounded-2xl overflow-hidden shadow-2xl border border-chat-border bg-chat-bg/95 backdrop-blur-xl flex flex-col">
               {/* Animated background gradient */}
               <div className="absolute inset-0 opacity-20">
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/15 to-transparent" />
               </div>
 
               {/* Header */}
-              <div className="relative z-10 p-4 border-b border-indigo-500/20 flex-shrink-0">
+              <div className="relative z-10 p-4 border-b border-chat-border/50 flex-shrink-0">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3 flex-1">
                     <motion.div
                       animate={{ rotate: 360 }}
                       transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                      className="w-3 h-3 rounded-full bg-gradient-to-r from-indigo-400 to-blue-400"
+                      className="w-3 h-3 rounded-full bg-gradient-to-r from-primary to-accent"
                     />
                     <div>
-                      <h3 className="font-semibold text-sm text-white">Echoless</h3>
-                      <p className="text-xs text-indigo-300 flex items-center gap-1">
+                      <h3 className="font-semibold text-sm text-chat-text">Echoless</h3>
+                      <p className="text-xs text-chat-text-muted flex items-center gap-1">
                         <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
                         Online • Ready to help
                       </p>
@@ -521,7 +521,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                   </div>
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="text-indigo-400 hover:text-indigo-300 transition-colors"
+                    className="text-chat-text-muted hover:text-chat-text transition-colors"
                     aria-label="Close chat"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -540,7 +540,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                     animate={{ opacity: 1, y: 0 }}
                     className="space-y-2 mb-4"
                   >
-                    <p className="text-xs font-medium text-indigo-300 px-2">Quick Actions:</p>
+                    <p className="text-xs font-medium text-chat-text-muted px-2">Quick Actions:</p>
                     {quickActions.map((action, idx) => (
                       <motion.button
                         key={action.id}
@@ -551,13 +551,13 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                           action.action();
                           setShowQuickActions(false);
                         }}
-                        className="w-full text-left p-3 rounded-lg border border-indigo-500/20 hover:border-indigo-500/50 bg-indigo-500/5 hover:bg-indigo-500/10 transition-all duration-200 group"
+                        className="w-full text-left p-3 rounded-lg border border-chat-border/50 hover:border-primary/50 bg-primary/5 hover:bg-primary/10 transition-all duration-200 group"
                       >
                         <div className="flex items-center gap-2 mb-1">
                           {action.icon}
-                          <span className="text-sm font-medium text-indigo-200 group-hover:text-indigo-100 transition-colors">{action.label}</span>
+                          <span className="text-sm font-medium text-chat-text group-hover:text-primary-foreground transition-colors">{action.label}</span>
                         </div>
-                        <p className="text-xs text-indigo-300/70 ml-6">{action.description}</p>
+                        <p className="text-xs text-chat-text-muted/70 ml-6">{action.description}</p>
                       </motion.button>
                     ))}
                   </motion.div>
@@ -576,8 +576,8 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                       layout
                       className={`max-w-[85%] p-3 rounded-2xl text-sm transition-all duration-200 ${
                         message.role === 'user'
-                          ? 'bg-gradient-to-br from-indigo-500 to-blue-600 text-white rounded-br-none'
-                          : 'bg-indigo-500/20 border border-indigo-500/30 text-indigo-100 rounded-bl-none backdrop-blur-sm'
+                          ? 'bg-gradient-to-br from-chat-bubble-user to-primary text-primary-foreground rounded-br-none'
+                          : 'bg-chat-bubble-bot border border-chat-border/50 text-chat-text rounded-bl-none backdrop-blur-sm'
                       }`}
                     >
                       <div className="whitespace-pre-wrap leading-relaxed text-sm">
@@ -610,7 +610,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                                       window.open(link.url, '_blank', 'noopener,noreferrer');
                                     }
                                   }}
-                                  className={`w-full px-4 py-2.5 rounded-xl font-medium text-sm flex items-center justify-center gap-2 transition-all duration-300 bg-gradient-to-r ${glowClass} text-white shadow-lg hover:shadow-xl`}
+                                  className={`w-full px-4 py-2.5 rounded-xl font-medium text-sm flex items-center justify-center gap-2 transition-all duration-300 bg-gradient-to-r ${glowClass} text-primary-foreground shadow-lg hover:shadow-xl`}
                                 >
                                   <Sparkles size={14} />
                                   {link.label}
@@ -655,8 +655,8 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                                 onClick={() => handleButtonAction(btn.action)}
                                 className={`w-full px-4 py-2.5 rounded-xl font-medium text-sm flex items-center justify-center gap-2 transition-all duration-300 ${
                                   isSocialButton 
-                                    ? `bg-gradient-to-r ${getGlowColor(btn.action)} text-white shadow-lg hover:shadow-xl`
-                                    : 'border border-indigo-400/50 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-200 hover:text-indigo-100'
+                                    ? `bg-gradient-to-r ${getGlowColor(btn.action)} text-primary-foreground shadow-lg hover:shadow-xl`
+                                    : 'border border-chat-border bg-primary/10 hover:bg-primary/20 text-chat-text hover:text-chat-text'
                                 }`}
                               >
                                 {btn.label}
@@ -683,22 +683,22 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                     animate={{ opacity: 1, scale: 1 }}
                     className="flex justify-start"
                   >
-                    <div className="bg-indigo-500/20 border border-indigo-500/30 text-indigo-200 p-3 rounded-2xl rounded-bl-none backdrop-blur-sm flex items-center gap-2">
+                    <div className="bg-chat-bubble-bot border border-chat-border/50 text-chat-text p-3 rounded-2xl rounded-bl-none backdrop-blur-sm flex items-center gap-2">
                       <div className="flex gap-1">
                         <motion.div
                           animate={{ y: [0, -4, 0] }}
                           transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
-                          className="w-2 h-2 rounded-full bg-indigo-400"
+                          className="w-2 h-2 rounded-full bg-primary"
                         />
                         <motion.div
                           animate={{ y: [0, -4, 0] }}
                           transition={{ duration: 0.6, repeat: Infinity, delay: 0.1 }}
-                          className="w-2 h-2 rounded-full bg-indigo-400"
+                          className="w-2 h-2 rounded-full bg-primary"
                         />
                         <motion.div
                           animate={{ y: [0, -4, 0] }}
                           transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
-                          className="w-2 h-2 rounded-full bg-indigo-400"
+                          className="w-2 h-2 rounded-full bg-primary"
                         />
                       </div>
                       <span className="ml-1 text-xs">Thinking...</span>
@@ -710,13 +710,13 @@ I can tell you about his video editing work, skills, or help you get in touch. W
               </div>
 
               {/* Input Area */}
-              <form onSubmit={sendMessage} className="relative z-10 p-4 border-t border-indigo-500/20 flex-shrink-0">
+              <form onSubmit={sendMessage} className="relative z-10 p-4 border-t border-chat-border/50 flex-shrink-0">
                 <div className="flex gap-2">
                   <Input
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Ask anything..."
-                    className="flex-1 text-sm bg-indigo-500/10 border-indigo-500/20 text-indigo-100 placeholder:text-indigo-400/50 rounded-lg focus:border-indigo-500/50 focus:ring-indigo-500/20"
+                    className="flex-1 text-sm bg-chat-input-bg border-chat-border/50 text-chat-text placeholder:text-chat-text-muted/50 rounded-lg focus:border-primary/50 focus:ring-primary/20"
                     disabled={isLoading}
                     maxLength={2000}
                     onKeyDown={(e) => {
@@ -734,7 +734,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                       type="submit"
                       size="sm"
                       disabled={!input.trim() || isLoading}
-                      className="bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 text-white rounded-lg"
+                      className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground rounded-lg"
                     >
                       <Send size={16} />
                     </Button>
@@ -743,7 +743,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
               </form>
 
               {/* Social Links Footer */}
-              <div className="relative z-10 px-4 py-3 border-t border-indigo-500/20 flex justify-center items-center gap-3">
+              <div className="relative z-10 px-4 py-3 border-t border-chat-border/50 flex justify-center items-center gap-3">
                 {[
                   { icon: Linkedin, url: 'https://www.linkedin.com/in/devi-charan-1a8b49302', label: 'LinkedIn' },
                   { icon: Instagram, url: 'https://www.instagram.com/imdvichrn', label: 'Instagram' },
@@ -754,10 +754,10 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                     whileHover={{ scale: 1.2 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => window.open(social.url, '_blank')}
-                    className="w-8 h-8 rounded-full hover:bg-indigo-500/20 flex items-center justify-center transition-colors"
+                    className="w-8 h-8 rounded-full hover:bg-primary/20 flex items-center justify-center transition-colors"
                     aria-label={social.label}
                   >
-                    <social.icon size={16} className="text-indigo-400 hover:text-indigo-300 transition-colors" />
+                    <social.icon size={16} className="text-chat-text-muted hover:text-primary transition-colors" />
                   </motion.button>
                 ))}
               </div>
