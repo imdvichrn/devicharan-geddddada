@@ -557,7 +557,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                           {action.icon}
                           <span className="text-sm font-medium text-chat-text group-hover:text-primary-foreground transition-colors">{action.label}</span>
                         </div>
-                        <p className="text-xs text-indigo-300/70 ml-6">{action.description}</p>
+                        <p className="text-xs text-chat-text-muted/70 ml-6">{action.description}</p>
                       </motion.button>
                     ))}
                   </motion.div>
