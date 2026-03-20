@@ -655,8 +655,8 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                                 onClick={() => handleButtonAction(btn.action)}
                                 className={`w-full px-4 py-2.5 rounded-xl font-medium text-sm flex items-center justify-center gap-2 transition-all duration-300 ${
                                   isSocialButton 
-                                    ? `bg-gradient-to-r ${getGlowColor(btn.action)} text-white shadow-lg hover:shadow-xl`
-                                    : 'border border-indigo-400/50 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-200 hover:text-indigo-100'
+                                    ? `bg-gradient-to-r ${getGlowColor(btn.action)} text-primary-foreground shadow-lg hover:shadow-xl`
+                                    : 'border border-chat-border bg-primary/10 hover:bg-primary/20 text-chat-text hover:text-chat-text'
                                 }`}
                               >
                                 {btn.label}
