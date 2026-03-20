@@ -757,7 +757,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                     className="w-8 h-8 rounded-full hover:bg-primary/20 flex items-center justify-center transition-colors"
                     aria-label={social.label}
                   >
-                    <social.icon size={16} className="text-indigo-400 hover:text-indigo-300 transition-colors" />
+                    <social.icon size={16} className="text-chat-text-muted hover:text-primary transition-colors" />
                   </motion.button>
                 ))}
               </div>
