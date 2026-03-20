@@ -18,51 +18,51 @@ All colors MUST be HSL for proper theming.
 
 @layer base {
   :root {
-    /* Base colors - Light theme inspired by macOS */
-    --background: 220 20% 97%;
-    --foreground: 220 20% 10%;
+    /* Base colors - Light: clean, editorial, warm-neutral */
+    --background: 225 15% 97%;
+    --foreground: 225 25% 10%;
 
     /* Glass panel backgrounds */
-    --glass: 220 20% 98%;
-    --glass-border: 220 20% 85%;
-    --glass-shadow: 220 20% 20%;
+    --glass: 225 15% 98%;
+    --glass-border: 225 12% 88%;
+    --glass-shadow: 225 20% 20%;
 
     /* Card and surface colors */
-    --card: 220 20% 96%;
-    --card-foreground: 220 20% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 225 25% 12%;
 
-    --popover: 220 20% 98%;
-    --popover-foreground: 220 20% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 225 25% 10%;
 
-    /* Primary - macOS blue accent */
-    --primary: 212 100% 50%;
+    /* Primary - deep sapphire blue */
+    --primary: 220 85% 52%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 212 100% 70%;
+    --primary-glow: 220 90% 68%;
 
-    /* Secondary - subtle gray */
-    --secondary: 220 15% 92%;
-    --secondary-foreground: 220 20% 20%;
+    /* Secondary - cool neutral */
+    --secondary: 225 12% 93%;
+    --secondary-foreground: 225 20% 22%;
 
-    /* Muted backgrounds - improved contrast for accessibility */
-    --muted: 220 15% 94%;
-    --muted-foreground: 220 10% 40%;
+    /* Muted backgrounds */
+    --muted: 225 12% 95%;
+    --muted-foreground: 225 8% 42%;
 
-    /* Accent - purple for highlights */
-    --accent: 270 95% 75%;
-    --accent-foreground: 270 95% 15%;
+    /* Accent - rich amethyst */
+    --accent: 262 80% 58%;
+    --accent-foreground: 0 0% 100%;
 
     /* Status colors */
-    --destructive: 0 84% 60%;
+    --destructive: 0 72% 55%;
     --destructive-foreground: 0 0% 100%;
-    --success: 142 76% 36%;
+    --success: 152 60% 38%;
     --success-foreground: 0 0% 100%;
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
 
     /* Interactive elements */
-    --border: 220 15% 88%;
-    --input: 220 15% 92%;
-    --ring: 212 100% 50%;
+    --border: 225 12% 90%;
+    --input: 225 12% 93%;
+    --ring: 220 85% 52%;
 
     /* Window chrome colors */
     --window-red: 0 85% 60%;
@@ -71,7 +71,6 @@ All colors MUST be HSL for proper theming.
 
     --radius: 1rem;
 
-    /* Additional design tokens for glassmorphism and animations */
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
     --gradient-glass: linear-gradient(135deg, 
@@ -80,9 +79,9 @@ All colors MUST be HSL for proper theming.
     );
     
     /* Shadows for depth */
-    --shadow-glass: 0 8px 32px hsla(var(--glass-shadow), 0.1);
-    --shadow-elevated: 0 20px 40px hsla(var(--glass-shadow), 0.15);
-    --shadow-floating: 0 12px 24px hsla(var(--glass-shadow), 0.12);
+    --shadow-glass: 0 8px 32px hsla(var(--glass-shadow), 0.08);
+    --shadow-elevated: 0 20px 40px hsla(var(--glass-shadow), 0.12);
+    --shadow-floating: 0 12px 24px hsla(var(--glass-shadow), 0.1);
     
     /* Blur effects */
     --blur-glass: blur(16px);
@@ -92,69 +91,97 @@ All colors MUST be HSL for proper theming.
     --transition-smooth: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 150ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
+    /* Hero section (always dark/cinematic) */
+    --hero-bg: 225 40% 5%;
+    --hero-bg-mid: 225 35% 12%;
+    --hero-text: 225 20% 95%;
+    --hero-text-muted: 220 30% 80%;
+    --hero-accent: 220 90% 65%;
+    --hero-accent-muted: 220 60% 45%;
+
+    /* Chatbot panel */
+    --chat-bg: 225 30% 8%;
+    --chat-border: 220 40% 25%;
+    --chat-text: 225 15% 92%;
+    --chat-text-muted: 220 20% 65%;
+    --chat-bubble-user: 220 85% 52%;
+    --chat-bubble-bot: 225 30% 15%;
+    --chat-input-bg: 225 30% 12%;
+
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    /* Base colors - Dark theme inspired by macOS dark mode */
-    --background: 220 25% 8%;
-    --foreground: 220 15% 95%;
+    /* Base colors - Dark: cinematic, rich, deep */
+    --background: 225 30% 6%;
+    --foreground: 225 10% 94%;
 
-    /* Glass panel backgrounds for dark mode */
-    --glass: 220 25% 10%;
-    --glass-border: 220 25% 20%;
-    --glass-shadow: 220 25% 5%;
+    /* Glass panel backgrounds */
+    --glass: 225 25% 9%;
+    --glass-border: 225 20% 18%;
+    --glass-shadow: 225 30% 3%;
 
     /* Card and surface colors */
-    --card: 220 25% 12%;
-    --card-foreground: 220 15% 90%;
+    --card: 225 25% 10%;
+    --card-foreground: 225 10% 90%;
 
-    --popover: 220 25% 10%;
-    --popover-foreground: 220 15% 95%;
+    --popover: 225 25% 9%;
+    --popover-foreground: 225 10% 94%;
 
-    /* Primary - brighter blue for dark mode */
-    --primary: 212 100% 60%;
-    --primary-foreground: 220 25% 8%;
-    --primary-glow: 212 100% 80%;
+    /* Primary - vivid electric blue */
+    --primary: 215 100% 60%;
+    --primary-foreground: 225 30% 6%;
+    --primary-glow: 215 100% 75%;
 
-    /* Secondary - darker gray */
-    --secondary: 220 20% 18%;
-    --secondary-foreground: 220 15% 85%;
+    /* Secondary */
+    --secondary: 225 20% 16%;
+    --secondary-foreground: 225 10% 85%;
 
-    /* Muted backgrounds - improved contrast for accessibility */
-    --muted: 220 20% 15%;
-    --muted-foreground: 220 10% 70%;
+    /* Muted backgrounds */
+    --muted: 225 20% 13%;
+    --muted-foreground: 225 8% 65%;
 
-    /* Accent - brighter purple for dark mode */
-    --accent: 270 95% 80%;
-    --accent-foreground: 270 95% 10%;
+    /* Accent - luminous violet */
+    --accent: 262 85% 72%;
+    --accent-foreground: 225 30% 6%;
 
-    /* Status colors for dark mode */
-    --destructive: 0 84% 65%;
-    --destructive-foreground: 220 25% 8%;
-    --success: 142 76% 45%;
-    --success-foreground: 220 25% 8%;
-    --warning: 38 92% 60%;
-    --warning-foreground: 220 25% 8%;
+    /* Status colors */
+    --destructive: 0 72% 60%;
+    --destructive-foreground: 225 30% 6%;
+    --success: 152 60% 45%;
+    --success-foreground: 225 30% 6%;
+    --warning: 38 92% 58%;
+    --warning-foreground: 225 30% 6%;
 
     /* Interactive elements */
-    --border: 220 20% 25%;
-    --input: 220 20% 18%;
-    --ring: 212 100% 60%;
+    --border: 225 18% 20%;
+    --input: 225 20% 16%;
+    --ring: 215 100% 60%;
+
+    /* Hero (same in dark - always cinematic) */
+    --hero-bg: 225 40% 5%;
+    --hero-bg-mid: 225 35% 12%;
+    --hero-text: 225 20% 95%;
+    --hero-text-muted: 220 30% 80%;
+    --hero-accent: 215 100% 65%;
+    --hero-accent-muted: 215 60% 50%;
+
+    /* Chatbot panel */
+    --chat-bg: 225 30% 7%;
+    --chat-border: 220 30% 20%;
+    --chat-text: 225 10% 92%;
+    --chat-text-muted: 220 15% 60%;
+    --chat-bubble-user: 215 100% 52%;
+    --chat-bubble-bot: 225 25% 14%;
+    --chat-input-bg: 225 25% 11%;
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
