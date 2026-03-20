@@ -551,7 +551,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                           action.action();
                           setShowQuickActions(false);
                         }}
-                        className="w-full text-left p-3 rounded-lg border border-indigo-500/20 hover:border-indigo-500/50 bg-indigo-500/5 hover:bg-indigo-500/10 transition-all duration-200 group"
+                        className="w-full text-left p-3 rounded-lg border border-chat-border/50 hover:border-primary/50 bg-primary/5 hover:bg-primary/10 transition-all duration-200 group"
                       >
                         <div className="flex items-center gap-2 mb-1">
                           {action.icon}
