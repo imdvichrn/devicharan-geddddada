@@ -503,7 +503,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
               </div>
 
               {/* Header */}
-              <div className="relative z-10 p-4 border-b border-indigo-500/20 flex-shrink-0">
+              <div className="relative z-10 p-4 border-b border-chat-border/50 flex-shrink-0">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3 flex-1">
                     <motion.div
