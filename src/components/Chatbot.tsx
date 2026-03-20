@@ -576,8 +576,8 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                       layout
                       className={`max-w-[85%] p-3 rounded-2xl text-sm transition-all duration-200 ${
                         message.role === 'user'
-                          ? 'bg-gradient-to-br from-indigo-500 to-blue-600 text-white rounded-br-none'
-                          : 'bg-indigo-500/20 border border-indigo-500/30 text-indigo-100 rounded-bl-none backdrop-blur-sm'
+                          ? 'bg-gradient-to-br from-chat-bubble-user to-primary text-primary-foreground rounded-br-none'
+                          : 'bg-chat-bubble-bot border border-chat-border/50 text-chat-text rounded-bl-none backdrop-blur-sm'
                       }`}
                     >
                       <div className="whitespace-pre-wrap leading-relaxed text-sm">
