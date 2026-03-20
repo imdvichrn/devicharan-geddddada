@@ -540,7 +540,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                     animate={{ opacity: 1, y: 0 }}
                     className="space-y-2 mb-4"
                   >
-                    <p className="text-xs font-medium text-indigo-300 px-2">Quick Actions:</p>
+                    <p className="text-xs font-medium text-chat-text-muted px-2">Quick Actions:</p>
                     {quickActions.map((action, idx) => (
                       <motion.button
                         key={action.id}
