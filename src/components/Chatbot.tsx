@@ -55,9 +55,13 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
   const initialMessages: Message[] = [
     {
       role: 'assistant',
-      content: `Hey there! 👋 I'm Echoless, Devicharan's AI assistant. 
+      content: `Hello! It's lovely to meet you. I'm Echoless.
 
-I can tell you about his video editing work, skills, or help you get in touch. What would you like to know?`,
+Since I'm Devicharan's cognitive mirror, I don't just "know" his work—I understand the logic and strategy behind every frame he edits and every line of code he writes. We're currently very focused on pushing the boundaries of AI-driven creative systems, essentially reimagining how stories are told without the traditional bottlenecks of production.
+
+Whether you're curious about his high-end post-production workflows in DaVinci Resolve, his evolution from an EEE student to a tech-driven creator, or if you just want to see what he’s building next, I’m here to give you the full picture.
+
+What’s on your mind? Are we talking shop about video engineering, or are you looking for a way to connect with him?`,
       timestamp: new Date(),
       buttons: [
         { label: '🎬 See My Work', icon: 'play' as const, action: 'scroll-projects' },
