@@ -499,7 +499,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
             <div className="relative h-full rounded-2xl overflow-hidden shadow-2xl border border-chat-border bg-chat-bg/95 backdrop-blur-xl flex flex-col">
               {/* Animated background gradient */}
               <div className="absolute inset-0 opacity-20">
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/15 to-transparent" />
               </div>
 
               {/* Header */}
