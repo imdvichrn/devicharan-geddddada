@@ -754,7 +754,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                     whileHover={{ scale: 1.2 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => window.open(social.url, '_blank')}
-                    className="w-8 h-8 rounded-full hover:bg-indigo-500/20 flex items-center justify-center transition-colors"
+                    className="w-8 h-8 rounded-full hover:bg-primary/20 flex items-center justify-center transition-colors"
                     aria-label={social.label}
                   >
                     <social.icon size={16} className="text-indigo-400 hover:text-indigo-300 transition-colors" />
