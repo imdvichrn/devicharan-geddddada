@@ -365,7 +365,7 @@ What’s on your mind? Are we talking shop about video engineering, or are you l
         window.open('https://x.com/devi_charan_2004', '_blank');
         break;
       case 'github':
-        window.open('https://github.com/DeviCharan-Geddada', '_blank');
+        window.open('https://github.com/imdvichrn', '_blank');
         break;
       case 'whatsapp':
         window.open('https://wa.me/916303468707', '_blank');
@@ -519,7 +519,7 @@ What’s on your mind? Are we talking shop about video engineering, or are you l
                       <h3 className="font-semibold text-sm text-white">Echoless</h3>
                       <p className="text-xs text-indigo-300 flex items-center gap-1">
                         <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
-                        Online • Ready to help
+                        Devicharan's Personal Assistant
                       </p>
                     </div>
                   </div>

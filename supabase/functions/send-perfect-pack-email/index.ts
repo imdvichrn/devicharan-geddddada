@@ -87,7 +87,7 @@ serve(async (req) => {
   <span style="color:#333;">|</span>
   <a href="https://linkedin.com/in/devicharan-geddada" style="color:#c8ff00;text-decoration:none;font-size:13px;margin:0 8px;">LinkedIn</a>
   <span style="color:#333;">|</span>
-  <a href="https://github.com/DeviCharan-Geddada" style="color:#c8ff00;text-decoration:none;font-size:13px;margin:0 8px;">GitHub</a>
+  <a href="https://github.com/imdvichrn" style="color:#c8ff00;text-decoration:none;font-size:13px;margin:0 8px;">GitHub</a>
 </td></tr>
 
 <!-- Footer -->
