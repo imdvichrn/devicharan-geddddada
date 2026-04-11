@@ -463,6 +463,26 @@ export function WorkflowsGrid() {
       size: 'normal' as const,
     },
     {
+      title: 'ExamFlow OS (EchOS)',
+      description: 'A gamified cognitive-optimization productivity system for students — syllabus tracking with topic-level mastery logic, SM2 active recall, and ambient focus modes.',
+      visual: (
+        <div className="h-20 rounded-lg bg-gradient-to-br from-primary/20 via-accent/20 to-success/10 border border-glass-border flex items-center justify-center gap-3 relative overflow-hidden">
+          <div className="absolute inset-0 opacity-30">
+            <div className="absolute top-2 left-4 w-10 h-3 rounded bg-primary/40" />
+            <div className="absolute top-6 left-4 w-16 h-2 rounded bg-primary/20" />
+            <div className="absolute bottom-3 right-4 w-8 h-8 rounded-lg bg-accent/30" />
+          </div>
+          <BarChart3 size={24} className="text-primary relative z-10" />
+          <Target size={20} className="text-accent relative z-10" />
+          <Zap size={18} className="text-warning relative z-10" />
+        </div>
+      ),
+      tools: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Framer Motion'],
+      specs: ['SM2 Recall Engine', 'Mastery Logic', 'Focus Engine', 'Analytics'],
+      projectLink: '/project/examflow-os',
+      size: 'normal' as const,
+    },
+    {
       title: 'Teamwork & Collaboration',
       description: 'Experienced in cross-functional team environments with strong communication and adaptability skills.',
       visual: <CollaborationNetwork />,
