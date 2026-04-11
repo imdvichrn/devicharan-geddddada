@@ -16,6 +16,28 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 'examflow-os',
+    title: 'ExamFlow OS (EchOS)',
+    shortDescription: 'A gamified, cognitive-optimization productivity system for students and high-performers.',
+    longDescription: 'ExamFlow OS is a flagship cognitive-optimization system designed to remove exam-preparation bottlenecks using topic-level mastery logic. Not a task manager — a Syllabus Tracker that measures what you actually know, not what you checked off. Features hierarchical Subject→Unit→Topic architecture, SM2 Active Recall Engine with spaced repetition, Focus Engine with ambient audio and lock-in mode, and a Behavioral Analytics dashboard with live performance tracking.',
+    challenge: 'Building a system that accurately calculates topic-level mastery and rolls progress upward through units and subjects while maintaining zero context-switch friction. Implementing SM2 spaced repetition with adaptive intervals where weak cards reappear within ~2 hours required precise scheduling logic.',
+    outcome: 'Engineered a production-ready cognitive system with hierarchical mastery tracking, adaptive recall scheduling, ambient focus modes, and real-time behavioral analytics — all running client-side with LocalStorage persistence for zero-latency interactions.',
+    youtubeEmbedId: '',
+    year: '2025',
+    tools: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Framer Motion', 'LocalStorage'],
+    roles: ['Lead Developer', 'System Architect', 'UI/UX Designer'],
+    technicalDetails: [
+      'Hierarchical Subject→Unit→Topic Architecture',
+      'SM2 Active Recall Engine',
+      'Spaced Repetition with Adaptive Intervals',
+      'Focus Engine with Ambient Audio',
+      'Lock-in Mode with UI Dimming',
+      'Behavioral Analytics Dashboard',
+      'Client-side State Persistence'
+    ],
+    category: 'web'
+  },
+  {
     id: 'video-production',
     title: 'Professional Video Production',
     shortDescription: 'Cinematic video editing with industry-standard color grading and VFX.',
