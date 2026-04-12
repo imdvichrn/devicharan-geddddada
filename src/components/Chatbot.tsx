@@ -403,6 +403,38 @@ I can tell you about his video editing work, skills, or help you get in touch. W
   };
 
   // --- Link extraction & rendering helpers ---
+  const URL_FRIENDLY_NAMES: Record<string, string> = {
+    'linkedin.com': 'LinkedIn',
+    'instagram.com': 'Instagram',
+    'facebook.com': 'Facebook',
+    'twitter.com': 'X (Twitter)',
+    'x.com': 'X (Twitter)',
+    'github.com': 'GitHub',
+    'wa.me': 'WhatsApp',
+    'examflowos.vercel.app': 'ExamFlow OS — Live Demo',
+    'youtube.com': 'YouTube',
+    'youtu.be': 'YouTube',
+  };
+
+  const getFriendlyLinkName = (url: string): string => {
+    for (const [domain, name] of Object.entries(URL_FRIENDLY_NAMES)) {
+      if (url.includes(domain)) return name;
+    }
+    // For internal paths, format nicely
+    if (url.startsWith('/')) {
+      const parts = url.split('/').filter(Boolean);
+      const last = parts[parts.length - 1]?.replace(/-/g, ' ') || 'View Page';
+      return last.charAt(0).toUpperCase() + last.slice(1);
+    }
+    // Fallback: clean domain
+    try {
+      const hostname = new URL(url).hostname.replace('www.', '');
+      return hostname;
+    } catch {
+      return 'Open Link';
+    }
+  };
+
   const extractLinks = (text: string): { url: string; label: string; isInternal: boolean }[] => {
     const links: { url: string; label: string; isInternal: boolean }[] = [];
     const seen = new Set<string>();
@@ -413,7 +445,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
     while ((match = mdRegex.exec(text)) !== null) {
       if (!seen.has(match[2])) {
         seen.add(match[2]);
-        links.push({ url: match[2], label: match[1], isInternal: match[2].startsWith('/') });
+        links.push({ url: match[2], label: getFriendlyLinkName(match[2]), isInternal: match[2].startsWith('/') });
       }
     }
 
@@ -423,8 +455,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
       const url = match[0].replace(/[.,;:!?)]+$/, '');
       if (!seen.has(url)) {
         seen.add(url);
-        const label = url.replace(/https?:\/\/(www\.)?/, '').split('/')[0];
-        links.push({ url, label, isInternal: false });
+        links.push({ url, label: getFriendlyLinkName(url), isInternal: false });
       }
     }
 
@@ -434,12 +465,19 @@ I can tell you about his video editing work, skills, or help you get in touch. W
       const path = match[1];
       if (!seen.has(path) && path.length > 1) {
         seen.add(path);
-        const label = path.split('/').filter(Boolean).pop()?.replace(/-/g, ' ') || path;
-        links.push({ url: path, label: label.charAt(0).toUpperCase() + label.slice(1), isInternal: true });
+        links.push({ url: path, label: getFriendlyLinkName(path), isInternal: true });
       }
     }
 
     return links;
+  };
+
+  const renderContentWithLinks = (content: string): string => {
+    // Strip markdown link syntax from display text
+    let cleaned = content.replace(/\[([^\]]+)\]\((?:https?:\/\/[^\s)]+|\/[^\s)]+)\)/g, '$1');
+    // Strip bare URLs from display text since buttons handle them
+    cleaned = cleaned.replace(/https?:\/\/[^\s)<>]+/g, '').replace(/\s{2,}/g, ' ').trim();
+    return cleaned;
   };
 
   const getLinkGlowColor = (url: string): string => {
@@ -449,14 +487,9 @@ I can tell you about his video editing work, skills, or help you get in touch. W
     if (url.includes('twitter') || url.includes('x.com')) return 'from-sky-400 to-sky-600 shadow-sky-500/50';
     if (url.includes('github')) return 'from-gray-600 to-gray-800 shadow-gray-500/50';
     if (url.includes('wa.me') || url.includes('whatsapp')) return 'from-emerald-500 to-teal-600 shadow-emerald-500/50';
+    if (url.includes('examflowos')) return 'from-blue-500 to-indigo-600 shadow-blue-500/50';
     if (url.startsWith('/')) return 'from-indigo-500 to-purple-600 shadow-indigo-500/50';
     return 'from-indigo-500 to-blue-600 shadow-indigo-500/50';
-  };
-
-  const renderContentWithLinks = (content: string): string => {
-    // Strip markdown link syntax and bare URLs from display text (buttons handle them)
-    let cleaned = content.replace(/\[([^\]]+)\]\((?:https?:\/\/[^\s)]+|\/[^\s)]+)\)/g, '$1');
-    return cleaned;
   };
 
   return (
