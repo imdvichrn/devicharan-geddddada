@@ -12,6 +12,7 @@ export interface Project {
   roles: string[];
   technicalDetails: string[];
   category: 'video' | 'design' | 'strategy' | 'web';
+  externalLink?: string;
 }
 
 export const projects: Project[] = [
