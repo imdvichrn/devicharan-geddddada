@@ -49,7 +49,7 @@ When someone asks for any social link, give the FULL URL exactly as listed above
 He works with JavaScript, TypeScript, Python, Verilog/VHDL, React, Node.js, Express. For video he uses DaVinci Resolve Studio across Color, Fusion, Fairlight, and Edit/Cut pages, plus Adobe Premiere Pro and After Effects. He does VLSI design with digital circuit design, RTL synthesis, and FPGA workflows. Sound design through Fairlight. Full-stack web development. Cognitive optimization system design.
 
 ## PROJECTS
-ExamFlow OS (EchOS) is the flagship — a gamified cognitive-optimization productivity system for students and high-performers. Not another planner. It's a Syllabus Tracker with mastery logic that measures what you actually know. Built with React, TypeScript, Vite, Tailwind, and Framer Motion. Live at https://examflowos.vercel.app and viewable at /project/examflow-os
+ExamFlow OS (EchOS) is the flagship — built for students who are tired of guessing where they stand before exams. It tracks real mastery across subjects, units, and topics using spaced repetition, has a Focus Timer with ambient audio, and a stats dashboard for streaks and accuracy. Built with React, TypeScript, Vite, Tailwind, and Framer Motion. Live at https://examflowos.vercel.app and viewable at /project/examflow-os
 
 Video Editing & Post-Production (2025) — professional post-production showcase at /projects/video-editing-post-production
 SceneSync Edits (2024) — beat-synchronized editing at /projects/scenesync-edits
