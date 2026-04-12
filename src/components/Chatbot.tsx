@@ -480,6 +480,18 @@ I can tell you about his video editing work, skills, or help you get in touch. W
     return cleaned;
   };
 
+  const getLinkGlowColor = (url: string): string => {
+    if (url.includes('linkedin')) return 'from-blue-500 to-blue-600 shadow-blue-500/50';
+    if (url.includes('instagram')) return 'from-pink-500 to-purple-600 shadow-pink-500/50';
+    if (url.includes('facebook')) return 'from-blue-600 to-blue-700 shadow-blue-600/50';
+    if (url.includes('twitter') || url.includes('x.com')) return 'from-sky-400 to-sky-600 shadow-sky-500/50';
+    if (url.includes('github')) return 'from-gray-600 to-gray-800 shadow-gray-500/50';
+    if (url.includes('wa.me') || url.includes('whatsapp')) return 'from-emerald-500 to-teal-600 shadow-emerald-500/50';
+    if (url.includes('examflowos')) return 'from-blue-500 to-indigo-600 shadow-blue-500/50';
+    if (url.startsWith('/')) return 'from-indigo-500 to-purple-600 shadow-indigo-500/50';
+    return 'from-indigo-500 to-blue-600 shadow-indigo-500/50';
+  };
+
   return (
     <>
       {/* Echo Less Toggle Button - Continuous Siri Orb Loop */}
