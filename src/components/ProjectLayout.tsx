@@ -192,7 +192,7 @@ export function ProjectLayout({
           <div className="max-w-6xl mx-auto">
             <div className="text-center space-y-4">
               <div className="flex justify-center items-center gap-6">
-                <a href="https://www.linkedin.com/in/devi-charan-1a8b49302" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+                <a href="https://www.linkedin.com/in/geddadadevicharan" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
                   <Button variant="ghost" size="sm" className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale">
                     <Linkedin size={20} className="text-muted-foreground hover:text-primary transition-colors" />
                   </Button>

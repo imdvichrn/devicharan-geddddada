@@ -230,7 +230,7 @@ I work with: ${allTools}, and more.
 
 For project inquiries:
 📧 Email: devicharangeddada@gmail.com
-📱 WhatsApp: +91 6303468707
+📱 WhatsApp: wa.me/916303468707
 💬 Use the Contact Form on this page
 
 Let's discuss your project requirements! I respond within 24 hours.`,
@@ -300,7 +300,7 @@ This foundation combined with creative post-production expertise allows me to so
       text: `Let's connect! You can reach me through multiple channels:
 
 📧 Email: devicharangeddada@gmail.com
-📱 WhatsApp/Phone: +91 6303468707
+📱 WhatsApp: wa.me/916303468707
 📍 Location: Visakhapatnam, India
 
 💬 RECOMMENDED: Use the Contact Form on this page for detailed project inquiries

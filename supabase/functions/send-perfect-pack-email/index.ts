@@ -85,7 +85,7 @@ serve(async (req) => {
   <p style="margin:0 0 12px;font-size:12px;color:#555555;letter-spacing:2px;">FOLLOW FOR UPDATES</p>
   <a href="https://www.instagram.com/imdvichrn" style="color:#c8ff00;text-decoration:none;font-size:13px;margin:0 8px;">Instagram</a>
   <span style="color:#333;">|</span>
-  <a href="https://www.linkedin.com/in/devi-charan-1a8b49302" style="color:#c8ff00;text-decoration:none;font-size:13px;margin:0 8px;">LinkedIn</a>
+  <a href="https://www.linkedin.com/in/geddadadevicharan" style="color:#c8ff00;text-decoration:none;font-size:13px;margin:0 8px;">LinkedIn</a>
   <span style="color:#333;">|</span>
   <a href="https://github.com/imdvichrn/imdvichrn" style="color:#c8ff00;text-decoration:none;font-size:13px;margin:0 8px;">GitHub</a>
 </td></tr>
