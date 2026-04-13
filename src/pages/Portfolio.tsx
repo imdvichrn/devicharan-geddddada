@@ -264,11 +264,10 @@ export function Portfolio() {
                       <span className="hidden sm:inline">Visakhapatnam, India</span>
                       <span className="sm:hidden">Vizag, India</span>
                     </div>
-                    <div className="flex items-center gap-1 md:gap-2">
+                    <a href="https://wa.me/916303468707" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 md:gap-2 hover:text-primary transition-colors">
                       <Phone size={14} className="md:w-4 md:h-4" aria-hidden="true" />
-                      <span className="hidden sm:inline">+91 6303468707</span>
-                      <span className="sm:hidden">+91 630...</span>
-                    </div>
+                      <span>WhatsApp</span>
+                    </a>
                     <div className="flex items-center gap-1 md:gap-2 max-w-full">
                       <Mail size={14} className="md:w-4 md:h-4 flex-shrink-0" aria-hidden="true" />
                       <span className="hidden md:inline truncate">devicharangeddada@gmail.com</span>
@@ -445,7 +444,7 @@ export function Portfolio() {
             {/* Social Media Links */}
             <nav className="flex justify-center items-center gap-6" aria-label="Social media links">
               <a 
-                href="https://www.linkedin.com/in/devi-charan-1a8b49302" 
+                href="https://www.linkedin.com/in/geddadadevicharan" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 aria-label="Visit LinkedIn Profile"

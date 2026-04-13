@@ -38,7 +38,7 @@ Education: B.Tech in Electrical & Electronics Engineering (EEE) — 3rd Year. Pr
 ## CONTACT
 Email: devicharangeddada@gmail.com
 Phone/WhatsApp: +91 6303468707
-LinkedIn: https://www.linkedin.com/in/devi-charan-1a8b49302
+LinkedIn: https://www.linkedin.com/in/geddadadevicharan
 Instagram: https://www.instagram.com/imdvichrn
 Facebook: https://www.facebook.com/imdvichrn
 GitHub: https://github.com/imdvichrn/imdvichrn

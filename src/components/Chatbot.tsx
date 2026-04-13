@@ -295,7 +295,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
             ...prev,
             {
               role: "assistant" as const,
-              content: `I'm having a moment — please try again! In the meantime:\n\n📧 devicharangeddada@gmail.com\n📱 +91 6303468707`,
+              content: `I'm having a moment — please try again! In the meantime:\n\n📧 devicharangeddada@gmail.com`,
               buttons: [
                 { label: "Send Email", icon: "mail" as const, action: "email" },
                 { label: "WhatsApp", icon: "phone" as const, action: "whatsapp" },
@@ -312,7 +312,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
         ...prev,
         {
           role: 'assistant' as const,
-          content: `Something went wrong. You can reach Devicharan at:\n\n📧 devicharangeddada@gmail.com\n📱 +91 6303468707`,
+          content: `Something went wrong. You can reach Devicharan at:\n\n📧 devicharangeddada@gmail.com`,
           buttons: [
             { label: 'Send Email', icon: 'mail' as const, action: 'email' },
             { label: 'WhatsApp', icon: 'phone' as const, action: 'whatsapp' }
@@ -349,7 +349,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
         window.location.href = 'mailto:devicharangeddada@gmail.com';
         break;
       case 'linkedin':
-        window.open('https://www.linkedin.com/in/devi-charan-1a8b49302', '_blank');
+        window.open('https://www.linkedin.com/in/geddadadevicharan', '_blank');
         break;
       case 'instagram':
         window.open('https://www.instagram.com/imdvichrn', '_blank');
@@ -778,7 +778,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
               {/* Social Links Footer */}
               <div className="relative z-10 px-4 py-3 border-t border-chat-border/50 flex justify-center items-center gap-3">
                 {[
-                  { icon: Linkedin, url: 'https://www.linkedin.com/in/devi-charan-1a8b49302', label: 'LinkedIn' },
+                  { icon: Linkedin, url: 'https://www.linkedin.com/in/geddadadevicharan', label: 'LinkedIn' },
                   { icon: Instagram, url: 'https://www.instagram.com/imdvichrn', label: 'Instagram' },
                   { icon: Facebook, url: 'https://www.facebook.com/imdvichrn', label: 'Facebook' },
                 ].map((social, idx) => (
