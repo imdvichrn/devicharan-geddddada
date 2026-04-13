@@ -55,9 +55,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
   const initialMessages: Message[] = [
     {
       role: 'assistant',
-      content: `Hey there! 👋 I'm Echoless, Devicharan's AI assistant. 
-
-I can tell you about his video editing work, skills, or help you get in touch. What would you like to know?`,
+      content: `Hey! 👋 I'm Echoless, Devicharan's personal assistant. What do you want to know?`,
       timestamp: new Date(),
       buttons: [
         { label: '🎬 See My Work', icon: 'play' as const, action: 'scroll-projects' },
@@ -548,7 +546,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                       <h3 className="font-semibold text-sm text-chat-text">Echoless</h3>
                       <p className="text-xs text-chat-text-muted flex items-center gap-1">
                         <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
-                        Online • Ready to help
+                        Online • Personal Assistant
                       </p>
                     </div>
                   </div>

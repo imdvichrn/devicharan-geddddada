@@ -20,7 +20,7 @@ export default function Chat() {
   const [messages, setMessages] = useState<Message[]>([
     { 
       role: "assistant", 
-      content: "Hi! I'm Devicharan's AI assistant. Ask me anything about his portfolio, projects, or experience!" 
+      content: "Hey! I'm Echoless, Devicharan's personal assistant. What do you want to know?" 
     }
   ]);
   const [input, setInput] = useState("");
