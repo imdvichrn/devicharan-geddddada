@@ -40,8 +40,8 @@ Email: devicharangeddada@gmail.com
 Phone/WhatsApp: +91 6303468707
 LinkedIn: https://www.linkedin.com/in/devi-charan-1a8b49302
 Instagram: https://www.instagram.com/imdvichrn
-Facebook: https://www.facebook.com/userdead.610
-GitHub: https://github.com/DeviCharan-Geddada
+Facebook: https://www.facebook.com/imdvichrn
+GitHub: https://github.com/imdvichrn/imdvichrn
 
 When someone asks for any social link, give the FULL URL exactly as listed above. Not shortened. Not just the platform name. The full link.
 

@@ -355,13 +355,13 @@ I can tell you about his video editing work, skills, or help you get in touch. W
         window.open('https://www.instagram.com/imdvichrn', '_blank');
         break;
       case 'facebook':
-        window.open('https://www.facebook.com/userdead.610', '_blank');
+        window.open('https://www.facebook.com/imdvichrn', '_blank');
         break;
       case 'twitter':
         window.open('https://x.com/devi_charan_2004', '_blank');
         break;
       case 'github':
-        window.open('https://github.com/DeviCharan-Geddada', '_blank');
+        window.open('https://github.com/imdvichrn/imdvichrn', '_blank');
         break;
       case 'whatsapp':
         window.open('https://wa.me/916303468707', '_blank');
@@ -780,7 +780,7 @@ I can tell you about his video editing work, skills, or help you get in touch. W
                 {[
                   { icon: Linkedin, url: 'https://www.linkedin.com/in/devi-charan-1a8b49302', label: 'LinkedIn' },
                   { icon: Instagram, url: 'https://www.instagram.com/imdvichrn', label: 'Instagram' },
-                  { icon: Facebook, url: 'https://www.facebook.com/userdead.610', label: 'Facebook' },
+                  { icon: Facebook, url: 'https://www.facebook.com/imdvichrn', label: 'Facebook' },
                 ].map((social, idx) => (
                   <motion.button
                     key={idx}
