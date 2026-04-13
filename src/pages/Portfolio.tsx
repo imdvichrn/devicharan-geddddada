@@ -367,7 +367,7 @@ export function Portfolio() {
                   Workflows & Capabilities
                 </CardTitle>
                 <LiveProjectsButton 
-                  href="https://github.com/imdvichrn" 
+                  href="https://github.com/imdvichrn/imdvichrn" 
                   label="View Live Projects"
                 />
               </div>
@@ -465,7 +465,7 @@ export function Portfolio() {
               </a>
 
               <a 
-                href="https://www.facebook.com/userdead.610" 
+                href="https://www.facebook.com/imdvichrn" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 aria-label="Visit Facebook Profile"
