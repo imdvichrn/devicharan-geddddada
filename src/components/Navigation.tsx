@@ -87,18 +87,7 @@ export function Navigation() {
               {navItems.map((item) => (
                 <button
                   key={item.id}
-                  onClick={() => {
-                    if (isHomePage) {
-                      const element = document.getElementById(item.id);
-                      if (element) {
-                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                      }
-                    } else {
-                      // Navigate to home with hash for smooth scroll
-                      window.location.href = `/#${item.id}`;
-                    }
-                    setIsMenuOpen(false);
-                  }}
+                  onClick={() => scrollToSection(item.id)}
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover-scale cursor-pointer ${
                     activeSection === item.id
                       ? 'text-primary bg-primary/10'
