@@ -124,14 +124,14 @@ const MiniBarChart = () => {
   const bars = [40, 65, 85, 70, 90, 75, 95];
   
   return (
-    <div className="flex items-end justify-center gap-1 h-16 w-full">
+    <div className="flex items-end justify-center gap-1.5 h-16 w-full">
       {bars.map((height, index) => (
         <div
           key={index}
-          className="w-4 rounded-t-sm bg-gradient-to-t from-primary/40 to-primary transition-all hover:from-primary/60 hover:to-primary"
+          className="w-4 rounded-t-sm bg-gradient-to-t from-primary/40 to-primary/80 transition-all hover:from-primary/60 hover:to-primary"
           style={{ 
             height: `${height}%`,
-            animationDelay: `${index * 100}ms`
+            animation: `pulse 2.5s ease-in-out ${index * 0.2}s infinite`,
           }}
         />
       ))}
@@ -141,40 +141,47 @@ const MiniBarChart = () => {
 
 // Collaboration Network
 const CollaborationNetwork = () => {
+  const nodes = [
+    { icon: Users, label: 'Team', angle: 0, color: 'text-primary', bg: 'bg-primary/20 border-primary/40' },
+    { icon: MessageSquare, label: 'Sync', angle: 72, color: 'text-accent', bg: 'bg-accent/20 border-accent/40' },
+    { icon: Lightbulb, label: 'Ideas', angle: 144, color: 'text-warning', bg: 'bg-warning/20 border-warning/40' },
+    { icon: Target, label: 'Goals', angle: 216, color: 'text-success', bg: 'bg-success/20 border-success/40' },
+    { icon: Zap, label: 'Ship', angle: 288, color: 'text-primary', bg: 'bg-primary/20 border-primary/40' },
+  ];
+
   return (
-    <div className="relative w-full h-24 flex items-center justify-center">
-      {/* Center node */}
+    <div className="relative w-full h-28 flex items-center justify-center">
       <div className="relative">
-        <div className="w-10 h-10 rounded-full bg-primary/20 border-2 border-primary flex items-center justify-center z-10 relative">
-          <Users size={16} className="text-primary" />
+        {/* Center hub */}
+        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/30 to-accent/20 border-2 border-primary/60 flex items-center justify-center z-10 relative shadow-[0_0_20px_rgba(var(--primary),0.2)]">
+          <Users size={18} className="text-primary" />
         </div>
-        
-        {/* Orbiting nodes */}
-        {[0, 1, 2, 3].map((i) => (
-          <div
-            key={i}
-            className="absolute w-6 h-6 rounded-full bg-background border border-glass-border flex items-center justify-center"
-            style={{
-              transform: `rotate(${i * 90}deg) translateX(32px) rotate(-${i * 90}deg)`,
-            }}
-          >
-            <MessageSquare size={10} className="text-muted-foreground" />
-          </div>
-        ))}
-        
-        {/* Connection lines */}
-        <svg className="absolute inset-0 w-20 h-20 -translate-x-5 -translate-y-5" viewBox="0 0 80 80">
-          <circle 
-            cx="40" 
-            cy="40" 
-            r="28" 
-            fill="none" 
-            stroke="hsl(var(--primary))" 
-            strokeWidth="1" 
-            strokeDasharray="4 4"
-            opacity="0.3"
-          />
+
+        {/* Rotating orbit ring */}
+        <svg className="absolute w-28 h-28 -translate-x-[32px] -translate-y-[32px] top-0 left-0 animate-[spin_20s_linear_infinite]" viewBox="0 0 112 112">
+          <circle cx="56" cy="56" r="48" fill="none" stroke="hsl(var(--primary))" strokeWidth="1" strokeDasharray="6 4" opacity="0.25" />
         </svg>
+
+        {/* Orbiting nodes */}
+        {nodes.map((node, i) => {
+          const rad = (node.angle * Math.PI) / 180;
+          const x = Math.cos(rad) * 44;
+          const y = Math.sin(rad) * 44;
+          return (
+            <div
+              key={i}
+              className={`absolute w-7 h-7 rounded-full ${node.bg} border flex items-center justify-center transition-all duration-300`}
+              style={{
+                left: `calc(50% + ${x}px - 14px)`,
+                top: `calc(50% + ${y}px - 14px)`,
+                animation: `pulse 3s ease-in-out ${i * 0.4}s infinite`,
+              }}
+              title={node.label}
+            >
+              <node.icon size={12} className={node.color} />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -484,9 +491,10 @@ export function WorkflowsGrid() {
     },
     {
       title: 'Teamwork & Collaboration',
-      description: 'Experienced in cross-functional team environments with strong communication and adaptability skills.',
+      description: 'Cross-functional team player — async communication, agile sprints, and shipping together across time zones.',
       visual: <CollaborationNetwork />,
-      tools: ['Agile Workflow', 'Remote Teams', 'Clear Communication'],
+      tools: ['Agile / Scrum', 'Async Comms', 'Code Reviews', 'Remote-first'],
+      specs: ['Cross-functional', 'Adaptable'],
       isComingSoon: true,
       size: 'normal' as const,
     },
