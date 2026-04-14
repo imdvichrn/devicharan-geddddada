@@ -61,13 +61,21 @@ export function VideoWindow({ youtubeId, title, className = '' }: VideoWindowPro
               {...({ importance: 'low', fetchPriority: 'low' } as React.ImgHTMLAttributes<HTMLImageElement>)}
             />
             
-            {/* Dark overlay on hover */}
-            <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors duration-300" />
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/70 transition-all duration-500" />
             
-            {/* Play button */}
+            {/* Title bar at bottom */}
+            <div className="absolute bottom-0 left-0 right-0 px-4 py-3 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <span className="text-white/80 text-xs font-medium truncate">{title}</span>
+            </div>
+            
+            {/* Play button with pulse ring */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 md:w-20 md:h-20 bg-primary/90 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:bg-primary transition-all duration-300 shadow-lg backdrop-blur-sm">
-                <Play className="w-7 h-7 md:w-9 md:h-9 text-white fill-white ml-1" />
+              <div className="relative">
+                <div className="absolute inset-0 w-16 h-16 md:w-20 md:h-20 rounded-full bg-primary/30 animate-ping" style={{ animationDuration: '2s' }} />
+                <div className="relative w-16 h-16 md:w-20 md:h-20 bg-primary/90 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:bg-primary transition-all duration-300 shadow-[0_0_30px_rgba(var(--primary),0.4)] backdrop-blur-sm">
+                  <Play className="w-7 h-7 md:w-9 md:h-9 text-white fill-white ml-1" />
+                </div>
               </div>
             </div>
           </button>
