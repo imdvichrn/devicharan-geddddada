@@ -16,7 +16,7 @@ const stagger = {
 
 const fadeUp = {
   initial: { opacity: 0, y: 16, filter: 'blur(4px)' },
-  animate: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { type: 'spring', stiffness: 300, damping: 30 } },
+  animate: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { type: 'spring' as const, stiffness: 300, damping: 30 } },
 };
 
 const features = [
