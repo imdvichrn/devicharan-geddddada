@@ -8,25 +8,26 @@ interface PageTransitionProps {
 const pageVariants = {
   initial: {
     opacity: 0,
-    y: 20,
-    scale: 0.98,
+    y: 12,
+    filter: 'blur(4px)',
   },
   animate: {
     opacity: 1,
     y: 0,
-    scale: 1,
+    filter: 'blur(0px)',
   },
   exit: {
     opacity: 0,
-    y: -10,
-    scale: 0.98,
+    y: -8,
+    filter: 'blur(4px)',
   },
 };
 
 const pageTransition = {
-  type: 'tween' as const,
-  ease: [0.4, 0, 0.2, 1] as [number, number, number, number],
-  duration: 0.3,
+  type: 'spring' as const,
+  stiffness: 260,
+  damping: 30,
+  mass: 0.8,
 };
 
 export function PageTransition({ children }: PageTransitionProps) {
@@ -37,6 +38,7 @@ export function PageTransition({ children }: PageTransitionProps) {
       exit="exit"
       variants={pageVariants}
       transition={pageTransition}
+      style={{ willChange: 'opacity, transform, filter' }}
     >
       {children}
     </motion.div>

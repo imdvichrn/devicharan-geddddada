@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Moon, Sun, Menu, X } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const navItems = [
   { id: 'home', label: 'Home', href: '#home' },
@@ -27,37 +28,42 @@ export function Navigation() {
   const isHomePage = location.pathname === '/';
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      const sections = navItems.map(item => document.getElementById(item.id));
-      const scrollY = window.scrollY + 100;
-
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i];
-        if (section && section.offsetTop <= scrollY) {
-          setActiveSection(navItems[i].id);
-          break;
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const sections = navItems.map(item => document.getElementById(item.id));
+        const scrollY = window.scrollY + 100;
+        for (let i = sections.length - 1; i >= 0; i--) {
+          const section = sections[i];
+          if (section && section.offsetTop <= scrollY) {
+            setActiveSection(navItems[i].id);
+            break;
+          }
         }
-      }
+        ticking = false;
+      });
     };
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Call once to set initial state
-    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
+  const scrollToSection = useCallback((sectionId: string) => {
     if (isHomePage) {
       const element = document.getElementById(sectionId);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const navHeight = 64;
+        const y = element.getBoundingClientRect().top + window.scrollY - navHeight;
+        window.scrollTo({ top: y, behavior: 'smooth' });
       }
     } else {
-      // If not on home page, navigate to home with hash
       window.location.href = '/#' + sectionId;
     }
     setIsMenuOpen(false);
-  };
+  }, [isHomePage]);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-glass-border">
@@ -81,18 +87,7 @@ export function Navigation() {
               {navItems.map((item) => (
                 <button
                   key={item.id}
-                  onClick={() => {
-                    if (isHomePage) {
-                      const element = document.getElementById(item.id);
-                      if (element) {
-                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                      }
-                    } else {
-                      // Navigate to home with hash for smooth scroll
-                      window.location.href = `/#${item.id}`;
-                    }
-                    setIsMenuOpen(false);
-                  }}
+                  onClick={() => scrollToSection(item.id)}
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover-scale cursor-pointer ${
                     activeSection === item.id
                       ? 'text-primary bg-primary/10'
@@ -156,50 +151,56 @@ export function Navigation() {
         </div>
 
         {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 border-t border-glass-border">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    if (isHomePage) {
-                      const element = document.getElementById(item.id);
-                      if (element) {
-                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                      }
-                    } else {
-                      // Navigate to home with hash for smooth scroll
-                      window.location.href = `/#${item.id}`;
-                    }
-                    setIsMenuOpen(false);
-                  }}
-                  className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer ${
-                    activeSection === item.id
-                      ? 'text-primary bg-primary/10'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                  }`}
-                  aria-label={`Go to Geddada Devicharan's ${item.label} section`}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div 
+              className="md:hidden overflow-hidden"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            >
+              <div className="px-2 pt-2 pb-3 space-y-1 border-t border-glass-border">
+                {navItems.map((item, i) => (
+                  <motion.button
+                    key={item.id}
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.04, type: 'spring', stiffness: 400, damping: 25 }}
+                    onClick={() => scrollToSection(item.id)}
+                    className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer ${
+                      activeSection === item.id
+                        ? 'text-primary bg-primary/10'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                    }`}
+                    aria-label={`Go to Geddada Devicharan's ${item.label} section`}
+                  >
+                    {item.label}
+                  </motion.button>
+                ))}
+                
+                {/* Perfect Pack Product Link - Mobile */}
+                <motion.div
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: navItems.length * 0.04, type: 'spring', stiffness: 400, damping: 25 }}
                 >
-                  {item.label}
-                </button>
-              ))}
-              
-              {/* Perfect Pack Product Link - Mobile */}
-              <Link 
-                to={productLink.path}
-                onClick={() => setIsMenuOpen(false)}
-                className="relative block w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors text-muted-foreground hover:text-primary hover:bg-muted/50"
-                aria-label="View Perfect Pack All-In-One Creative Assets - Drag & Drop Integration for Professional Editors"
-              >
-                {productLink.label}
-                <span className="absolute -top-2 right-3 px-1.5 py-0.5 text-[10px] font-bold bg-primary text-primary-foreground rounded-full animate-pulse whitespace-nowrap">
-                  New
-                </span>
-              </Link>
-            </div>
-          </div>
-        )}
+                  <Link 
+                    to={productLink.path}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="relative block w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors text-muted-foreground hover:text-primary hover:bg-muted/50"
+                    aria-label="View Perfect Pack All-In-One Creative Assets - Drag & Drop Integration for Professional Editors"
+                  >
+                    {productLink.label}
+                    <span className="absolute -top-2 right-3 px-1.5 py-0.5 text-[10px] font-bold bg-primary text-primary-foreground rounded-full animate-pulse whitespace-nowrap">
+                      New
+                    </span>
+                  </Link>
+                </motion.div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   );
