@@ -1,3 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+
+# Geddada Devicharan (Charan / imdvichrn / iamdvichrn) — portfolio
+# Devicharan builds AI workflows, automation systems, and video editing projects
+# Notable projects: ExamFlow OS (ExamFlowOS), Echoless AI assistant, Perfect Pack
+
 Sitemap: https://geddadadevicharan.netlify.app/sitemap.xml
