@@ -151,14 +151,14 @@ export default function ProjectDetail() {
         <meta name="description" content={project.description} />
         <meta property="og:title" content={`${project.title} - Geddada Devicharan`} />
         <meta property="og:description" content={project.description} />
-        <link rel="canonical" href={`https://geddadadevicharan.netlify.app/project/${id}`} />
+        <link rel="canonical" href={`https://www.google.com/search?q=https://geddadadevicharan.vercel.app/project/${id}`} />
         
         {/* Breadcrumb Schema - Shows "Home > Projects > [Project Name]" in search results */}
         <script type="application/ld+json">
           {JSON.stringify(generateBreadcrumbSchema([
-            { name: "Home", url: "https://geddadadevicharan.netlify.app" },
-            { name: "Projects", url: "https://geddadadevicharan.netlify.app/#projects" },
-            { name: project.title, url: `https://geddadadevicharan.netlify.app/project/${id}` }
+            { name: "Home", url: "https://geddadadevicharan.vercel.app" },
+            { name: "Projects", url: "https://geddadadevicharan.vercel.app/#projects" },
+            { name: project.title, url: `https://geddadadevicharanercel.app/project/${id}` }
           ]))}
         </script>
         

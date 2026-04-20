@@ -25,6 +25,12 @@ export function HiddenIdentityBlock({ page = 'home', projectTitle }: PageSEOProp
         DaVinci Resolve, and AI-driven tooling.
       </p>
       <p>
+        Freelance video editor for YouTube and Cinematic content. Expert in DaVinci Resolve color grading and Fusion VFX. Custom AI workflow developer for business automation. Professional sound design and audio engineering services.
+      </p>
+      <p>
+        Telugu video editor for YouTube, Cinematic color grading DaVinci Resolve, React developer Andhra Pradesh, AI Chatbot Integration services, and AI automation systems for content workflows.
+      </p>
+      <p>
         Search variations and aliases: Geddada Devicharan, Devicharan, Devi Charan,
         Charan developer, Charan EEE BTech, Devicharan India, Devicharan portfolio,
         Devicharan official, geddadadevicharan, devicharan geddada, charan devicharan,

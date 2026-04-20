@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/hooks/useTheme";
 import { PageTransition } from "@/components/PageTransition";
 import { Navigation } from "@/components/Navigation";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { Analytics } from '@vercel/analytics/react';
 import { Portfolio } from "./pages/Portfolio";
 import NotFound from "./pages/NotFound";
 import Admin from "./pages/Admin";
@@ -54,6 +55,7 @@ const App = () => (
             <Navigation />
             <AnimatedRoutes />
           </BrowserRouter>
+          <Analytics />
         </TooltipProvider>
       </ThemeProvider>
     </QueryClientProvider>

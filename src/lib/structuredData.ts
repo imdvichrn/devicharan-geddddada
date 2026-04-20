@@ -5,7 +5,7 @@
  *   Geddada, imdvichrn, iamdvichrn
  */
 
-const SITE_URL = "https://geddadadevicharan.netlify.app";
+const BASE_URL = "https://geddadadevicharan.vercel.app";
 const PERSON_NAME = "Geddada Devicharan";
 const PERSON_ALIASES = [
   "Charan",
@@ -22,9 +22,9 @@ export const generatePersonSchema = () => ({
   "@type": "Person",
   "name": PERSON_NAME,
   "alternateName": PERSON_ALIASES,
-  "url": SITE_URL,
-  "image": `${SITE_URL}/profile-avatar.png`,
-  "jobTitle": "AI Workflow Developer & Video Editor",
+  "url": BASE_URL,
+  "image": `${BASE_URL}/profile-avatar.png`,
+  "jobTitle": "Professional Video Editor & AI Automation Developer",
   "description":
     "Geddada Devicharan (Charan / imdvichrn) is an EEE BTech student who builds AI workflows, automation systems, and video editing projects including ExamFlowOS and Echoless.",
   "knowsAbout": [
@@ -57,7 +57,7 @@ export const generateWebsiteSchema = () => ({
   "@type": "WebSite",
   "name": "Geddada Devicharan — Portfolio",
   "alternateName": ["Charan Portfolio", "imdvichrn Portfolio", "Devicharan Portfolio"],
-  "url": SITE_URL,
+  "url": BASE_URL,
   "author": { "@type": "Person", "name": PERSON_NAME },
 });
 
@@ -91,7 +91,7 @@ export const generateVideoObjectSchema = (data: {
     "@type": "Person",
     "name": PERSON_NAME,
     "alternateName": PERSON_ALIASES,
-    "url": SITE_URL,
+    "url": BASE_URL,
   },
 });
 
@@ -111,7 +111,7 @@ export const generateCreativeWorkSchema = (data: {
     "@type": "Person",
     "name": PERSON_NAME,
     "alternateName": PERSON_ALIASES,
-    "url": SITE_URL,
+    "url": BASE_URL,
   },
   "keywords": [...data.tools, ...data.roles, ...PERSON_ALIASES].join(", "),
 });
@@ -126,10 +126,10 @@ export const generateProjectSchema = (data: {
 }) => ({
   "@context": "https://schema.org",
   "@type": "CreativeWork",
-  "@id": data.url || `${SITE_URL}/project/${data.id}`,
+  "@id": data.url || `${BASE_URL}/project/${data.id}`,
   "name": data.title,
   "description": data.description,
-  "url": data.url || `${SITE_URL}/project/${data.id}`,
+  "url": data.url || `${BASE_URL}/project/${data.id}`,
   "datePublished": data.year ? `${data.year}-01-01` : undefined,
   "keywords": [
     ...(data.tools || []),
@@ -142,7 +142,7 @@ export const generateProjectSchema = (data: {
     "@type": "Person",
     "name": PERSON_NAME,
     "alternateName": PERSON_ALIASES,
-    "url": SITE_URL,
+    "url": BASE_URL,
   },
 });
 
@@ -158,14 +158,14 @@ export const generateProductSchema = (data: {
   "@type": "Product",
   "name": data.name,
   "description": data.description,
-  "image": data.image || `${SITE_URL}/profile-avatar.png`,
+  "image": data.image || `${BASE_URL}/profile-avatar.png`,
   "brand": { "@type": "Brand", "name": "imdvichrn" },
   "offers": {
     "@type": "Offer",
     "price": data.price,
     "priceCurrency": data.currency || "USD",
     "availability": "https://schema.org/InStock",
-    "url": data.url || `${SITE_URL}/perfect-pack`,
+    "url": data.url || `${BASE_URL}/perfect-pack`,
     "seller": { "@type": "Person", "name": PERSON_NAME },
   },
 });
@@ -185,6 +185,6 @@ export const generatePluginSchema = () => ({
     "@type": "Person",
     "name": PERSON_NAME,
     "alternateName": PERSON_ALIASES,
-    "url": SITE_URL,
+    "url": BASE_URL,
   },
 });

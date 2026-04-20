@@ -33,7 +33,7 @@ export function VideoEmbed({ youtubeId, title = "Pro-Stream Plugin Demo", classN
             fetchPriority="low" 
             onError={handleImgError}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-            alt={`${title} - Video Production Workflow`} 
+            alt={`${title} – cinematic 3D titles created in DaVinci Resolve by Geddada Devicharan`} 
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="w-20 h-20 bg-primary/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(var(--primary),0.5)] shadow-xl">

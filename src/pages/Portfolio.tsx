@@ -203,11 +203,11 @@ export function Portfolio() {
       <Helmet>
         <title>Geddada Devicharan (Charan) — AI Workflows, Automation & Video Editing | imdvichrn</title>
         <meta name="description" content="Geddada Devicharan, also known as Charan or imdvichrn, is an EEE BTech student who builds AI workflows, automation systems, and video editing projects including ExamFlowOS and Echoless." />
-        <meta name="keywords" content="Geddada Devicharan, Devicharan, Devi Charan, Charan, Geddada, imdvichrn, iamdvichrn, geddadadevicharan, Devicharan portfolio, Charan developer, Devicharan AI developer, ExamFlowOS, ExamFlowOS developer, Echoless AI assistant, Charan Echoless, Charan automation engineer, Devicharan editor, Devicharan video editor, EEE BTech developer India, AI workflow developer, automation systems, student developer India, Echoless developer" />
-        <link rel="canonical" href="https://geddadadevicharan.netlify.app/" />
+        <meta name="keywords" content="Geddada Devicharan, Devicharan, Devi Charan, Charan, Geddada, imdvichrn, iamdvichrn, geddadadevicharan, Devicharan portfolio, Charan developer, Devicharan AI developer, ExamFlowOS, ExamFlowOS developer, Echoless AI assistant, Charan Echoless, Charan automation engineer, Devicharan editor, Devicharan video editor, Telugu video editor for YouTube, Cinematic color grading DaVinci Resolve, React developer Andhra Pradesh, AI Chatbot Integration services, EEE BTech developer India, AI workflow developer, automation systems, student developer India, Echoless developer" />
+        <link rel="canonical" href="https://geddadadevicharan.vercel.app" />
         <meta property="og:title" content="Geddada Devicharan (Charan) — AI Workflows, Automation & Video Editing" />
         <meta property="og:description" content="Devicharan builds AI workflows, automation systems, and video editing projects. Notable: ExamFlowOS and Echoless." />
-        <meta property="og:url" content="https://geddadadevicharan.netlify.app/" />
+        <meta property="og:url" content="https://geddadadevicharan.vercel.app" />
         <script type="application/ld+json">{JSON.stringify(generatePersonSchema())}</script>
         <script type="application/ld+json">{JSON.stringify(generateWebsiteSchema())}</script>
       </Helmet>
@@ -251,7 +251,7 @@ export function Portfolio() {
                 <div className="relative w-24 h-24 md:w-36 md:h-36">
                   <img 
                     src={profileImage} 
-                    alt="Geddada Devicharan - Video Editor and Digital Professional" 
+                    alt="Geddada Devicharan - Professional Video Editor and Developerer" 
                     width={144}
                     height={144}
                     className="w-full h-full rounded-full object-cover object-top border-4 border-primary/30 shadow-2xl ring-2 ring-primary/10 ring-offset-2 ring-offset-background" 
