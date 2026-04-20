@@ -33,7 +33,7 @@ interface QuickAction {
   action: () => void;
 }
 
-export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
+export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) => {
   const location = useLocation();
   
   // Scroll to section helper
@@ -323,6 +323,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
           timestamp: new Date()
         }
       ]);
+    } finally {
       setIsLoading(false);
     }
   };
