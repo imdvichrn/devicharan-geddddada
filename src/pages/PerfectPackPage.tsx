@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { WindowChrome } from '@/components/WindowChrome';
 import { Helmet } from 'react-helmet-async';
+import { HiddenIdentityBlock, FooterMicroBio } from '@/components/SEOContent';
 
 const stagger = {
   animate: { transition: { staggerChildren: 0.08 } },
@@ -71,9 +72,12 @@ export default function PerfectPackPage() {
   return (
     <>
       <Helmet>
-        <title>Perfect Pack — All-In-One Creative Assets | Geddada Devicharan</title>
-        <meta name="description" content="Professional textures, sound effects, DRFX presets & motion titles for DaVinci Resolve. Launching soon — register for early access." />
-        <link rel="canonical" href="https://geddadadevicharan.netlify.app/project/perfect-pack-plugin" />
+        <title>Perfect Pack — All-In-One Creative Assets by Geddada Devicharan (imdvichrn)</title>
+        <meta name="description" content="Perfect Pack by Geddada Devicharan (Charan / imdvichrn): professional textures, sound effects, DRFX presets and motion titles for DaVinci Resolve. Launching soon — register for early access." />
+        <meta name="keywords" content="Perfect Pack, Perfect Pack imdvichrn, Geddada Devicharan, Devicharan, Charan, imdvichrn, iamdvichrn, DaVinci Resolve assets, DRFX presets, motion titles, video editing pack, Devicharan editor, Charan video editor" />
+        <link rel="canonical" href="https://geddadadevicharan.netlify.app/perfect-pack" />
+        <meta property="og:title" content="Perfect Pack — All-In-One Creative Assets by Geddada Devicharan" />
+        <meta property="og:description" content="Professional textures, sound effects, DRFX presets & motion titles by imdvichrn. Launching soon." />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -82,9 +86,12 @@ export default function PerfectPackPage() {
             "description": "Professional-grade textures and drag-and-drop elements optimized for DaVinci Resolve and major NLEs",
             "brand": { "@type": "Brand", "name": "imdvichrn" },
             "offers": { "@type": "Offer", "price": "10", "priceCurrency": "USD", "availability": "https://schema.org/PreOrder" },
+            "author": { "@type": "Person", "name": "Geddada Devicharan", "alternateName": ["Charan", "Devicharan", "imdvichrn"] },
           })}
         </script>
       </Helmet>
+
+      <HiddenIdentityBlock page="perfect-pack" />
 
       <div className="min-h-screen bg-background pt-20 md:pt-28 pb-20 px-3 md:px-4 transition-colors duration-300">
         <motion.div
@@ -258,7 +265,35 @@ export default function PerfectPackPage() {
               </CardContent>
             </Card>
           </motion.div>
+
+          {/* About Perfect Pack — visible neutral-tone SEO essay */}
+          <motion.div variants={fadeUp}>
+            <Card className="glass-panel border-glass-border">
+              <CardContent className="p-6 md:p-8 space-y-3 text-muted-foreground leading-relaxed text-sm md:text-base">
+                <h2 className="text-lg md:text-xl font-semibold text-foreground">About Perfect Pack</h2>
+                <p>
+                  Perfect Pack is a creative asset toolkit built by Geddada Devicharan
+                  (also known as Charan, Devi Charan or imdvichrn) for video editors
+                  working in DaVinci Resolve and other major NLEs. The pack includes
+                  high-resolution textures, professional sound effects, drag-and-drop
+                  DRFX presets and animated motion titles.
+                </p>
+                <p>
+                  The focus is on clean drag-and-drop integration and consistent
+                  visual quality. Devicharan&apos;s portfolio also includes ExamFlowOS,
+                  a structured exam management system, and Echoless, a personal
+                  assistant chatbot for task automation and productivity.
+                </p>
+                <p className="text-xs opacity-70">
+                  Tags: Perfect Pack, imdvichrn, Geddada Devicharan, Devicharan,
+                  Charan, Devi Charan, DaVinci Resolve assets, DRFX presets, motion
+                  titles, video editing pack.
+                </p>
+              </CardContent>
+            </Card>
+          </motion.div>
         </motion.div>
+        <FooterMicroBio />
       </div>
     </>
   );

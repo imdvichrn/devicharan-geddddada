@@ -1,5 +1,8 @@
+import { Helmet } from 'react-helmet-async';
 import { Navigation } from '@/components/Navigation';
 import { ContactForm } from '@/components/ContactForm';
+import { HiddenIdentityBlock, FooterMicroBio } from '@/components/SEOContent';
+import { generatePersonSchema, generateWebsiteSchema } from '@/lib/structuredData';
 import { WindowChrome } from '@/components/WindowChrome';
 import { AnimatedBackground } from '@/components/AnimatedBackground';
 import { LiveProjectsButton } from '@/components/LiveProjectsButton';
@@ -197,6 +200,18 @@ export function Portfolio() {
     }
   };
   return <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Geddada Devicharan (Charan) — AI Workflows, Automation & Video Editing | imdvichrn</title>
+        <meta name="description" content="Geddada Devicharan, also known as Charan or imdvichrn, is an EEE BTech student who builds AI workflows, automation systems, and video editing projects including ExamFlowOS and Echoless." />
+        <meta name="keywords" content="Geddada Devicharan, Devicharan, Devi Charan, Charan, Geddada, imdvichrn, iamdvichrn, geddadadevicharan, Devicharan portfolio, Charan developer, Devicharan AI developer, ExamFlowOS, ExamFlowOS developer, Echoless AI assistant, Charan Echoless, Charan automation engineer, Devicharan editor, Devicharan video editor, EEE BTech developer India, AI workflow developer, automation systems, student developer India, Echoless developer" />
+        <link rel="canonical" href="https://geddadadevicharan.netlify.app/" />
+        <meta property="og:title" content="Geddada Devicharan (Charan) — AI Workflows, Automation & Video Editing" />
+        <meta property="og:description" content="Devicharan builds AI workflows, automation systems, and video editing projects. Notable: ExamFlowOS and Echoless." />
+        <meta property="og:url" content="https://geddadadevicharan.netlify.app/" />
+        <script type="application/ld+json">{JSON.stringify(generatePersonSchema())}</script>
+        <script type="application/ld+json">{JSON.stringify(generateWebsiteSchema())}</script>
+      </Helmet>
+      <HiddenIdentityBlock page="home" />
       <Navigation />
       
       {/* Hero Section */}
@@ -475,6 +490,7 @@ export function Portfolio() {
             </nav>
             
             <p className="text-foreground/70">© 2026 Geddada Devicharan (@imdvichrn). All rights reserved.</p>
+            <FooterMicroBio />
           </div>
         </div>
       </footer>

@@ -28,7 +28,8 @@ import {
 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { getProjectById } from '@/data/projects';
-import { generateProductSchema, generatePluginSchema } from '@/lib/structuredData';
+import { generateProductSchema, generatePluginSchema, generateProjectSchema, generateBreadcrumbSchema } from '@/lib/structuredData';
+import { HiddenIdentityBlock } from '@/components/SEOContent';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
@@ -141,11 +142,24 @@ export default function ProjectPage() {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>{project.title} - Geddada Devicharan</title>
-        <meta name="description" content={project.longDescription.slice(0, 160)} />
-        <meta property="og:title" content={`${project.title} - Geddada Devicharan`} />
+        <title>{project.title} — by Geddada Devicharan (Charan / imdvichrn)</title>
+        <meta name="description" content={`${project.title}: ${project.shortDescription} — built by Geddada Devicharan (Charan, imdvichrn).`.slice(0, 160)} />
+        <meta name="keywords" content={`${project.title}, ${project.tools.join(', ')}, Geddada Devicharan, Devicharan, Charan, imdvichrn, iamdvichrn, Devicharan ${project.category}, Charan developer, Devicharan portfolio`} />
+        <meta property="og:title" content={`${project.title} — Geddada Devicharan`} />
         <meta property="og:description" content={project.shortDescription} />
-        <link rel="canonical" href={`https://devicharangeddada.lovable.app/project/${projectId}`} />
+        <link rel="canonical" href={`https://geddadadevicharan.netlify.app/project/${projectId}`} />
+        <script type="application/ld+json">{JSON.stringify(generateProjectSchema({
+          id: project.id,
+          title: project.title,
+          description: project.longDescription,
+          year: project.year,
+          tools: project.tools,
+        }))}</script>
+        <script type="application/ld+json">{JSON.stringify(generateBreadcrumbSchema([
+          { name: 'Home', url: 'https://geddadadevicharan.netlify.app/' },
+          { name: 'Projects', url: 'https://geddadadevicharan.netlify.app/#projects' },
+          { name: project.title, url: `https://geddadadevicharan.netlify.app/project/${projectId}` },
+        ]))}</script>
         {project.id === 'davinci-workflow-plugin' && (
           <>
             <script type="application/ld+json">
@@ -162,6 +176,8 @@ export default function ProjectPage() {
           </>
         )}
       </Helmet>
+
+      <HiddenIdentityBlock page="project" projectTitle={project.title} />
 
       <Navigation />
 
@@ -305,7 +321,34 @@ export default function ProjectPage() {
             </CardContent>
           </Card>
 
-          {/* Challenge & Outcome */}
+          {/* About this project (visible neutral-tone SEO essay) */}
+          <Card className="glass-panel border-glass-border">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-xl">
+                <BookOpen className="text-primary h-5 w-5" />
+                <h2>About this project</h2>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3 text-muted-foreground leading-relaxed text-sm md:text-base">
+              <p>
+                {project.title} is a project developed by Geddada Devicharan — also
+                known as Charan, Devi Charan or imdvichrn — an EEE BTech student from
+                Visakhapatnam who builds {project.category === 'video' ? 'video editing and post-production' : project.category === 'web' ? 'AI workflows and system tools' : project.category === 'design' ? 'visual design and brand systems' : 'digital strategy and growth systems'} projects.
+              </p>
+              <p>
+                The work focuses on {project.tools.slice(0, 3).join(', ')} and other
+                production tools. Devicharan&apos;s portfolio also includes ExamFlowOS,
+                a structured exam management system, and Echoless, a personal
+                assistant chatbot for task automation and productivity.
+              </p>
+              <p className="text-xs opacity-70">
+                Tags: Geddada Devicharan, Devicharan, Charan, imdvichrn, iamdvichrn,
+                {' '}{project.title}, {project.tools.join(', ')}.
+              </p>
+            </CardContent>
+          </Card>
+
+
           <div className="grid md:grid-cols-2 gap-6">
             <Card className="glass-panel border-glass-border">
               <CardHeader>
