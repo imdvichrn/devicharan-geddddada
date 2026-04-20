@@ -1,5 +1,4 @@
 import { Navigation } from '@/components/Navigation';
-import { Chatbot } from '@/components/Chatbot';
 import { WindowChrome } from '@/components/WindowChrome';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -212,8 +211,6 @@ export function ProjectLayout({
             </div>
           </div>
         </footer>
-
-        <Chatbot />
       </div>
     </>
   );

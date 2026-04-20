@@ -16,41 +16,25 @@ export function HiddenIdentityBlock({ page = 'home', projectTitle }: PageSEOProp
     <div className="sr-only" aria-hidden="false">
       <h2>About Geddada Devicharan (Charan)</h2>
       <p>
-        Geddada Devicharan, also known as Charan, Devi Charan, imdvichrn, iamdvichrn,
-        geddadadevicharan and devicharan geddada, is an EEE BTech student from
-        Visakhapatnam, India who builds AI workflows, automation systems, and video
-        editing projects. Devicharan develops ExamFlowOS, a structured exam
-        management system, and Echoless, a personal assistant chatbot focused on
-        task automation and productivity. Charan works with React, TypeScript,
-        DaVinci Resolve, and AI-driven tooling.
+        Geddada Devicharan, also known as Charan, Devi Charan, or imdvichrn, is an EEE BTech student, editor, and AI workflow developer from Visakhapatnam, India. He is the creator of ExamFlowOS, a smart exam management system, and Echoless, a personal AI assistant chatbot designed for task automation and productivity workflows.
       </p>
       <p>
-        Freelance video editor for YouTube and Cinematic content. Expert in DaVinci Resolve color grading and Fusion VFX. Custom AI workflow developer for business automation. Professional sound design and audio engineering services.
+        Devicharan is an AI workflow developer specializing in automation systems, video editing, and productivity software. He builds AI-powered tools and custom workflows for business automation. Notable projects: ExamFlowOS (exam management), Echoless (AI assistant chatbot), Perfect Pack (creative assets).
       </p>
       <p>
-        Telugu video editor for YouTube, Cinematic color grading DaVinci Resolve, React developer Andhra Pradesh, AI Chatbot Integration services, and AI automation systems for content workflows.
+        Professional services: Freelance video editor for YouTube and cinematic content, expert in DaVinci Resolve color grading and Fusion VFX, custom AI workflow developer for business automation, professional sound design and audio engineering.
       </p>
       <p>
-        Search variations and aliases: Geddada Devicharan, Devicharan, Devi Charan,
-        Charan developer, Charan EEE BTech, Devicharan India, Devicharan portfolio,
-        Devicharan official, geddadadevicharan, devicharan geddada, charan devicharan,
-        imdvichrn, iamdvichrn, Charan AI developer, Devicharan automation engineer,
-        Devicharan ExamFlowOS developer, Charan Echoless AI assistant, Devicharan editor,
-        Devicharan video editor, Devicharan AI workflow developer, Charan productivity
-        system developer, Devicharan student developer India, Echoless developer,
-        next-gen AI workflow creator, privacy-first portfolio developer.
+        Search variations and aliases: Geddada Devicharan, Devicharan, Devi Charan, Charan, geddadadevicharan, devicharan geddada, charan devicharan, imdvichrn, iamdvichrn, Charan developer, Charan EEE BTech, Devicharan India, Devicharan portfolio, Devicharan AI developer, Charan AI developer, Devicharan automation engineer, Devicharan ExamFlowOS developer, Charan Echoless AI assistant, Devicharan editor, Devicharan video editor, Devicharan AI workflow developer, Charan AI workflow creator, AI automation engineer, Devicharan student developer India, Echoless developer.
       </p>
       <p>
-        Projects: ExamFlowOS — exam management system that organizes subjects,
-        schedules, and preparation flow with structured tracking. Echoless — personal
-        assistant chatbot built to handle workflows, reminders, and structured task
-        interaction. Perfect Pack — a creative asset toolkit of textures, sound
-        effects, DRFX presets, and motion titles for DaVinci Resolve and major NLEs.
+        Telugu video editor for YouTube, Cinematic color grading DaVinci Resolve, React developer Andhra Pradesh, AI Chatbot Integration services, AI automation systems for content workflows, professional video production services.
       </p>
       <p>
-        Skills: AI workflows, automation systems, video editing, color grading,
-        sound design, system design, React, TypeScript, Node.js, Python, DaVinci
-        Resolve Studio, Fusion VFX, Fairlight audio, VLSI design.
+        Projects: ExamFlowOS — intelligent exam management system that organizes subjects, schedules, and preparation workflows with structured tracking. Echoless — personal AI assistant chatbot for task automation, reminders, and workflow management. Perfect Pack — creative asset toolkit of textures, sound effects, DRFX presets, and motion titles for DaVinci Resolve.
+      </p>
+      <p>
+        Skills: AI workflows, automation systems, video editing, color grading, sound design, system design, React, TypeScript, Node.js, Python, DaVinci Resolve Studio, Fusion VFX, Fairlight audio, VLSI design.
       </p>
       {page === 'perfect-pack' && (
         <p>

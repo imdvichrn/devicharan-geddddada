@@ -12,6 +12,7 @@ import { Helmet } from 'react-helmet-async';
 import { generateBreadcrumbSchema, generateVideoObjectSchema, generateCreativeWorkSchema } from '@/lib/structuredData';
 
 // Lazy load Chatbot to reduce initial bundle size
+// Lazy load Chatbot removed - now rendered at App root level
 const Chatbot = lazy(() => import('@/components/Chatbot').then(mod => ({ default: mod.Chatbot } as any)));
 
 // Project data with YouTube IDs
@@ -147,9 +148,9 @@ export default function ProjectDetail() {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>{project.title} - Geddada Devicharan</title>
-        <meta name="description" content={project.description} />
-        <meta property="og:title" content={`${project.title} - Geddada Devicharan`} />
+        <title>{project.title} - AI Workflow by Devicharan</title>
+        <meta name="description" content={`${project.title} by Geddada Devicharan - AI Workflow Developer & Professional Video Editor. ${project.description}`} />
+        <meta property="og:title" content={`${project.title} - Devicharan AI Workflow`} />
         <meta property="og:description" content={project.description} />
         <link rel="canonical" href={`https://www.google.com/search?q=https://geddadadevicharan.vercel.app/project/${id}`} />
         
@@ -158,7 +159,7 @@ export default function ProjectDetail() {
           {JSON.stringify(generateBreadcrumbSchema([
             { name: "Home", url: "https://geddadadevicharan.vercel.app" },
             { name: "Projects", url: "https://geddadadevicharan.vercel.app/#projects" },
-            { name: project.title, url: `https://geddadadevicharanercel.app/project/${id}` }
+            { name: project.title, url: `https://geddadadevicharan.vercel.app/project/${id}` }
           ]))}
         </script>
         
@@ -257,10 +258,6 @@ export default function ProjectDetail() {
           </Card>
         </div>
       </section>
-
-      <Suspense fallback={null}>
-        <Chatbot />
-      </Suspense>
     </div>
   );
 }

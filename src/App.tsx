@@ -5,11 +5,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
+import { Suspense } from "react";
 import { ThemeProvider } from "@/hooks/useTheme";
 import { PageTransition } from "@/components/PageTransition";
 import { Navigation } from "@/components/Navigation";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { Analytics } from '@vercel/analytics/react';
+import { Chatbot } from "@/components/Chatbot";
 import { Portfolio } from "./pages/Portfolio";
 import NotFound from "./pages/NotFound";
 import Admin from "./pages/Admin";
@@ -54,6 +56,10 @@ const App = () => (
           <BrowserRouter>
             <Navigation />
             <AnimatedRoutes />
+            {/* Chatbot at root level - placed outside routes to avoid being clipped by overflow:hidden or transforms */}
+            <Suspense fallback={null}>
+              <Chatbot />
+            </Suspense>
           </BrowserRouter>
           <Analytics />
         </TooltipProvider>

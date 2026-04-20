@@ -11,7 +11,7 @@ import { Helmet } from 'react-helmet-async';
 import { Suspense, lazy } from 'react';
 import { generateBreadcrumbSchema, generateVideoObjectSchema, generateCreativeWorkSchema } from '@/lib/structuredData';
 
-// Lazy load Chatbot to reduce initial bundle size
+// Lazy load Chatbot removed - now rendered at App root level
 const Chatbot = lazy(() => import('@/components/Chatbot').then(mod => ({ default: mod.Chatbot } as any)));
 
 export default function VideoEditingPostProduction() {
@@ -285,10 +285,6 @@ export default function VideoEditingPostProduction() {
             </div>
           </div>
         </footer>
-
-        <Suspense fallback={null}>
-          <Chatbot />
-        </Suspense>
       </div>
     </>
   );

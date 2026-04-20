@@ -1,7 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Navigation } from '@/components/Navigation';
-import { Chatbot } from '@/components/Chatbot';
 import { VideoEmbed } from '@/components/VideoEmbed';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -132,7 +131,6 @@ export default function ProjectPage() {
             </CardContent>
           </Card>
         </div>
-        <Chatbot />
       </div>
     );
   }
@@ -415,8 +413,6 @@ export default function ProjectPage() {
           </div>
         </div>
       </main>
-
-      <Chatbot />
     </div>
   );
 }

@@ -15,6 +15,10 @@ const PERSON_ALIASES = [
   "imdvichrn",
   "iamdvichrn",
   "geddadadevicharan",
+  "Devicharan India",
+  "Charan EEE BTech",
+  "Devicharan editor",
+  "Devicharan developer",
 ];
 
 export const generatePersonSchema = () => ({
@@ -24,9 +28,9 @@ export const generatePersonSchema = () => ({
   "alternateName": PERSON_ALIASES,
   "url": BASE_URL,
   "image": `${BASE_URL}/profile-avatar.png`,
-  "jobTitle": "Professional Video Editor & AI Automation Developer",
+  "jobTitle": "AI Workflow Developer & Professional Video Editor",
   "description":
-    "Geddada Devicharan (Charan / imdvichrn) is an EEE BTech student who builds AI workflows, automation systems, and video editing projects including ExamFlowOS and Echoless.",
+    "Geddada Devicharan (Charan / imdvichrn), an EEE BTech student, is an AI workflow developer and professional video editor who builds AI automation systems and video editing projects including ExamFlowOS and Echoless. Based in Visakhapatnam, India.",
   "knowsAbout": [
     "AI workflows",
     "Automation systems",
