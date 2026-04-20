@@ -12,10 +12,6 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { Portfolio } from "./pages/Portfolio";
 import NotFound from "./pages/NotFound";
 import Admin from "./pages/Admin";
-import WebPortfolio from "./pages/projects/WebPortfolio";
-import SceneSyncEdits from "./pages/projects/SceneSyncEdits";
-import VisualDesign from "./pages/projects/VisualDesign";
-import GrowthStrategy from "./pages/projects/GrowthStrategy";
 import VideoEditingPostProduction from "./pages/projects/VideoEditingPostProduction";
 import ProjectDetail from "./pages/ProjectDetail";
 import ProjectPage from "./pages/ProjectPage";
@@ -34,11 +30,12 @@ function AnimatedRoutes() {
           <Route path="/admin" element={<Admin />} />
           <Route path="/projects" element={<Navigate to="/#projects" replace />} />
           <Route path="/project/:projectId" element={<PageTransition><ProjectPage /></PageTransition>} />
-          <Route path="/projects/web-portfolio" element={<PageTransition><WebPortfolio /></PageTransition>} />
-          <Route path="/projects/scenesync-edits" element={<PageTransition><SceneSyncEdits /></PageTransition>} />
-          <Route path="/projects/visual-design" element={<PageTransition><VisualDesign /></PageTransition>} />
-          <Route path="/projects/growth-strategy" element={<PageTransition><GrowthStrategy /></PageTransition>} />
           <Route path="/projects/video-editing-post-production" element={<PageTransition><VideoEditingPostProduction /></PageTransition>} />
+          {/* Legacy redirects for removed project pages */}
+          <Route path="/projects/web-portfolio" element={<Navigate to="/#projects" replace />} />
+          <Route path="/projects/scenesync-edits" element={<Navigate to="/#projects" replace />} />
+          <Route path="/projects/visual-design" element={<Navigate to="/#projects" replace />} />
+          <Route path="/projects/growth-strategy" element={<Navigate to="/#projects" replace />} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </AnimatePresence>

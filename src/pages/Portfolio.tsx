@@ -489,7 +489,7 @@ export function Portfolio() {
               </a>
             </nav>
             
-            <p className="text-foreground/70">© 2026 Geddada Devicharan (@imdvichrn). All rights reserved.</p>
+            <p className="text-xs text-foreground/60">© 2026 · @imdvichrn</p>
             <FooterMicroBio />
           </div>
         </div>

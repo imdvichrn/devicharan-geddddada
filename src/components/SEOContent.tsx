@@ -67,15 +67,13 @@ export function HiddenIdentityBlock({ page = 'home', projectTitle }: PageSEOProp
 }
 
 /**
- * FooterMicroBio — tiny, low-contrast visible bio line.
- * Unobtrusive but crawlable as on-page content (not hidden).
+ * FooterMicroBio — minimal one-liner. Keep it short and humble.
+ * Aliases live in the sr-only HiddenIdentityBlock for SEO; no need to repeat them visibly.
  */
 export function FooterMicroBio() {
   return (
-    <p className="text-[10px] md:text-xs text-foreground/40 leading-relaxed max-w-3xl mx-auto text-center mt-2 px-4">
-      Geddada Devicharan (Charan · Devi Charan · imdvichrn · iamdvichrn) — EEE BTech
-      student from Visakhapatnam who builds AI workflows, automation systems, and
-      video editing projects including ExamFlowOS and Echoless.
+    <p className="text-[10px] md:text-xs text-foreground/40 leading-relaxed max-w-2xl mx-auto text-center mt-2 px-4">
+      EEE BTech student from Visakhapatnam — building AI workflows, automation, and video editing tools.
     </p>
   );
 }

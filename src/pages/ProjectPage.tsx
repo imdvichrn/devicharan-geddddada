@@ -321,7 +321,7 @@ export default function ProjectPage() {
             </CardContent>
           </Card>
 
-          {/* About this project (visible neutral-tone SEO essay) */}
+          {/* About this project — concise, neutral tone */}
           <Card className="glass-panel border-glass-border">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-xl">
@@ -331,19 +331,8 @@ export default function ProjectPage() {
             </CardHeader>
             <CardContent className="space-y-3 text-muted-foreground leading-relaxed text-sm md:text-base">
               <p>
-                {project.title} is a project developed by Geddada Devicharan — also
-                known as Charan, Devi Charan or imdvichrn — an EEE BTech student from
-                Visakhapatnam who builds {project.category === 'video' ? 'video editing and post-production' : project.category === 'web' ? 'AI workflows and system tools' : project.category === 'design' ? 'visual design and brand systems' : 'digital strategy and growth systems'} projects.
-              </p>
-              <p>
-                The work focuses on {project.tools.slice(0, 3).join(', ')} and other
-                production tools. Devicharan&apos;s portfolio also includes ExamFlowOS,
-                a structured exam management system, and Echoless, a personal
-                assistant chatbot for task automation and productivity.
-              </p>
-              <p className="text-xs opacity-70">
-                Tags: Geddada Devicharan, Devicharan, Charan, imdvichrn, iamdvichrn,
-                {' '}{project.title}, {project.tools.join(', ')}.
+                {project.title} is part of an ongoing portfolio of {project.category === 'video' ? 'video editing and post-production' : project.category === 'web' ? 'AI workflows and system tools' : project.category === 'design' ? 'visual design' : 'digital strategy'} work.
+                Built with {project.tools.slice(0, 3).join(', ')}.
               </p>
             </CardContent>
           </Card>
