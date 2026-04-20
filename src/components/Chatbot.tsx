@@ -291,22 +291,14 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
         },
         onDone: () => {
           setIsLoading(false);
+          toast({
+            title: "Message Sent Successfully!",
+            description: "Geddada Devicharan will get back to you shortly.",
+          });
         },
         onError: (error) => {
           console.error("Chat stream error:", error);
-          setMessages(prev => [
-            ...prev,
-            {
-              role: "assistant" as const,
-              content: `I'm having a moment — please try again! In the meantime:\n\n📧 devicharangeddada@gmail.com`,
-              buttons: [
-                { label: "Send Email", icon: "mail" as const, action: "email" },
-                { label: "WhatsApp", icon: "phone" as const, action: "whatsapp" },
-              ],
-              timestamp: new Date(),
-            },
-          ]);
-          setIsLoading(false);
+          throw error; // Pass to the catch block
         },
       });
     } catch (error) {
@@ -323,6 +315,11 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
           timestamp: new Date()
         }
       ]);
+      toast({
+        variant: "destructive",
+        title: "Message Failed",
+        description: "Something went wrong. Please try again.",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -501,7 +498,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
     <>
       {/* Echo Less Toggle Button - Always-floating Siri Orb */}
       <motion.div
-        className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[70] pointer-events-auto"
+        className="fixed bottom-6 right-6 z-[9999] pointer-events-auto"
         whileHover={{ scale: 1.15 }}
         whileTap={{ scale: 0.95 }}
       >
@@ -531,7 +528,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="fixed bottom-20 left-4 right-4 md:bottom-24 md:right-6 md:left-auto w-full max-w-sm md:w-96 h-[500px] z-[65] flex flex-col"
+            className="fixed bottom-20 right-6 w-full max-w-sm h-[500px] z-[9998] flex flex-col"
           >
             {/* Glass Panel Container */}
             <div className="relative h-full rounded-2xl overflow-hidden shadow-2xl border border-chat-border bg-chat-bg/95 backdrop-blur-xl flex flex-col">

@@ -100,7 +100,11 @@ export function ContactForm() {
     try {
       // 1. Play the professional sound effect (non-blocking)
       try {
-          const audio = new Audio('/siri-wave.webm');
+        const audio = new Audio('/siri-wave.webm');
+        audio.play().catch(() => {
+          playFallbackBeep();
+        });
+      } catch (audioErr) {
         playFallbackBeep();
       }
 
