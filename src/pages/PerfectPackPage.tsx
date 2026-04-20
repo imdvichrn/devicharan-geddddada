@@ -265,7 +265,35 @@ export default function PerfectPackPage() {
               </CardContent>
             </Card>
           </motion.div>
+
+          {/* About Perfect Pack — visible neutral-tone SEO essay */}
+          <motion.div variants={fadeUp}>
+            <Card className="glass-panel border-glass-border">
+              <CardContent className="p-6 md:p-8 space-y-3 text-muted-foreground leading-relaxed text-sm md:text-base">
+                <h2 className="text-lg md:text-xl font-semibold text-foreground">About Perfect Pack</h2>
+                <p>
+                  Perfect Pack is a creative asset toolkit built by Geddada Devicharan
+                  (also known as Charan, Devi Charan or imdvichrn) for video editors
+                  working in DaVinci Resolve and other major NLEs. The pack includes
+                  high-resolution textures, professional sound effects, drag-and-drop
+                  DRFX presets and animated motion titles.
+                </p>
+                <p>
+                  The focus is on clean drag-and-drop integration and consistent
+                  visual quality. Devicharan&apos;s portfolio also includes ExamFlowOS,
+                  a structured exam management system, and Echoless, a personal
+                  assistant chatbot for task automation and productivity.
+                </p>
+                <p className="text-xs opacity-70">
+                  Tags: Perfect Pack, imdvichrn, Geddada Devicharan, Devicharan,
+                  Charan, Devi Charan, DaVinci Resolve assets, DRFX presets, motion
+                  titles, video editing pack.
+                </p>
+              </CardContent>
+            </Card>
+          </motion.div>
         </motion.div>
+        <FooterMicroBio />
       </div>
     </>
   );
