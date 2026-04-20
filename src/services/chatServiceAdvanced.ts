@@ -361,8 +361,12 @@ export async function sendChatMessageWithGemini(messages: Message[]): Promise<st
 }
 
 export function getUserNameFromStorage(): string | null {
-  if (typeof window !== 'undefined') {
-    return localStorage.getItem('chatbot_user_name');
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      return window.localStorage.getItem('chatbot_user_name');
+    }
+  } catch (error) {
+    console.warn('Unable to read chatbot user name from storage:', error);
   }
   return null;
 }

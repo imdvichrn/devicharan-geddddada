@@ -39,16 +39,21 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
   // Scroll to section helper
   const scrollToSection = (sectionId: string) => {
     setIsOpen(false);
-    // If not on home page, navigate first
-    if (location.pathname !== '/') {
-      navigate('/');
-      setTimeout(() => {
-        const element = document.getElementById(sectionId);
-        element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 300);
-    } else {
+    const isHomePage = location.pathname === '/';
+    if (isHomePage) {
       const element = document.getElementById(sectionId);
-      element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (element) {
+        const navHeight = 64;
+        const y = element.getBoundingClientRect().top + window.scrollY - navHeight;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+      return;
+    }
+
+    if (sectionId === 'home') {
+      window.location.href = '/';
+    } else {
+      window.location.href = '/#' + sectionId;
     }
   };
 
@@ -164,7 +169,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
     };
 
     try {
-      const audio = new Audio('/message-sent.mp3');
+      const audio = new Audio('/siri-wave.webm');
       audio.volume = 0.4;
       audio.play().catch(() => playFallbackBeep());
     } catch (err) {
@@ -325,7 +330,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
   const handleButtonAction = (action: string) => {
     switch (action) {
       case 'view-showreel':
-        navigate('/projects/scenesync-edits');
+        navigate('/project/scenesync-edits');
         setIsOpen(false);
         break;
       case 'scroll-projects':
@@ -389,11 +394,12 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
       default:
         if (action.startsWith('project-')) {
           const projectLink = action.replace('project-', '');
-          // Route to project based on link
           if (projectLink.includes('video')) {
             navigate('/projects/video-editing-post-production');
           } else if (projectLink.includes('scenesync')) {
             navigate('/project/scenesync-edits');
+          } else if (projectLink.includes('perfect-pack')) {
+            navigate('/project/perfect-pack-plugin');
           }
           setIsOpen(false);
         }
@@ -494,7 +500,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
     <>
       {/* Echo Less Toggle Button - Always-floating Siri Orb */}
       <motion.div
-        className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[60] pointer-events-auto"
+        className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[70] pointer-events-auto"
         whileHover={{ scale: 1.15 }}
         whileTap={{ scale: 0.95 }}
       >
@@ -524,7 +530,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }>((props, ref) => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="fixed bottom-20 right-4 md:bottom-24 md:right-6 w-[calc(100vw-2rem)] max-w-sm md:w-96 h-[500px] z-[55] flex flex-col"
+            className="fixed bottom-20 left-4 right-4 md:bottom-24 md:right-6 md:left-auto w-full max-w-sm md:w-96 h-[500px] z-[65] flex flex-col"
           >
             {/* Glass Panel Container */}
             <div className="relative h-full rounded-2xl overflow-hidden shadow-2xl border border-chat-border bg-chat-bg/95 backdrop-blur-xl flex flex-col">
