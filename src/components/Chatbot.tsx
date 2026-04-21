@@ -528,7 +528,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="fixed bottom-20 right-6 w-full max-w-sm h-[500px] z-[9998] flex flex-col"
+            className="fixed bottom-24 left-3 right-3 md:left-auto md:right-6 md:w-96 max-w-[calc(100vw-1.5rem)] h-[min(500px,calc(100vh-7rem))] z-[9998] flex flex-col"
           >
             {/* Glass Panel Container */}
             <div className="relative h-full rounded-2xl overflow-hidden shadow-2xl border border-chat-border bg-chat-bg/95 backdrop-blur-xl flex flex-col">
