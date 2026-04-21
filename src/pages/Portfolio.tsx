@@ -201,13 +201,13 @@ export function Portfolio() {
   };
   return <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Geddada Devicharan (Charan) — AI Workflows, Automation & Video Editing | imdvichrn</title>
-        <meta name="description" content="Geddada Devicharan, also known as Charan or imdvichrn, is an EEE BTech student who builds AI workflows, automation systems, and video editing projects including ExamFlowOS and Echoless." />
-        <meta name="keywords" content="Geddada Devicharan, Devicharan, Devi Charan, Charan, Geddada, imdvichrn, iamdvichrn, geddadadevicharan, Devicharan portfolio, Charan developer, Devicharan AI developer, ExamFlowOS, ExamFlowOS developer, Echoless AI assistant, Charan Echoless, Charan automation engineer, Devicharan editor, Devicharan video editor, Telugu video editor for YouTube, Cinematic color grading DaVinci Resolve, React developer Andhra Pradesh, AI Chatbot Integration services, EEE BTech developer India, AI workflow developer, automation systems, student developer India, Echoless developer" />
-        <link rel="canonical" href="https://geddadadevicharan.vercel.app" />
+        <title>Geddada Devicharan (@imdvichrn) — AI Workflows, Automation & Video Editing</title>
+        <meta name="description" content="Geddada Devicharan (@imdvichrn) is an EEE BTech student who builds AI workflows, automation systems, and video editing projects including ExamFlowOS and Echoless." />
+        <meta name="keywords" content="Geddada Devicharan, Devicharan, Devi Charan, imdvichrn, iamdvichrn, geddadadevicharan, @imdvichrn, Devicharan portfolio, imdvichrn developer, Devicharan AI developer, ExamFlowOS, ExamFlowOS developer, Echoless AI assistant, imdvichrn Echoless, imdvichrn automation engineer, Devicharan editor, Devicharan video editor, Telugu video editor for YouTube, Cinematic color grading DaVinci Resolve, React developer Andhra Pradesh, AI Chatbot Integration services, EEE BTech developer India, AI workflow developer, automation systems, student developer India, Echoless developer" />
+        <link rel="canonical" href="https://devicharangeddada.lovable.app" />
         <meta property="og:title" content="Geddada Devicharan (Charan) — AI Workflows, Automation & Video Editing" />
         <meta property="og:description" content="Devicharan builds AI workflows, automation systems, and video editing projects. Notable: ExamFlowOS and Echoless." />
-        <meta property="og:url" content="https://geddadadevicharan.vercel.app" />
+        <meta property="og:url" content="https://devicharangeddada.lovable.app" />
         <script type="application/ld+json">{JSON.stringify(generatePersonSchema())}</script>
         <script type="application/ld+json">{JSON.stringify(generateWebsiteSchema())}</script>
       </Helmet>
@@ -267,7 +267,7 @@ export function Portfolio() {
                     Geddada Devicharan
                   </h1>
                   <div className="mt-1">
-                    <span className="inline-block text-sm md:text-base text-primary font-medium">@imdvichrn</span>
+                    <span className="inline-block text-sm md:text-base text-primary font-medium">@geddadadevicharan</span>
                   </div>
                   <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground px-2">
                     Video Editor & Post-Production Specialist | Digital Creator | Developer
