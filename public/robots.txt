@@ -6,4 +6,4 @@ Disallow: /admin
 # Devicharan builds AI workflows, automation systems, and video editing projects
 # Notable projects: ExamFlow OS (ExamFlowOS), Echoless AI assistant, Perfect Pack
 
-Sitemap: https://geddadadevicharan.vercel.app/sitemap.xml
+Sitemap: https://devicharangeddada.lovable.app/sitemap.xml

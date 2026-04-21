@@ -5,7 +5,7 @@
  *   Geddada, imdvichrn, iamdvichrn
  */
 
-const BASE_URL = "https://geddadadevicharan.vercel.app";
+const BASE_URL = "https://devicharangeddada.lovable.app";
 const PERSON_NAME = "Geddada Devicharan";
 const PERSON_ALIASES = [
   "Charan",

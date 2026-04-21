@@ -73,14 +73,14 @@ export default function VideoEditingPostProduction() {
       <Helmet>
         <title>{title} | Geddada Devicharan</title>
         <meta name="description" content="Video Editing & Post-Production - Professional post-production portfolio by Geddada Devicharan featuring color grading, audio design, and cinematic editing techniques." />
-        <link rel="canonical" href="https://geddadadevicharan.vercel.app/projects/video-editing-post-production" />
+        <link rel="canonical" href="https://devicharangeddada.lovable.app/projects/video-editing-post-production" />
         
         {/* Breadcrumb Schema */}
         <script type="application/ld+json">
           {JSON.stringify(generateBreadcrumbSchema([
-            { name: "Home", url: "https://geddadadevicharan.vercel.app" },
-            { name: "Projects", url: "https://geddadadevicharan.vercel.app/#projects" },
-            { name: title, url: "https://geddadadevicharan.vercel.app/projects/video-editing-post-production" }
+            { name: "Home", url: "https://devicharangeddada.lovable.app" },
+            { name: "Projects", url: "https://devicharangeddada.lovable.app/#projects" },
+            { name: title, url: "https://devicharangeddada.lovable.app/projects/video-editing-post-production" }
           ]))}
         </script>
         

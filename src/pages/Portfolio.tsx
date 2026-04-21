@@ -204,10 +204,10 @@ export function Portfolio() {
         <title>Geddada Devicharan (Charan) — AI Workflows, Automation & Video Editing | imdvichrn</title>
         <meta name="description" content="Geddada Devicharan, also known as Charan or imdvichrn, is an EEE BTech student who builds AI workflows, automation systems, and video editing projects including ExamFlowOS and Echoless." />
         <meta name="keywords" content="Geddada Devicharan, Devicharan, Devi Charan, Charan, Geddada, imdvichrn, iamdvichrn, geddadadevicharan, Devicharan portfolio, Charan developer, Devicharan AI developer, ExamFlowOS, ExamFlowOS developer, Echoless AI assistant, Charan Echoless, Charan automation engineer, Devicharan editor, Devicharan video editor, Telugu video editor for YouTube, Cinematic color grading DaVinci Resolve, React developer Andhra Pradesh, AI Chatbot Integration services, EEE BTech developer India, AI workflow developer, automation systems, student developer India, Echoless developer" />
-        <link rel="canonical" href="https://geddadadevicharan.vercel.app" />
+        <link rel="canonical" href="https://devicharangeddada.lovable.app" />
         <meta property="og:title" content="Geddada Devicharan (Charan) — AI Workflows, Automation & Video Editing" />
         <meta property="og:description" content="Devicharan builds AI workflows, automation systems, and video editing projects. Notable: ExamFlowOS and Echoless." />
-        <meta property="og:url" content="https://geddadadevicharan.vercel.app" />
+        <meta property="og:url" content="https://devicharangeddada.lovable.app" />
         <script type="application/ld+json">{JSON.stringify(generatePersonSchema())}</script>
         <script type="application/ld+json">{JSON.stringify(generateWebsiteSchema())}</script>
       </Helmet>
