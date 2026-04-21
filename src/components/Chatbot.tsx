@@ -504,7 +504,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
       >
         <Button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-14 h-14 md:w-16 md:h-16 rounded-full shadow-2xl transition-all duration-200 overflow-hidden bg-transparent hover:bg-transparent border-0 outline-none ring-0 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:outline-none flex items-center justify-center p-0"
+          className="w-16 h-16 md:w-20 md:h-20 rounded-full shadow-2xl transition-all duration-200 overflow-hidden bg-transparent hover:bg-transparent border-0 outline-none ring-0 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:outline-none flex items-center justify-center p-0"
           style={{ border: 'none', outline: 'none' }}
           aria-label="Chat Support - Click to talk with Echoless"
         >
@@ -512,7 +512,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
           <motion.div
             animate={{ scale: [1, 1.1, 1] }}
             transition={{ duration: 2, repeat: Infinity, repeatType: 'loop' }}
-            className="w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden"
+            className="w-14 h-14 md:w-[72px] md:h-[72px] rounded-full overflow-hidden"
             style={{ borderRadius: '50%', border: 'none', outline: 'none' }}
           >
             <SiriOrb className="w-full h-full" />
