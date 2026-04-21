@@ -145,7 +145,7 @@ export default function ProjectPage() {
         <meta name="keywords" content={`${project.title}, ${project.tools.join(', ')}, Geddada Devicharan, Devicharan, Charan, imdvichrn, iamdvichrn, Devicharan ${project.category}, Charan developer, Devicharan portfolio`} />
         <meta property="og:title" content={`${project.title} — Geddada Devicharan`} />
         <meta property="og:description" content={project.shortDescription} />
-        <link rel="canonical" href={`https://devicharangeddada.lovable.app/project/${projectId}`} />
+        <link rel="canonical" href={`https://geddadadevicharan.vercel.app/project/${projectId}`} />
         <script type="application/ld+json">{JSON.stringify(generateProjectSchema({
           id: project.id,
           title: project.title,
@@ -154,9 +154,9 @@ export default function ProjectPage() {
           tools: project.tools,
         }))}</script>
         <script type="application/ld+json">{JSON.stringify(generateBreadcrumbSchema([
-          { name: 'Home', url: 'https://devicharangeddada.lovable.app' },
-          { name: 'Projects', url: 'https://devicharangeddada.lovable.app/#projects' },
-          { name: project.title, url: `https://devicharangeddada.lovable.app/project/${projectId}` },
+          { name: 'Home', url: 'https://geddadadevicharan.vercel.app' },
+          { name: 'Projects', url: 'https://geddadadevicharan.vercel.app/#projects' },
+          { name: project.title, url: `https://geddadadevicharan.vercel.app/project/${projectId}` },
         ]))}</script>
         {project.id === 'davinci-workflow-plugin' && (
           <>

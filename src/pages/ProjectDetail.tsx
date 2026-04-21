@@ -152,14 +152,14 @@ export default function ProjectDetail() {
         <meta name="description" content={`${project.title} by Geddada Devicharan - AI Workflow Developer & Professional Video Editor. ${project.description}`} />
         <meta property="og:title" content={`${project.title} - Devicharan AI Workflow`} />
         <meta property="og:description" content={project.description} />
-        <link rel="canonical" href={`https://www.google.com/search?q=https://devicharangeddada.lovable.app/project/${id}`} />
+        <link rel="canonical" href={`https://www.google.com/search?q=https://geddadadevicharan.vercel.app/project/${id}`} />
         
         {/* Breadcrumb Schema - Shows "Home > Projects > [Project Name]" in search results */}
         <script type="application/ld+json">
           {JSON.stringify(generateBreadcrumbSchema([
-            { name: "Home", url: "https://devicharangeddada.lovable.app" },
-            { name: "Projects", url: "https://devicharangeddada.lovable.app/#projects" },
-            { name: project.title, url: `https://devicharangeddada.lovable.app/project/${id}` }
+            { name: "Home", url: "https://geddadadevicharan.vercel.app" },
+            { name: "Projects", url: "https://geddadadevicharan.vercel.app/#projects" },
+            { name: project.title, url: `https://geddadadevicharan.vercel.app/project/${id}` }
           ]))}
         </script>
         
