@@ -489,7 +489,7 @@ export function Portfolio() {
               </a>
             </nav>
             
-            <p className="text-xs text-foreground/60">© 2026 · @imdvichrn</p>
+            <p className="text-xs text-foreground/60">© 2026 devicharangeddada</p>
             <FooterMicroBio />
           </div>
         </div>
