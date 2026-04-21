@@ -136,6 +136,7 @@ export default function ProjectPage() {
   }
 
   const isExamFlow = project.id === 'examflow-os';
+  const hasVideo = Boolean(project.youtubeEmbedId && project.youtubeEmbedId !== 'YOUR_VIDEO_ID');
 
   return (
     <div className="min-h-screen bg-background">
@@ -276,8 +277,8 @@ export default function ProjectPage() {
           {/* Download CTA for ExamFlow */}
           {isExamFlow && <ExamFlowDownloadCTA />}
 
-          {/* Video Player Section */}
-          {project.youtubeEmbedId && project.youtubeEmbedId !== '' && project.youtubeEmbedId !== 'YOUR_VIDEO_ID' ? (
+          {/* Video or showcase section */}
+          {hasVideo ? (
             <Card className="glass-panel border-glass-border overflow-hidden">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-xl">
@@ -307,62 +308,120 @@ export default function ProjectPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-xl">
                   <Play className="text-primary h-5 w-5" />
-                  Showcase Reel
+                  Project Showcase
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.97 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6 }}
-                  className="relative aspect-video rounded-2xl overflow-hidden border border-glass-border"
-                  style={{
-                    background:
-                      'linear-gradient(135deg, hsl(var(--primary) / 0.18), hsl(var(--accent) / 0.12), hsl(var(--background)))',
-                  }}
-                >
-                  {/* Animated gradient orbs */}
-                  <motion.div
-                    animate={{ x: [0, 40, 0], y: [0, -20, 0] }}
-                    transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-                    className="absolute -top-16 -left-16 w-64 h-64 rounded-full blur-3xl"
-                    style={{ background: 'hsl(var(--primary) / 0.35)' }}
-                  />
-                  <motion.div
-                    animate={{ x: [0, -30, 0], y: [0, 25, 0] }}
-                    transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-                    className="absolute -bottom-20 -right-10 w-72 h-72 rounded-full blur-3xl"
-                    style={{ background: 'hsl(var(--accent) / 0.30)' }}
-                  />
-
-                  {/* Subtle grid */}
-                  <div
-                    className="absolute inset-0 opacity-[0.06]"
-                    style={{
-                      backgroundImage:
-                        'linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)',
-                      backgroundSize: '32px 32px',
-                    }}
-                  />
-
-                  {/* Center content */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 gap-3">
-                    <motion.div
-                      animate={{ scale: [1, 1.08, 1] }}
-                      transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
-                      className="w-16 h-16 rounded-2xl flex items-center justify-center backdrop-blur-md border border-glass-border"
-                      style={{ background: 'hsl(var(--primary) / 0.18)' }}
-                    >
-                      <Play className="h-7 w-7 text-primary fill-primary" />
-                    </motion.div>
-                    <h3 className="text-xl md:text-2xl font-semibold text-foreground">
-                      Reel dropping soon
-                    </h3>
-                    <p className="text-sm text-muted-foreground max-w-md">
-                      A dedicated showcase video for {project.title} is being cut. In the meantime, scroll down for the full breakdown.
-                    </p>
+                {project.category === 'design' ? (
+                  <div className="grid gap-4 md:grid-cols-[1.2fr_0.8fr]">
+                    <div className="relative min-h-[280px] rounded-2xl border border-glass-border bg-gradient-to-br from-primary/10 via-background to-accent/10 overflow-hidden p-5">
+                      <div className="absolute inset-0 opacity-40">
+                        <motion.div
+                          animate={{ x: [0, 18, 0], y: [0, -10, 0] }}
+                          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+                          className="absolute top-5 left-5 h-24 w-24 rounded-2xl bg-primary/20"
+                        />
+                        <motion.div
+                          animate={{ x: [0, -14, 0], y: [0, 14, 0] }}
+                          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+                          className="absolute bottom-6 right-8 h-20 w-32 rounded-xl bg-accent/20"
+                        />
+                        <div className="absolute top-1/2 left-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full bg-muted/60 border border-glass-border" />
+                      </div>
+                      <div className="relative z-10 h-full flex flex-col justify-between">
+                        <div className="flex items-center justify-between gap-3">
+                          <Badge variant="outline" className="border-primary/20 bg-background/60">Visual System</Badge>
+                          <div className="flex gap-2">
+                            <span className="h-3 w-3 rounded-full bg-primary/60" />
+                            <span className="h-3 w-3 rounded-full bg-accent/60" />
+                            <span className="h-3 w-3 rounded-full bg-muted" />
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-3 gap-3">
+                          <div className="h-24 rounded-xl border border-glass-border bg-background/70 backdrop-blur-sm" />
+                          <div className="h-24 rounded-xl border border-glass-border bg-primary/10 backdrop-blur-sm" />
+                          <div className="h-24 rounded-xl border border-glass-border bg-accent/10 backdrop-blur-sm" />
+                        </div>
+                        <div className="space-y-2">
+                          <div className="h-3 w-32 rounded-full bg-foreground/10" />
+                          <div className="h-3 w-full rounded-full bg-foreground/10" />
+                          <div className="h-3 w-4/5 rounded-full bg-foreground/10" />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="grid gap-4">
+                      <div className="rounded-2xl border border-glass-border bg-background/50 p-4">
+                        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-2">Preview</p>
+                        <h3 className="text-lg font-semibold text-foreground">Design gallery coming next</h3>
+                        <p className="text-sm text-muted-foreground mt-2">For now this page highlights the design system, layout direction, and deliverable style instead of an empty video block.</p>
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        {['Brand Identity', 'Social Assets', 'Thumbnail Design', 'Digital Layouts'].map((item) => (
+                          <div key={item} className="rounded-xl border border-glass-border bg-background/50 px-3 py-4 text-sm text-foreground">
+                            {item}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                </motion.div>
+                ) : project.category === 'strategy' ? (
+                  <div className="grid gap-4 md:grid-cols-[1.15fr_0.85fr]">
+                    <div className="rounded-2xl border border-glass-border bg-gradient-to-br from-primary/10 via-background to-accent/10 p-5">
+                      <div className="grid gap-3">
+                        {[
+                          { title: 'Research', body: 'Audience mapping, competitor scan, signal gathering' },
+                          { title: 'Positioning', body: 'Offer clarity, channel fit, content angle' },
+                          { title: 'Optimization', body: 'Testing, measurement, iteration, retention' },
+                        ].map((step, index) => (
+                          <motion.div
+                            key={step.title}
+                            initial={{ opacity: 0, x: -12 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: index * 0.08 }}
+                            className="flex items-start gap-3 rounded-xl border border-glass-border bg-background/60 p-4"
+                          >
+                            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/15 text-sm font-semibold text-primary">
+                              {index + 1}
+                            </div>
+                            <div>
+                              <p className="font-medium text-foreground">{step.title}</p>
+                              <p className="text-sm text-muted-foreground">{step.body}</p>
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="grid gap-4">
+                      <div className="rounded-2xl border border-glass-border bg-background/50 p-4">
+                        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-2">Snapshot</p>
+                        <h3 className="text-lg font-semibold text-foreground">Strategy breakdown instead of filler</h3>
+                        <p className="text-sm text-muted-foreground mt-2">This section now previews the framework and decision flow until a proper case-study reel is added.</p>
+                      </div>
+                      <div className="rounded-2xl border border-glass-border bg-background/50 p-4 space-y-3">
+                        <div className="flex items-end gap-2 h-24">
+                          {[42, 68, 54, 82, 73].map((value, i) => (
+                            <motion.div
+                              key={i}
+                              animate={{ height: [`${Math.max(18, value - 12)}%`, `${value}%`, `${Math.max(18, value - 6)}%`] }}
+                              transition={{ duration: 2.6, repeat: Infinity, delay: i * 0.12, ease: 'easeInOut' }}
+                              className="flex-1 rounded-t-md bg-primary/30"
+                            />
+                          ))}
+                        </div>
+                        <div className="flex justify-between text-xs text-muted-foreground">
+                          <span>Reach</span>
+                          <span>CTR</span>
+                          <span>Retention</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="rounded-2xl border border-glass-border bg-gradient-to-br from-primary/10 via-background to-accent/10 p-6 text-center">
+                    <h3 className="text-xl font-semibold text-foreground">Showcase coming soon</h3>
+                    <p className="mt-2 text-sm text-muted-foreground">A dedicated media showcase will be added here soon.</p>
+                  </div>
+                )}
               </CardContent>
             </Card>
           )}

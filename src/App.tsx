@@ -37,8 +37,8 @@ function AnimatedRoutes() {
           {/* Legacy redirects for removed project pages */}
           <Route path="/projects/web-portfolio" element={<Navigate to="/#projects" replace />} />
           <Route path="/projects/scenesync-edits" element={<Navigate to="/#projects" replace />} />
-          <Route path="/projects/visual-design" element={<Navigate to="/#projects" replace />} />
-          <Route path="/projects/growth-strategy" element={<Navigate to="/#projects" replace />} />
+          <Route path="/projects/visual-design" element={<Navigate to="/project/visual-design" replace />} />
+          <Route path="/projects/growth-strategy" element={<Navigate to="/project/growth-strategy" replace />} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </AnimatePresence>
