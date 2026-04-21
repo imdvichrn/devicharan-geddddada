@@ -267,7 +267,7 @@ export function Portfolio() {
                     Geddada Devicharan
                   </h1>
                   <div className="mt-1">
-                    <span className="inline-block text-sm md:text-base text-primary font-medium">@geddadadevicharan</span>
+                    <span className="inline-block text-sm md:text-base text-primary font-medium">@imdvichrn</span>
                   </div>
                   <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground px-2">
                     Video Editor & Post-Production Specialist | Digital Creator | Developer
