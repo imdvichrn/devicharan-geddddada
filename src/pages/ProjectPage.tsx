@@ -277,7 +277,7 @@ export default function ProjectPage() {
           {isExamFlow && <ExamFlowDownloadCTA />}
 
           {/* Video Player Section */}
-          {project.youtubeEmbedId && project.youtubeEmbedId !== '' && (
+          {project.youtubeEmbedId && project.youtubeEmbedId !== '' && project.youtubeEmbedId !== 'YOUR_VIDEO_ID' ? (
             <Card className="glass-panel border-glass-border overflow-hidden">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-xl">
@@ -300,6 +300,69 @@ export default function ProjectPage() {
                     ))}
                   </div>
                 )}
+              </CardContent>
+            </Card>
+          ) : !isExamFlow && (
+            <Card className="glass-panel border-glass-border overflow-hidden">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-xl">
+                  <Play className="text-primary h-5 w-5" />
+                  Showcase Reel
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.97 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6 }}
+                  className="relative aspect-video rounded-2xl overflow-hidden border border-glass-border"
+                  style={{
+                    background:
+                      'linear-gradient(135deg, hsl(var(--primary) / 0.18), hsl(var(--accent) / 0.12), hsl(var(--background)))',
+                  }}
+                >
+                  {/* Animated gradient orbs */}
+                  <motion.div
+                    animate={{ x: [0, 40, 0], y: [0, -20, 0] }}
+                    transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+                    className="absolute -top-16 -left-16 w-64 h-64 rounded-full blur-3xl"
+                    style={{ background: 'hsl(var(--primary) / 0.35)' }}
+                  />
+                  <motion.div
+                    animate={{ x: [0, -30, 0], y: [0, 25, 0] }}
+                    transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+                    className="absolute -bottom-20 -right-10 w-72 h-72 rounded-full blur-3xl"
+                    style={{ background: 'hsl(var(--accent) / 0.30)' }}
+                  />
+
+                  {/* Subtle grid */}
+                  <div
+                    className="absolute inset-0 opacity-[0.06]"
+                    style={{
+                      backgroundImage:
+                        'linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)',
+                      backgroundSize: '32px 32px',
+                    }}
+                  />
+
+                  {/* Center content */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 gap-3">
+                    <motion.div
+                      animate={{ scale: [1, 1.08, 1] }}
+                      transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+                      className="w-16 h-16 rounded-2xl flex items-center justify-center backdrop-blur-md border border-glass-border"
+                      style={{ background: 'hsl(var(--primary) / 0.18)' }}
+                    >
+                      <Play className="h-7 w-7 text-primary fill-primary" />
+                    </motion.div>
+                    <h3 className="text-xl md:text-2xl font-semibold text-foreground">
+                      Reel dropping soon
+                    </h3>
+                    <p className="text-sm text-muted-foreground max-w-md">
+                      A dedicated showcase video for {project.title} is being cut. In the meantime, scroll down for the full breakdown.
+                    </p>
+                  </div>
+                </motion.div>
               </CardContent>
             </Card>
           )}
