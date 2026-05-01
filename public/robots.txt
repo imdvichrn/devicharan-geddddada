@@ -2,8 +2,8 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
-# Geddada Devicharan (Charan / imdvichrn / iamdvichrn) — portfolio
-# Devicharan builds AI workflows, automation systems, and video editing projects
-# Notable projects: ExamFlow OS (ExamFlowOS), Echoless AI assistant, Perfect Pack
+# Devicharan Geddada (imdvichrn) — AI Video Editor, Reels & Automation Creator (India)
+# Brands: Echoless (Echoess) ecosystem, ExamFlowOS (AI study system / StudyOS)
+# Notable projects: ExamFlowOS, Echoless AI assistant, Perfect Pack
 
 Sitemap: https://geddadadevicharan.vercel.app/sitemap.xml
