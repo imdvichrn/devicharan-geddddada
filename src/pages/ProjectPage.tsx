@@ -27,7 +27,7 @@ import {
 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { getProjectById } from '@/data/projects';
-import { generateProductSchema, generatePluginSchema, generateProjectSchema, generateBreadcrumbSchema } from '@/lib/structuredData';
+import { generateProductSchema, generatePluginSchema, generateProjectSchema, generateBreadcrumbSchema, generateExamFlowOSSchema, generateEchoessBrandSchema } from '@/lib/structuredData';
 import { HiddenIdentityBlock } from '@/components/SEOContent';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -138,14 +138,75 @@ export default function ProjectPage() {
   const isExamFlow = project.id === 'examflow-os';
   const hasVideo = Boolean(project.youtubeEmbedId && project.youtubeEmbedId !== 'YOUR_VIDEO_ID');
 
+  // Per-project SEO metadata (invisible) — natural language, no stuffing on UI
+  const seoConfig: Record<string, { title: string; description: string; keywords: string; ogTitle?: string }> = {
+    'examflow-os': {
+      title: 'ExamFlowOS | AI Study System by Devicharan Geddada',
+      description: 'ExamFlowOS — an AI-powered productivity and study system by Devicharan Geddada. A browser-based StudyOS combining syllabus tracking, spaced repetition, and focus-mode workflows.',
+      keywords: 'examflowos, examflow os, examflow system, examflow ai, examflow method, examflow protocol, examflowos by imdvichrn, examflowos devicharan, imdvichrn examflowos, examflow system devicharan, examflowos official, studyos, productivityos, focusos, deepworkos, disciplineos, ai study system, ai productivity system, automation study workflow, ai focus system, smart study os, echoess system, echoess ai, echoess workflows, echoess os, Devicharan Geddada, imdvichrn',
+      ogTitle: 'ExamFlowOS — AI Study System by Devicharan Geddada (imdvichrn)',
+    },
+    'video-production': {
+      title: 'Professional Video Production — Devicharan Geddada (imdvichrn)',
+      description: 'Cinematic 4K video production with DaVinci Resolve color grading, Fusion VFX, and Fairlight sound design. Reels, ads, and cinematic edits by Devicharan Geddada.',
+      keywords: 'professional video production, cinematic video editor india, davinci resolve color grading, fusion vfx, fairlight sound design, 4k raw workflow, reels editor india, ai video editor, Devicharan Geddada, imdvichrn',
+    },
+    'scenesync-edits': {
+      title: 'SceneSync Edits — Beat-Synced Reels & Music Edits | imdvichrn',
+      description: 'SceneSync Edits — frame-perfect beat-synchronized reels and music edits with dynamic transitions and audio-reactive visuals by Devicharan Geddada.',
+      keywords: 'beat sync editing, music video editing, reels editor, audio reactive visuals, dynamic transitions, davinci resolve, ai video editor, Devicharan Geddada, imdvichrn',
+    },
+    'visual-design': {
+      title: 'Visual Design Portfolio — Brand, Thumbnails & Reels Assets | imdvichrn',
+      description: 'Visual design portfolio by Devicharan Geddada — brand identity, YouTube thumbnails, social graphics, and creator visual systems.',
+      keywords: 'visual design portfolio, brand identity designer, youtube thumbnail designer, social media graphics india, creator visual system, Devicharan Geddada, imdvichrn',
+    },
+    'growth-strategy': {
+      title: 'Growth Strategy & Digital Marketing | Devicharan Geddada',
+      description: 'Data-driven growth strategy, content systems, and creator-economy marketing playbooks by Devicharan Geddada (imdvichrn).',
+      keywords: 'growth strategy, digital marketing india, content strategy, creator economy india, audience research, kpi tracking, Devicharan Geddada, imdvichrn',
+    },
+    'data-research': {
+      title: 'Data Research & Analysis | Devicharan Geddada',
+      description: 'Structured data research, analysis and documentation services by Devicharan Geddada — accuracy, clarity, and actionable insight.',
+      keywords: 'data research, market research, data analysis, documentation, Devicharan Geddada, imdvichrn',
+    },
+    'video-editing-post-production': {
+      title: 'Video Editing & Post-Production Showcase | Devicharan Geddada',
+      description: 'Professional post-production showcase: advanced editing, color correction, sound design, and 3D / Fusion motion graphics by Devicharan Geddada.',
+      keywords: 'video editing, post production, color correction, sound design, fusion motion graphics, 3d cgi integration, davinci resolve, Devicharan Geddada, imdvichrn',
+    },
+    'perfect-pack': {
+      title: 'PERFECT PACK — All-In-One Creative Assets by imdvichrn',
+      description: 'PERFECT PACK by imdvichrn — high-resolution textures, drag-and-drop assets, and Fusion-ready elements optimized for DaVinci Resolve and major NLEs.',
+      keywords: 'perfect pack, davinci resolve assets, fusion textures, drfx presets, video editor toolkit, imdvichrn, Devicharan Geddada',
+    },
+  };
+
+  const seo = seoConfig[project.id] ?? {
+    title: `${project.title} — by Devicharan Geddada (Charan / imdvichrn)`,
+    description: `${project.title}: ${project.shortDescription} — built by Devicharan Geddada (Charan, imdvichrn).`.slice(0, 160),
+    keywords: `${project.title}, ${project.tools.join(', ')}, Devicharan Geddada, Geddada Devicharan, Devicharan, Charan, imdvichrn, iamdvichrn, Devicharan ${project.category}, Charan developer, Devicharan portfolio`,
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>{project.title} — by Geddada Devicharan (Charan / imdvichrn)</title>
-        <meta name="description" content={`${project.title}: ${project.shortDescription} — built by Geddada Devicharan (Charan, imdvichrn).`.slice(0, 160)} />
-        <meta name="keywords" content={`${project.title}, ${project.tools.join(', ')}, Geddada Devicharan, Devicharan, Charan, imdvichrn, iamdvichrn, Devicharan ${project.category}, Charan developer, Devicharan portfolio`} />
-        <meta property="og:title" content={`${project.title} — Geddada Devicharan`} />
-        <meta property="og:description" content={project.shortDescription} />
+        <title>{seo.title}</title>
+        <meta name="description" content={seo.description} />
+        <meta name="keywords" content={seo.keywords} />
+        <meta name="author" content="Devicharan Geddada" />
+        <meta property="og:type" content={isExamFlow ? 'website' : 'article'} />
+        <meta property="og:title" content={seo.ogTitle ?? seo.title} />
+        <meta property="og:description" content={seo.description} />
+        <meta property="og:url" content={`https://geddadadevicharan.vercel.app/project/${projectId}`} />
+        <meta property="og:image" content={isExamFlow ? 'https://geddadadevicharan.vercel.app/examflow-logo.jpg' : 'https://geddadadevicharan.vercel.app/profile-avatar.png'} />
+        <meta property="og:site_name" content="Devicharan Geddada — Portfolio" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={seo.ogTitle ?? seo.title} />
+        <meta name="twitter:description" content={seo.description} />
+        <meta name="twitter:image" content={isExamFlow ? 'https://geddadadevicharan.vercel.app/examflow-logo.jpg' : 'https://geddadadevicharan.vercel.app/profile-avatar.png'} />
+        <meta name="twitter:creator" content="@imdvichrn" />
         <link rel="canonical" href={`https://geddadadevicharan.vercel.app/project/${projectId}`} />
         <script type="application/ld+json">{JSON.stringify(generateProjectSchema({
           id: project.id,
@@ -159,6 +220,12 @@ export default function ProjectPage() {
           { name: 'Projects', url: 'https://geddadadevicharan.vercel.app/#projects' },
           { name: project.title, url: `https://geddadadevicharan.vercel.app/project/${projectId}` },
         ]))}</script>
+        {isExamFlow && (
+          <>
+            <script type="application/ld+json">{JSON.stringify(generateExamFlowOSSchema())}</script>
+            <script type="application/ld+json">{JSON.stringify(generateEchoessBrandSchema())}</script>
+          </>
+        )}
         {project.id === 'davinci-workflow-plugin' && (
           <>
             <script type="application/ld+json">
@@ -176,7 +243,7 @@ export default function ProjectPage() {
         )}
       </Helmet>
 
-      <HiddenIdentityBlock page="project" projectTitle={project.title} />
+      <HiddenIdentityBlock page="project" projectTitle={project.title} projectId={project.id} projectKeywords={seo.keywords} />
 
       <Navigation />
 
