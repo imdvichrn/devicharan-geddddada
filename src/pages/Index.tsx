@@ -532,8 +532,6 @@ const Index = () => {
         </div>
       </motion.section>
 
-      {/* Chatbot */}
-      <Chatbot ref={undefined} />
     </>
   );
 };
