@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { Navigation } from '@/components/Navigation';
-import { Chatbot } from '@/components/Chatbot';
+
 import { WindowChrome } from '@/components/WindowChrome';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
