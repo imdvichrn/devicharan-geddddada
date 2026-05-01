@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { Navigation } from '@/components/Navigation';
 import { ContactForm } from '@/components/ContactForm';
 import { HiddenIdentityBlock, FooterMicroBio } from '@/components/SEOContent';
-import { generatePersonSchema, generateWebsiteSchema } from '@/lib/structuredData';
+import { generatePersonSchema, generateWebsiteSchema, generateEchoessBrandSchema, generateExamFlowOSSchema } from '@/lib/structuredData';
 import { WindowChrome } from '@/components/WindowChrome';
 import { AnimatedBackground } from '@/components/AnimatedBackground';
 import { LiveProjectsButton } from '@/components/LiveProjectsButton';
@@ -201,15 +201,26 @@ export function Portfolio() {
   };
   return <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Geddada Devicharan (@imdvichrn) — AI Workflows, Automation & Video Editing</title>
-        <meta name="description" content="Geddada Devicharan (@imdvichrn) is an EEE BTech student who builds AI workflows, automation systems, and video editing projects including ExamFlowOS and Echoless." />
-        <meta name="keywords" content="Geddada Devicharan, Devicharan, Devi Charan, imdvichrn, iamdvichrn, geddadadevicharan, @imdvichrn, Devicharan portfolio, imdvichrn developer, Devicharan AI developer, ExamFlowOS, ExamFlowOS developer, Echoless AI assistant, imdvichrn Echoless, imdvichrn automation engineer, Devicharan editor, Devicharan video editor, Telugu video editor for YouTube, Cinematic color grading DaVinci Resolve, React developer Andhra Pradesh, AI Chatbot Integration services, EEE BTech developer India, AI workflow developer, automation systems, student developer India, Echoless developer" />
+        <title>Devicharan Geddada (@imdvichrn) | AI Video Editor, Reels & Automation Creator India</title>
+        <meta name="description" content="Devicharan Geddada (imdvichrn) — AI Video Editor, Reels & Automation Creator from India. Creator of ExamFlowOS (AI study system) and Echoless (personal AI assistant). Cinematic edits, AI workflows, and automation systems." />
+        <meta name="keywords" content="Devicharan Geddada, Geddada Devicharan, Devicharan, Devi Charan, imdvichrn, iamdvichrn, geddadadevicharan, @imdvichrn, AI video editor india, reels editor india, automation creator india, ai workflow developer, ExamFlowOS, examflow os, examflow system, ai study system, studyos, productivityos, Echoless, Echoess, echoess ai, echoess workflows, echoess os, davinci resolve color grading, fusion vfx, sound design, react developer andhra pradesh, creator economy india, eee btech developer, premiere pro editor, after effects motion graphics, ai automation systems" />
+        <meta name="author" content="Devicharan Geddada" />
         <link rel="canonical" href="https://geddadadevicharan.vercel.app" />
-        <meta property="og:title" content="Geddada Devicharan (Charan) — AI Workflows, Automation & Video Editing" />
-        <meta property="og:description" content="Devicharan builds AI workflows, automation systems, and video editing projects. Notable: ExamFlowOS and Echoless." />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Devicharan Geddada (@imdvichrn) | AI Video Editor, Reels & Automation Creator India" />
+        <meta property="og:description" content="AI Video Editor, Reels & Automation Creator from India. Creator of ExamFlowOS and Echoless." />
         <meta property="og:url" content="https://geddadadevicharan.vercel.app" />
+        <meta property="og:image" content="https://geddadadevicharan.vercel.app/profile-avatar.png" />
+        <meta property="og:site_name" content="Devicharan Geddada — Portfolio" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Devicharan Geddada (@imdvichrn) | AI Video Editor, Reels & Automation Creator India" />
+        <meta name="twitter:description" content="AI Video Editor, Reels & Automation Creator from India. Creator of ExamFlowOS and Echoless." />
+        <meta name="twitter:image" content="https://geddadadevicharan.vercel.app/profile-avatar.png" />
+        <meta name="twitter:creator" content="@imdvichrn" />
         <script type="application/ld+json">{JSON.stringify(generatePersonSchema())}</script>
         <script type="application/ld+json">{JSON.stringify(generateWebsiteSchema())}</script>
+        <script type="application/ld+json">{JSON.stringify(generateEchoessBrandSchema())}</script>
+        <script type="application/ld+json">{JSON.stringify(generateExamFlowOSSchema())}</script>
       </Helmet>
       <HiddenIdentityBlock page="home" />
       <Navigation />
