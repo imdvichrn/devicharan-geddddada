@@ -495,10 +495,5 @@ export function Portfolio() {
         </div>
       </footer>
 
-      {/* Chatbot */}
-      <Suspense fallback={null}>
-        <Chatbot ref={chatbotRef} />
-      </Suspense>
-      
     </div>;
 }
