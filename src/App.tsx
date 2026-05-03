@@ -18,6 +18,7 @@ import Admin from "./pages/Admin";
 import VideoEditingPostProduction from "./pages/projects/VideoEditingPostProduction";
 import ProjectDetail from "./pages/ProjectDetail";
 import ProjectPage from "./pages/ProjectPage";
+import PerfectPackPage from "./pages/PerfectPackPage";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,8 @@ function AnimatedRoutes() {
           <Route path="/" element={<PageTransition><Portfolio /></PageTransition>} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/projects" element={<Navigate to="/#projects" replace />} />
+          <Route path="/perfect-pack" element={<PageTransition><PerfectPackPage /></PageTransition>} />
+          <Route path="/project/perfect-pack" element={<Navigate to="/perfect-pack" replace />} />
           <Route path="/project/:projectId" element={<PageTransition><ProjectPage /></PageTransition>} />
           <Route path="/projects/video-editing-post-production" element={<PageTransition><VideoEditingPostProduction /></PageTransition>} />
           {/* Legacy redirects for removed project pages */}
