@@ -49,9 +49,18 @@ async function loadProjects(projectRoot: string): Promise<ProjectLite[]> {
   return items;
 }
 
-function urlEntry(loc: string, lastmod: string, changefreq: string, priority: number) {
-  return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority.toFixed(2)}</priority>\n  </url>`;
+function urlEntry(loc: string, lastmod: string, changefreq: string, priority: number, image?: string) {
+  const img = image
+    ? `\n    <image:image>\n      <image:loc>${image}</image:loc>\n    </image:image>`
+    : '';
+  return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority.toFixed(2)}</priority>${img}\n  </url>`;
 }
+
+const OG_BY_ID: Record<string, string> = {
+  'examflow-os': 'https://geddadadevicharan.vercel.app/og/og-examflow.jpg',
+  'perfect-pack': 'https://geddadadevicharan.vercel.app/og/og-perfect-pack.jpg',
+  'perfect-pack-plugin': 'https://geddadadevicharan.vercel.app/og/og-perfect-pack.jpg',
+};
 
 export async function generateSitemap(projectRoot: string, outDir: string) {
   const projects = await loadProjects(projectRoot);
