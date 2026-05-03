@@ -49,9 +49,18 @@ async function loadProjects(projectRoot: string): Promise<ProjectLite[]> {
   return items;
 }
 
-function urlEntry(loc: string, lastmod: string, changefreq: string, priority: number) {
-  return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority.toFixed(2)}</priority>\n  </url>`;
+function urlEntry(loc: string, lastmod: string, changefreq: string, priority: number, image?: string) {
+  const img = image
+    ? `\n    <image:image>\n      <image:loc>${image}</image:loc>\n    </image:image>`
+    : '';
+  return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority.toFixed(2)}</priority>${img}\n  </url>`;
 }
+
+const OG_BY_ID: Record<string, string> = {
+  'examflow-os': 'https://geddadadevicharan.vercel.app/og/og-examflow.jpg',
+  'perfect-pack': 'https://geddadadevicharan.vercel.app/og/og-perfect-pack.jpg',
+  'perfect-pack-plugin': 'https://geddadadevicharan.vercel.app/og/og-perfect-pack.jpg',
+};
 
 export async function generateSitemap(projectRoot: string, outDir: string) {
   const projects = await loadProjects(projectRoot);
@@ -60,18 +69,19 @@ export async function generateSitemap(projectRoot: string, outDir: string) {
   const today = fmtDate(new Date());
 
   const urls: string[] = [];
-  urls.push(urlEntry(`${SITE_URL}/`, today, 'weekly', 1.0));
+  urls.push(urlEntry(`${SITE_URL}/`, today, 'weekly', 1.0, `${SITE_URL}/og/og-home.jpg`));
+  urls.push(urlEntry(`${SITE_URL}/perfect-pack`, today, 'weekly', 0.95, `${SITE_URL}/og/og-perfect-pack.jpg`));
 
   for (const p of projects) {
     const priority = FEATURED[p.id] ?? PRIORITY_BY_CATEGORY[p.category];
     const changefreq = CHANGEFREQ_BY_CATEGORY[p.category];
-    urls.push(urlEntry(`${SITE_URL}/project/${p.id}`, lastmod, changefreq, priority));
+    urls.push(urlEntry(`${SITE_URL}/project/${p.id}`, lastmod, changefreq, priority, OG_BY_ID[p.id]));
   }
 
   // Legacy redirect kept indexed (low priority)
   urls.push(urlEntry(`${SITE_URL}/projects/video-editing-post-production`, lastmod, 'monthly', 0.6));
 
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`;
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${urls.join('\n')}\n</urlset>\n`;
 
   const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <sitemap>\n    <loc>${SITE_URL}/sitemap.xml</loc>\n    <lastmod>${today}</lastmod>\n  </sitemap>\n</sitemapindex>\n`;
 

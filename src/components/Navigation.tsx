@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Moon, Sun, Menu, X } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
@@ -25,6 +25,7 @@ export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
+  const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
 
   useEffect(() => {
@@ -60,10 +61,11 @@ export function Navigation() {
         window.scrollTo({ top: y, behavior: 'smooth' });
       }
     } else {
-      window.location.href = '/#' + sectionId;
+      // SPA navigate (no full reload) — scroll handled by hash effect on Portfolio
+      navigate('/#' + sectionId);
     }
     setIsMenuOpen(false);
-  }, [isHomePage]);
+  }, [isHomePage, navigate]);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-glass-border">
