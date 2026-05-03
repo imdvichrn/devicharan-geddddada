@@ -5,12 +5,27 @@
     <lastmod>2026-05-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.00</priority>
+    <image:image>
+      <image:loc>https://geddadadevicharan.vercel.app/og/og-home.jpg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://geddadadevicharan.vercel.app/perfect-pack</loc>
+    <lastmod>2026-05-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://geddadadevicharan.vercel.app/og/og-perfect-pack.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://geddadadevicharan.vercel.app/project/examflow-os</loc>
     <lastmod>2026-05-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.98</priority>
+    <image:image>
+      <image:loc>https://geddadadevicharan.vercel.app/og/og-examflow.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://geddadadevicharan.vercel.app/project/video-production</loc>
@@ -53,12 +68,18 @@
     <lastmod>2026-05-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://geddadadevicharan.vercel.app/og/og-perfect-pack.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://geddadadevicharan.vercel.app/project/perfect-pack-plugin</loc>
     <lastmod>2026-05-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://geddadadevicharan.vercel.app/og/og-perfect-pack.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://geddadadevicharan.vercel.app/projects/video-editing-post-production</loc>

@@ -69,12 +69,13 @@ export async function generateSitemap(projectRoot: string, outDir: string) {
   const today = fmtDate(new Date());
 
   const urls: string[] = [];
-  urls.push(urlEntry(`${SITE_URL}/`, today, 'weekly', 1.0));
+  urls.push(urlEntry(`${SITE_URL}/`, today, 'weekly', 1.0, `${SITE_URL}/og/og-home.jpg`));
+  urls.push(urlEntry(`${SITE_URL}/perfect-pack`, today, 'weekly', 0.95, `${SITE_URL}/og/og-perfect-pack.jpg`));
 
   for (const p of projects) {
     const priority = FEATURED[p.id] ?? PRIORITY_BY_CATEGORY[p.category];
     const changefreq = CHANGEFREQ_BY_CATEGORY[p.category];
-    urls.push(urlEntry(`${SITE_URL}/project/${p.id}`, lastmod, changefreq, priority));
+    urls.push(urlEntry(`${SITE_URL}/project/${p.id}`, lastmod, changefreq, priority, OG_BY_ID[p.id]));
   }
 
   // Legacy redirect kept indexed (low priority)
