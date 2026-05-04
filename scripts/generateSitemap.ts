@@ -57,9 +57,9 @@ function urlEntry(loc: string, lastmod: string, changefreq: string, priority: nu
 }
 
 const OG_BY_ID: Record<string, string> = {
-  'examflow-os': 'https://geddadadevicharan.vercel.app/og/og-examflow.jpg',
-  'perfect-pack': 'https://geddadadevicharan.vercel.app/og/og-perfect-pack.jpg',
-  'perfect-pack-plugin': 'https://geddadadevicharan.vercel.app/og/og-perfect-pack.jpg',
+  'examflow-os': 'https://geddadadevicharan.vercel.app/og/og-examflowos.png?v=1',
+  'perfect-pack': 'https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=1',
+  'perfect-pack-plugin': 'https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=1',
 };
 
 export async function generateSitemap(projectRoot: string, outDir: string) {
@@ -69,8 +69,8 @@ export async function generateSitemap(projectRoot: string, outDir: string) {
   const today = fmtDate(new Date());
 
   const urls: string[] = [];
-  urls.push(urlEntry(`${SITE_URL}/`, today, 'weekly', 1.0, `${SITE_URL}/og/og-home.jpg`));
-  urls.push(urlEntry(`${SITE_URL}/perfect-pack`, today, 'weekly', 0.95, `${SITE_URL}/og/og-perfect-pack.jpg`));
+  urls.push(urlEntry(`${SITE_URL}/`, today, 'weekly', 1.0, `${SITE_URL}/og/og-home.png?v=1`));
+  urls.push(urlEntry(`${SITE_URL}/perfect-pack`, today, 'weekly', 0.95, `${SITE_URL}/og/og-perfectpack.png?v=1`));
 
   for (const p of projects) {
     const priority = FEATURED[p.id] ?? PRIORITY_BY_CATEGORY[p.category];

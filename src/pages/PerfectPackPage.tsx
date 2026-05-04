@@ -78,11 +78,11 @@ export default function PerfectPackPage() {
         <link rel="canonical" href="https://geddadadevicharan.vercel.app/perfect-pack" />
         <meta property="og:title" content="Perfect Pack — All-In-One Creative Assets by Geddada Devicharan" />
         <meta property="og:description" content="Professional textures, sound effects, DRFX presets & motion titles by imdvichrn. Launching soon." />
-        <meta property="og:image" content="https://geddadadevicharan.vercel.app/og/og-perfect-pack.jpg" />
+        <meta property="og:image" content="https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=1" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://geddadadevicharan.vercel.app/og/og-perfect-pack.jpg" />
+        <meta name="twitter:image" content="https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=1" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
