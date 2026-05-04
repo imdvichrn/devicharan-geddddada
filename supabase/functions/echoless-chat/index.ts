@@ -86,6 +86,44 @@ serve(async (req) => {
 
   try {
     const { messages } = await req.json();
+
+    // Validate input shape & cap sizes to prevent abuse / credit exhaustion
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return new Response(
+        JSON.stringify({ error: "Invalid messages payload" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    if (messages.length > 30) {
+      return new Response(
+        JSON.stringify({ error: "Too many messages in conversation" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    const MAX_CHARS = 4000;
+    for (const m of messages) {
+      if (!m || typeof m !== "object" || typeof m.role !== "string" || typeof m.content !== "string") {
+        return new Response(
+          JSON.stringify({ error: "Malformed message" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      if (!["user", "assistant", "system"].includes(m.role)) {
+        return new Response(
+          JSON.stringify({ error: "Invalid message role" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      if (m.content.length > MAX_CHARS) {
+        return new Response(
+          JSON.stringify({ error: "Message too long" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+    }
+    // Strip any client-supplied system messages — we set our own
+    const safeMessages = messages.filter((m: { role: string }) => m.role !== "system");
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
@@ -101,7 +139,7 @@ serve(async (req) => {
           model: "google/gemini-3-flash-preview",
           messages: [
             { role: "system", content: SYSTEM_PROMPT },
-            ...messages,
+            ...safeMessages,
           ],
           stream: true,
         }),

@@ -24,6 +24,40 @@ serve(async (req) => {
       });
     }
 
+    // Validate types and lengths
+    const fields = { name, email, subject, message };
+    for (const [k, v] of Object.entries(fields)) {
+      if (typeof v !== 'string') {
+        return new Response(JSON.stringify({ error: `Invalid ${k}` }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+    }
+    if (name.length > 100 || email.length > 255 || subject.length > 200 || message.length > 5000) {
+      return new Response(JSON.stringify({ error: 'Field too long' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return new Response(JSON.stringify({ error: 'Invalid email address' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Escape user-supplied content before embedding into HTML
+    const escapeHtml = (s: string) =>
+      s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safeSubject = escapeHtml(subject);
+    const safeMessage = escapeHtml(message).replace(/\n/g, '<br>');
+    const safeMailtoSubject = encodeURIComponent(`Re: ${subject}`);
+
     // 1. Send notification to site owner
     const ownerHtml = `
 <!DOCTYPE html>
@@ -41,17 +75,17 @@ serve(async (req) => {
 <tr><td style="padding:24px 40px;">
   <table cellpadding="0" cellspacing="0" width="100%">
     <tr><td style="padding:8px 0;font-size:13px;color:#777;">Name</td></tr>
-    <tr><td style="padding:0 0 16px;font-size:15px;color:#fff;font-weight:600;">${name}</td></tr>
+    <tr><td style="padding:0 0 16px;font-size:15px;color:#fff;font-weight:600;">${safeName}</td></tr>
     <tr><td style="padding:8px 0;font-size:13px;color:#777;">Email</td></tr>
-    <tr><td style="padding:0 0 16px;font-size:15px;color:#c8ff00;">${email}</td></tr>
+    <tr><td style="padding:0 0 16px;font-size:15px;color:#c8ff00;">${safeEmail}</td></tr>
     <tr><td style="padding:8px 0;font-size:13px;color:#777;">Subject</td></tr>
-    <tr><td style="padding:0 0 16px;font-size:15px;color:#fff;">${subject}</td></tr>
+    <tr><td style="padding:0 0 16px;font-size:15px;color:#fff;">${safeSubject}</td></tr>
     <tr><td style="padding:8px 0;font-size:13px;color:#777;">Message</td></tr>
-    <tr><td style="padding:0;font-size:15px;color:#ccc;line-height:1.7;">${message.replace(/\n/g, '<br>')}</td></tr>
+    <tr><td style="padding:0;font-size:15px;color:#ccc;line-height:1.7;">${safeMessage}</td></tr>
   </table>
 </td></tr>
 <tr><td style="padding:16px 40px 24px;text-align:center;">
-  <a href="mailto:${email}?subject=Re: ${subject}" style="display:inline-block;background:#c8ff00;color:#000;padding:12px 32px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;">Reply to ${name}</a>
+  <a href="mailto:${safeEmail}?subject=${safeMailtoSubject}" style="display:inline-block;background:#c8ff00;color:#000;padding:12px 32px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;">Reply to ${safeName}</a>
 </td></tr>
 </table>
 </td></tr>
@@ -70,11 +104,11 @@ serve(async (req) => {
 <table width="600" cellpadding="0" cellspacing="0" style="background:#111;border-radius:16px;border:1px solid #222;">
 <tr><td style="padding:32px 40px 16px;text-align:center;">
   <h1 style="margin:0;font-size:24px;color:#ffffff;">Message Received ✓</h1>
-  <p style="margin:12px 0 0;font-size:14px;color:#aaa;">Thanks for reaching out, ${name}!</p>
+  <p style="margin:12px 0 0;font-size:14px;color:#aaa;">Thanks for reaching out, ${safeName}!</p>
 </td></tr>
 <tr><td style="padding:16px 40px;"><div style="height:1px;background:#222;"></div></td></tr>
 <tr><td style="padding:24px 40px;">
-  <p style="margin:0 0 16px;font-size:15px;color:#ccc;line-height:1.7;">I've received your message about <strong style="color:#fff;">"${subject}"</strong> and will get back to you as soon as possible.</p>
+  <p style="margin:0 0 16px;font-size:15px;color:#ccc;line-height:1.7;">I've received your message about <strong style="color:#fff;">"${safeSubject}"</strong> and will get back to you as soon as possible.</p>
   <p style="margin:0;font-size:15px;color:#ccc;line-height:1.7;">In the meantime, feel free to check out my portfolio and recent work.</p>
 </td></tr>
 <tr><td style="padding:0 40px 30px;text-align:center;">
