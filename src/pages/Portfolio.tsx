@@ -210,14 +210,14 @@ export function Portfolio() {
         <meta property="og:title" content="Devicharan Geddada (@imdvichrn) | AI Video Editor, Reels & Automation Creator India" />
         <meta property="og:description" content="AI Video Editor, Reels & Automation Creator from India. Creator of ExamFlowOS and Echoless." />
         <meta property="og:url" content="https://geddadadevicharan.vercel.app" />
-        <meta property="og:image" content="https://geddadadevicharan.vercel.app/og/og-home.jpg" />
+        <meta property="og:image" content="https://geddadadevicharan.vercel.app/og/og-home.png?v=1" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="Devicharan Geddada — Portfolio" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Devicharan Geddada (@imdvichrn) | AI Video Editor, Reels & Automation Creator India" />
         <meta name="twitter:description" content="AI Video Editor, Reels & Automation Creator from India. Creator of ExamFlowOS and Echoless." />
-        <meta name="twitter:image" content="https://geddadadevicharan.vercel.app/og/og-home.jpg" />
+        <meta name="twitter:image" content="https://geddadadevicharan.vercel.app/og/og-home.png?v=1" />
         <meta name="twitter:creator" content="@imdvichrn" />
         <script type="application/ld+json">{JSON.stringify(generatePersonSchema())}</script>
         <script type="application/ld+json">{JSON.stringify(generateWebsiteSchema())}</script>
