@@ -145,7 +145,7 @@ export default function ProjectPage() {
       description: 'ExamFlowOS — an AI-powered productivity and study system by Devicharan Geddada. A browser-based StudyOS combining syllabus tracking, spaced repetition, and focus-mode workflows.',
       keywords: 'examflowos, examflow os, examflow system, examflow ai, examflow method, examflow protocol, examflowos by imdvichrn, examflowos devicharan, imdvichrn examflowos, examflow system devicharan, examflowos official, studyos, productivityos, focusos, deepworkos, disciplineos, ai study system, ai productivity system, automation study workflow, ai focus system, smart study os, echoess system, echoess ai, echoess workflows, echoess os, Devicharan Geddada, imdvichrn',
       ogTitle: 'ExamFlowOS — AI Study System by Devicharan Geddada (imdvichrn)',
-      ogImage: 'https://geddadadevicharan.vercel.app/og/og-examflowos.png?v=1',
+      ogImage: 'https://geddadadevicharan.vercel.app/og/og-examflowos.png?v=3',
     },
     'video-production': {
       title: 'Professional Video Production — Devicharan Geddada (imdvichrn)',
@@ -208,14 +208,20 @@ export default function ProjectPage() {
         <meta property="og:title" content={seo.ogTitle ?? seo.title} />
         <meta property="og:description" content={seo.description} />
         <meta property="og:url" content={`https://geddadadevicharan.vercel.app/project/${projectId}`} />
-        <meta property="og:image" content={seo.ogImage ?? 'https://geddadadevicharan.vercel.app/og/og-home.png?v=1'} />
+        <meta property="og:image" content={seo.ogImage ?? 'https://geddadadevicharan.vercel.app/og/og-home.png?v=3'} />
+        <meta property="og:image:secure_url" content={seo.ogImage ?? 'https://geddadadevicharan.vercel.app/og/og-home.png?v=3'} />
+        <meta property="og:image:type" content="image/png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:site_name" content="Devicharan Geddada — Portfolio" />
+        <meta property="og:image:alt" content={seo.ogTitle ?? seo.title} />
+        <meta property="og:site_name" content="Geddada Devicharan" />
+        <meta name="application-name" content="Geddada Devicharan" />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={`https://geddadadevicharan.vercel.app/project/${projectId}`} />
         <meta name="twitter:title" content={seo.ogTitle ?? seo.title} />
         <meta name="twitter:description" content={seo.description} />
-        <meta name="twitter:image" content={seo.ogImage ?? 'https://geddadadevicharan.vercel.app/og/og-home.png?v=1'} />
+        <meta name="twitter:image" content={seo.ogImage ?? 'https://geddadadevicharan.vercel.app/og/og-home.png?v=3'} />
+        <meta name="twitter:image:alt" content={seo.ogTitle ?? seo.title} />
         <meta name="twitter:creator" content="@imdvichrn" />
         <link rel="canonical" href={`https://geddadadevicharan.vercel.app/project/${projectId}`} />
         <script type="application/ld+json">{JSON.stringify(generateProjectSchema({

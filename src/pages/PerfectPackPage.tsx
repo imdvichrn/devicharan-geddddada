@@ -78,14 +78,22 @@ export default function PerfectPackPage() {
         <link rel="canonical" href="https://geddadadevicharan.vercel.app/perfect-pack" />
         <meta property="og:title" content="Perfect Pack — All-In-One Creative Assets by Geddada Devicharan" />
         <meta property="og:description" content="Professional textures, sound effects, DRFX presets & motion titles by imdvichrn. Launching soon." />
-        <meta property="og:image" content="https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=2" />
+        <meta property="og:type" content="product" />
+        <meta property="og:url" content="https://geddadadevicharan.vercel.app/perfect-pack" />
+        <meta property="og:image" content="https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=3" />
+        <meta property="og:image:secure_url" content="https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=3" />
+        <meta property="og:image:type" content="image/png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Perfect Pack — Creative Assets by Geddada Devicharan" />
+        <meta property="og:site_name" content="Geddada Devicharan" />
+        <meta name="application-name" content="Geddada Devicharan" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://geddadadevicharan.vercel.app/perfect-pack" />
         <meta name="twitter:title" content="Perfect Pack — All-In-One Creative Assets by Geddada Devicharan" />
         <meta name="twitter:description" content="Professional textures, sound effects, DRFX presets & motion titles by imdvichrn. Launching soon." />
-        <meta name="twitter:image" content="https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=2" />
+        <meta name="twitter:image" content="https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=3" />
+        <meta name="twitter:image:alt" content="Perfect Pack — Creative Assets by Geddada Devicharan" />
         <meta name="twitter:creator" content="@imdvichrn" />
         <script type="application/ld+json">
           {JSON.stringify({
