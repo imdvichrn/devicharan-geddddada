@@ -181,13 +181,13 @@ export default function ProjectPage() {
       title: 'PERFECT PACK — All-In-One Creative Assets by imdvichrn',
       description: 'PERFECT PACK by imdvichrn — high-resolution textures, drag-and-drop assets, and Fusion-ready elements optimized for DaVinci Resolve and major NLEs.',
       keywords: 'perfect pack, davinci resolve assets, fusion textures, drfx presets, video editor toolkit, imdvichrn, Devicharan Geddada',
-      ogImage: 'https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=1',
+      ogImage: 'https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=2',
     },
     'perfect-pack-plugin': {
       title: 'PERFECT PACK — All-In-One Creative Assets by imdvichrn',
       description: 'PERFECT PACK by imdvichrn — high-resolution textures, drag-and-drop assets, and Fusion-ready elements optimized for DaVinci Resolve and major NLEs.',
       keywords: 'perfect pack, davinci resolve assets, fusion textures, drfx presets, video editor toolkit, imdvichrn, Devicharan Geddada',
-      ogImage: 'https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=1',
+      ogImage: 'https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=2',
     },
   };
 
