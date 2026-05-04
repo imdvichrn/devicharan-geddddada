@@ -210,14 +210,20 @@ export function Portfolio() {
         <meta property="og:title" content="Devicharan Geddada (@imdvichrn) | AI Video Editor, Reels & Automation Creator India" />
         <meta property="og:description" content="AI Video Editor, Reels & Automation Creator from India. Creator of ExamFlowOS and Echoless." />
         <meta property="og:url" content="https://geddadadevicharan.vercel.app" />
-        <meta property="og:image" content="https://geddadadevicharan.vercel.app/og/og-home.png?v=1" />
+        <meta property="og:image" content="https://geddadadevicharan.vercel.app/og/og-home.png?v=3" />
+        <meta property="og:image:secure_url" content="https://geddadadevicharan.vercel.app/og/og-home.png?v=3" />
+        <meta property="og:image:type" content="image/png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:site_name" content="Devicharan Geddada — Portfolio" />
+        <meta property="og:image:alt" content="Geddada Devicharan — AI Workflows, Video Editing & Automation" />
+        <meta property="og:site_name" content="Geddada Devicharan" />
+        <meta name="application-name" content="Geddada Devicharan" />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://geddadadevicharan.vercel.app" />
         <meta name="twitter:title" content="Devicharan Geddada (@imdvichrn) | AI Video Editor, Reels & Automation Creator India" />
         <meta name="twitter:description" content="AI Video Editor, Reels & Automation Creator from India. Creator of ExamFlowOS and Echoless." />
-        <meta name="twitter:image" content="https://geddadadevicharan.vercel.app/og/og-home.png?v=1" />
+        <meta name="twitter:image" content="https://geddadadevicharan.vercel.app/og/og-home.png?v=3" />
+        <meta name="twitter:image:alt" content="Geddada Devicharan — AI Workflows & Automation" />
         <meta name="twitter:creator" content="@imdvichrn" />
         <script type="application/ld+json">{JSON.stringify(generatePersonSchema())}</script>
         <script type="application/ld+json">{JSON.stringify(generateWebsiteSchema())}</script>
