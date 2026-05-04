@@ -16,7 +16,7 @@ const navItems = [
 
 const productLink = {
   label: 'Perfect Pack',
-  path: '/project/perfect-pack-plugin',
+  path: '/perfect-pack',
   isProduct: true
 };
 
