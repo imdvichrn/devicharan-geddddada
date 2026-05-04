@@ -1,5 +1,8 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+    { "source": "/projects/:path*", "destination": "/" },
+    { "source": "/project/:path*", "destination": "/" },
+    { "source": "/perfect-pack", "destination": "/" },
+    { "source": "/((?!api/|_next/|.*\\..*).*)", "destination": "/" }
   ]
 }

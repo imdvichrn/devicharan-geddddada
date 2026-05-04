@@ -82,7 +82,11 @@ export default function PerfectPackPage() {
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://geddadadevicharan.vercel.app/perfect-pack" />
+        <meta name="twitter:title" content="Perfect Pack — All-In-One Creative Assets by Geddada Devicharan" />
+        <meta name="twitter:description" content="Professional textures, sound effects, DRFX presets & motion titles by imdvichrn. Launching soon." />
         <meta name="twitter:image" content="https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=2" />
+        <meta name="twitter:creator" content="@imdvichrn" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
