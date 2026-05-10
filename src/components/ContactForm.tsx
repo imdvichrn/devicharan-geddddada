@@ -115,20 +115,31 @@ export function ContactForm() {
         className: "bg-primary text-black font-bold",
       });
 
-      // 3. Send form data to backend API
-      await emailjs.send(
-        'service_20azq4s',
-        'template_689lfji',
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-        },
-        'yxDgR_bWBnh9BXZpr'
-      );
+      // 3. Send form data via EmailJS
+      const SERVICE_ID = 'service_20azq4s';
+      const PUBLIC_KEY = 'yxDgR_bWBnh9BXZpr';
+      const NOTIFY_TEMPLATE = 'template_689lfji';
+      const AUTOREPLY_TEMPLATE = 'template_w46ui3m';
 
-      // Keep the success toast (already shown) and reset form
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+        time: new Date().toLocaleString(),
+      };
+
+      // First: send inquiry notification to owner
+      await emailjs.send(SERVICE_ID, NOTIFY_TEMPLATE, templateParams, PUBLIC_KEY);
+
+      // Second: send autoreply confirmation to visitor (non-blocking failure)
+      try {
+        await emailjs.send(SERVICE_ID, AUTOREPLY_TEMPLATE, templateParams, PUBLIC_KEY);
+      } catch (autoReplyErr) {
+        console.warn('Autoreply email failed:', autoReplyErr);
+      }
+
+      // Reset form after successful send
       setFormData(initialFormData);
     } catch (error) {
       console.error('Contact form error:', error);
