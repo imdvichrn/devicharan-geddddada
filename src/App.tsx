@@ -3,7 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
+import { HelmetProvider, Helmet } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
 import { Suspense } from "react";
 import { ThemeProvider } from "@/hooks/useTheme";
@@ -51,6 +51,7 @@ function AnimatedRoutes() {
 
 const App = () => (
   <HelmetProvider>
+    <Helmet defaultTitle="GEDDADA DEVICHARAN" titleTemplate="%s | GEDDADA DEVICHARAN" />
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <TooltipProvider>
