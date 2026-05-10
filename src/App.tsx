@@ -51,7 +51,7 @@ function AnimatedRoutes() {
 
 const App = () => (
   <HelmetProvider>
-    <Helmet defaultTitle="GEDDADA DEVICHARAN" titleTemplate="%s | GEDDADA DEVICHARAN" />
+    <Helmet defaultTitle="GEDDADA DEVICHARAN" />
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <TooltipProvider>
