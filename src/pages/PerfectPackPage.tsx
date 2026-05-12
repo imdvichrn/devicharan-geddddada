@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { WindowChrome } from '@/components/WindowChrome';
 import { Helmet } from 'react-helmet-async';
+import { generatePerfectPackProductSchema, generateBreadcrumbSchema } from '@/lib/structuredData';
 import { HiddenIdentityBlock, FooterMicroBio } from '@/components/SEOContent';
 
 const stagger = {
@@ -73,58 +74,33 @@ export default function PerfectPackPage() {
     <>
       <Helmet>
         <title>Perfect Pack for DaVinci Resolve | Cinematic Editing Toolkit</title>
-        <meta name="description" content="Professional DaVinci Resolve editing toolkit featuring cinematic presets, transitions, sound effects, editing assets, and workflow tools created by Geddada Devicharan." />
-        <meta name="keywords" content="DaVinci Resolve toolkit, cinematic editing pack, editing toolkit, DaVinci Resolve presets, transitions, LUTs, sound effects, editing assets, cinematic workflow, Perfect Pack" />
-        <link rel="canonical" href="https://geddadadevicharan.vercel.app/project/perfect-pack-plugin" />
+        <meta name="description" content="Professional DaVinci Resolve toolkit featuring cinematic presets, transitions, sound effects, editing assets, and workflow tools by Geddada Devicharan." />
+        <meta name="keywords" content="Perfect Pack, DaVinci Resolve toolkit, cinematic editing pack, DaVinci Resolve presets, editing toolkit, transitions, LUTs, sound effects, Perfect Pack, cinematic workflow, editing assets, Geddada Devicharan, imdvichrn" />
+        <link rel="canonical" href="https://geddadadevicharan.vercel.app/perfect-pack" />
         <meta property="og:site_name" content="Geddada Devicharan" />
         <meta property="og:title" content="Perfect Pack for DaVinci Resolve | Cinematic Editing Toolkit" />
-        <meta property="og:description" content="Professional DaVinci Resolve editing toolkit featuring cinematic presets, transitions, sound effects, editing assets, and workflow tools created by Geddada Devicharan." />
-        <meta property="og:url" content="https://geddadadevicharan.vercel.app/project/perfect-pack-plugin" />
-        <meta property="og:image" content="https://geddadadevicharan.vercel.app/assets/perfect-pack-preview.png" />
+        <meta property="og:description" content="Professional DaVinci Resolve toolkit featuring cinematic presets, transitions, sound effects, editing assets, and workflow tools by Geddada Devicharan." />
+        <meta property="og:type" content="product" />
+        <meta property="og:url" content="https://geddadadevicharan.vercel.app/perfect-pack" />
+        <meta property="og:image" content="https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=3" />
+        <meta property="og:image:secure_url" content="https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=3" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Perfect Pack — Creative Assets by Geddada Devicharan" />
+        <meta name="application-name" content="Geddada Devicharan" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@imdvichrn" />
-        <meta name="twitter:creator" content="@imdvichrn" />
+        <meta name="twitter:url" content="https://geddadadevicharan.vercel.app/perfect-pack" />
         <meta name="twitter:title" content="Perfect Pack for DaVinci Resolve | Cinematic Editing Toolkit" />
-        <meta name="twitter:description" content="Professional DaVinci Resolve editing toolkit featuring cinematic presets, transitions, sound effects, editing assets, and workflow tools created by Geddada Devicharan." />
-        <meta name="twitter:image" content="https://geddadadevicharan.vercel.app/assets/perfect-pack-preview.png" />
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Product",
-            "name": "Perfect Pack for DaVinci Resolve",
-            "description": "Professional DaVinci Resolve editing toolkit featuring cinematic presets, transitions, sound effects, editing assets, and workflow tools created by Geddada Devicharan.",
-            "image": "https://geddadadevicharan.vercel.app/assets/perfect-pack-preview.png",
-            "brand": { "@type": "Brand", "name": "imdvichrn" },
-            "offers": {
-              "@type": "Offer",
-              "price": "10.00",
-              "priceCurrency": "USD",
-              "availability": "https://schema.org/PreOrder",
-              "url": "https://geddadadevicharan.vercel.app/project/perfect-pack-plugin"
-            },
-            "author": { "@type": "Person", "name": "Geddada Devicharan", "alternateName": ["Charan", "Devicharan", "imdvichrn"] }
-          })}
-        </script>
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            "name": "Perfect Pack for DaVinci Resolve",
-            "url": "https://geddadadevicharan.vercel.app/project/perfect-pack-plugin",
-            "description": "Professional DaVinci Resolve editing toolkit featuring cinematic presets, transitions, sound effects, editing assets, and workflow tools created by Geddada Devicharan.",
-            "applicationCategory": "MultimediaApplication",
-            "operatingSystem": "DaVinci Resolve Studio",
-            "softwareVersion": "1.0",
-            "author": { "@type": "Person", "name": "Geddada Devicharan", "alternateName": ["Charan", "Devicharan", "imdvichrn" ] },
-            "offers": {
-              "@type": "Offer",
-              "price": "10.00",
-              "priceCurrency": "USD",
-              "availability": "https://schema.org/PreOrder",
-              "url": "https://geddadadevicharan.vercel.app/project/perfect-pack-plugin"
-            }
-          })}
-        </script>
+        <meta name="twitter:description" content="Professional DaVinci Resolve toolkit featuring cinematic presets, transitions, sound effects, editing assets, and workflow tools by Geddada Devicharan." />
+        <meta name="twitter:image" content="https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=3" />
+        <meta name="twitter:image:alt" content="Perfect Pack — Cinematic Editing Toolkit for DaVinci Resolve" />
+        <meta name="twitter:creator" content="@imdvichrn" />
+        <script type="application/ld+json">{JSON.stringify(generatePerfectPackProductSchema())}</script>
+        <script type="application/ld+json">{JSON.stringify(generateBreadcrumbSchema([
+          { name: 'Home', url: 'https://geddadadevicharan.vercel.app' },
+          { name: 'Perfect Pack', url: 'https://geddadadevicharan.vercel.app/perfect-pack' },
+        ]))}</script>
       </Helmet>
 
       <HiddenIdentityBlock page="perfect-pack" />

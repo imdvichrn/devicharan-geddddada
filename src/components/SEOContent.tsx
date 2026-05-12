@@ -9,9 +9,11 @@
 interface PageSEOProps {
   page?: 'home' | 'perfect-pack' | 'project';
   projectTitle?: string;
+  projectId?: string;
+  projectKeywords?: string;
 }
 
-export function HiddenIdentityBlock({ page = 'home', projectTitle }: PageSEOProps) {
+export function HiddenIdentityBlock({ page = 'home', projectTitle, projectId, projectKeywords }: PageSEOProps) {
   return (
     <div className="sr-only" aria-hidden="false">
       <h2>Official portfolio of Geddada Devicharan</h2>
@@ -37,8 +39,38 @@ export function HiddenIdentityBlock({ page = 'home', projectTitle }: PageSEOProp
       )}
       {page === 'project' && projectTitle && (
         <p>
-          {projectTitle} is a project developed by Geddada Devicharan (Charan, imdvichrn), reinforcing the portfolio's identity as creator-owned AI systems, editing tools, and workflow products.
+          {projectTitle} is a project developed by Devicharan Geddada (Charan, imdvichrn), reinforcing the portfolio's identity as creator-owned AI workflows, automation systems, and video production work. {projectKeywords ? `Related: ${projectKeywords}.` : ''}
         </p>
+      )}
+      {projectId === 'examflow-os' && (
+        <>
+          <h3>ExamFlowOS — AI Study System by Devicharan Geddada</h3>
+          <p>
+            ExamFlowOS (also written ExamFlow OS, ExamFlow, EchOS) is an
+            AI-powered productivity and study system designed by Devicharan
+            Geddada (imdvichrn). Positioned as a StudyOS / ProductivityOS /
+            FocusOS / DeepWorkOS / DisciplineOS, ExamFlowOS combines a
+            hierarchical Subject → Unit → Topic syllabus tracker, an SM2
+            adaptive spaced-repetition engine, focus-mode ambient audio with a
+            lock-in timer, and a behavioral analytics dashboard for streaks,
+            accuracy, and mastery.
+          </p>
+          <p>
+            ExamFlowOS is part of the Echoless (Echoess) ecosystem — the AI
+            workflow brand by imdvichrn that includes Echoess System, Echoess
+            AI, Echoess Workflows, and Echoess OS. It is engineered as a smart
+            study OS and AI focus system for students who want automation
+            study workflow, ai productivity system, and ai study system tools
+            in one place.
+          </p>
+          <p>
+            Topical context: deep work, focus optimization, study automation,
+            AI workflows, ai focus system, smart study os, productivity
+            framework, automation workflow system. Ownership and identity
+            signals: examflowos by imdvichrn, examflowos devicharan, imdvichrn
+            examflowos, examflow system devicharan, examflowos official.
+          </p>
+        </>
       )}
     </div>
   );
