@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { WindowChrome } from '@/components/WindowChrome';
 import { Helmet } from 'react-helmet-async';
+import { generatePerfectPackProductSchema, generateBreadcrumbSchema } from '@/lib/structuredData';
 import { HiddenIdentityBlock, FooterMicroBio } from '@/components/SEOContent';
 
 const stagger = {
