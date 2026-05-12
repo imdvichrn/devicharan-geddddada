@@ -1,150 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml">
-
-  <!-- Home -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://geddadadevicharan.vercel.app/</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.00</priority>
     <image:image>
       <image:loc>https://geddadadevicharan.vercel.app/og/og-home.png?v=3</image:loc>
-      <image:title>Geddada Devicharan — AI Workflows &amp; Automation</image:title>
-      <image:caption>Portfolio of Geddada Devicharan (imdvichrn) — AI workflows, automation, and cinematic video editing.</image:caption>
     </image:image>
   </url>
-
-  <!-- Perfect Pack landing -->
   <url>
     <loc>https://geddadadevicharan.vercel.app/perfect-pack</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
     <image:image>
       <image:loc>https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=3</image:loc>
-      <image:title>Perfect Pack — All-In-One Creative Assets by Geddada Devicharan</image:title>
-      <image:caption>Cinematic textures, sound effects, DRFX presets and motion titles for DaVinci Resolve.</image:caption>
     </image:image>
   </url>
-
-  <!-- ExamFlow OS -->
   <url>
     <loc>https://geddadadevicharan.vercel.app/project/examflow-os</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.98</priority>
     <image:image>
       <image:loc>https://geddadadevicharan.vercel.app/og/og-examflowos.png?v=3</image:loc>
-      <image:title>ExamFlow OS (EchOS) — Personal Exam Companion</image:title>
-      <image:caption>Real-time mastery tracking, spaced repetition, and a focus engine for serious students.</image:caption>
     </image:image>
   </url>
-
-  <!-- Video Production -->
   <url>
     <loc>https://geddadadevicharan.vercel.app/project/video-production</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://geddadadevicharan.vercel.app/og/og-home.png?v=3</image:loc>
-      <image:title>Professional Video Production by Geddada Devicharan</image:title>
-      <image:caption>4K cinematic editing, node-based color grading, and Fusion VFX in DaVinci Resolve Studio.</image:caption>
-    </image:image>
   </url>
-
-  <!-- SceneSync Edits -->
   <url>
     <loc>https://geddadadevicharan.vercel.app/project/scenesync-edits</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-    <image:image>
-      <image:loc>https://geddadadevicharan.vercel.app/og/og-home.png?v=3</image:loc>
-      <image:title>SceneSync Edits — Beat-Synchronized Editing</image:title>
-      <image:caption>Frame-perfect cuts and audio-reactive transitions tuned to the beat.</image:caption>
-    </image:image>
+    <priority>0.85</priority>
   </url>
-
-  <!-- Visual Design -->
   <url>
     <loc>https://geddadadevicharan.vercel.app/project/visual-design</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
-    <image:image>
-      <image:loc>https://geddadadevicharan.vercel.app/og/og-home.png?v=3</image:loc>
-      <image:title>Visual Design Portfolio — Brand &amp; Creator Assets</image:title>
-      <image:caption>Brand identity, YouTube thumbnails, and creator visual systems.</image:caption>
-    </image:image>
   </url>
-
-  <!-- Growth Strategy -->
   <url>
     <loc>https://geddadadevicharan.vercel.app/project/growth-strategy</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
-    <image:image>
-      <image:loc>https://geddadadevicharan.vercel.app/og/og-home.png?v=3</image:loc>
-      <image:title>Growth Strategy &amp; Digital Marketing — Geddada Devicharan</image:title>
-      <image:caption>Data-driven growth playbooks for the creator economy.</image:caption>
-    </image:image>
+    <priority>0.75</priority>
   </url>
-
-  <!-- Data Research -->
   <url>
     <loc>https://geddadadevicharan.vercel.app/project/data-research</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.65</priority>
-    <image:image>
-      <image:loc>https://geddadadevicharan.vercel.app/og/og-home.png?v=3</image:loc>
-      <image:title>Data Research &amp; Analysis — Geddada Devicharan</image:title>
-      <image:caption>Structured market research, analysis, and documentation.</image:caption>
-    </image:image>
+    <priority>0.75</priority>
   </url>
-
-  <!-- Video Editing & Post-Production (canonical /project/* path) -->
   <url>
     <loc>https://geddadadevicharan.vercel.app/project/video-editing-post-production</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.88</priority>
-    <image:image>
-      <image:loc>https://geddadadevicharan.vercel.app/og/og-home.png?v=3</image:loc>
-      <image:title>Video Editing &amp; Post-Production Showcase</image:title>
-      <image:caption>Color correction, Fusion motion graphics, and audio sync in DaVinci Resolve.</image:caption>
-    </image:image>
+    <priority>0.85</priority>
   </url>
-
-  <!-- Perfect Pack project detail -->
   <url>
     <loc>https://geddadadevicharan.vercel.app/project/perfect-pack</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.92</priority>
-    <image:image>
-      <image:loc>https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=3</image:loc>
-      <image:title>PERFECT PACK — All-In-One Creative Assets</image:title>
-      <image:caption>High-resolution textures, drag-and-drop assets, and Fusion-ready elements.</image:caption>
-    </image:image>
-  </url>
-
-  <!-- Perfect Pack plugin -->
-  <url>
-    <loc>https://geddadadevicharan.vercel.app/project/perfect-pack-plugin</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
     <image:image>
       <image:loc>https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=3</image:loc>
-      <image:title>PERFECT PACK Plugin — DaVinci Resolve Workflow Utility</image:title>
-      <image:caption>$10 automation plugin that accelerates post-production by 30%.</image:caption>
     </image:image>
   </url>
-
+  <url>
+    <loc>https://geddadadevicharan.vercel.app/project/perfect-pack-plugin</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=3</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://geddadadevicharan.vercel.app/projects/video-editing-post-production</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
 </urlset>
