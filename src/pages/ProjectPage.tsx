@@ -27,7 +27,7 @@ import {
 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { getProjectById } from '@/data/projects';
-import { generateProductSchema, generatePluginSchema, generateProjectSchema, generateBreadcrumbSchema } from '@/lib/structuredData';
+import { generateProductSchema, generatePluginSchema, generateProjectSchema, generateBreadcrumbSchema, generateSoftwareApplicationSchema } from '@/lib/structuredData';
 import { HiddenIdentityBlock } from '@/components/SEOContent';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -140,12 +140,28 @@ export default function ProjectPage() {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>{project.title} — by Geddada Devicharan (Charan / imdvichrn)</title>
-        <meta name="description" content={`${project.title}: ${project.shortDescription} — built by Geddada Devicharan (Charan, imdvichrn).`.slice(0, 160)} />
-        <meta name="keywords" content={`${project.title}, ${project.tools.join(', ')}, Geddada Devicharan, Devicharan, Charan, imdvichrn, iamdvichrn, Devicharan ${project.category}, Charan developer, Devicharan portfolio`} />
-        <meta property="og:title" content={`${project.title} — Geddada Devicharan`} />
-        <meta property="og:description" content={project.shortDescription} />
+        <title>{isExamFlow ? 'ExamFlowOS | Smart Recall & AI Study System' : `${project.title} — by Geddada Devicharan (Charan / imdvichrn)`}</title>
+        <meta
+          name="description"
+          content={isExamFlow
+            ? 'AI-powered study and productivity system with smart recall, spaced repetition, syllabus tracking, focus tools, and exam analytics created by Geddada Devicharan.'
+            : `${project.title}: ${project.shortDescription} — built by Geddada Devicharan (Charan, imdvichrn).`.slice(0, 160)}
+        />
+        <meta
+          name="keywords"
+          content={isExamFlow
+            ? 'AI study system, study OS, smart recall, spaced repetition, exam preparation, student productivity, focus system, gamified learning, ExamFlowOS, Geddada Devicharan, imdvichrn'
+            : `${project.title}, ${project.tools.join(', ')}, Geddada Devicharan, Devicharan, Charan, imdvichrn, iamdvichrn, Devicharan ${project.category}, Charan developer, Devicharan portfolio`}
+        />
+        <meta property="og:site_name" content="Geddada Devicharan" />
+        <meta property="og:title" content={isExamFlow ? 'ExamFlowOS | Smart Recall & AI Study System' : `${project.title} — Geddada Devicharan`} />
+        <meta property="og:description" content={isExamFlow ? 'AI-powered study and productivity system with smart recall, spaced repetition, syllabus tracking, focus tools, and exam analytics created by Geddada Devicharan.' : project.shortDescription} />
         <link rel="canonical" href={`https://geddadadevicharan.vercel.app/project/${projectId}`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@imdvichrn" />
+        <meta name="twitter:creator" content="@imdvichrn" />
+        <meta name="twitter:title" content={isExamFlow ? 'ExamFlowOS | Smart Recall & AI Study System' : `${project.title} — Geddada Devicharan`} />
+        <meta name="twitter:description" content={isExamFlow ? 'AI-powered study and productivity system with smart recall, spaced repetition, syllabus tracking, focus tools, and exam analytics created by Geddada Devicharan.' : project.shortDescription} />
         <script type="application/ld+json">{JSON.stringify(generateProjectSchema({
           id: project.id,
           title: project.title,
@@ -158,6 +174,19 @@ export default function ProjectPage() {
           { name: 'Projects', url: 'https://geddadadevicharan.vercel.app/#projects' },
           { name: project.title, url: `https://geddadadevicharan.vercel.app/project/${projectId}` },
         ]))}</script>
+        {isExamFlow && (
+          <script type="application/ld+json">
+            {JSON.stringify(generateSoftwareApplicationSchema({
+              name: 'ExamFlowOS',
+              url: `https://geddadadevicharan.vercel.app/project/${projectId}`,
+              description: 'AI-powered study and productivity system with smart recall, spaced repetition, syllabus tracking, focus tools, and exam analytics created by Geddada Devicharan.',
+              applicationCategory: 'EducationApplication',
+              operatingSystem: 'Web',
+              softwareVersion: '1.0',
+              audience: 'Education and study productivity'
+            }))}
+          </script>
+        )}
         {project.id === 'davinci-workflow-plugin' && (
           <>
             <script type="application/ld+json">

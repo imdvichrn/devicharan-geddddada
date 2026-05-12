@@ -63,6 +63,68 @@ export const generateWebsiteSchema = () => ({
   "alternateName": ["Charan Portfolio", "imdvichrn Portfolio", "Devicharan Portfolio"],
   "url": BASE_URL,
   "author": { "@type": "Person", "name": PERSON_NAME },
+  "publisher": { "@type": "Organization", "name": PERSON_NAME, "url": BASE_URL },
+});
+
+export const generateOrganizationSchema = () => ({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": PERSON_NAME,
+  "url": BASE_URL,
+  "logo": `${BASE_URL}/favicon_io/android-chrome-512x512.png`,
+  "sameAs": [
+    "https://www.linkedin.com/in/geddadadevicharan",
+    "https://www.instagram.com/imdvichrn",
+    "https://github.com/imdvichrn",
+    "https://twitter.com/imdvichrn"
+  ],
+  "founder": {
+    "@type": "Person",
+    "name": PERSON_NAME,
+    "alternateName": PERSON_ALIASES,
+    "url": BASE_URL
+  },
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "contactType": "technical support",
+      "url": BASE_URL,
+      "availableLanguage": ["English"]
+    }
+  ]
+});
+
+export const generateSoftwareApplicationSchema = (data: {
+  name: string;
+  description: string;
+  url?: string;
+  applicationCategory: string;
+  operatingSystem?: string;
+  softwareVersion?: string;
+  audience?: string;
+}) => ({
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": data.name,
+  "url": data.url || BASE_URL,
+  "description": data.description,
+  "applicationCategory": data.applicationCategory,
+  "operatingSystem": data.operatingSystem || "Cross-platform",
+  "softwareVersion": data.softwareVersion || "1.0",
+  "author": {
+    "@type": "Person",
+    "name": PERSON_NAME,
+    "alternateName": PERSON_ALIASES,
+    "url": BASE_URL
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0.00",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": data.url || BASE_URL
+  },
+  ...(data.audience ? { educationalUse: data.audience } : {}),
 });
 
 export const generateBreadcrumbSchema = (items: Array<{ name: string; url: string }>) => ({
