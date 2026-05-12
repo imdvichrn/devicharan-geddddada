@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { Navigation } from '@/components/Navigation';
 import { ContactForm } from '@/components/ContactForm';
 import { HiddenIdentityBlock, FooterMicroBio } from '@/components/SEOContent';
-import { generatePersonSchema, generateWebsiteSchema, generateEchoessBrandSchema, generateExamFlowOSSchema } from '@/lib/structuredData';
+import { generatePersonSchema, generateWebsiteSchema, generateEchoessBrandSchema, generateExamFlowOSSchema, generateOrganizationSchema, generateEchoessAppSchema } from '@/lib/structuredData';
 import { WindowChrome } from '@/components/WindowChrome';
 import { AnimatedBackground } from '@/components/AnimatedBackground';
 import { LiveProjectsButton } from '@/components/LiveProjectsButton';
