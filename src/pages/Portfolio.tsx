@@ -201,14 +201,14 @@ export function Portfolio() {
   };
   return <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Devicharan Geddada (@imdvichrn) | AI Video Editor, Reels & Automation Creator India</title>
-        <meta name="description" content="Devicharan Geddada (imdvichrn) — AI Video Editor, Reels & Automation Creator from India. Creator of ExamFlowOS (AI study system) and Echoless (personal AI assistant). Cinematic edits, AI workflows, and automation systems." />
-        <meta name="keywords" content="Devicharan Geddada, Geddada Devicharan, Devicharan, Devi Charan, imdvichrn, iamdvichrn, geddadadevicharan, @imdvichrn, AI video editor india, reels editor india, automation creator india, ai workflow developer, ExamFlowOS, examflow os, examflow system, ai study system, studyos, productivityos, Echoless, Echoess, echoess ai, echoess workflows, echoess os, davinci resolve color grading, fusion vfx, sound design, react developer andhra pradesh, creator economy india, eee btech developer, premiere pro editor, after effects motion graphics, ai automation systems" />
+        <title>Geddada Devicharan | AI Systems, Editing & Workflow Design</title>
+        <meta name="description" content="Creator of ExamFlowOS and Echoless. Building AI-powered workflow systems, cinematic editing tools, automation systems, and modern digital experiences." />
+        <meta name="keywords" content="Geddada Devicharan, Devicharan Geddada, imdvichrn, AI systems creator, AI workflows, workflow automation, workflow designer, video editor, DaVinci Resolve editor, creative developer, AI systems developer, automation systems, ExamFlowOS, Echoless, Perfect Pack, cinematic editing toolkit, ai study system, multi-model ai, AI orchestration" />
         <meta name="author" content="Devicharan Geddada" />
         <link rel="canonical" href="https://geddadadevicharan.vercel.app" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Devicharan Geddada (@imdvichrn) | AI Video Editor, Reels & Automation Creator India" />
-        <meta property="og:description" content="AI Video Editor, Reels & Automation Creator from India. Creator of ExamFlowOS and Echoless." />
+        <meta property="og:title" content="Geddada Devicharan | AI Systems, Editing & Workflow Design" />
+        <meta property="og:description" content="Creator of ExamFlowOS and Echoless. Building AI-powered workflow systems, cinematic editing tools, automation systems, and modern digital experiences." />
         <meta property="og:url" content="https://geddadadevicharan.vercel.app" />
         <meta property="og:image" content="https://geddadadevicharan.vercel.app/og/og-home.png?v=3" />
         <meta property="og:image:secure_url" content="https://geddadadevicharan.vercel.app/og/og-home.png?v=3" />
