@@ -148,11 +148,18 @@ export default function ProjectDetail() {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>{project.title} - AI Workflow by Devicharan</title>
-        <meta name="description" content={`${project.title} by Geddada Devicharan - AI Workflow Developer & Professional Video Editor. ${project.description}`} />
-        <meta property="og:title" content={`${project.title} - Devicharan AI Workflow`} />
+        <title>{project.title} | Geddada Devicharan</title>
+        <meta name="description" content={`${project.title} — ${project.description} Built by Geddada Devicharan (imdvichrn).`} />
+        <meta property="og:title" content={`${project.title} | Geddada Devicharan`} />
         <meta property="og:description" content={project.description} />
-        <link rel="canonical" href={`https://www.google.com/search?q=https://geddadadevicharan.vercel.app/project/${id}`} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`https://geddadadevicharan.vercel.app/project/${id}`} />
+        <meta property="og:site_name" content="Geddada Devicharan" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${project.title} | Geddada Devicharan`} />
+        <meta name="twitter:description" content={project.description} />
+        <meta name="twitter:creator" content="@imdvichrn" />
+        <link rel="canonical" href={`https://geddadadevicharan.vercel.app/project/${id}`} />
         
         {/* Breadcrumb Schema - Shows "Home > Projects > [Project Name]" in search results */}
         <script type="application/ld+json">
