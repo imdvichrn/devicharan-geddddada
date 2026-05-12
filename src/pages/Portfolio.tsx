@@ -220,14 +220,16 @@ export function Portfolio() {
         <meta name="application-name" content="Geddada Devicharan" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://geddadadevicharan.vercel.app" />
-        <meta name="twitter:title" content="Devicharan Geddada (@imdvichrn) | AI Video Editor, Reels & Automation Creator India" />
-        <meta name="twitter:description" content="AI Video Editor, Reels & Automation Creator from India. Creator of ExamFlowOS and Echoless." />
+        <meta name="twitter:title" content="Geddada Devicharan | AI Systems, Editing & Workflow Design" />
+        <meta name="twitter:description" content="Creator of ExamFlowOS and Echoless. Building AI-powered workflow systems, cinematic editing tools, automation systems, and modern digital experiences." />
         <meta name="twitter:image" content="https://geddadadevicharan.vercel.app/og/og-home.png?v=3" />
-        <meta name="twitter:image:alt" content="Geddada Devicharan — AI Workflows & Automation" />
+        <meta name="twitter:image:alt" content="Geddada Devicharan — AI Systems, Editing & Workflow Design" />
         <meta name="twitter:creator" content="@imdvichrn" />
         <script type="application/ld+json">{JSON.stringify(generatePersonSchema())}</script>
         <script type="application/ld+json">{JSON.stringify(generateWebsiteSchema())}</script>
+        <script type="application/ld+json">{JSON.stringify(generateOrganizationSchema())}</script>
         <script type="application/ld+json">{JSON.stringify(generateEchoessBrandSchema())}</script>
+        <script type="application/ld+json">{JSON.stringify(generateEchoessAppSchema())}</script>
         <script type="application/ld+json">{JSON.stringify(generateExamFlowOSSchema())}</script>
       </Helmet>
       <HiddenIdentityBlock page="home" />
