@@ -270,3 +270,69 @@ export const generatePluginSchema = () => ({
   },
   "author": { "@id": `${BASE_URL}/#person` },
 });
+
+/** Organization schema for the creator's brand entity */
+export const generateOrganizationSchema = () => ({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${BASE_URL}/#organization`,
+  "name": "Geddada Devicharan",
+  "alternateName": ["imdvichrn", "Echoless"],
+  "url": BASE_URL,
+  "logo": `${BASE_URL}/profile-avatar.png`,
+  "image": `${BASE_URL}/profile-avatar.png`,
+  "description":
+    "Independent creator studio by Geddada Devicharan (imdvichrn) — building AI workflow systems, cinematic editing tools, and automation products including ExamFlowOS, Perfect Pack, and Echoless.",
+  "founder": { "@id": `${BASE_URL}/#person` },
+  "sameAs": SOCIAL_PROFILES,
+});
+
+/** Echoless as a SoftwareApplication (multi-model AI workflow system) */
+export const generateEchoessAppSchema = () => ({
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "@id": `${BASE_URL}/#echoless-app`,
+  "name": "Echoless",
+  "alternateName": ["Echoess", "Echoess AI", "Echoless AI"],
+  "applicationCategory": "BusinessApplication",
+  "applicationSubCategory": "AI Workflow System",
+  "operatingSystem": "Web",
+  "url": BASE_URL,
+  "description":
+    "Echoless — a multi-model AI workflow system designed for intelligent automation, reasoning enhancement, and adaptive workflow execution.",
+  "keywords":
+    "echoless, multi-model ai, ai workflow system, ai orchestration, automation systems, workflow intelligence, adaptive workflow",
+  "creator": { "@id": `${BASE_URL}/#person` },
+  "author": { "@id": `${BASE_URL}/#person` },
+  "publisher": { "@id": `${BASE_URL}/#person` },
+  "brand": { "@id": `${BASE_URL}/#echoless-brand` },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+  },
+});
+
+/** Perfect Pack — Product schema for the DaVinci Resolve toolkit */
+export const generatePerfectPackProductSchema = () => ({
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": `${BASE_URL}/perfect-pack#product`,
+  "name": "Perfect Pack — Cinematic Editing Toolkit for DaVinci Resolve",
+  "description":
+    "Professional DaVinci Resolve toolkit featuring cinematic presets, transitions, sound effects, editing assets, and workflow tools by Geddada Devicharan.",
+  "image": `${BASE_URL}/og/og-perfectpack.png?v=3`,
+  "url": `${BASE_URL}/perfect-pack`,
+  "category": "Video Editing Toolkit",
+  "brand": { "@type": "Brand", "name": "Geddada Devicharan" },
+  "manufacturer": { "@id": `${BASE_URL}/#person` },
+  "offers": {
+    "@type": "Offer",
+    "price": "10",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/PreOrder",
+    "url": `${BASE_URL}/perfect-pack`,
+    "seller": { "@id": `${BASE_URL}/#person` },
+  },
+});
