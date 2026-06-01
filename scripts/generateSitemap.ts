@@ -72,14 +72,18 @@ export async function generateSitemap(projectRoot: string, outDir: string) {
   urls.push(urlEntry(`${SITE_URL}/`, today, 'weekly', 1.0, `${SITE_URL}/og/og-home.png?v=3`));
   urls.push(urlEntry(`${SITE_URL}/perfect-pack`, today, 'weekly', 0.95, `${SITE_URL}/og/og-perfectpack.png?v=3`));
 
+  // Routes that redirect (301/Navigate) — must be excluded from the sitemap
+  const REDIRECTED_PROJECT_IDS = new Set<string>(['perfect-pack']);
+
   for (const p of projects) {
+    if (REDIRECTED_PROJECT_IDS.has(p.id)) continue;
     const priority = FEATURED[p.id] ?? PRIORITY_BY_CATEGORY[p.category];
     const changefreq = CHANGEFREQ_BY_CATEGORY[p.category];
     urls.push(urlEntry(`${SITE_URL}/project/${p.id}`, lastmod, changefreq, priority, OG_BY_ID[p.id]));
   }
 
-  // Legacy redirect kept indexed (low priority)
-  urls.push(urlEntry(`${SITE_URL}/projects/video-editing-post-production`, lastmod, 'monthly', 0.6));
+  // Dedicated standalone page (real 200 route, not a redirect)
+  urls.push(urlEntry(`${SITE_URL}/projects/video-editing-post-production`, lastmod, 'monthly', 0.8));
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${urls.join('\n')}\n</urlset>\n`;
 
