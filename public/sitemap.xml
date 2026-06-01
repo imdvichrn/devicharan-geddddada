@@ -1,31 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://geddadadevicharan.vercel.app/</loc>
     <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.00</priority>
-    <image:image>
-      <image:loc>https://geddadadevicharan.vercel.app/og/og-home.png?v=3</image:loc>
-    </image:image>
   </url>
   <url>
     <loc>https://geddadadevicharan.vercel.app/perfect-pack</loc>
     <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
-    <image:image>
-      <image:loc>https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=3</image:loc>
-    </image:image>
   </url>
   <url>
     <loc>https://geddadadevicharan.vercel.app/project/examflow-os</loc>
     <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.98</priority>
-    <image:image>
-      <image:loc>https://geddadadevicharan.vercel.app/og/og-examflowos.png?v=3</image:loc>
-    </image:image>
   </url>
   <url>
     <loc>https://geddadadevicharan.vercel.app/project/video-production</loc>
@@ -68,9 +59,6 @@
     <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
-    <image:image>
-      <image:loc>https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=3</image:loc>
-    </image:image>
   </url>
   <url>
     <loc>https://geddadadevicharan.vercel.app/projects/video-editing-post-production</loc>
