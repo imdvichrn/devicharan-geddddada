@@ -76,11 +76,11 @@ export async function generateSitemap(projectRoot: string, outDir: string) {
   urls.push(urlEntry(`${SITE_URL}/`, today, 'weekly', 1.0));
   urls.push(urlEntry(`${SITE_URL}/perfect-pack`, today, 'weekly', 0.95));
 
-  // Routes that redirect (301/Navigate) — must be excluded from the sitemap
-  const REDIRECTED_PROJECT_IDS = new Set<string>(['perfect-pack']);
+  // Routes that redirect (301/Navigate) or are duplicates of dedicated pages — exclude from the sitemap.
+  const EXCLUDED_PROJECT_IDS = new Set<string>(['perfect-pack', 'video-editing-post-production']);
 
   for (const p of projects) {
-    if (REDIRECTED_PROJECT_IDS.has(p.id)) continue;
+    if (EXCLUDED_PROJECT_IDS.has(p.id)) continue;
     const priority = FEATURED[p.id] ?? PRIORITY_BY_CATEGORY[p.category];
     const changefreq = CHANGEFREQ_BY_CATEGORY[p.category];
     urls.push(urlEntry(`${SITE_URL}/project/${p.id}`, lastmod, changefreq, priority));
