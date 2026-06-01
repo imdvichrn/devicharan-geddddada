@@ -24,6 +24,8 @@ export const projects: Project[] = [
     challenge: 'The biggest challenge was making mastery feel accurate. If you know 3 out of 5 topics in a unit, your unit progress should reflect that precisely — and roll up correctly into the subject level too. On top of that, the recall engine needed to be smart enough to resurface weak cards within a couple hours, not just on a fixed schedule.',
     outcome: 'The result is a clean, fast app that runs entirely in your browser with zero sign-up required. Students can track their entire semester, review flashcards with adaptive scheduling, and stay focused with ambient audio — all without an internet connection after the first load.',
     youtubeEmbedId: 'cmk8S96EDQ0',
+    year: '2025',
+    tools: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Framer Motion', 'LocalStorage'],
     roles: ['Lead Developer', 'System Architect', 'UI/UX Designer'],
     technicalDetails: [
       'Hierarchical Subject→Unit→Topic Architecture',
