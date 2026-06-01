@@ -424,7 +424,7 @@ export function WorkflowsGrid() {
       title: 'Video Editing & Post-Production',
       description: 'Professional video editing with industry-standard color grading, VFX compositing, and cinematic sound design.',
       visual: <VideoTimeline />,
-      youtubeId: 'N68iysGT2DU',
+      youtubeId: 'cmk8S96EDQ0',
       tools: ['DaVinci Resolve Studio', 'Fusion VFX', 'Fairlight Audio'],
       specs: ['4K Workflow', 'RAW Processing', 'Node-based Grading', 'HDR Mastering'],
       modalContent: <VideoEditingDetails />,
