@@ -22,7 +22,7 @@ export default function VideoEditingPostProduction() {
   const title = "Video Editing & Post-Production";
   const description = "Professional post-production showcase featuring advanced editing techniques, color correction, and seamless transitions. This portfolio demonstrates expertise in utilizing industry-standard tools like Adobe Premiere Pro and DaVinci Resolve to create polished, cinema-quality final deliverables with professional sound design and advanced 3D workflows.";
   const year = "2025";
-  const youtubeId = "N68iysGT2DU";
+  const youtubeId = "cmk8S96EDQ0";
   
   const tools = [
     "Adobe Premiere Pro",
