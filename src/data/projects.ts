@@ -116,8 +116,9 @@ export const projects: Project[] = [
     longDescription: 'A comprehensive post-production portfolio demonstrating professional video editing, advanced color grading techniques, and seamless transition design. This project showcases expertise in utilizing industry-standard tools for creating polished final deliverables with cinema-quality visuals and sound design.',
     challenge: 'Managing complex timelines with multiple video layers, achieving consistent color grading across diverse source material, and seamlessly integrating audio with visual elements while maintaining professional pacing and visual flow.',
     outcome: 'Created a portfolio of professionally edited videos with industry-standard color correction, smooth transitions, and synchronized audio design. The projects demonstrate technical proficiency in post-production workflows and creative visual storytelling.',
-    youtubeEmbedId: 'N68iysGT2DU',
+    youtubeEmbedId: 'cmk8S96EDQ0',
     additionalVideos: [
+      { id: 'N68iysGT2DU', title: 'Post-Production Showcase' },
       { id: 'fkniR6CZWsY', title: 'Additional Post-Production Showcase' }
     ],
     year: '2025',
