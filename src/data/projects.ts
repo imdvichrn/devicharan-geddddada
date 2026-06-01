@@ -23,9 +23,7 @@ export const projects: Project[] = [
     longDescription: 'ExamFlow OS is built for students who are tired of guessing where they stand before exams. Instead of another to-do list, it gives you a real-time picture of your knowledge across every subject, unit, and topic. You add your syllabus, and the app tracks your mastery as you study — showing exactly which topics need more work and which ones you have nailed. It uses spaced repetition (the same science behind the most effective study methods) to bring back the stuff you are forgetting at just the right time. There is a built-in Focus Timer with ambient sounds like rain and white noise to keep you locked in, plus a stats dashboard so you can see your streaks, accuracy, and progress at a glance. Think of it as your study command center.',
     challenge: 'The biggest challenge was making mastery feel accurate. If you know 3 out of 5 topics in a unit, your unit progress should reflect that precisely — and roll up correctly into the subject level too. On top of that, the recall engine needed to be smart enough to resurface weak cards within a couple hours, not just on a fixed schedule.',
     outcome: 'The result is a clean, fast app that runs entirely in your browser with zero sign-up required. Students can track their entire semester, review flashcards with adaptive scheduling, and stay focused with ambient audio — all without an internet connection after the first load.',
-    youtubeEmbedId: '',
-    year: '2025',
-    tools: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Framer Motion', 'LocalStorage'],
+    youtubeEmbedId: 'cmk8S96EDQ0',
     roles: ['Lead Developer', 'System Architect', 'UI/UX Designer'],
     technicalDetails: [
       'Hierarchical Subject→Unit→Topic Architecture',
