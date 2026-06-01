@@ -64,15 +64,6 @@
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://geddadadevicharan.vercel.app/project/perfect-pack</loc>
-    <lastmod>2026-06-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.90</priority>
-    <image:image>
-      <image:loc>https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=3</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://geddadadevicharan.vercel.app/project/perfect-pack-plugin</loc>
     <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -85,6 +76,6 @@
     <loc>https://geddadadevicharan.vercel.app/projects/video-editing-post-production</loc>
     <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <priority>0.80</priority>
   </url>
 </urlset>
