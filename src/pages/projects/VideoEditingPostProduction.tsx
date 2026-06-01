@@ -22,7 +22,7 @@ export default function VideoEditingPostProduction() {
   const title = "Video Editing & Post-Production";
   const description = "Professional post-production showcase featuring advanced editing techniques, color correction, and seamless transitions. This portfolio demonstrates expertise in utilizing industry-standard tools like Adobe Premiere Pro and DaVinci Resolve to create polished, cinema-quality final deliverables with professional sound design and advanced 3D workflows.";
   const year = "2025";
-  const youtubeId = "N68iysGT2DU";
+  const youtubeId = "cmk8S96EDQ0";
   
   const tools = [
     "Adobe Premiere Pro",
@@ -199,13 +199,25 @@ export default function VideoEditingPostProduction() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="px-4 md:px-8 pb-8 space-y-8">
+                {/* Featured Video — Latest Release */}
+                <div className="space-y-3">
+                  <h3 className="text-base md:text-lg font-medium text-foreground">
+                    Featured — Latest Release
+                  </h3>
+                  <VideoEmbed 
+                    youtubeId={youtubeId} 
+                    title="ExamFlow OS — Cinematic Showcase by Geddada Devicharan"
+                    className="shadow-lg"
+                  />
+                </div>
+
                 {/* Primary Video */}
                 <div className="space-y-3">
                   <h3 className="text-base md:text-lg font-medium text-foreground">
                     Main Showcase
                   </h3>
                   <VideoEmbed 
-                    youtubeId={youtubeId} 
+                    youtubeId="N68iysGT2DU" 
                     title="Video Editing & Post-Production Showcase"
                     className="shadow-lg"
                   />
