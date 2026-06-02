@@ -145,7 +145,7 @@ export const generateExamFlowOSSchema = () => ({
     "ExamFlow AI",
     "ExamFlow Method",
     "ExamFlow Protocol",
-    "EchOS",
+    "EFOS",
     "ExamFlowOS by imdvichrn",
     "ExamFlowOS Devicharan",
     "ExamFlow System Devicharan",

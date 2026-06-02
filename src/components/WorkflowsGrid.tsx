@@ -470,7 +470,7 @@ export function WorkflowsGrid() {
       size: 'normal' as const,
     },
     {
-      title: 'ExamFlow OS (EchOS)',
+      title: 'ExamFlow OS (EFOS)',
       description: 'A gamified cognitive-optimization productivity system for students — syllabus tracking with topic-level mastery logic, SM2 active recall, and ambient focus modes.',
       visual: (
         <div className="h-20 rounded-lg bg-gradient-to-br from-primary/20 via-accent/20 to-success/10 border border-glass-border flex items-center justify-center gap-3 relative overflow-hidden">
