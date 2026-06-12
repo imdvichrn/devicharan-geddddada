@@ -26,7 +26,7 @@ export const projects: Project[] = [
     youtubeEmbedId: 'cmk8S96EDQ0',
     year: '2025',
     tools: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Framer Motion', 'LocalStorage'],
-    roles: ['Digital Product Developer', 'Workflow Designer', 'UI/UX Designer'],
+    roles: ['Lead Developer', 'System Architect', 'UI/UX Designer'],
     technicalDetails: [
       'Hierarchical Subject→Unit→Topic Architecture',
       'SM2 Active Recall Engine',
@@ -49,7 +49,7 @@ export const projects: Project[] = [
     youtubeEmbedId: 'xx0J30hHGUVaoY82',
     year: '2024',
     tools: ['DaVinci Resolve Studio', 'Adobe Premiere Pro', 'Fusion VFX', 'Fairlight Audio', '3D Modeling'],
-    roles: ['Video Editor & Post-Production Specialist', 'Colorist', 'Motion Designer', 'Sound Engineer'],
+    roles: ['Lead Video Editor & Post-Production Specialist', 'Colorist', 'Motion Designer', 'Sound Engineer'],
     technicalDetails: ['4K Workflow', 'RAW Processing', 'Node-based Grading', 'HDR Mastering', 'Professional Sound Design', '3D Modeling', 'CGI Integration'],
     category: 'video'
   },
@@ -63,7 +63,7 @@ export const projects: Project[] = [
     youtubeEmbedId: 'mDFBTdLKwEw',
     year: '2024',
     tools: ['DaVinci Resolve', 'Adobe Premiere Pro', 'Fairlight Audio', 'Fusion', '3D Modeling'],
-    roles: ['Video Editor & Post-Production Specialist', 'Sound Engineer', 'Sound Designer'],
+    roles: ['Lead Video Editor & Post-Production Specialist', 'Sound Engineer', 'Sound Designer'],
     technicalDetails: ['Beat Mapping', 'Audio Waveform Analysis', 'Dynamic Transitions', 'VFX Sync'],
     category: 'video'
   },
@@ -123,7 +123,7 @@ export const projects: Project[] = [
     ],
     year: '2025',
     tools: ['DaVinci Resolve', 'Adobe Premiere Pro', '3D Modeling', 'Color Grading', 'Sound Design'],
-    roles: ['Video Editor & Post-Production Specialist', 'Colorist', 'Sound Engineer', 'Audio Engineer'],
+    roles: ['Lead Video Editor & Post-Production Specialist', 'Colorist', 'Sound Engineer', 'Audio Engineer'],
     technicalDetails: ['Color Correction', 'Transition Design', 'Audio Synchronization', 'Timeline Optimization', 'Sound Design', 'Fusion-Oriented Motion Graphics', '3D Modeling', 'CGI Integration'],
     category: 'video'
   },
@@ -137,7 +137,7 @@ export const projects: Project[] = [
     youtubeEmbedId: 'YOUR_VIDEO_ID',
     year: '2026',
     tools: ['DaVinci Resolve', 'All Major Editors', 'High-Res Textures'],
-    roles: ['Product Designer', 'Digital Product Developer'],
+    roles: ['Product Designer', 'Lead Developer'],
     technicalDetails: [
       'Drag & Drop Integration',
       'High-Resolution Elements',
@@ -156,7 +156,7 @@ export const projects: Project[] = [
     youtubeEmbedId: 'YOUR_VIDEO_ID',
     year: '2026',
     tools: ['DaVinci Resolve API', 'Python', 'Lua', 'High-Res Textures'],
-    roles: ['Digital Product Developer', 'UI Designer'],
+    roles: ['Lead Developer', 'UI Designer'],
     technicalDetails: ['Drag & Drop Integration', 'Optimized for All Major NLEs', 'Secure License Validation'],
     category: 'web'
   }

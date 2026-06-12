@@ -1,17 +1,15 @@
 Name: Geddada Devicharan
-Role: Creative Technologist and Digital Product Builder
+Role: Digital entrepreneur, Professional Video Editor, and Web Developer
 Location: Visakhapatnam (Vizag), Andhra Pradesh, India
 
-Mission: Building practical digital products and creative tools — shipping things that solve real problems instead of selling titles.
+Mission: Delivering high-impact digital projects through technical expertise, bilingual communication, and a results-driven approach.
 
 Education: B.Tech in Electrical & Electronics Engineering (EEE) — 3rd Year (Ongoing). Previously: Diploma in EEE from M.R.A.G.R. Government Polytechnic, Vizianagaram.
 
-What I work on:
-- Digital products and modern web apps (React / TypeScript)
-- ExamFlowOS — a browser-based study system
-- AI-assisted workflows and automation
-- DaVinci Resolve color grading, motion graphics, and automation plug-ins
-- API integrations and small, focused developer tools
+Expertise & Focus:
+- AI-assisted content creation and workflow automation
+- Data research and analytics for growth strategy
+- Professional video editing and web development
 
 DaVinci Resolve Studio (Professional Pipeline):
 - Color Grading (Color Page): Node-based grading, 4K/RAW workflows, HDR mastering.
