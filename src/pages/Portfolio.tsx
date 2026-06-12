@@ -37,7 +37,7 @@ const education = [{
   period: "Completed",
   status: "Completed"
 }];
-const highlights = ["Self-taught in Prompt Engineering & AI Tools", "Bilingual (Telugu & English)", "Digital Marketing & Creative Design", "Professional Video Editor & Colorist", "Full Post-Production Pipeline Expertise"];
+const highlights = ["Digital Product Builder", "ExamFlowOS Developer", "AI Workflow Developer", "DaVinci Resolve Colorist", "Motion Graphics & Post-Production"];
 export function Portfolio() {
   const [isDownloading, setIsDownloading] = useState(false);
   const [parallaxOffset, setParallaxOffset] = useState(0);
