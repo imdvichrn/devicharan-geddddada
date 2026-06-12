@@ -374,7 +374,7 @@ export function Portfolio() {
               <WindowChrome className="mb-2 md:mb-4" />
               <CardTitle className="text-xl md:text-3xl font-bold flex items-center gap-2 md:gap-3">
                 <Code className="text-primary w-5 h-5 md:w-6 md:h-6" />
-                Skills & Expertise
+                Skills & Tools
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 md:space-y-8 px-4 md:px-6">
