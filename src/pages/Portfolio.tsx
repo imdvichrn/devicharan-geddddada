@@ -37,7 +37,7 @@ const education = [{
   period: "Completed",
   status: "Completed"
 }];
-const highlights = ["Self-taught in Prompt Engineering & AI Tools", "Bilingual (Telugu & English)", "Digital Marketing & Creative Design", "Professional Video Editor & Colorist", "Full Post-Production Pipeline Expertise"];
+const highlights = ["Digital Product Builder", "ExamFlowOS Developer", "AI Workflow Developer", "DaVinci Resolve Colorist", "Motion Graphics & Post-Production"];
 export function Portfolio() {
   const [isDownloading, setIsDownloading] = useState(false);
   const [parallaxOffset, setParallaxOffset] = useState(0);
@@ -201,29 +201,29 @@ export function Portfolio() {
   };
   return <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Geddada Devicharan | AI Systems, Editing & Workflow Design</title>
-        <meta name="description" content="Creator of ExamFlowOS and Echoless. Building AI-powered workflow systems, cinematic editing tools, automation systems, and modern digital experiences." />
-        <meta name="keywords" content="Geddada Devicharan, Devicharan Geddada, imdvichrn, AI systems creator, AI workflows, workflow automation, workflow designer, video editor, DaVinci Resolve editor, creative developer, AI systems developer, automation systems, ExamFlowOS, Echoless, Perfect Pack, cinematic editing toolkit, ai study system, multi-model ai, AI orchestration" />
+        <title>Geddada Devicharan | Creative Technologist & Digital Product Builder</title>
+        <meta name="description" content="Independent builder shipping digital products, ExamFlowOS, AI-assisted workflows, DaVinci Resolve color and motion work, web development, and DaVinci automation plug-ins." />
+        <meta name="keywords" content="Geddada Devicharan, Devicharan Geddada, imdvichrn, creative technologist, digital product builder, independent developer, AI workflow developer, automation builder, workflow designer, ExamFlowOS developer, DaVinci Resolve colorist, motion graphics artist, post-production specialist, web developer, React developer, API integrations, color grading, Perfect Pack" />
         <meta name="author" content="Devicharan Geddada" />
         <link rel="canonical" href="https://geddadadevicharan.vercel.app" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Geddada Devicharan | AI Systems, Editing & Workflow Design" />
-        <meta property="og:description" content="Creator of ExamFlowOS and Echoless. Building AI-powered workflow systems, cinematic editing tools, automation systems, and modern digital experiences." />
+        <meta property="og:title" content="Geddada Devicharan | Creative Technologist & Digital Product Builder" />
+        <meta property="og:description" content="Independent builder shipping digital products, ExamFlowOS, AI-assisted workflows, DaVinci Resolve color and motion work, and modern web tools." />
         <meta property="og:url" content="https://geddadadevicharan.vercel.app" />
         <meta property="og:image" content="https://geddadadevicharan.vercel.app/og/og-home.png?v=3" />
         <meta property="og:image:secure_url" content="https://geddadadevicharan.vercel.app/og/og-home.png?v=3" />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Geddada Devicharan — AI Workflows, Video Editing & Automation" />
+        <meta property="og:image:alt" content="Geddada Devicharan — Digital products, AI workflows, DaVinci Resolve" />
         <meta property="og:site_name" content="Geddada Devicharan" />
         <meta name="application-name" content="Geddada Devicharan" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://geddadadevicharan.vercel.app" />
-        <meta name="twitter:title" content="Geddada Devicharan | AI Systems, Editing & Workflow Design" />
-        <meta name="twitter:description" content="Creator of ExamFlowOS and Echoless. Building AI-powered workflow systems, cinematic editing tools, automation systems, and modern digital experiences." />
+        <meta name="twitter:title" content="Geddada Devicharan | Creative Technologist & Digital Product Builder" />
+        <meta name="twitter:description" content="Independent builder shipping digital products, ExamFlowOS, AI-assisted workflows, DaVinci Resolve color and motion work, and modern web tools." />
         <meta name="twitter:image" content="https://geddadadevicharan.vercel.app/og/og-home.png?v=3" />
-        <meta name="twitter:image:alt" content="Geddada Devicharan — AI Systems, Editing & Workflow Design" />
+        <meta name="twitter:image:alt" content="Geddada Devicharan — Digital products, AI workflows, DaVinci Resolve" />
         <meta name="twitter:creator" content="@imdvichrn" />
         <script type="application/ld+json">{JSON.stringify(generatePersonSchema())}</script>
         <script type="application/ld+json">{JSON.stringify(generateOrganizationSchema())}</script>
@@ -291,7 +291,7 @@ export function Portfolio() {
                     <span className="inline-block text-sm md:text-base text-primary font-medium">@imdvichrn</span>
                   </div>
                   <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground px-2">
-                    Video Editor & Post-Production Specialist | Digital Creator | Developer
+                    Creative Technologist · Digital Product Builder · DaVinci Resolve Colorist
                   </p>
                   
                   <div className="flex flex-wrap justify-center items-center gap-2 md:gap-4 text-xs md:text-sm text-muted-foreground">
@@ -351,14 +351,15 @@ export function Portfolio() {
             </CardHeader>
             <CardContent className="space-y-3 md:space-y-6 px-4 md:px-6">
               <p className="text-sm md:text-lg text-muted-foreground leading-relaxed">
-                Video editor and post-production specialist with a Diploma in Electrical & Electronics Engineering, 
-                currently completing a B.Tech in EEE. I deliver professional video editing, graphic design, web development, 
-                and digital content strategy. Self-taught in AI-assisted workflows and prompt engineering, with 
-                proven adaptability and technical precision.
+                Independent builder working across digital products, AI-assisted workflows, and DaVinci Resolve
+                post-production. Currently completing a B.Tech in Electrical & Electronics Engineering, with a
+                prior Diploma in EEE. I build and ship things that solve real problems — from study tools to
+                editorial toolkits.
               </p>
               <p className="text-sm md:text-lg text-muted-foreground leading-relaxed">
-                I build digital experiences that combine engineering discipline with creative execution. My work 
-                spans the full post-production pipeline — from color grading and VFX to sound design and delivery optimization.
+                Day to day I work on ExamFlowOS, modern web apps, DaVinci Resolve color and motion work,
+                automation plug-ins, and API integrations. The focus is practical: clean code, fast interfaces,
+                and finished work that actually ships.
               </p>
             </CardContent>
           </Card>
@@ -373,7 +374,7 @@ export function Portfolio() {
               <WindowChrome className="mb-2 md:mb-4" />
               <CardTitle className="text-xl md:text-3xl font-bold flex items-center gap-2 md:gap-3">
                 <Code className="text-primary w-5 h-5 md:w-6 md:h-6" />
-                Skills & Expertise
+                Skills & Tools
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 md:space-y-8 px-4 md:px-6">

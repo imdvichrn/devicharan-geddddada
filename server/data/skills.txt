@@ -1,4 +1,4 @@
-Technical Expertise:
+Skills & Tools:
 - Languages: JavaScript, TypeScript, Python, Verilog/VHDL
 - Frameworks & Tools: React, Node.js, Express
 - Web Development: React, modern JS toolchain, full-stack development
