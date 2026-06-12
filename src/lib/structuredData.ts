@@ -39,9 +39,9 @@ export const generatePersonSchema = () => ({
   "alternateName": PERSON_ALIASES,
   "url": BASE_URL,
   "image": `${BASE_URL}/profile-avatar.png`,
-  "jobTitle": "AI Video Editor, Reels & Automation Creator",
+  "jobTitle": "Creative Technologist & Digital Product Builder",
   "description":
-    "Devicharan Geddada (imdvichrn) — AI Video Editor, Reels & Automation Creator from India. Creator of ExamFlowOS (AI study system) and Echoless (personal AI assistant). EEE BTech student building AI workflows, automation systems, and cinematic video projects.",
+    "Devicharan Geddada (imdvichrn) — independent builder from India shipping digital products, AI-assisted workflows, ExamFlowOS, DaVinci Resolve color and motion work, web development, and DaVinci automation plug-ins. EEE BTech student building practical, modern tools.",
   "knowsAbout": [
     "AI workflows",
     "AI automation",
