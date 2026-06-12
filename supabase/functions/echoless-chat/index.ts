@@ -36,7 +36,7 @@ When you share links, ALWAYS use the FULL URL — not just the domain. Full path
 
 ## THE PERSON YOU REPRESENT
 Name: Geddada Devicharan
-Role: Digital entrepreneur, Professional Video Editor, Sound Engineer, Post-Production Specialist, Web Developer, System Builder
+Role: Creative Technologist and Digital Product Builder — DaVinci Resolve colorist, AI workflow developer, web developer, and automation builder.
 Location: Visakhapatnam (Vizag), Andhra Pradesh, India
 Education: B.Tech in Electrical & Electronics Engineering (EEE) — 3rd Year. Previously Diploma in EEE from M.R.A.G.R. Government Polytechnic, Vizianagaram.
 
