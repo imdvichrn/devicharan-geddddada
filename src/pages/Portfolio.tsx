@@ -201,29 +201,29 @@ export function Portfolio() {
   };
   return <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Geddada Devicharan | AI Systems, Editing & Workflow Design</title>
-        <meta name="description" content="Creator of ExamFlowOS and Echoless. Building AI-powered workflow systems, cinematic editing tools, automation systems, and modern digital experiences." />
-        <meta name="keywords" content="Geddada Devicharan, Devicharan Geddada, imdvichrn, AI systems creator, AI workflows, workflow automation, workflow designer, video editor, DaVinci Resolve editor, creative developer, AI systems developer, automation systems, ExamFlowOS, Echoless, Perfect Pack, cinematic editing toolkit, ai study system, multi-model ai, AI orchestration" />
+        <title>Geddada Devicharan | Creative Technologist & Digital Product Builder</title>
+        <meta name="description" content="Independent builder shipping digital products, ExamFlowOS, AI-assisted workflows, DaVinci Resolve color and motion work, web development, and DaVinci automation plug-ins." />
+        <meta name="keywords" content="Geddada Devicharan, Devicharan Geddada, imdvichrn, creative technologist, digital product builder, independent developer, AI workflow developer, automation builder, workflow designer, ExamFlowOS developer, DaVinci Resolve colorist, motion graphics artist, post-production specialist, web developer, React developer, API integrations, color grading, Perfect Pack" />
         <meta name="author" content="Devicharan Geddada" />
         <link rel="canonical" href="https://geddadadevicharan.vercel.app" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Geddada Devicharan | AI Systems, Editing & Workflow Design" />
-        <meta property="og:description" content="Creator of ExamFlowOS and Echoless. Building AI-powered workflow systems, cinematic editing tools, automation systems, and modern digital experiences." />
+        <meta property="og:title" content="Geddada Devicharan | Creative Technologist & Digital Product Builder" />
+        <meta property="og:description" content="Independent builder shipping digital products, ExamFlowOS, AI-assisted workflows, DaVinci Resolve color and motion work, and modern web tools." />
         <meta property="og:url" content="https://geddadadevicharan.vercel.app" />
         <meta property="og:image" content="https://geddadadevicharan.vercel.app/og/og-home.png?v=3" />
         <meta property="og:image:secure_url" content="https://geddadadevicharan.vercel.app/og/og-home.png?v=3" />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Geddada Devicharan — AI Workflows, Video Editing & Automation" />
+        <meta property="og:image:alt" content="Geddada Devicharan — Digital products, AI workflows, DaVinci Resolve" />
         <meta property="og:site_name" content="Geddada Devicharan" />
         <meta name="application-name" content="Geddada Devicharan" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://geddadadevicharan.vercel.app" />
-        <meta name="twitter:title" content="Geddada Devicharan | AI Systems, Editing & Workflow Design" />
-        <meta name="twitter:description" content="Creator of ExamFlowOS and Echoless. Building AI-powered workflow systems, cinematic editing tools, automation systems, and modern digital experiences." />
+        <meta name="twitter:title" content="Geddada Devicharan | Creative Technologist & Digital Product Builder" />
+        <meta name="twitter:description" content="Independent builder shipping digital products, ExamFlowOS, AI-assisted workflows, DaVinci Resolve color and motion work, and modern web tools." />
         <meta name="twitter:image" content="https://geddadadevicharan.vercel.app/og/og-home.png?v=3" />
-        <meta name="twitter:image:alt" content="Geddada Devicharan — AI Systems, Editing & Workflow Design" />
+        <meta name="twitter:image:alt" content="Geddada Devicharan — Digital products, AI workflows, DaVinci Resolve" />
         <meta name="twitter:creator" content="@imdvichrn" />
         <script type="application/ld+json">{JSON.stringify(generatePersonSchema())}</script>
         <script type="application/ld+json">{JSON.stringify(generateOrganizationSchema())}</script>
