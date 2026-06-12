@@ -291,7 +291,7 @@ export function Portfolio() {
                     <span className="inline-block text-sm md:text-base text-primary font-medium">@imdvichrn</span>
                   </div>
                   <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground px-2">
-                    Video Editor & Post-Production Specialist | Digital Creator | Developer
+                    Creative Technologist · Digital Product Builder · DaVinci Resolve Colorist
                   </p>
                   
                   <div className="flex flex-wrap justify-center items-center gap-2 md:gap-4 text-xs md:text-sm text-muted-foreground">
