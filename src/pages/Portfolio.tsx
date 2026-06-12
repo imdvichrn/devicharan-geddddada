@@ -351,14 +351,15 @@ export function Portfolio() {
             </CardHeader>
             <CardContent className="space-y-3 md:space-y-6 px-4 md:px-6">
               <p className="text-sm md:text-lg text-muted-foreground leading-relaxed">
-                Video editor and post-production specialist with a Diploma in Electrical & Electronics Engineering, 
-                currently completing a B.Tech in EEE. I deliver professional video editing, graphic design, web development, 
-                and digital content strategy. Self-taught in AI-assisted workflows and prompt engineering, with 
-                proven adaptability and technical precision.
+                Independent builder working across digital products, AI-assisted workflows, and DaVinci Resolve
+                post-production. Currently completing a B.Tech in Electrical & Electronics Engineering, with a
+                prior Diploma in EEE. I build and ship things that solve real problems — from study tools to
+                editorial toolkits.
               </p>
               <p className="text-sm md:text-lg text-muted-foreground leading-relaxed">
-                I build digital experiences that combine engineering discipline with creative execution. My work 
-                spans the full post-production pipeline — from color grading and VFX to sound design and delivery optimization.
+                Day to day I work on ExamFlowOS, modern web apps, DaVinci Resolve color and motion work,
+                automation plug-ins, and API integrations. The focus is practical: clean code, fast interfaces,
+                and finished work that actually ships.
               </p>
             </CardContent>
           </Card>
