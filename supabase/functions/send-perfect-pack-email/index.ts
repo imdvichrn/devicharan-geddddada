@@ -17,12 +17,20 @@ serve(async (req) => {
     }
 
     const { email } = await req.json();
-    if (!email) {
-      return new Response(JSON.stringify({ error: 'Email is required' }), {
+    if (typeof email !== 'string' || email.length < 5 || email.length > 254) {
+      return new Response(JSON.stringify({ error: 'Invalid email' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return new Response(JSON.stringify({ error: 'Invalid email address' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    const safeEmail = email.replace(/[\r\n]/g, '');
 
     const htmlContent = `
 <!DOCTYPE html>
@@ -113,14 +121,15 @@ serve(async (req) => {
       body: JSON.stringify({
         from: 'Perfect Pack <onboarding@resend.dev>',
         to: ['devicharangeddada@gmail.com'],
-        subject: `New Perfect Pack registration: ${email}`,
+        subject: `New Perfect Pack registration: ${safeEmail}`,
         html: htmlContent,
       }),
     });
 
     const data = await res.json();
     if (!res.ok) {
-      throw new Error(`Resend API error: ${JSON.stringify(data)}`);
+      console.error('Resend API error:', data);
+      throw new Error('Email provider error');
     }
 
     return new Response(JSON.stringify({ success: true }), {
@@ -129,7 +138,7 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error('Error sending Perfect Pack email:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(JSON.stringify({ error: 'Failed to process request. Please try again later.' }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
