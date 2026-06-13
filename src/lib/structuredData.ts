@@ -1,27 +1,11 @@
 /**
  * Utility functions for generating JSON-LD structured data.
- * Optimized for entity recognition and ranking on identity + product keywords:
- *   Geddada Devicharan, Devicharan, Charan, Devi Charan,
- *   Geddada, imdvichrn, iamdvichrn, ExamFlowOS, Echoless, Echoess
+ * Canonical identity: Geddada Devicharan. Aliases: Charan, imdvichrn.
  */
 
 const BASE_URL = "https://geddadadevicharan.vercel.app";
-const PERSON_NAME = "Devicharan Geddada";
-const PERSON_ALIASES = [
-  "Geddada Devicharan",
-  "Charan",
-  "Devi Charan",
-  "Devicharan",
-  "Geddada Charan",
-  "imdvichrn",
-  "iamdvichrn",
-  "geddadadevicharan",
-  "Devicharan India",
-  "Charan EEE BTech",
-  "Devicharan editor",
-  "Devicharan developer",
-  "Devicharan Geddada AI",
-];
+const PERSON_NAME = "Geddada Devicharan";
+const PERSON_ALIASES = ["Charan", "imdvichrn"];
 
 const SOCIAL_PROFILES = [
   "https://www.linkedin.com/in/geddadadevicharan",
@@ -39,9 +23,9 @@ export const generatePersonSchema = () => ({
   "alternateName": PERSON_ALIASES,
   "url": BASE_URL,
   "image": `${BASE_URL}/profile-avatar.png`,
-  "jobTitle": "AI Video Editor, Reels & Automation Creator",
+  "jobTitle": "AI Systems Architect",
   "description":
-    "Devicharan Geddada (imdvichrn) — AI Video Editor, Reels & Automation Creator from India. Creator of ExamFlowOS (AI study system) and Echoless (personal AI assistant). EEE BTech student building AI workflows, automation systems, and cinematic video projects.",
+    "Geddada Devicharan (also known as Charan, imdvichrn) — AI Systems Architect. Creator of ExamFlowOS, Echoless, and Perfect Pack. Builds AI workflows, automation systems, and cinematic video projects.",
   "knowsAbout": [
     "AI workflows",
     "AI automation",
@@ -76,10 +60,10 @@ export const generateWebsiteSchema = () => ({
   "@context": "https://schema.org",
   "@type": "WebSite",
   "@id": `${BASE_URL}/#website`,
-  "name": "Devicharan Geddada — Portfolio",
-  "alternateName": ["Charan Portfolio", "imdvichrn Portfolio", "Devicharan Portfolio", "Echoless Ecosystem"],
+  "name": "Geddada Devicharan",
+  "alternateName": ["Charan", "imdvichrn"],
   "url": BASE_URL,
-  "description": "Portfolio of Devicharan Geddada (imdvichrn) — AI video editor, reels and automation creator from India.",
+  "description": "Official portfolio of Geddada Devicharan (also known as Charan, imdvichrn) — AI Systems Architect building AI workflows, automation, and cinematic video projects.",
   "inLanguage": "en-IN",
   "author": { "@id": `${BASE_URL}/#person` },
   "publisher": { "@id": `${BASE_URL}/#person` },

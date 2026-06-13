@@ -167,6 +167,7 @@ const Index = () => {
 
             <motion.div variants={itemVariants} className="space-y-4">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
+                <span className="sr-only">Geddada Devicharan — </span>
                 <span className="bg-gradient-to-r from-hero-text-muted via-hero-text to-hero-text-muted bg-clip-text text-transparent">
                   Cinematic
                 </span>
