@@ -17,12 +17,20 @@ serve(async (req) => {
     }
 
     const { email } = await req.json();
-    if (!email) {
-      return new Response(JSON.stringify({ error: 'Email is required' }), {
+    if (typeof email !== 'string' || email.length < 5 || email.length > 254) {
+      return new Response(JSON.stringify({ error: 'Invalid email' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return new Response(JSON.stringify({ error: 'Invalid email address' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    const safeEmail = email.replace(/[\r\n]/g, '');
 
     const htmlContent = `
 <!DOCTYPE html>
