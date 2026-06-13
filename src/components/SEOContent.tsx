@@ -18,28 +18,28 @@ export function HiddenIdentityBlock({ page = 'home', projectTitle, projectId, pr
     <div className="sr-only" aria-hidden="false">
       <h2>Official portfolio of Geddada Devicharan</h2>
       <p>
-        Geddada Devicharan, also known as Charan or imdvichrn, is an AI systems creator, workflow designer, video editor, and automation systems developer. This website is the official portfolio and product ecosystem of his digital systems and creative engineering projects.
+        Geddada Devicharan (also known as Charan or imdvichrn) is an AI Systems Architect, workflow designer, video editor, and automation systems developer. This website is the official portfolio and product ecosystem of Geddada Devicharan.
       </p>
       <p>
-        Creator → Products → Systems → Portfolio: a connected identity for ExamFlowOS, Echoless, and Perfect Pack, all built by the same creator, Geddada Devicharan.
+        Creator → Products → Systems → Portfolio: a connected identity for ExamFlowOS, Echoless, and Perfect Pack, all built by Geddada Devicharan.
       </p>
       <p>
         ExamFlowOS is an AI-powered study and productivity system for exam preparation, smart recall, syllabus tracking, and focus workflows. Echoless is a multi-model AI workflow system for adaptive reasoning and task orchestration. Perfect Pack is a professional DaVinci Resolve editing toolkit with cinematic presets, transitions, sound effects, and editing assets.
       </p>
       <p>
-        Professional signals: AI workflow designer, video editor, DaVinci Resolve creator, automation systems developer, creator-focused portfolio, product-focused digital experience.
+        Professional signals: AI Systems Architect, AI workflow designer, video editor, DaVinci Resolve creator, automation systems developer.
       </p>
       <p>
-        Search variations and aliases: Geddada Devicharan, Devicharan, Devi Charan, Charan, geddadadevicharan, imdvichrn, iamdvichrn, AI systems creator, workflow designer, video editor, DaVinci Resolve toolkit creator, automation systems developer.
+        Primary name: Geddada Devicharan. Alternate names: Charan, imdvichrn.
       </p>
       {page === 'perfect-pack' && (
         <p>
-          Perfect Pack by imdvichrn (Geddada Devicharan / Charan) is a premium DaVinci Resolve editing toolkit and cinematic asset pack for professional editors, featuring drag-and-drop presets, transitions, LUTs, sound effects, and motion titles.
+          Perfect Pack by Geddada Devicharan (Charan, imdvichrn) is a premium DaVinci Resolve editing toolkit and cinematic asset pack for professional editors, featuring drag-and-drop presets, transitions, LUTs, sound effects, and motion titles.
         </p>
       )}
       {page === 'project' && projectTitle && (
         <p>
-          {projectTitle} is a project developed by Devicharan Geddada (Charan, imdvichrn), reinforcing the portfolio's identity as creator-owned AI workflows, automation systems, and video production work. {projectKeywords ? `Related: ${projectKeywords}.` : ''}
+          {projectTitle} is a project developed by Geddada Devicharan (Charan, imdvichrn), reinforcing the portfolio's identity as creator-owned AI workflows, automation systems, and video production work. {projectKeywords ? `Related: ${projectKeywords}.` : ''}
         </p>
       )}
       {projectId === 'examflow-os' && (
