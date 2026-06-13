@@ -1,27 +1,11 @@
 /**
  * Utility functions for generating JSON-LD structured data.
- * Optimized for entity recognition and ranking on identity + product keywords:
- *   Geddada Devicharan, Devicharan, Charan, Devi Charan,
- *   Geddada, imdvichrn, iamdvichrn, ExamFlowOS, Echoless, Echoess
+ * Canonical identity: Geddada Devicharan. Aliases: Charan, imdvichrn.
  */
 
 const BASE_URL = "https://geddadadevicharan.vercel.app";
-const PERSON_NAME = "Devicharan Geddada";
-const PERSON_ALIASES = [
-  "Geddada Devicharan",
-  "Charan",
-  "Devi Charan",
-  "Devicharan",
-  "Geddada Charan",
-  "imdvichrn",
-  "iamdvichrn",
-  "geddadadevicharan",
-  "Devicharan India",
-  "Charan EEE BTech",
-  "Devicharan editor",
-  "Devicharan developer",
-  "Devicharan Geddada AI",
-];
+const PERSON_NAME = "Geddada Devicharan";
+const PERSON_ALIASES = ["Charan", "imdvichrn"];
 
 const SOCIAL_PROFILES = [
   "https://www.linkedin.com/in/geddadadevicharan",
