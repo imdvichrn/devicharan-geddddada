@@ -14,7 +14,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { Chatbot } from "@/components/Chatbot";
 import { Portfolio } from "./pages/Portfolio";
 import NotFound from "./pages/NotFound";
-import Admin from "./pages/Admin";
+
 import VideoEditingPostProduction from "./pages/projects/VideoEditingPostProduction";
 import ProjectDetail from "./pages/ProjectDetail";
 import ProjectPage from "./pages/ProjectPage";
@@ -31,7 +31,7 @@ function AnimatedRoutes() {
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<PageTransition><Portfolio /></PageTransition>} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin" element={<Navigate to="/" replace />} />
           <Route path="/projects" element={<Navigate to="/#projects" replace />} />
           <Route path="/perfect-pack" element={<PageTransition><PerfectPackPage /></PageTransition>} />
           <Route path="/project/perfect-pack" element={<Navigate to="/perfect-pack" replace />} />
