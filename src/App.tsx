@@ -14,7 +14,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { Chatbot } from "@/components/Chatbot";
 import { Portfolio } from "./pages/Portfolio";
 import NotFound from "./pages/NotFound";
-import Admin from "./pages/Admin";
+
 import VideoEditingPostProduction from "./pages/projects/VideoEditingPostProduction";
 import ProjectDetail from "./pages/ProjectDetail";
 import ProjectPage from "./pages/ProjectPage";
