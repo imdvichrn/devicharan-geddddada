@@ -31,7 +31,7 @@ function AnimatedRoutes() {
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<PageTransition><Portfolio /></PageTransition>} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin" element={<Navigate to="/" replace />} />
           <Route path="/projects" element={<Navigate to="/#projects" replace />} />
           <Route path="/perfect-pack" element={<PageTransition><PerfectPackPage /></PageTransition>} />
           <Route path="/project/perfect-pack" element={<Navigate to="/perfect-pack" replace />} />
