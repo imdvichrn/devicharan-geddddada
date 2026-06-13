@@ -44,11 +44,11 @@ export function HiddenIdentityBlock({ page = 'home', projectTitle, projectId, pr
       )}
       {projectId === 'examflow-os' && (
         <>
-          <h3>ExamFlowOS — AI Study System by Devicharan Geddada</h3>
+          <h3>ExamFlowOS — AI Study System by Geddada Devicharan</h3>
           <p>
             ExamFlowOS (also written ExamFlow OS, ExamFlow, EFOS) is an
-            AI-powered productivity and study system designed by Devicharan
-            Geddada (imdvichrn). Positioned as a StudyOS / ProductivityOS /
+            AI-powered productivity and study system designed by Geddada
+            Devicharan (Charan, imdvichrn). Positioned as a StudyOS / ProductivityOS /
             FocusOS / DeepWorkOS / DisciplineOS, ExamFlowOS combines a
             hierarchical Subject → Unit → Topic syllabus tracker, an SM2
             adaptive spaced-repetition engine, focus-mode ambient audio with a
