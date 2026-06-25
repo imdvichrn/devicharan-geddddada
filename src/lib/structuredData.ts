@@ -267,9 +267,6 @@ export const generateProjectSchema = (data: {
   "keywords": [
     ...(data.tools || []),
     "Geddada Devicharan",
-    "Geddada Devicharan",
-    "Devicharan",
-    "Charan",
     "imdvichrn",
     "Echoless",
   ].join(", "),

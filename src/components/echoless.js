@@ -86,7 +86,7 @@ const intentKeywords = {
     patterns: [/^(hi+|hey+|hello+|yo+)$/i, /^what'?s? up/i, /^how are you/i, /^how r u/i, /^how's it going/i]
   },
   about: {
-    keywords: ['who are you', 'about', 'tell me about yourself', 'introduce', 'yourself', 'background', 'who is devicharan', 'who is devi', 'about you', 'describe yourself', 'who made this', 'who built this', 'creator', 'owner', 'whose portfolio', 'your story', 'your journey', 'bio', 'biography', 'profile', 'introduction', 'who dis', 'devicharan', 'devi charan'],
+    keywords: ['who are you', 'about', 'tell me about yourself', 'introduce', 'yourself', 'background', 'who is geddada devicharan', 'who is devicharan', 'about you', 'describe yourself', 'who made this', 'who built this', 'creator', 'owner', 'whose portfolio', 'your story', 'your journey', 'bio', 'biography', 'profile', 'introduction', 'who dis', 'geddada devicharan', 'imdvichrn'],
     patterns: [/who (are|r) (you|u)/i, /tell (me )?about (you|yourself)/i, /introduce yourself/i, /your (story|background|journey)/i, /who('s| is) (this|devicharan|devi)/i]
   },
   skills: {

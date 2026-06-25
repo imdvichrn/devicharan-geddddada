@@ -202,7 +202,7 @@ export default function ProjectPage() {
   const seo = seoConfig[project.id] ?? {
     title: `${project.title} — by Geddada Devicharan (imdvichrn)`,
     description: `${project.title}: ${project.shortDescription} — built by Geddada Devicharan (imdvichrn).`.slice(0, 160),
-    keywords: `${project.title}, ${project.tools.join(', ')}, Geddada Devicharan, Geddada Devicharan, Devicharan, Charan, imdvichrn, iamdvichrn, Devicharan ${project.category}, Charan developer, Devicharan portfolio`,
+    keywords: `${project.title}, ${project.tools.join(', ')}, Geddada Devicharan, imdvichrn, Geddada Devicharan ${project.category}, Geddada Devicharan portfolio`,
   };
 
   return (
