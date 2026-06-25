@@ -203,8 +203,8 @@ export function Portfolio() {
       <Helmet>
         <title>Geddada Devicharan | AI Systems, Editing & Workflow Design</title>
         <meta name="description" content="Creator of ExamFlowOS and Echoless. Building AI-powered workflow systems, cinematic editing tools, automation systems, and modern digital experiences." />
-        <meta name="keywords" content="Geddada Devicharan, Devicharan Geddada, imdvichrn, AI systems creator, AI workflows, workflow automation, workflow designer, video editor, DaVinci Resolve editor, creative developer, AI systems developer, automation systems, ExamFlowOS, Echoless, Perfect Pack, cinematic editing toolkit, ai study system, multi-model ai, AI orchestration" />
-        <meta name="author" content="Devicharan Geddada" />
+        <meta name="keywords" content="Geddada Devicharan, Geddada Devicharan, imdvichrn, AI systems creator, AI workflows, workflow automation, workflow designer, video editor, DaVinci Resolve editor, creative developer, AI systems developer, automation systems, ExamFlowOS, Echoless, Perfect Pack, cinematic editing toolkit, ai study system, multi-model ai, AI orchestration" />
+        <meta name="author" content="Geddada Devicharan" />
         <link rel="canonical" href="https://geddadadevicharan.vercel.app" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Geddada Devicharan | AI Systems, Editing & Workflow Design" />

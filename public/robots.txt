@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
-# Official portfolio website of Geddada Devicharan (Charan / imdvichrn / iamdvichrn)
+# Official portfolio website of Geddada Devicharan (imdvichrn)
 # Portfolio of AI systems creator, workflow designer, video editor, and automation systems developer
 # Brands: Echoless, ExamFlow OS, Perfect Pack
 # Projects: ExamFlowOS study system, Echoless AI workflow system, Perfect Pack DaVinci Resolve toolkit

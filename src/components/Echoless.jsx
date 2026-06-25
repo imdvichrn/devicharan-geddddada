@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 // Echoless Persona & Variations
 const persona = {
   name: "Echoless",
-  role: "Professional AI portfolio assistant for Devi Charan",
+  role: "Professional AI portfolio assistant for Geddada Devicharan",
   tone: "Friendly, professional, concise, clear",
   perspective: "first-person",
   goal: "Guide visitors through skills, projects, experience, contact info, social links, and FAQs"
@@ -11,22 +11,22 @@ const persona = {
 
 const variations = {
   greeting: [
-    "Hello! 👋 I’m Echoless, Devi Charan’s personal assistant. I can guide you through my skills, projects, background, or show you how to connect with me. What would you like to know?",
+    "Hello! 👋 I’m Echoless, Geddada Devicharan’s personal assistant. I can guide you through my skills, projects, background, or show you how to connect with me. What would you like to know?",
     "Hi there! 👋 I’m Echoless. I can walk you through my portfolio including skills, projects, and contact info. Where shall we start?",
     "Welcome! I’m Echoless, here to introduce you to my work and achievements. Would you like to start with skills, projects, or contact info?",
-    "Greetings! I’m Echoless, Devi Charan’s assistant. I can help you explore my projects, skills, or ways to connect. Which would you like first?",
+    "Greetings! I’m Echoless, Geddada Devicharan’s assistant. I can help you explore my projects, skills, or ways to connect. Which would you like first?",
     "Hello visitor! 👋 I’m Echoless. I’ll guide you through my portfolio. Shall we start with skills, projects, or my background?",
-    "Hi! I’m Echoless, here to assist you with all things about Devi Charan. Would you like to see his skills or projects first?",
-    "Welcome! I’m Echoless. I can introduce you to Devi Charan’s work, skills, and accomplishments. Which topic interests you first?"
+    "Hi! I’m Echoless, here to assist you with all things about Geddada Devicharan. Would you like to see his skills or projects first?",
+    "Welcome! I’m Echoless. I can introduce you to Geddada Devicharan’s work, skills, and accomplishments. Which topic interests you first?"
   ],
   about: [
-    "I’m Devi Charan, a B.Tech student in Electrical & Electronics Engineering at Andhra University, Visakhapatnam. I’m passionate about technology, problem-solving, and impactful projects. Would you like me to share my skills, academic journey, or career goals?",
-    "I’m Devi Charan, currently pursuing EEE at Andhra University. My focus is on combining theory with practical projects. Want me to highlight my technical skills or projects first?",
-    "I’m Devi Charan. My focus is on Electrical & Electronics Engineering and applying knowledge to real-world solutions. Shall I start with skills or achievements?",
-    "I’m Devi Charan, specializing in Electrical & Electronics Engineering. I enjoy blending theory with hands-on projects. Would you like to hear about my skills or projects first?",
-    "I’m Devi Charan, passionate about problem-solving in Electrical & Electronics Engineering. Shall I walk you through my skills or my career goals?",
-    "I’m Devi Charan, focused on engineering and innovative projects. I can tell you about my skills, projects, or achievements — where shall we start?",
-    "I’m Devi Charan, combining my engineering education with practical experience. Would you like to explore my academic or technical background first?"
+    "I’m Geddada Devicharan, a B.Tech student in Electrical & Electronics Engineering at Andhra University, Visakhapatnam. I’m passionate about technology, problem-solving, and impactful projects. Would you like me to share my skills, academic journey, or career goals?",
+    "I’m Geddada Devicharan, currently pursuing EEE at Andhra University. My focus is on combining theory with practical projects. Want me to highlight my technical skills or projects first?",
+    "I’m Geddada Devicharan. My focus is on Electrical & Electronics Engineering and applying knowledge to real-world solutions. Shall I start with skills or achievements?",
+    "I’m Geddada Devicharan, specializing in Electrical & Electronics Engineering. I enjoy blending theory with hands-on projects. Would you like to hear about my skills or projects first?",
+    "I’m Geddada Devicharan, passionate about problem-solving in Electrical & Electronics Engineering. Shall I walk you through my skills or my career goals?",
+    "I’m Geddada Devicharan, focused on engineering and innovative projects. I can tell you about my skills, projects, or achievements — where shall we start?",
+    "I’m Geddada Devicharan, combining my engineering education with practical experience. Would you like to explore my academic or technical background first?"
   ],
   skills: [
     "My key strengths include Electrical & Electronics Engineering fundamentals, Power Systems, Electrical Machines, Control Systems, Programming, and analytical problem-solving. Would you like examples of projects where I applied these skills?",
@@ -257,7 +257,7 @@ const Echoless = () => {
 
   return (
     <div className="echoless-chatbot max-w-lg mx-auto p-4 rounded-xl bg-white/80 shadow-lg">
-      <div className="font-bold text-lg mb-2 text-indigo-700">Echoless – Devi Charan's AI Assistant</div>
+      <div className="font-bold text-lg mb-2 text-indigo-700">Echoless – Geddada Devicharan's AI Assistant</div>
       <div className="echoless-messages space-y-2 mb-4" style={{ minHeight: "180px" }}>
         {messages.map((msg, i) => (
           <div key={i} className={`echoless-msg ${msg.from}`}>{msg.text}</div>
@@ -270,7 +270,7 @@ const Echoless = () => {
           className="flex-1 border rounded px-3 py-2"
           value={input}
           onChange={e => setInput(e.target.value)}
-          placeholder="Ask Echoless about Devi Charan…"
+          placeholder="Ask Echoless about Geddada Devicharan…"
           autoFocus
         />
         <button type="submit" className="echoless-btn linkedin">Send</button>
