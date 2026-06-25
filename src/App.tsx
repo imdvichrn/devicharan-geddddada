@@ -19,6 +19,7 @@ import VideoEditingPostProduction from "./pages/projects/VideoEditingPostProduct
 import ProjectDetail from "./pages/ProjectDetail";
 import ProjectPage from "./pages/ProjectPage";
 import PerfectPackPage from "./pages/PerfectPackPage";
+import ExamFlowOSJourney from "./pages/blog/ExamFlowOSJourney";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ function AnimatedRoutes() {
           <Route path="/projects" element={<Navigate to="/#projects" replace />} />
           <Route path="/perfect-pack" element={<PageTransition><PerfectPackPage /></PageTransition>} />
           <Route path="/project/perfect-pack" element={<Navigate to="/perfect-pack" replace />} />
+          <Route path="/project/examflow-os/blog/examflowos-journey" element={<PageTransition><ExamFlowOSJourney /></PageTransition>} />
           <Route path="/project/:projectId" element={<PageTransition><ProjectPage /></PageTransition>} />
           <Route path="/projects/video-editing-post-production" element={<PageTransition><VideoEditingPostProduction /></PageTransition>} />
           {/* Legacy redirects for removed project pages */}
