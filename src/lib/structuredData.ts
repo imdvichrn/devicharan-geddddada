@@ -1,11 +1,11 @@
 /**
  * Utility functions for generating JSON-LD structured data.
- * Canonical identity: Geddada Devicharan. Aliases: Charan, imdvichrn.
+ * Canonical identity: Geddada Devicharan. Handle: imdvichrn.
  */
 
 const BASE_URL = "https://geddadadevicharan.vercel.app";
 const PERSON_NAME = "Geddada Devicharan";
-const PERSON_ALIASES = ["Charan", "imdvichrn"];
+const PERSON_ALIASES = ["imdvichrn"];
 
 const SOCIAL_PROFILES = [
   "https://www.linkedin.com/in/geddadadevicharan",
@@ -25,7 +25,7 @@ export const generatePersonSchema = () => ({
   "image": `${BASE_URL}/profile-avatar.png`,
   "jobTitle": "AI Systems Architect",
   "description":
-    "Geddada Devicharan (also known as Charan, imdvichrn) — AI Systems Architect. Creator of ExamFlowOS, Echoless, and Perfect Pack. Builds AI workflows, automation systems, and cinematic video projects.",
+    "Geddada Devicharan (imdvichrn) — AI Systems Architect. Creator of ExamFlowOS, Echoless, and Perfect Pack. Builds AI workflows, automation systems, and cinematic video projects.",
   "knowsAbout": [
     "AI workflows",
     "AI automation",
@@ -61,9 +61,9 @@ export const generateWebsiteSchema = () => ({
   "@type": "WebSite",
   "@id": `${BASE_URL}/#website`,
   "name": "Geddada Devicharan",
-  "alternateName": ["Charan", "imdvichrn"],
+  "alternateName": ["imdvichrn"],
   "url": BASE_URL,
-  "description": "Official portfolio of Geddada Devicharan (also known as Charan, imdvichrn) — AI Systems Architect building AI workflows, automation, and cinematic video projects.",
+  "description": "Official portfolio of Geddada Devicharan (imdvichrn) — AI Systems Architect building AI workflows, automation, and cinematic video projects.",
   "inLanguage": "en-IN",
   "author": { "@id": `${BASE_URL}/#person` },
   "publisher": { "@id": `${BASE_URL}/#person` },
@@ -110,7 +110,7 @@ export const generateEchoessBrandSchema = () => ({
   "name": "Echoless",
   "alternateName": ["Echoess", "Echoess AI", "Echoess System", "Echoess Workflows", "Echoess OS"],
   "description":
-    "Echoless (Echoess) is the personal AI assistant and workflow brand created by Devicharan Geddada (imdvichrn) — covering AI chatbots, automation systems, and creator workflows.",
+    "Echoless (Echoess) is the personal AI assistant and workflow brand created by Geddada Devicharan (imdvichrn) — covering AI chatbots, automation systems, and creator workflows.",
   "url": BASE_URL,
   "founder": { "@id": `${BASE_URL}/#person` },
   "sameAs": SOCIAL_PROFILES,
@@ -142,7 +142,7 @@ export const generateExamFlowOSSchema = () => ({
   "sameAs": [`${BASE_URL}/project/examflow-os`],
   "image": `${BASE_URL}/examflow-logo.jpg`,
   "description":
-    "ExamFlowOS — an AI-powered productivity and study system designed by Devicharan Geddada. A browser-based StudyOS / ProductivityOS combining hierarchical syllabus tracking, SM2 spaced repetition, focus-mode ambient audio, and behavioral analytics for deep work and exam mastery.",
+    "ExamFlowOS — an AI-powered productivity and study system designed by Geddada Devicharan. A browser-based StudyOS / ProductivityOS combining hierarchical syllabus tracking, SM2 spaced repetition, focus-mode ambient audio, and behavioral analytics for deep work and exam mastery.",
   "keywords":
     "examflowos, examflow system, examflow ai, examflow method, examflow protocol, examflowos by imdvichrn, examflowos devicharan, studyos, productivityos, focusos, deepworkos, disciplineos, ai study system, ai productivity system, automation study workflow, ai focus system, smart study os, echoess system, echoess ai, echoess workflows, echoess os",
   "featureList": [
@@ -266,10 +266,7 @@ export const generateProjectSchema = (data: {
   "datePublished": data.year ? `${data.year}-01-01` : undefined,
   "keywords": [
     ...(data.tools || []),
-    "Devicharan Geddada",
     "Geddada Devicharan",
-    "Devicharan",
-    "Charan",
     "imdvichrn",
     "Echoless",
   ].join(", "),

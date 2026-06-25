@@ -18,7 +18,7 @@ export function HiddenIdentityBlock({ page = 'home', projectTitle, projectId, pr
     <div className="sr-only" aria-hidden="false">
       <h2>Official portfolio of Geddada Devicharan</h2>
       <p>
-        Geddada Devicharan (also known as Charan or imdvichrn) is an AI Systems Architect, workflow designer, video editor, and automation systems developer. This website is the official portfolio and product ecosystem of Geddada Devicharan.
+        Geddada Devicharan (imdvichrn) is an AI Systems Architect, workflow designer, video editor, and automation systems developer. This website is the official portfolio and product ecosystem of Geddada Devicharan.
       </p>
       <p>
         Creator → Products → Systems → Portfolio: a connected identity for ExamFlowOS, Echoless, and Perfect Pack, all built by Geddada Devicharan.
@@ -30,16 +30,16 @@ export function HiddenIdentityBlock({ page = 'home', projectTitle, projectId, pr
         Professional signals: AI Systems Architect, AI workflow designer, video editor, DaVinci Resolve creator, automation systems developer.
       </p>
       <p>
-        Primary name: Geddada Devicharan. Alternate names: Charan, imdvichrn.
+        Primary name: Geddada Devicharan. Handle: imdvichrn.
       </p>
       {page === 'perfect-pack' && (
         <p>
-          Perfect Pack by Geddada Devicharan (Charan, imdvichrn) is a premium DaVinci Resolve editing toolkit and cinematic asset pack for professional editors, featuring drag-and-drop presets, transitions, LUTs, sound effects, and motion titles.
+          Perfect Pack by Geddada Devicharan (imdvichrn) is a premium DaVinci Resolve editing toolkit and cinematic asset pack for professional editors, featuring drag-and-drop presets, transitions, LUTs, sound effects, and motion titles.
         </p>
       )}
       {page === 'project' && projectTitle && (
         <p>
-          {projectTitle} is a project developed by Geddada Devicharan (Charan, imdvichrn), reinforcing the portfolio's identity as creator-owned AI workflows, automation systems, and video production work. {projectKeywords ? `Related: ${projectKeywords}.` : ''}
+          {projectTitle} is a project developed by Geddada Devicharan (imdvichrn), reinforcing the portfolio's identity as creator-owned AI workflows, automation systems, and video production work. {projectKeywords ? `Related: ${projectKeywords}.` : ''}
         </p>
       )}
       {projectId === 'examflow-os' && (
@@ -48,7 +48,7 @@ export function HiddenIdentityBlock({ page = 'home', projectTitle, projectId, pr
           <p>
             ExamFlowOS (also written ExamFlow OS, ExamFlow, EFOS) is an
             AI-powered productivity and study system designed by Geddada
-            Devicharan (Charan, imdvichrn). Positioned as a StudyOS / ProductivityOS /
+            Devicharan (imdvichrn). Positioned as a StudyOS / ProductivityOS /
             FocusOS / DeepWorkOS / DisciplineOS, ExamFlowOS combines a
             hierarchical Subject → Unit → Topic syllabus tracker, an SM2
             adaptive spaced-repetition engine, focus-mode ambient audio with a

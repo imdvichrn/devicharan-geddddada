@@ -200,9 +200,9 @@ export default function ProjectPage() {
   };
 
   const seo = seoConfig[project.id] ?? {
-    title: `${project.title} — by Devicharan Geddada (Charan / imdvichrn)`,
-    description: `${project.title}: ${project.shortDescription} — built by Devicharan Geddada (Charan, imdvichrn).`.slice(0, 160),
-    keywords: `${project.title}, ${project.tools.join(', ')}, Devicharan Geddada, Geddada Devicharan, Devicharan, Charan, imdvichrn, iamdvichrn, Devicharan ${project.category}, Charan developer, Devicharan portfolio`,
+    title: `${project.title} — by Geddada Devicharan (imdvichrn)`,
+    description: `${project.title}: ${project.shortDescription} — built by Geddada Devicharan (imdvichrn).`.slice(0, 160),
+    keywords: `${project.title}, ${project.tools.join(', ')}, Geddada Devicharan, imdvichrn, Geddada Devicharan ${project.category}, Geddada Devicharan portfolio`,
   };
 
   return (
@@ -211,7 +211,7 @@ export default function ProjectPage() {
         <title>{seo.title}</title>
         <meta name="description" content={seo.description} />
         <meta name="keywords" content={seo.keywords} />
-        <meta name="author" content="Devicharan Geddada" />
+        <meta name="author" content="Geddada Devicharan" />
         <meta property="og:type" content={isExamFlow ? 'website' : 'article'} />
         <meta property="og:title" content={seo.ogTitle ?? seo.title} />
         <meta property="og:description" content={seo.description} />
