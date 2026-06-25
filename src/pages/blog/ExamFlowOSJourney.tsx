@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 
 const CANONICAL =
-  'https://devicharangeddada.lovable.app/project/examflow-os/blog/examflowos-journey';
+  'https://geddadadevicharan.vercel.app/project/examflow-os/blog/examflowos-journey';
 const PUBLISHED = '2026-06-25';
 const TITLE =
   'Building ExamFlowOS: A Better Way to Access Previous Year Question Papers';
@@ -39,13 +39,13 @@ const articleSchema = {
     '@type': 'Person',
     name: 'Geddada Devicharan',
     alternateName: 'imdvichrn',
-    url: 'https://devicharangeddada.lovable.app/',
+    url: 'https://geddadadevicharan.vercel.app/',
   },
   publisher: {
     '@type': 'Person',
     name: 'Geddada Devicharan',
     alternateName: 'imdvichrn',
-    url: 'https://devicharangeddada.lovable.app/',
+    url: 'https://geddadadevicharan.vercel.app/',
   },
   about: {
     '@type': 'Thing',
@@ -72,13 +72,13 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 1,
       name: 'Home',
-      item: 'https://devicharangeddada.lovable.app/',
+      item: 'https://geddadadevicharan.vercel.app/',
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: 'ExamFlow OS',
-      item: 'https://devicharangeddada.lovable.app/project/examflow-os',
+      item: 'https://geddadadevicharan.vercel.app/project/examflow-os',
     },
     {
       '@type': 'ListItem',
