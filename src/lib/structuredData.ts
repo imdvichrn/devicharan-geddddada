@@ -131,8 +131,6 @@ export const generateExamFlowOSSchema = () => ({
     "ExamFlow Protocol",
     "EFOS",
     "ExamFlowOS by imdvichrn",
-    "ExamFlowOS Devicharan",
-    "ExamFlow System Devicharan",
     "ExamFlowOS Official",
   ],
   "applicationCategory": "ProductivityApplication",
@@ -144,7 +142,7 @@ export const generateExamFlowOSSchema = () => ({
   "description":
     "ExamFlowOS — an AI-powered productivity and study system designed by Geddada Devicharan. A browser-based StudyOS / ProductivityOS combining hierarchical syllabus tracking, SM2 spaced repetition, focus-mode ambient audio, and behavioral analytics for deep work and exam mastery.",
   "keywords":
-    "examflowos, examflow system, examflow ai, examflow method, examflow protocol, examflowos by imdvichrn, examflowos devicharan, studyos, productivityos, focusos, deepworkos, disciplineos, ai study system, ai productivity system, automation study workflow, ai focus system, smart study os, echoess system, echoess ai, echoess workflows, echoess os",
+    "examflowos, examflow system, examflow ai, examflow method, examflow protocol, examflowos by imdvichrn, studyos, productivityos, focusos, deepworkos, disciplineos, ai study system, ai productivity system, automation study workflow, ai focus system, smart study os, echoess system, echoess ai, echoess workflows, echoess os",
   "featureList": [
     "Hierarchical Subject → Unit → Topic syllabus tracker",
     "SM2 active recall engine with adaptive spaced repetition",
