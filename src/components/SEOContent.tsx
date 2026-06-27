@@ -67,8 +67,8 @@ export function HiddenIdentityBlock({ page = 'home', projectTitle, projectId, pr
             Topical context: deep work, focus optimization, study automation,
             AI workflows, ai focus system, smart study os, productivity
             framework, automation workflow system. Ownership and identity
-            signals: examflowos by imdvichrn, examflowos devicharan, imdvichrn
-            examflowos, examflow system devicharan, examflowos official.
+            signals: examflowos by imdvichrn, imdvichrn examflowos,
+            examflowos official.
           </p>
         </>
       )}
