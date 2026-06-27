@@ -131,8 +131,6 @@ export const generateExamFlowOSSchema = () => ({
     "ExamFlow Protocol",
     "EFOS",
     "ExamFlowOS by imdvichrn",
-    "ExamFlowOS Devicharan",
-    "ExamFlow System Devicharan",
     "ExamFlowOS Official",
   ],
   "applicationCategory": "ProductivityApplication",
