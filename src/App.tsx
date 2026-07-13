@@ -20,6 +20,7 @@ import ProjectDetail from "./pages/ProjectDetail";
 import ProjectPage from "./pages/ProjectPage";
 import PerfectPackPage from "./pages/PerfectPackPage";
 import ExamFlowOSJourney from "./pages/blog/ExamFlowOSJourney";
+import ExamFlowOSGuide from "./pages/blog/ExamFlowOSGuide";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ function AnimatedRoutes() {
           <Route path="/perfect-pack" element={<PageTransition><PerfectPackPage /></PageTransition>} />
           <Route path="/project/perfect-pack" element={<Navigate to="/perfect-pack" replace />} />
           <Route path="/project/examflow-os/blog/examflowos-journey" element={<PageTransition><ExamFlowOSJourney /></PageTransition>} />
+          <Route path="/project/examflow-os/blog/examflowos-all-in-one-exam-prep-app-ap-tg-ecet-icet-polycet" element={<PageTransition><ExamFlowOSGuide /></PageTransition>} />
           <Route path="/project/:projectId" element={<PageTransition><ProjectPage /></PageTransition>} />
           <Route path="/projects/video-editing-post-production" element={<PageTransition><VideoEditingPostProduction /></PageTransition>} />
           {/* Legacy redirects for removed project pages */}
