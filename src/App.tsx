@@ -20,6 +20,7 @@ import ProjectDetail from "./pages/ProjectDetail";
 import ProjectPage from "./pages/ProjectPage";
 import PerfectPackPage from "./pages/PerfectPackPage";
 import ExamFlowOSJourney from "./pages/blog/ExamFlowOSJourney";
+import ExamFlowOSGuide from "./pages/blog/ExamFlowOSGuide";
 
 const queryClient = new QueryClient();
 
