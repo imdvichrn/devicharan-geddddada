@@ -19,8 +19,6 @@ import profileImage from '@/assets/profile-avatar.png';
 import backgroundVideo from '@/assets/background-video.mp4';
 import heroBg from '@/assets/hero-bg.png';
 
-// Lazy load Chatbot to reduce initial bundle size
-const Chatbot = lazy(() => import('@/components/Chatbot').then(mod => ({ default: mod.Chatbot } as any)));
 const skills = {
   "Creative & Technical Tools": ["DaVinci Resolve Studio", "Fusion VFX", "VLSI Design", "React", "Node.js", "TypeScript"],
   "Professional Skills": ["Sound Design & Audio Engineering", "Fusion Mastery & Motion Graphics", "Professional Web Development", "VLSI Circuit Design"],
