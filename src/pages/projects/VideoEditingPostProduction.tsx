@@ -8,7 +8,6 @@ import { ArrowLeft, Calendar, Wrench, Target, Layers, Linkedin, Instagram, Faceb
 import { Link } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { Helmet } from 'react-helmet-async';
-import { Suspense, lazy } from 'react';
 import { generateBreadcrumbSchema, generateVideoObjectSchema, generateCreativeWorkSchema } from '@/lib/structuredData';
 
 
