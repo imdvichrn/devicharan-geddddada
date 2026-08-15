@@ -16,7 +16,6 @@ import { Portfolio } from "./pages/Portfolio";
 import NotFound from "./pages/NotFound";
 
 import VideoEditingPostProduction from "./pages/projects/VideoEditingPostProduction";
-import ProjectDetail from "./pages/ProjectDetail";
 import ProjectPage from "./pages/ProjectPage";
 import PerfectPackPage from "./pages/PerfectPackPage";
 import ExamFlowOSJourney from "./pages/blog/ExamFlowOSJourney";
