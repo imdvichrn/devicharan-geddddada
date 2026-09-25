@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import { SEOHead } from '@/components/SEOHead';
 import { motion } from 'framer-motion';
 import { WindowChrome } from '@/components/WindowChrome';
 import { Badge } from '@/components/ui/badge';
@@ -187,28 +187,19 @@ const TOC = [
 export default function ExamFlowOSGuide() {
   return (
     <PageShell maxWidth="default">
-      <Helmet>
-        <title>{TITLE} | Geddada Devicharan</title>
-        <meta name="description" content={DESCRIPTION} />
-        <link rel="canonical" href={CANONICAL} />
-        <meta name="author" content="Geddada Devicharan" />
-        <meta name="keywords" content={KEYWORDS.join(', ')} />
-        <meta property="og:type" content="article" />
-        <meta property="og:site_name" content="Geddada Devicharan" />
-        <meta property="og:title" content={TITLE} />
-        <meta property="og:description" content={DESCRIPTION} />
-        <meta property="og:url" content={CANONICAL} />
-        <meta property="article:published_time" content={PUBLISHED} />
-        <meta property="article:author" content="Geddada Devicharan" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={TITLE} />
-        <meta name="twitter:description" content={DESCRIPTION} />
-        <meta name="twitter:creator" content="@imdvichrn" />
-        <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
-        <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
-        <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
-        <script type="application/ld+json">{JSON.stringify(howToSchema)}</script>
-      </Helmet>
+      <SEOHead
+        title={`${TITLE} | Geddada Devicharan`}
+        description={DESCRIPTION}
+        path="/project/examflow-os/blog/examflowos-all-in-one-exam-prep-app-ap-tg-ecet-icet-polycet"
+        ogType="article"
+        ogImage="https://geddadadevicharan.vercel.app/og/og-examflowos.png"
+        breadcrumbs={[
+          { name: 'Home', url: 'https://geddadadevicharan.vercel.app/' },
+          { name: 'ExamFlow OS', url: 'https://geddadadevicharan.vercel.app/project/examflow-os' },
+          { name: 'ExamFlowOS Review & Guide', url: CANONICAL }
+        ]}
+        structuredData={[articleSchema, breadcrumbSchema, faqSchema, howToSchema]}
+      />
 
       <div>
         {/* Breadcrumb */}

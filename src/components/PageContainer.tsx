@@ -32,10 +32,10 @@ export function PageContainer({
   }
 
   const maxWidthClass = {
-    narrow: 'max-w-3xl',
-    default: 'max-w-[1140px]',
-    wide: 'max-w-[1240px]',
-    hero: 'max-w-[1080px]',
+    narrow: 'max-w-3xl 2xl:max-w-4xl',
+    default: 'max-w-[1200px] 2xl:max-w-[1360px]',
+    wide: 'max-w-[1320px] 2xl:max-w-[1480px]',
+    hero: 'max-w-[1180px] 2xl:max-w-[1280px]',
     full: 'max-w-full',
   }[maxWidth];
 

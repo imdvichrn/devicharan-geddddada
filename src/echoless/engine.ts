@@ -104,7 +104,8 @@ export class EcholessEngine {
       parsed.language,
       state,
       confidenceEval.isConfident,
-      confidenceEval.clarificationPrompt
+      confidenceEval.clarificationPrompt,
+      intentMatch.subTopic
     );
 
     // 7. Compose Natural Sentences from Verified Knowledge
@@ -170,14 +171,14 @@ export class EcholessEngine {
       if (callbacks.onError) {
         await callbacks.onError(err);
       } else {
-        await callbacks.onChunk("What part would you like to know about?");
+        await callbacks.onChunk("What would you like to explore across Devicharan's work?");
         if (callbacks.onDone) await callbacks.onDone();
       }
     }
   }
 
   public getHonestUnavailableResponse(): string {
-    return "What part of Devicharan's work would you like to explore?";
+    return "What would you like to explore across Devicharan's software products, video post-production, or digital systems?";
   }
 
   public getMemory(): ConversationMemory {
@@ -198,7 +199,7 @@ export class EcholessEngine {
       if (msg.role === 'user') {
         const parsed = parseInput(msg.content);
         const entities = extractEntities(parsed);
-        const intent = classifyIntent(parsed);
+        const intent = classifyIntent(parsed, Boolean(this.memory.getState().currentEntityId));
         const context = resolveContext(parsed, intent.type, entities, this.memory.getState());
 
         const assistantMsg = messages[i + 1]?.role === 'assistant' ? messages[i + 1].content : '';

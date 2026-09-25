@@ -1,4 +1,4 @@
-// Echoless AI Chat Service — streams responses from Lovable AI edge function
+// Echoless AI Chat Service — deterministic conversational streaming for Geddada Devicharan's portfolio
 
 import { Project } from '@/data/projects';
 import { defaultEngine } from '@/echoless/engine';
@@ -19,14 +19,8 @@ export interface ChatContext {
   contextualProjects?: Project[];
 }
 
-const CHAT_URL = "/api/chat";
-
-function getClientFallbackAnswer(): string {
-  return defaultEngine.getHonestUnavailableResponse();
-}
-
 /**
- * Stream a chat response from the Echoless AI endpoint.
+ * Stream a chat response from the deterministic Echoless engine.
  * Calls onDelta with each token chunk, onDone when complete.
  */
 export async function streamChatMessage({
@@ -45,98 +39,30 @@ export async function streamChatMessage({
   onError?: (error: string) => void;
 }) {
   try {
-    const resp = await fetch(CHAT_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ messages, taskType, modelPreference }),
-    });
-
-    if (!resp.ok) {
-      const errorData = await resp.json().catch(() => ({ error: `HTTP ${resp.status}` }));
-      const errorMsg = errorData.error || `HTTP ${resp.status}`;
-      console.warn("Chat server returned non-OK status:", errorMsg);
-      const fallback = getClientFallbackAnswer();
-      onDelta(fallback);
-      onDone();
-      return;
-    }
-
-    if (!resp.body) {
-      onDelta(getClientFallbackAnswer());
-      onDone();
-      return;
-    }
-
-    const reader = resp.body.getReader();
-    const decoder = new TextDecoder();
-    let textBuffer = "";
-    let streamDone = false;
-    let receivedAnyText = false;
-
-    while (!streamDone) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      textBuffer += decoder.decode(value, { stream: true });
-
-      let newlineIndex: number;
-      while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
-        let line = textBuffer.slice(0, newlineIndex);
-        textBuffer = textBuffer.slice(newlineIndex + 1);
-
-        if (line.endsWith("\r")) line = line.slice(0, -1);
-        if (line.startsWith(":") || line.trim() === "") continue;
-        if (!line.startsWith("data: ")) continue;
-
-        const jsonStr = line.slice(6).trim();
-        if (jsonStr === "[DONE]") {
-          streamDone = true;
-          break;
-        }
-
-        try {
-          const parsed = JSON.parse(jsonStr);
-          const content = parsed.choices?.[0]?.delta?.content as string | undefined;
-          if (content) {
-            receivedAnyText = true;
-            onDelta(content);
-          }
-        } catch {
-          textBuffer = line + "\n" + textBuffer;
-          break;
-        }
+    await defaultEngine.streamConversation(
+      messages,
+      {
+        onChunk: (chunk) => {
+          onDelta(chunk);
+        },
+        onDone: () => {
+          onDone();
+        },
+        onError: (err) => {
+          if (onError) onError(err);
+          else onDone();
+        },
       }
-    }
-
-    // Flush remaining buffer
-    if (textBuffer.trim()) {
-      for (let raw of textBuffer.split("\n")) {
-        if (!raw) continue;
-        if (raw.endsWith("\r")) raw = raw.slice(0, -1);
-        if (raw.startsWith(":") || raw.trim() === "") continue;
-        if (!raw.startsWith("data: ")) continue;
-        const jsonStr = raw.slice(6).trim();
-        if (jsonStr === "[DONE]") continue;
-        try {
-          const parsed = JSON.parse(jsonStr);
-          const content = parsed.choices?.[0]?.delta?.content as string | undefined;
-          if (content) {
-            receivedAnyText = true;
-            onDelta(content);
-          }
-        } catch { /* ignore */ }
-      }
-    }
-
-    if (!receivedAnyText) {
-      onDelta(getClientFallbackAnswer());
-    }
-
-    onDone();
+    );
   } catch (err) {
-    console.warn("Notice during streamChatMessage, activating fallback:", err);
-    onDelta(getClientFallbackAnswer());
+    console.warn("Notice during streamChatMessage:", err);
+    try {
+      const lastUser = messages[messages.length - 1]?.content || "";
+      const resp = await defaultEngine.respond(lastUser, messages);
+      onDelta(resp.text);
+    } catch {
+      onDelta("What would you like to explore across Devicharan's software products, video post-production, or digital systems?");
+    }
     onDone();
   }
 }
@@ -160,7 +86,7 @@ export async function sendChatMessage(
         fullText += chunk;
       },
       onDone: () => {
-        resolve({ text: fullText || "Sorry, I couldn't generate a response." });
+        resolve({ text: fullText || "What would you like to explore across Devicharan's work?" });
       },
       onError: (error) => {
         reject(new Error(error));

@@ -104,12 +104,16 @@ export function composeResponse(
     };
   }
 
-  // 8. Domain Entities (examflowos, video, perfect_pack, annapurna, web, systems, cv, devicharan)
+  // 8. Domain Entities (examflowos, video, software, perfect_pack, annapurna, web, systems, cv, devicharan)
   const domainObj = (composer as any)[plan.domain] || (composer as any).examflowos;
 
   let candidateText = '';
 
-  if (plan.depth === 'why' && domainObj.why) {
+  if (plan.domain === 'video' && plan.subTopic === 'editing' && domainObj.editing) {
+    candidateText = selectVariation(domainObj.editing, turnCount);
+  } else if (plan.domain === 'video' && plan.subTopic === 'color_grading' && domainObj.colorGrading) {
+    candidateText = selectVariation(domainObj.colorGrading, turnCount);
+  } else if (plan.depth === 'why' && domainObj.why) {
     candidateText = domainObj.why;
   } else if (plan.depth === 'expand' && domainObj.expand) {
     candidateText = selectVariation(domainObj.expand, turnCount);

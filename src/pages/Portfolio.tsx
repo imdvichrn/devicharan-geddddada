@@ -188,17 +188,17 @@ export function Portfolio() {
         }}
         onPointerMove={handleHeroPointerMove}
         onPointerLeave={handleHeroPointerLeave}
-        className="relative pb-16 sm:pb-24 md:pb-28 w-full min-h-[62vh] flex flex-col justify-center items-start md:items-center text-left md:text-center overflow-x-hidden page-shell-gutter md:px-0"
+        className="relative pb-16 sm:pb-24 md:pb-28 lg:pb-32 w-full min-h-[62vh] flex flex-col justify-center items-start md:items-center text-left md:text-center overflow-x-hidden page-shell-gutter"
       >
         {/* Dedicated subtle HeroField separate from global background with 2-8px parallax */}
         <HeroField pointerDepth={heroPointerDepth} />
 
-        <div className="relative z-10 w-full max-w-2xl mx-auto flex flex-col items-start md:items-center">
+        <div className="relative z-10 w-full max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto flex flex-col items-start md:items-center">
           
           {/* STEP 1: PORTRAIT ANCHOR */}
           <div className="mb-4 sm:mb-6 hero-step-1">
             <div 
-              className="relative w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden border border-border bg-card shadow-[0_4px_20px_rgba(0,0,0,0.18)] ml-0 md:mx-auto transition-transform duration-300 hover:scale-[1.02] depth-interactive"
+              className="relative w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full overflow-hidden border border-border bg-card shadow-[0_4px_20px_rgba(0,0,0,0.18)] ml-0 md:mx-auto transition-transform duration-300 hover:scale-[1.02] depth-interactive"
               style={{
                 transform: `translate3d(${heroPointerDepth.pixelX * 0.3}px, ${heroPointerDepth.pixelY * 0.3}px, 0)`
               }}
@@ -206,8 +206,8 @@ export function Portfolio() {
               <img 
                 src={profileImage} 
                 alt="Geddada Devicharan portrait" 
-                width={128}
-                height={128}
+                width={144}
+                height={144}
                 className="w-full h-full object-cover object-center" 
                 loading="eager"
                 fetchPriority="high"
@@ -222,22 +222,22 @@ export function Portfolio() {
           </div>
 
           {/* STEP 3: DISPLAY NAME (Instrument Serif) */}
-          <h1 className="hero-step-3 mt-1.5 sm:mt-2.5 font-display text-3xl sm:text-5xl md:text-6xl font-normal tracking-tight text-foreground leading-[1.08] text-left md:text-center">
+          <h1 className="hero-step-3 mt-2 sm:mt-3 font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-normal tracking-tight text-foreground leading-[1.06] text-left md:text-center">
             Geddada Devicharan
           </h1>
 
           {/* STEP 4: DISCIPLINE STATEMENT (Balanced & Clean) */}
-          <div className="hero-step-4 mt-3 sm:mt-4 text-xs sm:text-base md:text-lg text-foreground/90 font-normal tracking-normal max-w-lg mx-0 md:mx-auto leading-snug px-0 md:px-2 text-left md:text-center">
+          <div className="hero-step-4 mt-3 sm:mt-4 text-xs sm:text-base md:text-lg lg:text-xl text-foreground/90 font-normal tracking-normal max-w-xl xl:max-w-2xl mx-0 md:mx-auto leading-snug px-0 md:px-2 text-left md:text-center">
             Digital Product Builder · Video Editor · Business Systems
           </div>
 
           {/* STEP 5: PERSONAL INTRO (Calm, human, readable) */}
-          <p className="hero-step-5 mt-2.5 sm:mt-4 text-xs sm:text-sm md:text-base text-muted-foreground max-w-md sm:max-w-lg mx-0 md:mx-auto leading-relaxed font-normal px-0 md:px-2 text-left md:text-center">
+          <p className="hero-step-5 mt-2.5 sm:mt-4 text-xs sm:text-sm md:text-base lg:text-[17px] text-muted-foreground max-w-md sm:max-w-xl md:max-w-2xl mx-0 md:mx-auto leading-relaxed font-normal px-0 md:px-2 text-left md:text-center">
             Designing minimal software systems, finishing commercial post-production video, and managing digital infrastructure from Andhra Pradesh, India.
           </p>
 
           {/* STEP 6: ACTIONS (Physical depth & micro-lift on hover, press down state) */}
-          <div className="hero-step-6 mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-start md:justify-center gap-3 w-full max-w-xs sm:max-w-md mx-0 md:mx-auto">
+          <div className="hero-step-6 mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-start md:justify-center gap-3 w-full sm:w-auto max-w-md md:max-w-none mx-0 md:mx-auto">
             
             {/* Primary Action */}
             <a 
@@ -254,7 +254,7 @@ export function Portfolio() {
             {/* Tertiary Action: Get in touch */}
             <Link 
               to="/contact"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-4 h-10 sm:h-12 rounded-xl text-xs sm:text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/40 depth-interactive transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shrink-0"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-5 h-11 sm:h-12 rounded-xl text-xs sm:text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/40 depth-interactive transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shrink-0"
             >
               <span>Get in touch</span>
             </Link>
@@ -319,35 +319,35 @@ export function Portfolio() {
       {/* =========================================================================
           2. MAP OF WORK — 4 CLEAR DESTINATIONS (CONTAINED SURFACE SEPARATION)
           ========================================================================= */}
-      <section id="work-map" className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1140px] mx-auto border-t border-border/40">
+      <section id="work-map" className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 max-w-[1240px] 2xl:max-w-[1380px] mx-auto border-t border-border/40">
         <div className="space-y-12">
           
           <ScrollReveal distance={16}>
-            <div className="space-y-3 max-w-2xl">
+            <div className="space-y-3 max-w-3xl">
               <div className="text-xs font-mono uppercase tracking-widest text-primary font-medium">
                 DISCIPLINES & SPACES
               </div>
               <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-foreground">
                 What I build & create.
               </h2>
-              <p className="text-base text-muted-foreground leading-relaxed">
+              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl">
                 Four dedicated spaces covering software products, high-velocity post-production, managed web ecosystems, and automated business systems.
               </p>
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-7 xl:gap-8">
             {primaryPathways.map((pathway, idx) => {
               const Icon = pathway.icon;
               return (
                 <ScrollReveal key={pathway.id} staggerIndex={idx} distance={18}>
                   <Link
                     to={pathway.path}
-                    className="p-8 sm:p-10 rounded-2xl depth-widget depth-interactive hover:border-foreground/30 transition-all duration-200 flex flex-col justify-between space-y-6 group h-full"
+                    className="p-6 sm:p-8 lg:p-10 xl:p-11 rounded-2xl depth-widget depth-interactive hover:border-foreground/30 transition-all duration-200 flex flex-col justify-between space-y-6 group h-full"
                   >
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <div className="w-11 h-11 rounded-xl bg-muted/70 border border-border/80 flex items-center justify-center text-foreground group-hover:text-primary transition-colors">
+                        <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-muted/70 border border-border/80 flex items-center justify-center text-foreground group-hover:text-primary transition-colors">
                           <Icon size={22} strokeWidth={1.6} />
                         </div>
                         <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground flex items-center gap-1 group-hover:text-foreground">
@@ -365,7 +365,7 @@ export function Portfolio() {
                         </h3>
                       </div>
 
-                      <p className="text-sm text-muted-foreground leading-relaxed">
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                         {pathway.summary}
                       </p>
                     </div>
@@ -386,29 +386,29 @@ export function Portfolio() {
       {/* =========================================================================
           3. FEATURED HIGHLIGHTS (EXAMFLOWOS & REEL)
           ========================================================================= */}
-      <section id="work" className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1140px] mx-auto border-t border-border/40">
+      <section id="work" className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 max-w-[1240px] 2xl:max-w-[1380px] mx-auto border-t border-border/40">
         <div className="space-y-16">
           
           <ScrollReveal distance={16}>
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border/40">
-              <div className="space-y-3 max-w-2xl">
+              <div className="space-y-3 max-w-3xl">
                 <div className="text-xs font-mono uppercase tracking-widest text-primary font-medium">
                   HIGHLIGHTS
                 </div>
-                <h2 className="font-display text-4xl sm:text-5xl font-normal tracking-tight text-foreground">
+                <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-foreground">
                   Selected work in depth.
                 </h2>
-                <p className="text-base text-muted-foreground leading-relaxed">
+                <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl">
                   ExamFlowOS, commercial video finishing in DaVinci Resolve Studio, and local business digital architectures.
                 </p>
               </div>
               
               <Link 
                 to="/work" 
-                className="text-xs font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5 shrink-0"
+                className="text-xs sm:text-sm font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5 shrink-0"
               >
                 <span>Explore All Work</span>
-                <ArrowRight size={13} />
+                <ArrowRight size={14} />
               </Link>
             </div>
           </ScrollReveal>
@@ -426,20 +426,20 @@ export function Portfolio() {
                 }
               />
 
-              <div className="p-8 sm:p-12 space-y-8">
+              <div className="p-6 sm:p-8 md:p-10 lg:p-12 xl:p-14 space-y-8">
                 <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6 pb-6 border-b border-border/40">
                   <div className="flex items-start gap-4 sm:gap-5">
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl overflow-hidden border border-border bg-card/80 shrink-0 shadow-sm mt-0.5">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-2xl overflow-hidden border border-border bg-card/80 shrink-0 shadow-sm mt-0.5">
                       <img 
                         src="/examflow-logo.jpg" 
                         alt="ExamFlowOS official app logo" 
-                        width={56}
-                        height={56}
+                        width={64}
+                        height={64}
                         className="w-full h-full object-cover"
                         loading="lazy"
                       />
                     </div>
-                    <div className="space-y-2 max-w-2xl">
+                    <div className="space-y-2 max-w-3xl">
                       <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-muted-foreground">
                         <span className="text-primary font-semibold uppercase tracking-wider">Flagship Software</span>
                         <span aria-hidden="true">·</span>
@@ -449,7 +449,7 @@ export function Portfolio() {
                         <span aria-hidden="true">·</span>
                         <span className="text-muted-foreground">Free for Students</span>
                       </div>
-                      <h3 className="font-display text-2xl sm:text-4xl font-normal text-foreground">
+                      <h3 className="font-display text-2xl sm:text-4xl lg:text-5xl font-normal text-foreground">
                         ExamFlowOS
                       </h3>
                       <p className="text-sm sm:text-base text-muted-foreground leading-relaxed pt-1">
@@ -463,14 +463,14 @@ export function Portfolio() {
                       href="https://examflowos.in" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-lg text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/95 depth-interactive shadow-sm"
+                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/95 depth-interactive shadow-sm"
                     >
                       <span>Visit ExamFlowOS</span>
                       <ExternalLink size={13} />
                     </a>
                     <Link 
                       to="/software"
-                      className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-lg text-xs font-medium depth-surface depth-interactive hover:border-foreground/40 text-foreground transition-colors"
+                      className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium depth-surface depth-interactive hover:border-foreground/40 text-foreground transition-colors"
                     >
                       <span>Case Study</span>
                       <ArrowRight size={13} />
@@ -478,22 +478,22 @@ export function Portfolio() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-mono text-muted-foreground">
-                  <div className="p-4 rounded-xl bg-background/50 border border-border/50">
-                    <span className="text-primary font-bold text-sm block">10K+ Users</span>
-                    <span>Registered accounts</span>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 sm:gap-4 lg:gap-5 text-xs font-mono text-muted-foreground">
+                  <div className="p-4 sm:p-5 rounded-xl bg-background/50 border border-border/50">
+                    <span className="text-primary font-bold text-sm sm:text-base block">10K+ Users</span>
+                    <span className="text-[11px] sm:text-xs">Registered accounts</span>
                   </div>
-                  <div className="p-4 rounded-xl bg-background/50 border border-border/50">
-                    <span className="text-foreground font-bold text-sm block">~700 Active</span>
-                    <span>Regular student test-takers</span>
+                  <div className="p-4 sm:p-5 rounded-xl bg-background/50 border border-border/50">
+                    <span className="text-foreground font-bold text-sm sm:text-base block">~700 Active</span>
+                    <span className="text-[11px] sm:text-xs">Regular student test-takers</span>
                   </div>
-                  <div className="p-4 rounded-xl bg-background/50 border border-border/50">
-                    <span className="text-foreground font-bold text-sm block">100% Free</span>
-                    <span>Zero student paywalls</span>
+                  <div className="p-4 sm:p-5 rounded-xl bg-background/50 border border-border/50">
+                    <span className="text-foreground font-bold text-sm sm:text-base block">100% Free</span>
+                    <span className="text-[11px] sm:text-xs">Zero student paywalls</span>
                   </div>
-                  <div className="p-4 rounded-xl bg-background/50 border border-border/50">
-                    <span className="text-primary font-bold text-sm block">Google Drive</span>
-                    <span>Client-side cloud sync</span>
+                  <div className="p-4 sm:p-5 rounded-xl bg-background/50 border border-border/50">
+                    <span className="text-primary font-bold text-sm sm:text-base block">Google Drive</span>
+                    <span className="text-[11px] sm:text-xs">Client-side cloud sync</span>
                   </div>
                 </div>
               </div>
@@ -501,18 +501,18 @@ export function Portfolio() {
           </ScrollReveal>
 
           {/* Sri Lahari Studios & Video Deliverables */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 xl:gap-10">
             
             <ScrollReveal distance={18} staggerIndex={0}>
-              <article className="p-8 sm:p-10 rounded-2xl depth-widget depth-interactive hover:border-foreground/30 space-y-6 flex flex-col justify-between h-full">
+              <article className="p-6 sm:p-8 lg:p-10 rounded-2xl depth-widget depth-interactive hover:border-foreground/30 space-y-6 flex flex-col justify-between h-full">
                 <div className="space-y-4">
                   <div className="text-xs font-mono text-primary font-semibold uppercase">
                     Business Digital Ecosystem
                   </div>
-                  <h3 className="font-display text-2xl sm:text-3xl font-normal text-foreground">
+                  <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-normal text-foreground">
                     Sri Lahari Studios OS
                   </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                     Modernized the digital presence and client intake of a 10-year operating photography studio in Kothavalasa and Vizag with responsive web architecture, regional SEO, and automated inquiry routing.
                   </p>
                   <div className="text-xs font-mono text-muted-foreground space-y-1.5 pt-1">
@@ -525,7 +525,7 @@ export function Portfolio() {
                 <div className="pt-6 border-t border-border/50">
                   <Link 
                     to="/project/sri-lahari-studios"
-                    className="text-xs font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5"
+                    className="text-xs sm:text-sm font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5"
                   >
                     <span>Read Studio Case Study</span>
                     <ArrowRight size={13} />
@@ -535,15 +535,15 @@ export function Portfolio() {
             </ScrollReveal>
 
             <ScrollReveal distance={18} staggerIndex={1}>
-              <article className="p-8 sm:p-10 rounded-2xl depth-widget depth-interactive hover:border-foreground/30 space-y-6 flex flex-col justify-between h-full">
+              <article className="p-6 sm:p-8 lg:p-10 rounded-2xl depth-widget depth-interactive hover:border-foreground/30 space-y-6 flex flex-col justify-between h-full">
                 <div className="space-y-4">
                   <div className="text-xs font-mono text-primary font-semibold uppercase">
                     700+ Video Deliverables
                   </div>
-                  <h3 className="font-display text-2xl sm:text-3xl font-normal text-foreground">
+                  <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-normal text-foreground">
                     Video Post-Production & Color
                   </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                     High-velocity creative post-production in DaVinci Resolve Studio on macOS across commercial promotions, music events, and social campaigns.
                   </p>
                   <div className="text-xs font-mono text-muted-foreground space-y-1.5 pt-1">
@@ -556,7 +556,7 @@ export function Portfolio() {
                 <div className="pt-6 border-t border-border/40 flex items-center justify-between">
                   <Link 
                     to="/video"
-                    className="text-xs font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5"
+                    className="text-xs sm:text-sm font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5"
                   >
                     <span>Explore Video Room</span>
                     <ArrowRight size={13} />
@@ -574,38 +574,38 @@ export function Portfolio() {
       {/* =========================================================================
           4. WRITING & BUILD LOGS
           ========================================================================= */}
-      <section id="writing" className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1140px] mx-auto border-t border-border/40">
+      <section id="writing" className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 max-w-[1240px] 2xl:max-w-[1380px] mx-auto border-t border-border/40">
         <div className="space-y-12">
           
           <ScrollReveal distance={16}>
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border/40">
-              <div className="space-y-3 max-w-2xl">
+              <div className="space-y-3 max-w-3xl">
                 <div className="text-xs font-mono uppercase tracking-widest text-primary font-medium">
                   WRITING
                 </div>
-                <h2 className="font-display text-4xl sm:text-5xl font-normal tracking-tight text-foreground">
+                <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-foreground">
                   Technical build logs.
                 </h2>
-                <p className="text-base text-muted-foreground leading-relaxed">
+                <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl">
                   Engineering reflections structured as: What I Built · How I Built It · Why · What Went Wrong · What Worked · Lessons.
                 </p>
               </div>
 
               <Link 
                 to="/writing" 
-                className="text-xs font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5 shrink-0"
+                className="text-xs sm:text-sm font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5 shrink-0"
               >
                 <span>View All Logs</span>
-                <ArrowRight size={13} />
+                <ArrowRight size={14} />
               </Link>
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7 xl:gap-8">
             {articles.map((art, idx) => (
               <ScrollReveal key={art.id} staggerIndex={idx} distance={18}>
                 <article 
-                  className="p-8 rounded-2xl border border-border/60 bg-card/40 backdrop-blur-xs flex flex-col justify-between space-y-6 hover:border-foreground/40 transition-all duration-200 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.25)] h-full"
+                  className="p-6 sm:p-7 lg:p-8 rounded-2xl border border-border/60 bg-card/40 backdrop-blur-xs flex flex-col justify-between space-y-6 hover:border-foreground/40 transition-all duration-200 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.25)] h-full"
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between text-xs font-mono text-muted-foreground">
@@ -625,7 +625,7 @@ export function Portfolio() {
                   <button
                     type="button"
                     onClick={() => setSelectedArticle(art)}
-                    className="w-full py-2.5 px-4 rounded-lg text-xs font-medium border border-border/80 hover:border-foreground/50 bg-background/60 text-foreground transition-colors flex items-center justify-center gap-2"
+                    className="w-full py-2.5 px-4 rounded-xl text-xs font-medium border border-border/80 hover:border-foreground/50 bg-background/60 text-foreground transition-colors flex items-center justify-center gap-2 depth-interactive"
                   >
                     <BookOpen size={13} />
                     <span>Read Reflection</span>
@@ -645,7 +645,7 @@ export function Portfolio() {
           role="dialog"
           aria-modal="true"
         >
-          <div className="relative w-full max-w-[760px] bg-card border border-border/60 rounded-2xl shadow-2xl p-6 sm:p-12 my-8 animate-in fade-in-0 zoom-in-95 duration-200">
+          <div className="relative w-full max-w-[760px] bg-card border border-border/60 rounded-2xl shadow-2xl p-6 sm:p-10 md:p-12 my-8 animate-in fade-in-0 zoom-in-95 duration-200">
             <button 
               onClick={() => setSelectedArticle(null)}
               className="absolute top-6 right-6 p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
@@ -714,7 +714,7 @@ export function Portfolio() {
               <div className="pt-6 border-t border-border/40 flex justify-end">
                 <button 
                   onClick={() => setSelectedArticle(null)} 
-                  className="px-6 py-2.5 rounded-lg text-xs font-medium bg-foreground text-background hover:bg-foreground/90 transition-colors"
+                  className="px-6 py-2.5 rounded-xl text-xs font-medium bg-foreground text-background hover:bg-foreground/90 transition-colors"
                 >
                   Close
                 </button>
@@ -727,36 +727,36 @@ export function Portfolio() {
       {/* =========================================================================
           5. ABOUT & BACKGROUND (NO AGE / DOB)
           ========================================================================= */}
-      <section id="about" className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1140px] mx-auto border-t border-border/40">
+      <section id="about" className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 max-w-[1240px] 2xl:max-w-[1380px] mx-auto border-t border-border/40">
         <div className="space-y-12">
           
           <ScrollReveal distance={16}>
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border/40">
-              <div className="space-y-3 max-w-2xl">
+              <div className="space-y-3 max-w-3xl">
                 <div className="text-xs font-mono uppercase tracking-widest text-primary font-medium">
                   BACKGROUND
                 </div>
-                <h2 className="font-display text-4xl sm:text-5xl font-normal tracking-tight text-foreground">
+                <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-foreground">
                   About Geddada Devicharan.
                 </h2>
-                <p className="text-base text-muted-foreground leading-relaxed">
+                <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl">
                   Digital Product Builder, Video Editor & Business Systems Creator based in Andhra Pradesh.
                 </p>
               </div>
 
               <Link 
                 to="/about" 
-                className="text-xs font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5 shrink-0"
+                className="text-xs sm:text-sm font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5 shrink-0"
               >
                 <span>Full Biography</span>
-                <ArrowRight size={13} />
+                <ArrowRight size={14} />
               </Link>
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-start">
             
-            <ScrollReveal className="lg:col-span-7 space-y-6 text-base text-muted-foreground leading-relaxed" distance={16} staggerIndex={0}>
+            <ScrollReveal className="lg:col-span-7 space-y-6 text-base sm:text-lg text-muted-foreground leading-relaxed" distance={16} staggerIndex={0}>
               <p>
                 Based in Visakhapatnam and Vizianagaram, Andhra Pradesh. I operate across software engineering, video post-production (700+ deliverables in DaVinci Resolve Studio), website management (8+ managed websites including Sri Lahari Studios and Annapurna Foundation), and practical business automation.
               </p>
@@ -781,12 +781,12 @@ export function Portfolio() {
             </ScrollReveal>
 
             <ScrollReveal className="lg:col-span-5 space-y-6" distance={16} staggerIndex={1}>
-              <div className="p-8 rounded-2xl border border-border/60 bg-card/40 backdrop-blur-xs space-y-4 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.25)]">
-                <div className="flex items-center gap-2 font-semibold text-foreground text-sm">
+              <div className="p-6 sm:p-8 lg:p-9 rounded-2xl border border-border/60 bg-card/40 backdrop-blur-xs space-y-4 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.25)]">
+                <div className="flex items-center gap-2 font-semibold text-foreground text-sm sm:text-base">
                   <GraduationCap size={18} className="text-primary" />
                   <span>Academic Rigor</span>
                 </div>
-                <div className="space-y-3.5 text-xs text-muted-foreground">
+                <div className="space-y-3.5 text-xs sm:text-sm text-muted-foreground">
                   <div className="border-l-2 border-primary/50 pl-3 space-y-0.5">
                     <div className="font-semibold text-foreground">B.Tech Electrical & Electronics Engineering</div>
                     <div>Final Year · Andhra University affiliated college, Vizag</div>
@@ -811,32 +811,27 @@ export function Portfolio() {
       {/* =========================================================================
           6. CONTACT & COMMUNICATION
           ========================================================================= */}
-      <section id="contact" className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1140px] mx-auto border-t border-border/40">
+      <section id="contact" className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 max-w-[1240px] 2xl:max-w-[1380px] mx-auto border-t border-border/40">
         <ScrollReveal distance={18}>
-          <div className="max-w-3xl mx-auto space-y-12 text-center">
+          <div className="max-w-3xl lg:max-w-4xl mx-auto space-y-12 text-center">
             
             <div className="space-y-3">
               <div className="text-xs font-mono uppercase tracking-widest text-primary font-medium">
                 DIRECT CHANNELS
               </div>
-              <h2 className="font-display text-4xl sm:text-5xl font-normal tracking-tight text-foreground">
+              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-foreground">
                 Direct communication.
               </h2>
-              <p className="text-base text-muted-foreground max-w-lg mx-auto leading-relaxed">
+              <p className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
                 Reach out for software products, video post-production, website management, and business automations.
               </p>
             </div>
 
-            <div className="p-8 sm:p-12 rounded-2xl border border-border/60 bg-card/40 backdrop-blur-xs text-left space-y-6 shadow-[0_6px_28px_-4px_rgba(0,0,0,0.3)]">
-              <div className="space-y-1">
-                <h3 className="text-xl font-semibold text-foreground">
-                  Send a Direct Message
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  Leave a note below with your project context or inquiry.
-                </p>
-              </div>
-              <ContactForm />
+            <div className="w-full">
+              <ContactForm 
+                title="Send a Direct Message" 
+                subtitle="Leave a note below with your project context or inquiry." 
+              />
             </div>
 
           </div>
@@ -846,22 +841,22 @@ export function Portfolio() {
       {/* =========================================================================
           7. FOOTER
           ========================================================================= */}
-      <footer className="py-12 sm:py-16 px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1140px] mx-auto border-t border-border/40">
+      <footer className="py-12 sm:py-16 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 max-w-[1240px] 2xl:max-w-[1380px] mx-auto border-t border-border/40">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
           
           <div className="space-y-1">
             <p className="text-base font-semibold text-foreground">
               Geddada Devicharan
             </p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs sm:text-sm text-muted-foreground">
               Digital Product Builder, Video Editor & Business Systems Creator.
             </p>
-            <p className="text-[11px] font-mono text-muted-foreground/60 pt-1">
+            <p className="text-[11px] sm:text-xs font-mono text-muted-foreground/60 pt-1">
               Visakhapatnam & Vizianagaram, AP, India · © {new Date().getFullYear()}
             </p>
           </div>
 
-          <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
+          <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-xs sm:text-sm text-muted-foreground">
             <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
             <Link to="/software" className="hover:text-foreground transition-colors">Software</Link>
             <Link to="/video" className="hover:text-foreground transition-colors">Video</Link>
@@ -878,27 +873,27 @@ export function Portfolio() {
               target="_blank" 
               rel="noopener noreferrer" 
               aria-label="GitHub"
-              className="p-2 text-muted-foreground hover:text-foreground depth-interactive transition-colors"
+              className="p-2.5 text-muted-foreground hover:text-foreground depth-interactive transition-colors rounded-lg"
             >
-              <OfficialGithubIcon size={16} />
+              <OfficialGithubIcon size={17} />
             </a>
             <a 
               href="https://www.linkedin.com/in/geddadadevicharan" 
               target="_blank" 
               rel="noopener noreferrer" 
               aria-label="LinkedIn"
-              className="p-2 text-muted-foreground hover:text-foreground depth-interactive transition-colors"
+              className="p-2.5 text-muted-foreground hover:text-foreground depth-interactive transition-colors rounded-lg"
             >
-              <OfficialLinkedinIcon size={16} />
+              <OfficialLinkedinIcon size={17} />
             </a>
             <a 
               href="https://www.instagram.com/imdvichrn" 
               target="_blank" 
               rel="noopener noreferrer" 
               aria-label="Instagram"
-              className="p-2 text-muted-foreground hover:text-foreground depth-interactive transition-colors"
+              className="p-2.5 text-muted-foreground hover:text-foreground depth-interactive transition-colors rounded-lg"
             >
-              <OfficialInstagramIcon size={16} />
+              <OfficialInstagramIcon size={17} />
             </a>
           </div>
 

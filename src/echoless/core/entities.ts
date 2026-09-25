@@ -37,6 +37,9 @@ const FUZZY_ALIAS_MAP: Record<string, string> = {
   'github': 'social_github',
   'git': 'social_github',
 
+  'twitter': 'social_twitter',
+  'x': 'social_twitter',
+
   'whats app': 'contact_whatsapp',
   'whatsapp': 'contact_whatsapp',
   'wa': 'contact_whatsapp',
@@ -46,7 +49,10 @@ const FUZZY_ALIAS_MAP: Record<string, string> = {
   'exams': 'examflowos',
   'examflow': 'examflowos',
   'examflowos': 'examflowos',
+  'exam flow': 'examflowos',
+  'exam flow os': 'examflowos',
   'cbt': 'examflowos',
+  'cbt platform': 'examflowos',
   'ecet': 'examflowos',
   'polycet': 'examflowos',
   'icet': 'examflowos',
@@ -57,12 +63,32 @@ const FUZZY_ALIAS_MAP: Record<string, string> = {
   'videos': 'video',
   'video work': 'video',
   'video editing': 'video',
+  'editing': 'video',
+  'edit': 'video',
+  'editor': 'video',
   'color grading': 'video',
+  'color grade': 'video',
+  'grading': 'video',
+  'grades': 'video',
+  'color': 'video',
   'davinci': 'video',
   'davinci resolve': 'video',
   'resolve': 'video',
   'fairlight': 'video',
   'fusion': 'video',
+  'post production': 'video',
+  'post-production': 'video',
+
+  // Software & Engineering
+  'software': 'software',
+  'softwares': 'software',
+  'code': 'software',
+  'coding': 'software',
+  'apps': 'software',
+  'products': 'software',
+  'builds': 'software',
+  'engineering': 'software',
+  'development': 'software',
 
   // Products
   'perfect pack': 'perfect_pack',
@@ -95,11 +121,18 @@ const FUZZY_ALIAS_MAP: Record<string, string> = {
 
   // Person
   'devicharan': 'devicharan',
+  'geddada devicharan': 'devicharan',
   'devi': 'devicharan',
   'charan': 'devicharan',
   'atanu': 'devicharan',
   'author': 'devicharan',
   'builder': 'devicharan',
+  'who are you': 'devicharan',
+  'who is devicharan': 'devicharan',
+  'about devicharan': 'devicharan',
+  'about you': 'devicharan',
+  'who is he': 'devicharan',
+  'yourself': 'devicharan',
 };
 
 export function extractEntities(parsed: ParsedInput): ExtractedEntity[] {
@@ -142,33 +175,45 @@ export function extractEntities(parsed: ParsedInput): ExtractedEntity[] {
     }
   }
 
-  // 3. Knowledge Graph general lookup
-  const graphNode = knowledgeGraph.findNode(norm);
-  if (graphNode && !seenNodeIds.has(graphNode.id)) {
-    seenNodeIds.add(graphNode.id);
-    results.push({
-      node: graphNode,
-      matchedText: norm,
-      confidence: 0.9,
-      isFuzzy: false,
-    });
+  // 3. Knowledge Graph Aliases Match (Exact token boundary match)
+  const allNodes = knowledgeGraph.getAllNodes();
+  for (const node of allNodes) {
+    if (seenNodeIds.has(node.id)) continue;
+
+    for (const alias of node.aliases) {
+      const regex = new RegExp(`\\b${escapeRegExp(alias.toLowerCase())}\\b`, 'i');
+      if (regex.test(norm)) {
+        seenNodeIds.add(node.id);
+        results.push({
+          node,
+          matchedText: alias,
+          confidence: 0.95,
+          isFuzzy: false,
+        });
+        break;
+      }
+    }
   }
 
-  // 4. Token-by-token fuzzy check if still empty
-  if (results.length === 0) {
+  // 4. Fuzzy Levenshtein Distance match on unknown words
+  if (results.length === 0 && parsed.tokens.length > 0) {
     for (const token of parsed.cleanTokens) {
       if (token.length < 3) continue;
 
-      // Check fuzzy map keys for close edit distance (distance <= 1)
-      for (const [alias, nodeId] of Object.entries(FUZZY_ALIAS_MAP)) {
-        if (alias.length >= 4 && computeLevenshtein(token, alias) <= 1) {
-          const node = knowledgeGraph.getNode(nodeId);
-          if (node && !seenNodeIds.has(node.id)) {
+      for (const node of allNodes) {
+        if (seenNodeIds.has(node.id)) continue;
+
+        for (const alias of node.aliases) {
+          const aliasLower = alias.toLowerCase();
+          const dist = levenshtein(token, aliasLower);
+          const maxAllowed = aliasLower.length <= 4 ? 1 : 2;
+
+          if (dist <= maxAllowed) {
             seenNodeIds.add(node.id);
             results.push({
               node,
               matchedText: token,
-              confidence: 0.85,
+              confidence: 0.75,
               isFuzzy: true,
             });
             break;
@@ -181,28 +226,38 @@ export function extractEntities(parsed: ParsedInput): ExtractedEntity[] {
   return results;
 }
 
-function computeLevenshtein(a: string, b: string): number {
-  if (a.length === 0) return b.length;
-  if (b.length === 0) return a.length;
-  const matrix: number[][] = [];
-  for (let i = 0; i <= b.length; i++) matrix[i] = [i];
-  for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
-  for (let i = 1; i <= b.length; i++) {
-    for (let j = 1; j <= a.length; j++) {
+function escapeRegExp(string: string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function levenshtein(a: string, b: string): number {
+  const an = a ? a.length : 0;
+  const bn = b ? b.length : 0;
+  if (an === 0) return bn;
+  if (bn === 0) return an;
+  const matrix = new Array<number[]>(bn + 1);
+  for (let i = 0; i <= bn; ++i) {
+    let row = (matrix[i] = new Array<number>(an + 1));
+    row[0] = i;
+  }
+  const firstRow = matrix[0];
+  for (let j = 1; j <= an; ++j) {
+    firstRow[j] = j;
+  }
+  for (let i = 1; i <= bn; ++i) {
+    for (let j = 1; j <= an; ++j) {
       if (b.charAt(i - 1) === a.charAt(j - 1)) {
         matrix[i][j] = matrix[i - 1][j - 1];
       } else {
         matrix[i][j] = Math.min(
-          matrix[i - 1][j - 1] + 1,
-          matrix[i][j - 1] + 1,
-          matrix[i - 1][j] + 1
+          matrix[i - 1][j - 1] + 1, // substitution
+          Math.min(
+            matrix[i][j - 1] + 1, // insertion
+            matrix[i - 1][j] + 1 // deletion
+          )
         );
       }
     }
   }
-  return matrix[b.length][a.length];
-}
-
-function escapeRegExp(string: string): string {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return matrix[bn][an];
 }

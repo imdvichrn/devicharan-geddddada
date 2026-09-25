@@ -155,6 +155,7 @@ export default function ProjectPage() {
         title={`${project.title} | Case Study | Geddada Devicharan`}
         description={project.shortDescription}
         path={`/project/${project.id}`}
+        ogImage={project.id === 'examflow-os' ? 'https://geddadadevicharan.vercel.app/og/og-examflowos.png' : undefined}
         breadcrumbs={[
           { name: 'Home', url: 'https://geddadadevicharan.vercel.app' },
           { name: 'Work', url: 'https://geddadadevicharan.vercel.app/work' },

@@ -177,7 +177,39 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
 
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isLoading) return;
+    const userMessage = input.trim();
+    if (!userMessage) return;
+
+    // If an animation is already in progress, interrupt and finalize previous message immediately
+    if (streamIntervalRef.current) {
+      clearInterval(streamIntervalRef.current);
+      streamIntervalRef.current = null;
+      if (textBufferRef.current) {
+        currentResponseTextRef.current += textBufferRef.current;
+        textBufferRef.current = "";
+      }
+      if (currentResponseTextRef.current) {
+        const { refinedText, actions } = runNaturalnessPipeline(currentResponseTextRef.current, {
+          recentHistory: messages,
+        });
+        const actionButtons: ActionButton[] | undefined =
+          actions.length > 0
+            ? actions.map(a => ({
+                label: a.label,
+                action: a.id,
+                icon: 'link' as const,
+              }))
+            : undefined;
+
+        setMessages(prev =>
+          prev.map((m, i) =>
+            i === prev.length - 1 && m.role === 'assistant'
+              ? { ...m, content: refinedText, buttons: actionButtons }
+              : m
+          )
+        );
+      }
+    }
 
     // try to play message-sent audio, fallback to WebAudio beep if blocked/missing
     const playFallbackBeep = () => {
@@ -205,7 +237,6 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
       playFallbackBeep();
     }
 
-    const userMessage = input.trim();
     setInput('');
     setShowQuickActions(false);
     
@@ -293,30 +324,20 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
             return;
           }
 
-          if (!streamActiveRef.current) {
-            const remaining = textBufferRef.current;
-            textBufferRef.current = "";
-            currentResponseTextRef.current += remaining;
-            
-            finalizeAssistantMessage(currentResponseTextRef.current);
-            smartScrollToBottom(true);
-            
-            clearInterval(streamIntervalRef.current!);
-            streamIntervalRef.current = null;
-            return;
-          }
-
+          // Progressive typewriter pace: reveal 2-4 characters per tick smoothly
           const bufferLength = textBufferRef.current.length;
-          let takeLength = 4;
+          let takeLength = 3;
           
           if (bufferLength > 200) {
-            takeLength = 28;
-          } else if (bufferLength > 90) {
-            takeLength = 16;
+            takeLength = 10;
+          } else if (bufferLength > 100) {
+            takeLength = 6;
           } else if (bufferLength > 40) {
-            takeLength = 8;
-          } else if (bufferLength > 15) {
-            takeLength = 5;
+            takeLength = 4;
+          } else if (bufferLength > 10) {
+            takeLength = 3;
+          } else {
+            takeLength = 2;
           }
           
           const chunkToAppend = textBufferRef.current.slice(0, takeLength);
@@ -342,7 +363,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
           });
 
           smartScrollToBottom(false);
-        }, 35);
+        }, 18);
       };
 
       const upsertAssistantChunk = (nextChunk: string) => {
@@ -599,28 +620,28 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
     <>
       {/* Echo Less Toggle Button - Always-floating Siri Orb */}
       <motion.div
-        className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-[9999] pointer-events-auto"
+        className="fixed bottom-5 right-5 sm:bottom-7 sm:right-7 md:bottom-8 md:right-8 z-[9999] pointer-events-auto"
         style={{
-          bottom: 'max(1.5rem, env(safe-area-inset-bottom) + 0.5rem)',
-          right: 'max(1.5rem, env(safe-area-inset-right) + 0.5rem)',
+          bottom: 'max(1.25rem, env(safe-area-inset-bottom) + 0.5rem)',
+          right: 'max(1.25rem, env(safe-area-inset-right) + 0.5rem)',
         }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.94 }}
       >
         <Button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full shadow-2xl transition-all duration-200 overflow-hidden bg-transparent hover:bg-transparent border-0 outline-none ring-0 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:outline-none flex items-center justify-center p-0 cursor-pointer"
+          className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full shadow-2xl transition-all duration-200 overflow-hidden bg-transparent hover:bg-transparent border-0 outline-none ring-0 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:outline-none flex items-center justify-center p-0 cursor-pointer depth-interactive"
           style={{ border: 'none', outline: 'none' }}
           aria-label="Chat Support - Click to talk with Echoless"
         >
           {/* Continuous looping Siri Orb - runs regardless of chat state */}
           <motion.div
-            animate={{ scale: [1, 1.08, 1] }}
-            transition={{ duration: 2.2, repeat: Infinity, repeatType: 'loop' }}
-            className="w-10 h-10 sm:w-14 sm:h-14 md:w-[72px] md:h-[72px] rounded-full overflow-hidden flex items-center justify-center"
+            animate={{ scale: [1, 1.06, 1] }}
+            transition={{ duration: 2.4, repeat: Infinity, repeatType: 'loop' }}
+            className="w-12 h-12 sm:w-14 sm:h-14 md:w-[72px] md:h-[72px] rounded-full overflow-hidden flex items-center justify-center"
             style={{ borderRadius: '50%', border: 'none', outline: 'none' }}
           >
-            <SiriOrb className="w-full h-full" />
+            <SiriOrb className="w-full h-full" isOpen={isOpen} />
           </motion.div>
         </Button>
       </motion.div>

@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import { SEOHead } from '@/components/SEOHead';
 import { Link } from 'react-router-dom';
 import { 
   ArrowLeft, 
@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { WindowChrome } from '@/components/WindowChrome';
 import { PageShell } from '@/components/PageShell';
-import { generateBreadcrumbSchema, generateCreativeWorkSchema } from '@/lib/structuredData';
+import { generateCreativeWorkSchema } from '@/lib/structuredData';
 
 export function AnnapurnaFoundationPage() {
   const canonicalUrl = 'https://geddadadevicharan.vercel.app/project/annapurna-foundation';
@@ -57,26 +57,15 @@ export function AnnapurnaFoundationPage() {
 
   return (
     <PageShell maxWidth="wide">
-      <Helmet>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <link rel="canonical" href={canonicalUrl} />
-        
-        {/* OpenGraph & Social Sharing */}
-        <meta property="og:title" content="Annapurna Foundation — Digital Work & Case Study | Geddada Devicharan" />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="article" />
-        <meta property="og:image" content={logoUrl} />
-
-        {/* Structured Data */}
-        <script type="application/ld+json">
-          {JSON.stringify(generateBreadcrumbSchema(breadcrumbs))}
-        </script>
-        <script type="application/ld+json">
-          {JSON.stringify(generateCreativeWorkSchema(creativeWorkData))}
-        </script>
-      </Helmet>
+      <SEOHead
+        title={title}
+        description={description}
+        path="/project/annapurna-foundation"
+        ogType="article"
+        ogImage="https://geddadadevicharan.vercel.app/og/og-home.png"
+        breadcrumbs={breadcrumbs}
+        structuredData={generateCreativeWorkSchema(creativeWorkData)}
+      />
 
       <main className="space-y-16 sm:space-y-24">
         

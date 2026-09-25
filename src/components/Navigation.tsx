@@ -112,7 +112,7 @@ export function Navigation() {
             : 'bg-transparent border-b border-transparent'
         }`}
       >
-        <div className="max-w-[1240px] mx-auto page-shell-gutter h-[var(--header-height)] flex items-center justify-between">
+        <div className="max-w-[1240px] 2xl:max-w-[1380px] mx-auto page-shell-gutter h-[var(--header-height)] flex items-center justify-between">
           
           {/* Brand Anchor: Devicharan (@imdvichrn) */}
           <Link 

@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { WindowChrome } from './WindowChrome';
 import { useToast } from '@/hooks/use-toast';
 import { Send } from 'lucide-react';
@@ -16,6 +15,13 @@ interface FormData {
   subject: string;
   message: string;
   honeypot: string; // Hidden field for spam protection
+}
+
+interface ContactFormProps {
+  showChrome?: boolean;
+  className?: string;
+  title?: string;
+  subtitle?: string;
 }
 
 const initialFormData: FormData = {
@@ -32,7 +38,7 @@ const PUBLIC_KEY = 'yxDgR_bWBnh9BXZpr';
 const NOTIFY_TEMPLATE = 'template_689lfji';
 const AUTOREPLY_TEMPLATE = 'template_w46ui3m';
 
-export function ContactForm() {
+export function ContactForm({ showChrome = true, className = '', title = 'Get In Touch', subtitle }: ContactFormProps) {
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -130,7 +136,6 @@ export function ContactForm() {
           console.warn('Autoreply notice:', autoReplyErr);
         }
       } catch (emailJsError: any) {
-        // If EmailJS has 412 (Gmail grant expired) or network issue, log notice and rely on backend API
         console.warn('EmailJS service notice (falling back to direct backend channel):', emailJsError?.text || emailJsError?.message || emailJsError);
       }
 
@@ -167,7 +172,6 @@ export function ContactForm() {
           setSubmitStatus('idle');
         }, 4000);
       } else {
-        // Both failed (e.g. complete offline state)
         throw new Error('Unable to deliver message at this time.');
       }
     } catch (error) {
@@ -188,136 +192,164 @@ export function ContactForm() {
   };
 
   return (
-    <Card className="glass-panel border-glass-border transition-all duration-300">
-      <CardHeader className="px-4 md:px-6">
-        <div className="flex items-center justify-between mb-2 md:mb-4">
+    <div className={`p-6 sm:p-8 md:p-10 lg:p-11 rounded-2xl border border-border/60 bg-card/60 backdrop-blur-md shadow-[0_6px_28px_-4px_rgba(0,0,0,0.25)] transition-all duration-300 ${className}`}>
+      {showChrome && (
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
           <WindowChrome />
+          <span className="text-[11px] sm:text-xs font-mono text-muted-foreground uppercase tracking-wider">
+            Direct Transmission
+          </span>
         </div>
-        <CardTitle className="text-xl md:text-2xl font-bold text-center">Get In Touch</CardTitle>
-      </CardHeader>
-      <CardContent className="px-4 md:px-6">
-        <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-          {/* Honeypot field - hidden from users */}
-          <input
-            type="text"
-            name="honeypot"
-            value={formData.honeypot}
-            onChange={handleInputChange}
-            className="absolute -left-[9999px] opacity-0 pointer-events-none"
-            tabIndex={-1}
-            autoComplete="off"
-            aria-hidden="true"
-          />
+      )}
+      
+      <div className="mb-6 sm:mb-8 space-y-1 text-left">
+        <h3 className="font-display text-2xl sm:text-3xl md:text-4xl font-normal text-foreground">
+          {title}
+        </h3>
+        {subtitle ? (
+          <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+            {subtitle}
+          </p>
+        ) : (
+          <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+            Fill out the fields below or reach out directly on WhatsApp or Email.
+          </p>
+        )}
+      </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Name *</Label>
-              <Input
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                className={`bg-transparent border-glass-border ${errors.name ? 'border-destructive' : ''}`}
-                required
-                disabled={isSubmitting}
-              />
-              {errors.name && (
-                <p className="text-sm text-destructive">{errors.name}</p>
-              )}
-            </div>
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 md:space-y-6">
+        {/* Honeypot field - hidden from users */}
+        <input
+          type="text"
+          name="honeypot"
+          value={formData.honeypot}
+          onChange={handleInputChange}
+          className="absolute -left-[9999px] opacity-0 pointer-events-none"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+        />
 
-            <div className="space-y-2">
-              <Label htmlFor="email">Email *</Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                className={`bg-transparent border-glass-border ${errors.email ? 'border-destructive' : ''}`}
-                required
-                disabled={isSubmitting}
-              />
-              {errors.email && (
-                <p className="text-sm text-destructive">{errors.email}</p>
-              )}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="subject">Subject *</Label>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 md:gap-6">
+          <div className="space-y-1.5 sm:space-y-2 text-left">
+            <Label htmlFor="contact-name" className="text-xs sm:text-sm font-mono uppercase tracking-wider text-foreground/80 font-medium">
+              Name *
+            </Label>
             <Input
-              id="subject"
-              name="subject"
-              value={formData.subject}
+              id="contact-name"
+              name="name"
+              placeholder="Your name"
+              value={formData.name}
               onChange={handleInputChange}
-              className={`bg-transparent border-glass-border ${errors.subject ? 'border-destructive' : ''}`}
+              className={`h-11 sm:h-12 px-3.5 sm:px-4 text-xs sm:text-sm md:text-base rounded-xl bg-background/60 border-border/80 focus:border-primary focus:ring-1 focus:ring-primary/40 transition-all ${errors.name ? 'border-destructive' : ''}`}
               required
               disabled={isSubmitting}
             />
-            {errors.subject && (
-              <p className="text-sm text-destructive">{errors.subject}</p>
+            {errors.name && (
+              <p className="text-xs text-destructive pt-0.5">{errors.name}</p>
             )}
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="message">Message *</Label>
-            <Textarea
-              id="message"
-              name="message"
-              value={formData.message}
+          <div className="space-y-1.5 sm:space-y-2 text-left">
+            <Label htmlFor="contact-email" className="text-xs sm:text-sm font-mono uppercase tracking-wider text-foreground/80 font-medium">
+              Email *
+            </Label>
+            <Input
+              id="contact-email"
+              name="email"
+              type="email"
+              placeholder="name@example.com"
+              value={formData.email}
               onChange={handleInputChange}
-              rows={5}
-              className={`bg-transparent border-glass-border resize-none ${errors.message ? 'border-destructive' : ''}`}
+              className={`h-11 sm:h-12 px-3.5 sm:px-4 text-xs sm:text-sm md:text-base rounded-xl bg-background/60 border-border/80 focus:border-primary focus:ring-1 focus:ring-primary/40 transition-all ${errors.email ? 'border-destructive' : ''}`}
               required
               disabled={isSubmitting}
             />
-            {errors.message && (
-              <p className="text-sm text-destructive">{errors.message}</p>
+            {errors.email && (
+              <p className="text-xs text-destructive pt-0.5">{errors.email}</p>
             )}
           </div>
+        </div>
 
-          <div className="pt-2">
-            <Button
-              type="submit"
-              className={`w-full h-11 transition-all duration-200 ${
-                submitStatus === 'success'
-                  ? 'bg-emerald-600 hover:bg-emerald-600 text-white'
-                  : submitStatus === 'error'
-                  ? 'bg-destructive hover:bg-destructive text-white'
-                  : 'bg-primary hover:bg-primary/90 text-primary-foreground'
-              }`}
-              disabled={isSubmitting || submitStatus === 'success'}
-              aria-label="Send message to Geddada Devicharan"
-            >
-              {submitStatus === 'loading' && (
-                <span className="inline-flex items-center justify-center gap-2">
-                  <SVGLoadingSpinner size={15} className="shrink-0" />
-                  <span>Sending message...</span>
-                </span>
-              )}
-              {submitStatus === 'success' && (
-                <span className="inline-flex items-center justify-center gap-2 text-white font-medium">
-                  <SVGSuccessCheckmark size={16} className="shrink-0 text-white" />
-                  <span>Message Sent Successfully</span>
-                </span>
-              )}
-              {submitStatus === 'error' && (
-                <span className="inline-flex items-center justify-center gap-2 text-white font-medium">
-                  <SVGErrorCross size={16} className="shrink-0 text-white" />
-                  <span>Failed — Please Try Again</span>
-                </span>
-              )}
-              {submitStatus === 'idle' && (
-                <span className="inline-flex items-center justify-center gap-2">
-                  <Send className="h-4 w-4 shrink-0" />
-                  <span>Send Message</span>
-                </span>
-              )}
-            </Button>
-          </div>
-        </form>
-      </CardContent>
-    </Card>
+        <div className="space-y-1.5 sm:space-y-2 text-left">
+          <Label htmlFor="contact-subject" className="text-xs sm:text-sm font-mono uppercase tracking-wider text-foreground/80 font-medium">
+            Subject *
+          </Label>
+          <Input
+            id="contact-subject"
+            name="subject"
+            placeholder="Project inquiry, video post-production, or consultation"
+            value={formData.subject}
+            onChange={handleInputChange}
+            className={`h-11 sm:h-12 px-3.5 sm:px-4 text-xs sm:text-sm md:text-base rounded-xl bg-background/60 border-border/80 focus:border-primary focus:ring-1 focus:ring-primary/40 transition-all ${errors.subject ? 'border-destructive' : ''}`}
+            required
+            disabled={isSubmitting}
+          />
+          {errors.subject && (
+            <p className="text-xs text-destructive pt-0.5">{errors.subject}</p>
+          )}
+        </div>
+
+        <div className="space-y-1.5 sm:space-y-2 text-left">
+          <Label htmlFor="contact-message" className="text-xs sm:text-sm font-mono uppercase tracking-wider text-foreground/80 font-medium">
+            Message *
+          </Label>
+          <Textarea
+            id="contact-message"
+            name="message"
+            placeholder="Describe your project, timeline, deliverables, or objectives..."
+            value={formData.message}
+            onChange={handleInputChange}
+            rows={5}
+            className={`min-h-[130px] sm:min-h-[150px] md:min-h-[170px] p-3.5 sm:p-4 text-xs sm:text-sm md:text-base rounded-xl bg-background/60 border-border/80 focus:border-primary focus:ring-1 focus:ring-primary/40 resize-y leading-relaxed transition-all ${errors.message ? 'border-destructive' : ''}`}
+            required
+            disabled={isSubmitting}
+          />
+          {errors.message && (
+            <p className="text-xs text-destructive pt-0.5">{errors.message}</p>
+          )}
+        </div>
+
+        <div className="pt-2 sm:pt-3">
+          <Button
+            type="submit"
+            className={`w-full h-11 sm:h-12 md:h-13 rounded-xl text-xs sm:text-sm md:text-base font-medium transition-all duration-200 depth-interactive shadow-sm ${
+              submitStatus === 'success'
+                ? 'bg-emerald-600 hover:bg-emerald-600 text-white'
+                : submitStatus === 'error'
+                ? 'bg-destructive hover:bg-destructive text-white'
+                : 'bg-primary hover:bg-primary/95 text-primary-foreground'
+            }`}
+            disabled={isSubmitting || submitStatus === 'success'}
+            aria-label="Send message to Geddada Devicharan"
+          >
+            {submitStatus === 'loading' && (
+              <span className="inline-flex items-center justify-center gap-2">
+                <SVGLoadingSpinner size={16} className="shrink-0" />
+                <span>Transmitting message...</span>
+              </span>
+            )}
+            {submitStatus === 'success' && (
+              <span className="inline-flex items-center justify-center gap-2 text-white font-medium">
+                <SVGSuccessCheckmark size={17} className="shrink-0 text-white" />
+                <span>Message Transmitted Successfully</span>
+              </span>
+            )}
+            {submitStatus === 'error' && (
+              <span className="inline-flex items-center justify-center gap-2 text-white font-medium">
+                <SVGErrorCross size={17} className="shrink-0 text-white" />
+                <span>Failed — Please Try Again</span>
+              </span>
+            )}
+            {submitStatus === 'idle' && (
+              <span className="inline-flex items-center justify-center gap-2">
+                <Send className="h-4 w-4 shrink-0" />
+                <span>Send Direct Message</span>
+              </span>
+            )}
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 }

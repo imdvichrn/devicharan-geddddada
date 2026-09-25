@@ -12,7 +12,7 @@ interface SEOHeadProps {
 }
 
 const DOMAIN = 'https://geddadadevicharan.vercel.app';
-const DEFAULT_OG_IMAGE = `${DOMAIN}/og/og-home.png?v=3`;
+const DEFAULT_OG_IMAGE = `${DOMAIN}/og/og-home.png`;
 
 export function SEOHead({
   title,
@@ -24,6 +24,13 @@ export function SEOHead({
   structuredData,
 }: SEOHeadProps) {
   const canonicalUrl = `${DOMAIN}${path.startsWith('/') ? path : `/${path}`}`;
+  
+  // Ensure absolute production URL on domain
+  const rawImage = ogImage || DEFAULT_OG_IMAGE;
+  const absoluteOgImage = rawImage.startsWith('http')
+    ? rawImage
+    : `${DOMAIN}${rawImage.startsWith('/') ? rawImage : `/${rawImage}`}`;
+
   const breadcrumbSchema = breadcrumbs ? generateBreadcrumbSchema(breadcrumbs) : null;
 
   return (
@@ -38,7 +45,11 @@ export function SEOHead({
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={ogImage.startsWith('http') ? ogImage : `${DOMAIN}${ogImage}`} />
+      <meta property="og:image" content={absoluteOgImage} />
+      <meta property="og:image:secure_url" content={absoluteOgImage} />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:site_name" content="Geddada Devicharan" />
 
       {/* Twitter / X */}
@@ -46,7 +57,7 @@ export function SEOHead({
       <meta name="twitter:url" content={canonicalUrl} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={ogImage.startsWith('http') ? ogImage : `${DOMAIN}${ogImage}`} />
+      <meta name="twitter:image" content={absoluteOgImage} />
       <meta name="twitter:creator" content="@imdvichrn" />
 
       {/* Breadcrumb Structured Data */}

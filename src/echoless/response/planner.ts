@@ -11,6 +11,7 @@ import { ConversationState } from '../conversation/state';
 export type ResponseDomain =
   | 'examflowos'
   | 'video'
+  | 'software'
   | 'perfect_pack'
   | 'annapurna'
   | 'web'
@@ -32,6 +33,7 @@ export interface ResponsePlan {
   depth: ResponseDepth;
   actionIds: string[];
   socialChannelKey?: string;
+  subTopic?: 'editing' | 'color_grading' | 'general';
   language: SupportedLanguage;
   entityId?: string;
 }
@@ -42,7 +44,8 @@ export function planResponse(
   language: SupportedLanguage,
   state: ConversationState,
   isConfident: boolean,
-  clarificationPrompt?: string
+  clarificationPrompt?: string,
+  subTopic?: 'editing' | 'color_grading' | 'general'
 ): ResponsePlan {
   // 1. Ambiguous / Low confidence
   if (!isConfident) {
@@ -132,7 +135,7 @@ export function planResponse(
   }
 
   // 7. Entity Depth resolution
-  const entity = resolvedEntityId || 'examflowos';
+  const entity = resolvedEntityId || 'devicharan';
   let depth: ResponseDepth = 'explain';
 
   if (intent === 'EXPAND') {
@@ -156,7 +159,18 @@ export function planResponse(
     return {
       domain: 'video',
       depth,
+      subTopic: subTopic || 'general',
       actionIds: ['video'],
+      language,
+      entityId: entity,
+    };
+  }
+
+  if (entity === 'software') {
+    return {
+      domain: 'software',
+      depth,
+      actionIds: ['examflowos', 'software'],
       language,
       entityId: entity,
     };

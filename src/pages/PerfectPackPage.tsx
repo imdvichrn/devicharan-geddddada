@@ -117,7 +117,7 @@ export default function PerfectPackPage() {
         title="Perfect Pack for DaVinci Resolve | Cinematic Editing Toolkit"
         description="In-development professional DaVinci Resolve toolkit featuring cinematic presets, sound effects, motion titles, and workflow assets by Geddada Devicharan."
         path="/perfect-pack"
-        ogImage="https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=3"
+        ogImage="https://geddadadevicharan.vercel.app/og/og-perfectpack.png"
         ogType="website"
         breadcrumbs={[
           { name: 'Home', url: 'https://geddadadevicharan.vercel.app' },

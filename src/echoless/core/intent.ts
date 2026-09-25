@@ -26,18 +26,40 @@ export interface IntentMatch {
   type: IntentType;
   confidence: number;
   extractedContext?: string;
+  subTopic?: 'editing' | 'color_grading' | 'general';
 }
 
 export function classifyIntent(parsed: ParsedInput, hasActiveContext: boolean = false): IntentMatch {
   const norm = parsed.normalized;
   const raw = parsed.raw.toLowerCase();
 
-  // 1. Ambiguity Guard: "what", "huh" with no other tokens
+  // 1. Greetings & Casual (MUST NEVER trigger portfolio clarification)
+  if (
+    norm === 'hi' ||
+    norm === 'hello' ||
+    norm === 'hey' ||
+    norm === 'hey there' ||
+    norm === 'greetings' ||
+    norm === 'good morning' ||
+    norm === 'good afternoon' ||
+    norm === 'good evening' ||
+    norm === 'namaste' ||
+    norm === 'namaskaram' ||
+    norm === 'yo' ||
+    norm === 'howdy' ||
+    norm.startsWith('hi ') ||
+    norm.startsWith('hello ') ||
+    norm.startsWith('hey ')
+  ) {
+    return { type: 'GREETING', confidence: 0.98 };
+  }
+
+  // 2. Ambiguity Guard: "what", "huh" with no other tokens
   if (parsed.isAmbiguous && !hasActiveContext) {
     return { type: 'AMBIGUOUS', confidence: 0.95 };
   }
 
-  // 2. Language switch requests
+  // 3. Language switch requests
   if (
     norm.includes('telugulo cheppu') ||
     norm.includes('telugu lo cheppu') ||
@@ -52,7 +74,7 @@ export function classifyIntent(parsed: ParsedInput, hasActiveContext: boolean = 
     return { type: 'CHANGE_LANGUAGE', confidence: 0.98 };
   }
 
-  // 3. User Correction / Switch to Other: "no the other one", "other one", "not this"
+  // 4. User Correction / Switch to Other: "no the other one", "other one", "not this"
   if (
     norm === 'no the other one' ||
     norm === 'the other one' ||
@@ -67,7 +89,7 @@ export function classifyIntent(parsed: ParsedInput, hasActiveContext: boolean = 
     return { type: 'SWITCH_OTHER', confidence: 0.95 };
   }
 
-  // 4. Expand / Follow-up: "tell me more", "more", "what else", "continue"
+  // 5. Expand / Follow-up: "tell me more", "more", "what else", "continue"
   if (
     norm === 'tell me more' ||
     norm === 'more' ||
@@ -85,7 +107,7 @@ export function classifyIntent(parsed: ParsedInput, hasActiveContext: boolean = 
     return { type: 'EXPAND', confidence: 0.95 };
   }
 
-  // 5. "Why" inquiries: "why did he build it?", "why?", "enduku"
+  // 6. "Why" inquiries: "why did he build it?", "why?", "enduku"
   if (
     norm === 'why' ||
     norm === 'why did he build it' ||
@@ -99,7 +121,24 @@ export function classifyIntent(parsed: ParsedInput, hasActiveContext: boolean = 
     return { type: 'WHY', confidence: 0.92 };
   }
 
-  // 6. List all socials: "give me all links for his social media", "all socials", "social media links"
+  // 7. Identity & Who are you
+  if (
+    norm === 'who are you' ||
+    norm === 'what is your name' ||
+    norm === 'who is devicharan' ||
+    norm === 'who is geddada devicharan' ||
+    norm === 'who is he' ||
+    norm === 'about devicharan' ||
+    norm === 'about you' ||
+    norm === 'tell me about yourself' ||
+    norm === 'introduce yourself' ||
+    norm === 'who created you' ||
+    norm === 'who built you'
+  ) {
+    return { type: 'EXPLAIN', confidence: 0.98, extractedContext: 'devicharan' };
+  }
+
+  // 8. List all socials: "give me all links for his social media", "all socials", "social media links"
   if (
     norm.includes('all links') ||
     norm.includes('all social') ||
@@ -113,7 +152,7 @@ export function classifyIntent(parsed: ParsedInput, hasActiveContext: boolean = 
     return { type: 'LIST_SOCIALS', confidence: 0.98 };
   }
 
-  // 7. Individual Social / Fuzzy Social Names: "his instagram", "facboook", "linkdin", "git hub", "twitter"
+  // 9. Individual Social / Fuzzy Social Names
   const socialKeywords = [
     'instagram', 'insta', 'instgram', 'instagarm', 'ig',
     'facebook', 'facboook', 'facbook', 'fb',
@@ -123,11 +162,11 @@ export function classifyIntent(parsed: ParsedInput, hasActiveContext: boolean = 
   ];
   for (const s of socialKeywords) {
     if (norm === s || norm === `his ${s}` || norm === `${s} link` || norm === `${s} profile` || norm.includes(s)) {
-      return { type: 'OPEN_SOCIAL', confidence: 0.95, extractedContext: s };
+      return { type: 'OPEN_SOCIAL', confidence: 0.96, extractedContext: s };
     }
   }
 
-  // 8. Contact inquiries: "contact", "whatsapp", "email", "how to contact him"
+  // 10. Contact inquiries: "contact", "whatsapp", "email", "how to contact him"
   if (
     norm.includes('whatsapp') ||
     norm.includes('whats app') ||
@@ -139,10 +178,10 @@ export function classifyIntent(parsed: ParsedInput, hasActiveContext: boolean = 
     norm.includes('message him') ||
     norm.includes('book a call')
   ) {
-    return { type: 'CONTACT', confidence: 0.92 };
+    return { type: 'CONTACT', confidence: 0.95 };
   }
 
-  // 9. List builds / projects: "what did he build?", "what has he made?", "his projects", "atanu em chesadu"
+  // 11. List builds / projects
   if (
     norm === 'what did he build' ||
     norm === 'what did he make' ||
@@ -151,6 +190,8 @@ export function classifyIntent(parsed: ParsedInput, hasActiveContext: boolean = 
     norm === 'his projects' ||
     norm === 'his software' ||
     norm === 'what are his projects' ||
+    norm === 'projects' ||
+    norm === 'builds' ||
     norm.includes('what did he build') ||
     norm.includes('what has he built') ||
     norm.includes('atanu em chesadu') ||
@@ -172,36 +213,41 @@ export function classifyIntent(parsed: ParsedInput, hasActiveContext: boolean = 
     return { type: 'LIST_BUILDS', confidence: 0.95 };
   }
 
-  // 10. Greetings & Casual
-  if (
-    norm === 'hi' ||
-    norm === 'hello' ||
-    norm === 'hey' ||
-    norm === 'hey there' ||
-    norm === 'who are you' ||
-    norm === 'what is your name' ||
-    norm === 'namaste' ||
-    norm === 'namaskaram'
-  ) {
-    return { type: 'GREETING', confidence: 0.9 };
+  // 12. Direct Video Sub-topic queries
+  if (norm === 'editing' || norm === 'video editing' || norm.includes('video editing') || norm.includes('editing work')) {
+    return { type: hasActiveContext ? 'EXPAND' : 'EXPLAIN', confidence: 0.95, extractedContext: 'video', subTopic: 'editing' };
+  }
+  if (norm === 'color grading' || norm === 'grading' || norm === 'color grade' || norm.includes('color grading') || norm.includes('color grade')) {
+    return { type: hasActiveContext ? 'EXPAND' : 'EXPLAIN', confidence: 0.95, extractedContext: 'video', subTopic: 'color_grading' };
   }
 
-  // 11. Navigation / Section Requests
+  // 13. Direct keywords
   if (
-    norm.startsWith('show me ') ||
-    norm.startsWith('go to ') ||
-    norm.startsWith('open ') ||
     norm === 'video' ||
+    norm === 'videos' ||
     norm === 'software' ||
+    norm === 'examflowos' ||
+    norm === 'examflow' ||
+    norm === 'exam flow' ||
+    norm === 'cbt' ||
     norm === 'systems' ||
     norm === 'web' ||
     norm === 'cv' ||
     norm === 'resume'
   ) {
-    return { type: 'NAVIGATE', confidence: 0.85 };
+    return { type: 'EXPLAIN', confidence: 0.95, extractedContext: norm };
   }
 
-  // 12. General Explain / Inquire: default for questions containing entities or keywords
+  // 14. Navigation / Section Requests
+  if (
+    norm.startsWith('show me ') ||
+    norm.startsWith('go to ') ||
+    norm.startsWith('open ')
+  ) {
+    return { type: 'NAVIGATE', confidence: 0.88 };
+  }
+
+  // 15. General Explain / Inquire: default for questions containing entities or keywords
   if (
     parsed.questionWord ||
     norm.startsWith('tell me about') ||
@@ -209,7 +255,7 @@ export function classifyIntent(parsed: ParsedInput, hasActiveContext: boolean = 
     norm.startsWith('who is') ||
     norm.includes('about')
   ) {
-    return { type: 'EXPLAIN', confidence: 0.8 };
+    return { type: 'EXPLAIN', confidence: 0.85 };
   }
 
   return { type: 'UNKNOWN', confidence: 0.4 };

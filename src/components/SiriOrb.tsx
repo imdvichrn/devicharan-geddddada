@@ -1,3 +1,4 @@
+import React, { useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 interface SiriOrbProps {
@@ -6,41 +7,40 @@ interface SiriOrbProps {
 }
 
 export function SiriOrb({ className }: SiriOrbProps) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.muted = true;
+      video.playsInline = true;
+      video.play().catch(() => {});
+    }
+  }, []);
+
   return (
     <div
-      className={cn("relative overflow-hidden rounded-full", className)}
-      style={{ 
-        width: '100%', 
-        height: '100%', 
-        background: 'none', 
-        padding: 0, 
-        margin: 0,
-        borderRadius: '50%'
+      className={cn("relative overflow-hidden rounded-full w-full h-full flex items-center justify-center", className)}
+      style={{
+        borderRadius: '50%',
       }}
     >
       <video
+        ref={videoRef}
         src="/siri-wave.webm"
         autoPlay
         loop
         muted
         playsInline
         preload="auto"
-        onLoadedData={(e) => {
-          const video = e.currentTarget;
-          video.currentTime = 0;
-          video.play().catch(console.error);
-        }}
         onEnded={(e) => {
           const video = e.currentTarget;
           video.currentTime = 0;
-          video.play().catch(console.error);
+          video.play().catch(() => {});
         }}
-        style={{ 
-          width: '100%', 
-          height: '100%', 
-          borderRadius: '50%', 
-          objectFit: 'cover', 
-          display: 'block',
+        className="w-full h-full object-cover rounded-full pointer-events-none"
+        style={{
+          borderRadius: '50%',
           clipPath: 'circle(50%)'
         }}
       />
