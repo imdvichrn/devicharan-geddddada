@@ -1,6 +1,7 @@
 // Echoless AI Chat Service — streams responses from Lovable AI edge function
 
-import { projects, Project } from '@/data/projects';
+import { Project } from '@/data/projects';
+import { defaultEngine } from '@/echoless/engine';
 
 export interface Message {
   role: 'user' | 'assistant';
@@ -18,19 +19,27 @@ export interface ChatContext {
   contextualProjects?: Project[];
 }
 
-const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/echoless-chat`;
+const CHAT_URL = "/api/chat";
+
+function getClientFallbackAnswer(): string {
+  return defaultEngine.getHonestUnavailableResponse();
+}
 
 /**
- * Stream a chat response from the Echoless AI edge function.
+ * Stream a chat response from the Echoless AI endpoint.
  * Calls onDelta with each token chunk, onDone when complete.
  */
 export async function streamChatMessage({
   messages,
+  taskType,
+  modelPreference,
   onDelta,
   onDone,
   onError,
 }: {
   messages: { role: string; content: string }[];
+  taskType?: 'general' | 'fast' | 'complex';
+  modelPreference?: 'general' | 'fast' | 'complex';
   onDelta: (text: string) => void;
   onDone: () => void;
   onError?: (error: string) => void;
@@ -40,21 +49,22 @@ export async function streamChatMessage({
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
       },
-      body: JSON.stringify({ messages }),
+      body: JSON.stringify({ messages, taskType, modelPreference }),
     });
 
     if (!resp.ok) {
       const errorData = await resp.json().catch(() => ({ error: `HTTP ${resp.status}` }));
       const errorMsg = errorData.error || `HTTP ${resp.status}`;
-      onError?.(errorMsg);
+      console.warn("Chat server returned non-OK status:", errorMsg);
+      const fallback = getClientFallbackAnswer();
+      onDelta(fallback);
       onDone();
       return;
     }
 
     if (!resp.body) {
-      onError?.("No response body");
+      onDelta(getClientFallbackAnswer());
       onDone();
       return;
     }
@@ -63,6 +73,7 @@ export async function streamChatMessage({
     const decoder = new TextDecoder();
     let textBuffer = "";
     let streamDone = false;
+    let receivedAnyText = false;
 
     while (!streamDone) {
       const { done, value } = await reader.read();
@@ -87,7 +98,10 @@ export async function streamChatMessage({
         try {
           const parsed = JSON.parse(jsonStr);
           const content = parsed.choices?.[0]?.delta?.content as string | undefined;
-          if (content) onDelta(content);
+          if (content) {
+            receivedAnyText = true;
+            onDelta(content);
+          }
         } catch {
           textBuffer = line + "\n" + textBuffer;
           break;
@@ -107,15 +121,22 @@ export async function streamChatMessage({
         try {
           const parsed = JSON.parse(jsonStr);
           const content = parsed.choices?.[0]?.delta?.content as string | undefined;
-          if (content) onDelta(content);
+          if (content) {
+            receivedAnyText = true;
+            onDelta(content);
+          }
         } catch { /* ignore */ }
       }
     }
 
+    if (!receivedAnyText) {
+      onDelta(getClientFallbackAnswer());
+    }
+
     onDone();
   } catch (err) {
-    console.error("Stream error:", err);
-    onError?.(err instanceof Error ? err.message : "Connection error");
+    console.warn("Notice during streamChatMessage, activating fallback:", err);
+    onDelta(getClientFallbackAnswer());
     onDone();
   }
 }

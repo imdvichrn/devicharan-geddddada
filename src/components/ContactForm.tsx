@@ -7,7 +7,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { WindowChrome } from './WindowChrome';
 import { useToast } from '@/hooks/use-toast';
-import { Send, Loader2 } from 'lucide-react';
+import { Send } from 'lucide-react';
+import { SVGLoadingSpinner, SVGSuccessCheckmark, SVGErrorCross } from '@/components/motion/MicroFeedback';
 
 interface FormData {
   name: string;
@@ -25,9 +26,16 @@ const initialFormData: FormData = {
   honeypot: ''
 };
 
+// EmailJS Credentials & Template IDs
+const SERVICE_ID = 'service_20azq4s';
+const PUBLIC_KEY = 'yxDgR_bWBnh9BXZpr';
+const NOTIFY_TEMPLATE = 'template_689lfji';
+const AUTOREPLY_TEMPLATE = 'template_w46ui3m';
+
 export function ContactForm() {
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errors, setErrors] = useState<Partial<FormData>>({});
   const { toast } = useToast();
 
@@ -39,7 +47,7 @@ export function ContactForm() {
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim() || !emailRegex.test(formData.email)) {
+    if (!formData.email.trim() || !emailRegex.test(formData.email.trim())) {
       newErrors.email = 'Please enter a valid email address';
     }
 
@@ -68,9 +76,12 @@ export function ContactForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Prevent duplicate submissions
+    if (isSubmitting) return;
+
     // Check honeypot for spam
     if (formData.honeypot) {
-      return; // Silent fail for spam
+      return; // Silent fail for bots
     }
 
     if (!validateForm()) {
@@ -78,83 +89,106 @@ export function ContactForm() {
     }
 
     setIsSubmitting(true);
-
-    // small helper: fallback to WebAudio beep if audio file missing/blocked
-    const playFallbackBeep = () => {
-      try {
-        const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
-        const o = ctx.createOscillator();
-        const g = ctx.createGain();
-        o.type = 'sine';
-        o.frequency.value = 880;
-        g.gain.value = 0.02;
-        o.connect(g);
-        g.connect(ctx.destination);
-        o.start();
-        setTimeout(() => { o.stop(); ctx.close(); }, 300);
-      } catch (err) {
-        // no-op
-      }
-    };
+    setSubmitStatus('loading');
 
     try {
-      // 1. Play the professional sound effect (non-blocking)
-      try {
-        const audio = new Audio('/siri-wave.webm');
-        audio.play().catch(() => {
-          playFallbackBeep();
-        });
-      } catch (audioErr) {
-        playFallbackBeep();
-      }
-
-      // 2. Show the World-Class visual feedback
-      toast({
-        title: "Message Sent Successfully!",
-        description: "Geddada Devicharan will get back to you shortly.",
-        className: "bg-primary text-black font-bold",
-      });
-
-      // 3. Send form data via EmailJS
-      const SERVICE_ID = 'service_20azq4s';
-      const PUBLIC_KEY = 'yxDgR_bWBnh9BXZpr';
-      const NOTIFY_TEMPLATE = 'template_689lfji';
-      const AUTOREPLY_TEMPLATE = 'template_w46ui3m';
-
-      const templateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
-        subject: formData.subject,
-        message: formData.message,
+      const payload = {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        subject: formData.subject.trim(),
+        message: formData.message.trim(),
         time: new Date().toLocaleString(),
       };
 
-      // First: send inquiry notification to owner
-      await emailjs.send(SERVICE_ID, NOTIFY_TEMPLATE, templateParams, PUBLIC_KEY);
+      const templateParams = {
+        from_name: payload.name,
+        from_email: payload.email,
+        user_name: payload.name,
+        user_email: payload.email,
+        name: payload.name,
+        email: payload.email,
+        reply_to: payload.email,
+        to_email: payload.email,
+        to_name: payload.name,
+        subject: payload.subject,
+        message: payload.message,
+        time: payload.time,
+      };
 
-      // Second: send autoreply confirmation to visitor (non-blocking failure)
+      let emailJsDelivered = false;
+      let serverDelivered = false;
+
+      // 1. Try sending via EmailJS if available
       try {
-        await emailjs.send(SERVICE_ID, AUTOREPLY_TEMPLATE, templateParams, PUBLIC_KEY);
-      } catch (autoReplyErr) {
-        console.warn('Autoreply email failed:', autoReplyErr);
+        await emailjs.send(SERVICE_ID, NOTIFY_TEMPLATE, templateParams, PUBLIC_KEY);
+        emailJsDelivered = true;
+        
+        // Attempt visitor autoreply quietly (non-blocking failure)
+        try {
+          await emailjs.send(SERVICE_ID, AUTOREPLY_TEMPLATE, templateParams, PUBLIC_KEY);
+        } catch (autoReplyErr) {
+          console.warn('Autoreply notice:', autoReplyErr);
+        }
+      } catch (emailJsError: any) {
+        // If EmailJS has 412 (Gmail grant expired) or network issue, log notice and rely on backend API
+        console.warn('EmailJS service notice (falling back to direct backend channel):', emailJsError?.text || emailJsError?.message || emailJsError);
       }
 
-      // Reset form after successful send
-      setFormData(initialFormData);
+      // 2. Submit to reliable backend /api/contact endpoint
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (response.ok) {
+          serverDelivered = true;
+        }
+      } catch (serverError) {
+        console.warn('Backend contact route notice:', serverError);
+      }
+
+      // If either server or EmailJS received the message, mark as successful
+      if (emailJsDelivered || serverDelivered) {
+        setSubmitStatus('success');
+        toast({
+          title: "Message sent.",
+          description: "Thanks — I'll get back to you when I can.",
+        });
+
+        // Reset form on confirmed success
+        setFormData(initialFormData);
+        setErrors({});
+
+        setTimeout(() => {
+          setSubmitStatus('idle');
+        }, 4000);
+      } else {
+        // Both failed (e.g. complete offline state)
+        throw new Error('Unable to deliver message at this time.');
+      }
     } catch (error) {
-      console.error('Contact form error:', error);
+      console.error('Contact form submission fallback triggered:', error);
+      setSubmitStatus('error');
       toast({
-        title: "Failed to send",
-        description: error instanceof Error ? error.message : "Please try again or contact me directly at devicharangeddada@gmail.com",
+        title: "Message not delivered",
+        description: "Please email directly at devicharangeddada@gmail.com",
         variant: "destructive",
       });
+
+      setTimeout(() => {
+        setSubmitStatus('idle');
+      }, 3500);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <Card className="glass-panel border-glass-border hover-scale transition-all duration-300">
+    <Card className="glass-panel border-glass-border transition-all duration-300">
       <CardHeader className="px-4 md:px-6">
         <div className="flex items-center justify-between mb-2 md:mb-4">
           <WindowChrome />
@@ -169,9 +203,10 @@ export function ContactForm() {
             name="honeypot"
             value={formData.honeypot}
             onChange={handleInputChange}
-            className="absolute -left-9999px bg-transparent"
+            className="absolute -left-[9999px] opacity-0 pointer-events-none"
             tabIndex={-1}
             autoComplete="off"
+            aria-hidden="true"
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -184,6 +219,7 @@ export function ContactForm() {
                 onChange={handleInputChange}
                 className={`bg-transparent border-glass-border ${errors.name ? 'border-destructive' : ''}`}
                 required
+                disabled={isSubmitting}
               />
               {errors.name && (
                 <p className="text-sm text-destructive">{errors.name}</p>
@@ -200,6 +236,7 @@ export function ContactForm() {
                 onChange={handleInputChange}
                 className={`bg-transparent border-glass-border ${errors.email ? 'border-destructive' : ''}`}
                 required
+                disabled={isSubmitting}
               />
               {errors.email && (
                 <p className="text-sm text-destructive">{errors.email}</p>
@@ -216,6 +253,7 @@ export function ContactForm() {
               onChange={handleInputChange}
               className={`bg-transparent border-glass-border ${errors.subject ? 'border-destructive' : ''}`}
               required
+              disabled={isSubmitting}
             />
             {errors.subject && (
               <p className="text-sm text-destructive">{errors.subject}</p>
@@ -232,30 +270,52 @@ export function ContactForm() {
               rows={5}
               className={`bg-transparent border-glass-border resize-none ${errors.message ? 'border-destructive' : ''}`}
               required
+              disabled={isSubmitting}
             />
             {errors.message && (
               <p className="text-sm text-destructive">{errors.message}</p>
             )}
           </div>
 
-          <Button
-            type="submit"
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground hover-scale"
-            disabled={isSubmitting}
-            aria-label="Send a professional inquiry message to Geddada Devicharan"
-          >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Sending...
-              </>
-            ) : (
-              <>
-                <Send className="mr-2 h-4 w-4" />
-                Send Message
-              </>
-            )}
-          </Button>
+          <div className="pt-2">
+            <Button
+              type="submit"
+              className={`w-full h-11 transition-all duration-200 ${
+                submitStatus === 'success'
+                  ? 'bg-emerald-600 hover:bg-emerald-600 text-white'
+                  : submitStatus === 'error'
+                  ? 'bg-destructive hover:bg-destructive text-white'
+                  : 'bg-primary hover:bg-primary/90 text-primary-foreground'
+              }`}
+              disabled={isSubmitting || submitStatus === 'success'}
+              aria-label="Send message to Geddada Devicharan"
+            >
+              {submitStatus === 'loading' && (
+                <span className="inline-flex items-center justify-center gap-2">
+                  <SVGLoadingSpinner size={15} className="shrink-0" />
+                  <span>Sending message...</span>
+                </span>
+              )}
+              {submitStatus === 'success' && (
+                <span className="inline-flex items-center justify-center gap-2 text-white font-medium">
+                  <SVGSuccessCheckmark size={16} className="shrink-0 text-white" />
+                  <span>Message Sent Successfully</span>
+                </span>
+              )}
+              {submitStatus === 'error' && (
+                <span className="inline-flex items-center justify-center gap-2 text-white font-medium">
+                  <SVGErrorCross size={16} className="shrink-0 text-white" />
+                  <span>Failed — Please Try Again</span>
+                </span>
+              )}
+              {submitStatus === 'idle' && (
+                <span className="inline-flex items-center justify-center gap-2">
+                  <Send className="h-4 w-4 shrink-0" />
+                  <span>Send Message</span>
+                </span>
+              )}
+            </Button>
+          </div>
         </form>
       </CardContent>
     </Card>

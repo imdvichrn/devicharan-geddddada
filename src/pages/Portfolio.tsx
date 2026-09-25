@@ -1,518 +1,914 @@
-import { Helmet } from 'react-helmet-async';
-import { Navigation } from '@/components/Navigation';
+import { SEOHead } from '@/components/SEOHead';
 import { ContactForm } from '@/components/ContactForm';
 import { HiddenIdentityBlock, FooterMicroBio } from '@/components/SEOContent';
-import { generatePersonSchema, generateWebsiteSchema, generateOrganizationSchema, generateEchoessBrandSchema, generateExamFlowOSSchema, generateEchoessAppSchema } from '@/lib/structuredData';
+import { 
+  generatePersonSchema, 
+  generateWebsiteSchema, 
+  generateOrganizationSchema, 
+  generateExamFlowOSSchema 
+} from '@/lib/structuredData';
 import { WindowChrome } from '@/components/WindowChrome';
-import { AnimatedBackground } from '@/components/AnimatedBackground';
-import { LiveProjectsButton } from '@/components/LiveProjectsButton';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { HeroField } from '@/components/HeroField';
+import { usePointerDepth } from '@/hooks/usePointerDepth';
+import { ScrollReveal } from '@/components/motion/ScrollReveal';
+import { DownloadCVButton } from '@/components/motion/MicroFeedback';
+import { 
+  SoftwareProductIcon,
+  VideoStudioIcon,
+  WebEcosystemIcon,
+  BusinessSystemsIcon,
+  WritingLedgerIcon,
+  OfficialGithubIcon,
+  OfficialInstagramIcon,
+  OfficialLinkedinIcon,
+  OfficialWhatsappIcon,
+  VerifiedCheckIcon
+} from '@/components/icons/PortfolioIcons';
 import { toast } from '@/hooks/use-toast';
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Download, User, Code, Briefcase, GraduationCap, Star, Calendar, Loader2, Linkedin, Instagram, Facebook, Workflow } from 'lucide-react';
-import { WorkflowsGrid } from '@/components/WorkflowsGrid';
+import { 
+  Mail, 
+  MapPin, 
+  Download, 
+  ExternalLink,
+  GraduationCap,
+  X,
+  ArrowRight,
+  BookOpen,
+  ArrowUpRight,
+  Sparkles
+} from 'lucide-react';
 import profileImage from '@/assets/profile-avatar.png';
-import backgroundVideo from '@/assets/background-video.mp4';
-import heroBg from '@/assets/hero-bg.png';
 
-const skills = {
-  "Creative & Technical Tools": ["DaVinci Resolve Studio", "Fusion VFX", "VLSI Design", "React", "Node.js", "TypeScript"],
-  "Professional Skills": ["Sound Design & Audio Engineering", "Fusion Mastery & Motion Graphics", "Professional Web Development", "VLSI Circuit Design"],
-  "Soft Skills": ["Strategic Thinking", "Teamwork", "Adaptability", "Continuous Learning"]
-};
-const education = [{
-  degree: "B.Tech in Electrical & Electronics Engineering",
-  institution: "Currently Pursuing",
-  period: "Ongoing",
-  status: "In Progress"
-}, {
-  degree: "Diploma in Electrical & Electronics Engineering",
-  institution: "M.R.A.G.R. Govt. Polytechnic, Vizianagaram",
-  period: "Completed",
-  status: "Completed"
-}];
-const highlights = ["Self-taught in Prompt Engineering & AI Tools", "Bilingual (Telugu & English)", "Digital Marketing & Creative Design", "Professional Video Editor & Colorist", "Full Post-Production Pipeline Expertise"];
+// 4 Primary Pathways — Map of Devicharan's Work
+const primaryPathways = [
+  {
+    id: 'software',
+    title: 'Software & Products',
+    path: '/software',
+    kicker: 'Digital Products',
+    summary: 'Architecting lightweight web apps, CBT simulation platforms, and user-owned Google Drive cloud backup systems.',
+    evidence: 'ExamFlowOS · 10K+ Total Users · ~700 Active',
+    icon: SoftwareProductIcon,
+  },
+  {
+    id: 'video',
+    title: 'Video & Post-Production',
+    path: '/video',
+    kicker: 'Creative Studio',
+    summary: 'High-throughput commercial finishing, node-based ACES/YRGB color science, and Fairlight audio mastering in DaVinci Resolve Studio.',
+    evidence: '700+ Client Video Projects Delivered',
+    icon: VideoStudioIcon,
+  },
+  {
+    id: 'web',
+    title: 'Websites & Digital',
+    path: '/web',
+    kicker: 'Managed Web',
+    summary: 'Design, technical SEO infrastructure, and continuous operational stewardship across live business web ecosystems.',
+    evidence: 'Sri Lahari Studios · Annapurna Foundation (7+ Sites)',
+    icon: WebEcosystemIcon,
+  },
+  {
+    id: 'systems',
+    title: 'Business Systems',
+    path: '/systems',
+    kicker: 'Operations Autopilot',
+    summary: 'Event-driven n8n automations, client intake routing, and business digital OS workflows that eliminate manual friction.',
+    evidence: 'Studio Digital OS · Webhook Pipelines',
+    icon: BusinessSystemsIcon,
+  }
+];
+
+// Technical Articles & Build Logs
+const articles = [
+  {
+    id: 'examflowos-architecture',
+    title: 'ExamFlowOS Architecture: Designing a Google Drive Cloud Backup System',
+    category: 'Product Architecture',
+    readTime: '6 min read',
+    intro: 'How I designed a Google Drive-based backup approach as part of ExamFlowOS’s zero-cost infrastructure strategy for 10K+ students.',
+    content: {
+      whatIBuilt: 'ExamFlowOS is a free, lightweight exam preparation and Computer-Based Testing (CBT) platform tailored for competitive entrance tests in Andhra Pradesh and Telangana (ECET, POLYCET, ICET).',
+      howIBuiltIt: 'Built using React, TypeScript, and Vite. The critical innovation is client-side data serialization that authenticates directly with the student’s personal Google Drive via Google Drive API, saving bookmarks, custom notes, and exam history directly into their personal cloud storage.',
+      whyIBuiltIt: 'Traditional cloud databases (Firebase, Supabase, Postgres) charge per read/write or compute hours. For a free service with 10K+ users taking 150-question mock exams, server costs would have killed the project or forced paywalls onto students.',
+      whatWentWrong: 'OAuth token expiration and refresh handling inside iframes caused intermittent sync errors during multi-hour mock exams in early prototypes.',
+      whatWorked: 'Implementing local IndexedDB caching with deferred background synchronization to Google Drive completely solved the token interruption issue.',
+      whatILearned: 'Low-cost architecture requires rethinking data ownership. By letting users own their storage, you eliminate both backend liabilities and user subscription costs.'
+    }
+  },
+  {
+    id: 'video-editing-scale',
+    title: 'Video Post-Production at Scale: 700+ Deliverables in DaVinci Resolve Studio',
+    category: 'Post-Production',
+    readTime: '7 min read',
+    intro: 'Key workflows, node structures, and Fairlight audio mastering pipelines refined across 700+ completed commercial video projects.',
+    content: {
+      whatIBuilt: 'A standardized high-velocity post-production operating system on macOS using DaVinci Resolve Studio for commercial promotions, events, and dynamic short-form storytelling.',
+      howIBuiltIt: 'Standardized timeline templates, fixed node-tree color grading structures (ACES/DaVinci YRGB Color Managed), custom Fusion kinetic text macros, and Fairlight multi-bus audio mastering.',
+      whyIBuiltIt: 'Delivering 700+ client projects with high retention requires eliminating decision fatigue on repetitive technical steps like color management and loudness calibration.',
+      whatWentWrong: 'Early projects suffered from inconsistent audio across different mobile loudspeakers and headphone monitors due to relying on consumer headphone mixing.',
+      whatWorked: 'Enforcing strict ITU-R BS.1770 broadcast loudness standards (-14 LUFS integrated for digital platforms, -1.0 dB True Peak ceiling) in Fairlight eliminated all cross-device volume issues.',
+      whatILearned: 'Speed in creative work does not come from rushing; it comes from having an airtight, non-destructive pipeline where technical foundations are automated.'
+    }
+  },
+  {
+    id: 'sri-lahari-studios-os',
+    title: 'Sri Lahari Studios: Building a Digital OS for a 10-Year Photography Business',
+    category: 'Business Systems',
+    readTime: '5 min read',
+    intro: 'Transforming a decade-old studio’s operations with a unified web platform, regional SEO, and n8n inquiry automations.',
+    content: {
+      whatIBuilt: 'A unified digital presence and client intake operating system for Sri Lahari Studios, a 10-year operating studio with branches in Kothavalasa and Visakhapatnam.',
+      howIBuiltIt: 'Designed and coded a fast, mobile-first showcase web platform, structured regional Google Business profiles, and integrated automated webhook triggers into n8n.',
+      whyIBuiltIt: 'During peak wedding seasons, incoming inquiries were lost in unorganized chats and phone calls, leading to response lag and lost bookings.',
+      whatWentWrong: 'Initial form designs were too exhaustive, causing prospective clients on mobile connections to abandon quote requests halfway through.',
+      whatWorked: 'Reduced the booking intake to three essential questions with an instant direct routing fallback, increasing qualified inquiry submissions by over 60%.',
+      whatILearned: 'Local business technology succeeds when it eliminates friction for the customer while reducing mental overhead for the business owner.'
+    }
+  }
+];
+
 export function Portfolio() {
-  const [isDownloading, setIsDownloading] = useState(false);
-  const [parallaxOffset, setParallaxOffset] = useState(0);
-  const chatbotRef = useRef<{
-    toggleChat: () => void;
-  }>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const [selectedArticle, setSelectedArticle] = useState<typeof articles[0] | null>(null);
+  
+  // High performance pointer parallax for HeroField
+  const { 
+    depth: heroPointerDepth, 
+    containerRef: heroContainerRef, 
+    handlePointerMove: handleHeroPointerMove, 
+    handlePointerLeave: handleHeroPointerLeave 
+  } = usePointerDepth(6, 0.08);
 
-  // Parallax scroll effect for background video
-  const handleScroll = useCallback(() => {
-    const scrollY = window.scrollY;
-    const offset = scrollY * 0.4; // Subtle parallax multiplier
-    setParallaxOffset(offset);
-  }, []);
+  // Intersection Observers for subtle section entries
+  const [heroRef, heroInView] = useInView({ threshold: 0.1, triggerOnce: true });
+  const [pathwaysRef, pathwaysInView] = useInView({ threshold: 0.1, triggerOnce: true });
+  const [workRef, workInView] = useInView({ threshold: 0.1, triggerOnce: true });
+  const [writingRef, writingInView] = useInView({ threshold: 0.1, triggerOnce: true });
+  const [aboutRef, aboutInView] = useInView({ threshold: 0.1, triggerOnce: true });
+  const [contactRef, contactInView] = useInView({ threshold: 0.1, triggerOnce: true });
 
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
+  return (
+    <div className="relative min-h-screen text-foreground selection:bg-primary/20 selection:text-primary">
+      <SEOHead
+        title="Geddada Devicharan — Personal Digital Space (@imdvichrn)"
+        description="Geddada Devicharan (@imdvichrn) — Personal digital home. Digital Product Builder, Video Editor & Business Systems Creator based in Visakhapatnam & Vizianagaram, AP, India."
+        path="/"
+        breadcrumbs={[
+          { name: 'Home', url: 'https://geddadadevicharan.vercel.app/' },
+          { name: 'Work', url: 'https://geddadadevicharan.vercel.app/work' },
+          { name: 'Software', url: 'https://geddadadevicharan.vercel.app/software' },
+          { name: 'Video Studio', url: 'https://geddadadevicharan.vercel.app/video' },
+          { name: 'Web & Systems', url: 'https://geddadadevicharan.vercel.app/web' },
+          { name: 'Writing & Build Logs', url: 'https://geddadadevicharan.vercel.app/writing' },
+          { name: 'Skills & Capabilities', url: 'https://geddadadevicharan.vercel.app/skills' },
+          { name: 'Experiments & Lab', url: 'https://geddadadevicharan.vercel.app/experiments' },
+          { name: 'Contact', url: 'https://geddadadevicharan.vercel.app/contact' }
+        ]}
+        structuredData={[
+          generatePersonSchema(),
+          generateWebsiteSchema(),
+          generateOrganizationSchema(),
+          generateExamFlowOSSchema()
+        ]}
+      />
 
-    // Force play immediately - don't call load() as it interrupts autoplay
-    const playVideo = () => {
-      video.play().catch(() => {
-        // If autoplay blocked, try muted (should already be muted, but ensure)
-        video.muted = true;
-        video.play().catch(() => {});
-      });
-    };
+      <HiddenIdentityBlock />
 
-    // Play on mount
-    playVideo();
+      {/* =========================================================================
+          1. HERO — CENTRAL VISUAL AXIS (PROGRESSIVE COMPOSITION & HEROFIELD DEPTH)
+          ========================================================================= */}
+      <section 
+        id="hero" 
+        ref={(node) => {
+          heroRef(node);
+          heroContainerRef.current = node;
+        }}
+        onPointerMove={handleHeroPointerMove}
+        onPointerLeave={handleHeroPointerLeave}
+        className="relative pb-16 sm:pb-24 md:pb-28 w-full min-h-[62vh] flex flex-col justify-center items-start md:items-center text-left md:text-center overflow-x-hidden page-shell-gutter md:px-0"
+      >
+        {/* Dedicated subtle HeroField separate from global background with 2-8px parallax */}
+        <HeroField pointerDepth={heroPointerDepth} />
 
-    // Handle seamless loop restart (backup for loop attribute)
-    const handleEnded = () => {
-      video.currentTime = 0;
-      playVideo();
-    };
-
-    // Handle timeupdate to prevent stalling near end
-    const handleTimeUpdate = () => {
-      if (video.duration && video.currentTime >= video.duration - 0.1) {
-        video.currentTime = 0;
-      }
-    };
-
-    // Ensure video keeps playing when tab becomes visible
-    const handleVisibilityChange = () => {
-      if (!document.hidden && video.paused) {
-        playVideo();
-      }
-    };
-
-    // Handle canplaythrough to ensure smooth playback
-    const handleCanPlay = () => {
-      playVideo();
-    };
-
-    video.addEventListener('ended', handleEnded);
-    video.addEventListener('timeupdate', handleTimeUpdate);
-    video.addEventListener('canplaythrough', handleCanPlay);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-
-    return () => {
-      video.removeEventListener('ended', handleEnded);
-      video.removeEventListener('timeupdate', handleTimeUpdate);
-      video.removeEventListener('canplaythrough', handleCanPlay);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
-
-  // Intersection observers for scroll animations
-  const [aboutRef, aboutInView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1
-  });
-  const [skillsRef, skillsInView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1
-  });
-  const [projectsRef, projectsInView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1
-  });
-  const [educationRef, educationInView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1
-  });
-  const [highlightsRef, highlightsInView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1
-  });
-  const [contactRef, contactInView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1
-  });
-  const handleDownloadCV = async () => {
-    try {
-      setIsDownloading(true);
-
-      // Create a link element to trigger download
-      const link = document.createElement('a');
-      link.href = '/cv.pdf';
-      link.download = 'Geddada_Devicharan_CV.pdf';
-
-      // Check if file exists by trying to fetch it
-      const response = await fetch('/cv.pdf');
-      if (!response.ok) {
-        throw new Error('CV file not found');
-      }
-
-      // Trigger download
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      toast({
-        title: "Download Started",
-        description: "Your CV is being downloaded..."
-      });
-    } catch (error) {
-      console.error('Download error:', error);
-      toast({
-        title: "Download Failed",
-        description: "Unable to download CV. Please try again later.",
-        variant: "destructive"
-      });
-    } finally {
-      // Add a small delay to show the loading state
-      setTimeout(() => setIsDownloading(false), 1000);
-    }
-  };
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
-  const scrollToContact = () => {
-    document.getElementById('contact')?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
-  };
-  const scrollToProjects = () => {
-    document.getElementById('projects')?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
-  };
-
-  // Portfolio component for Geddada Devicharan
-  const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(console.error);
-    } else {
-      document.exitFullscreen().catch(console.error);
-    }
-  };
-  return <div className="min-h-screen bg-background">
-      <Helmet>
-        <title>Geddada Devicharan | AI Systems, Editing & Workflow Design</title>
-        <meta name="description" content="Creator of ExamFlowOS and Echoless. Building AI-powered workflow systems, cinematic editing tools, automation systems, and modern digital experiences." />
-        <meta name="keywords" content="Geddada Devicharan, Geddada Devicharan, imdvichrn, AI systems creator, AI workflows, workflow automation, workflow designer, video editor, DaVinci Resolve editor, creative developer, AI systems developer, automation systems, ExamFlowOS, Echoless, Perfect Pack, cinematic editing toolkit, ai study system, multi-model ai, AI orchestration" />
-        <meta name="author" content="Geddada Devicharan" />
-        <link rel="canonical" href="https://geddadadevicharan.vercel.app" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Geddada Devicharan | AI Systems, Editing & Workflow Design" />
-        <meta property="og:description" content="Creator of ExamFlowOS and Echoless. Building AI-powered workflow systems, cinematic editing tools, automation systems, and modern digital experiences." />
-        <meta property="og:url" content="https://geddadadevicharan.vercel.app" />
-        <meta property="og:image" content="https://geddadadevicharan.vercel.app/og/og-home.png?v=3" />
-        <meta property="og:image:secure_url" content="https://geddadadevicharan.vercel.app/og/og-home.png?v=3" />
-        <meta property="og:image:type" content="image/png" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Geddada Devicharan — AI Workflows, Video Editing & Automation" />
-        <meta property="og:site_name" content="Geddada Devicharan" />
-        <meta name="application-name" content="Geddada Devicharan" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://geddadadevicharan.vercel.app" />
-        <meta name="twitter:title" content="Geddada Devicharan | AI Systems, Editing & Workflow Design" />
-        <meta name="twitter:description" content="Creator of ExamFlowOS and Echoless. Building AI-powered workflow systems, cinematic editing tools, automation systems, and modern digital experiences." />
-        <meta name="twitter:image" content="https://geddadadevicharan.vercel.app/og/og-home.png?v=3" />
-        <meta name="twitter:image:alt" content="Geddada Devicharan — AI Systems, Editing & Workflow Design" />
-        <meta name="twitter:creator" content="@imdvichrn" />
-        <script type="application/ld+json">{JSON.stringify(generatePersonSchema())}</script>
-        <script type="application/ld+json">{JSON.stringify(generateOrganizationSchema())}</script>
-        <script type="application/ld+json">{JSON.stringify(generateWebsiteSchema())}</script>
-        <script type="application/ld+json">{JSON.stringify(generateEchoessBrandSchema())}</script>
-        <script type="application/ld+json">{JSON.stringify(generateEchoessAppSchema())}</script>
-        <script type="application/ld+json">{JSON.stringify(generateExamFlowOSSchema())}</script>
-      </Helmet>
-      <HiddenIdentityBlock page="home" />
-      <Navigation />
-      
-      {/* Hero Section */}
-      <section id="home" className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden">
-        <div 
-          className="absolute inset-0"
-          style={{ 
-            zIndex: 0,
-            maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)'
-          }}
-        >
-          <video
-            ref={videoRef}
-            poster={heroBg}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="metadata"
-            className="absolute w-full h-[120%] object-cover will-change-transform"
-            style={{ 
-              transform: `translate3d(0, ${-parallaxOffset}px, 0)`,
-              top: '-10%'
-            }}
-          >
-            <source src={backgroundVideo} type="video/mp4" />
-          </video>
-        </div>
-        <div className="absolute inset-0 bg-background/60" style={{ zIndex: 1 }} />
-        
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-3 md:px-4" style={{ zIndex: 2 }}>
-          <Card className="glass-elevated border-glass-border animate-scale-in">
-            <CardHeader className="pb-4 md:pb-6 px-3 md:px-6">
-              <WindowChrome className="mb-3 md:mb-6" />
-              <div className="flex flex-col items-center space-y-3 md:space-y-6">
-                <div className="relative w-24 h-24 md:w-36 md:h-36">
-                  <img 
-                    src={profileImage} 
-                    alt="Geddada Devicharan - Professional Video Editor and Developerer" 
-                    width={144}
-                    height={144}
-                    className="w-full h-full rounded-full object-cover object-top border-4 border-primary/30 shadow-2xl ring-2 ring-primary/10 ring-offset-2 ring-offset-background" 
-                    loading="eager"
-                    fetchPriority="high"
-                    decoding="async"
-                  />
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/10 via-transparent to-accent/10 pointer-events-none"></div>
-                </div>
-                
-                <div className="space-y-2 md:space-y-4">
-                  <h1 className="text-2xl md:text-4xl lg:text-6xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                    Geddada Devicharan
-                  </h1>
-                  <div className="mt-1">
-                    <span className="inline-block text-sm md:text-base text-primary font-medium">@imdvichrn</span>
-                  </div>
-                  <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground px-2">
-                    Video Editor & Post-Production Specialist | Digital Creator | Developer
-                  </p>
-                  
-                  <div className="flex flex-wrap justify-center items-center gap-2 md:gap-4 text-xs md:text-sm text-muted-foreground">
-                    <div className="flex items-center gap-1 md:gap-2">
-                      <MapPin size={14} className="md:w-4 md:h-4" aria-hidden="true" />
-                      <span className="hidden sm:inline">Visakhapatnam, India</span>
-                      <span className="sm:hidden">Vizag, India</span>
-                    </div>
-                    <a href="https://wa.me/916303468707" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 md:gap-2 hover:text-primary transition-colors">
-                      <Phone size={14} className="md:w-4 md:h-4" aria-hidden="true" />
-                      <span>WhatsApp</span>
-                    </a>
-                    <div className="flex items-center gap-1 md:gap-2 max-w-full">
-                      <Mail size={14} className="md:w-4 md:h-4 flex-shrink-0" aria-hidden="true" />
-                      <span className="hidden md:inline truncate">devicharangeddada@gmail.com</span>
-                      <span className="md:hidden truncate text-xs">devicharan...</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="flex flex-wrap justify-center gap-2 md:gap-4">
-                  <Button onClick={handleDownloadCV} disabled={isDownloading} size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-50 hover-scale text-xs md:text-sm" aria-label="Download CV">
-                    {isDownloading ? <>
-                        <Loader2 className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4 animate-spin" aria-hidden="true" />
-                        <span className="hidden sm:inline">Downloading...</span>
-                        <span className="sm:hidden">Loading...</span>
-                      </> : <>
-                        <Download className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" aria-hidden="true" />
-                        <span className="hidden sm:inline">Download CV</span>
-                        <span className="sm:hidden">CV</span>
-                      </>}
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={() => document.getElementById('contact')?.scrollIntoView({
-                  behavior: 'smooth',
-                  block: 'start'
-                })} className="border-primary/20 hover:bg-primary/10 hover-scale text-xs md:text-sm" aria-label="Contact Geddada Devicharan">
-                    <Mail className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" aria-hidden="true" />
-                    Contact
-                  </Button>
-                </div>
-              </div>
-            </CardHeader>
-          </Card>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="about" className="py-10 md:py-20 px-3 md:px-4">
-        <div ref={aboutRef} className={`max-w-6xl mx-auto transition-all duration-700 ${aboutInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <Card className="glass-panel border-glass-border hover-scale">
-            <CardHeader className="px-4 md:px-6">
-              <WindowChrome className="mb-2 md:mb-4" />
-              <CardTitle className="text-xl md:text-3xl font-bold flex items-center gap-2 md:gap-3">
-                <User className="text-primary w-5 h-5 md:w-6 md:h-6" />
-                About Me
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 md:space-y-6 px-4 md:px-6">
-              <p className="text-sm md:text-lg text-muted-foreground leading-relaxed">
-                Video editor and post-production specialist with a Diploma in Electrical & Electronics Engineering, 
-                currently completing a B.Tech in EEE. I deliver professional video editing, graphic design, web development, 
-                and digital content strategy. Self-taught in AI-assisted workflows and prompt engineering, with 
-                proven adaptability and technical precision.
-              </p>
-              <p className="text-sm md:text-lg text-muted-foreground leading-relaxed">
-                I build digital experiences that combine engineering discipline with creative execution. My work 
-                spans the full post-production pipeline — from color grading and VFX to sound design and delivery optimization.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Skills Section */}
-      <section id="skills" className="py-10 md:py-20 px-3 md:px-4 bg-muted/30">
-        <div ref={skillsRef} className={`max-w-6xl mx-auto transition-all duration-700 delay-100 ${skillsInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <Card className="glass-panel border-glass-border hover-scale">
-            <CardHeader className="px-4 md:px-6">
-              <WindowChrome className="mb-2 md:mb-4" />
-              <CardTitle className="text-xl md:text-3xl font-bold flex items-center gap-2 md:gap-3">
-                <Code className="text-primary w-5 h-5 md:w-6 md:h-6" />
-                Skills & Expertise
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 md:space-y-8 px-4 md:px-6">
-              {Object.entries(skills).map(([category, skillList]) => <div key={category} className="space-y-2 md:space-y-4">
-                  <h3 className="text-base md:text-xl font-semibold text-foreground">{category}</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {skillList.map(skill => <Badge key={skill} variant="secondary" className="px-3 py-1 bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-all duration-200 hover-scale">
-                        {skill}
-                      </Badge>)}
-                  </div>
-                </div>)}
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Workflows & Capabilities Section */}
-      <section id="projects" className="py-10 md:py-20 px-3 md:px-4">
-        <div ref={projectsRef} className={`max-w-6xl mx-auto transition-all duration-700 delay-200 ${projectsInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <Card className="glass-panel border-glass-border mb-4 md:mb-8 hover-scale">
-            <CardHeader className="px-4 md:px-6">
-              <WindowChrome className="mb-2 md:mb-4" />
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <CardTitle className="text-xl md:text-3xl font-bold flex items-center gap-2 md:gap-3">
-                  <Workflow className="text-primary w-5 h-5 md:w-6 md:h-6" />
-                  Workflows & Capabilities
-                </CardTitle>
-                <LiveProjectsButton 
-                  href="https://github.com/imdvichrn/imdvichrn" 
-                  label="View Live Projects"
-                />
-              </div>
-            </CardHeader>
-          </Card>
+        <div className="relative z-10 w-full max-w-2xl mx-auto flex flex-col items-start md:items-center">
           
-          <WorkflowsGrid />
-        </div>
-      </section>
+          {/* STEP 1: PORTRAIT ANCHOR */}
+          <div className="mb-4 sm:mb-6 hero-step-1">
+            <div 
+              className="relative w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden border border-border bg-card shadow-[0_4px_20px_rgba(0,0,0,0.18)] ml-0 md:mx-auto transition-transform duration-300 hover:scale-[1.02] depth-interactive"
+              style={{
+                transform: `translate3d(${heroPointerDepth.pixelX * 0.3}px, ${heroPointerDepth.pixelY * 0.3}px, 0)`
+              }}
+            >
+              <img 
+                src={profileImage} 
+                alt="Geddada Devicharan portrait" 
+                width={128}
+                height={128}
+                className="w-full h-full object-cover object-center" 
+                loading="eager"
+                fetchPriority="high"
+              />
+            </div>
+          </div>
 
-      {/* Education Section */}
-      <section id="education" className="py-10 md:py-20 px-3 md:px-4 bg-muted/30">
-        <div ref={educationRef} className={`max-w-6xl mx-auto transition-all duration-700 delay-300 ${educationInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <Card className="glass-panel border-glass-border hover-scale">
-            <CardHeader className="px-4 md:px-6">
-              <WindowChrome className="mb-2 md:mb-4" />
-              <CardTitle className="text-xl md:text-3xl font-bold flex items-center gap-2 md:gap-3">
-                <GraduationCap className="text-primary w-5 h-5 md:w-6 md:h-6" />
-                Education
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 md:space-y-6 px-4 md:px-6">
-              {education.map((edu, index) => <div key={index} className="border-l-4 border-primary/30 pl-3 md:pl-6 pb-4 md:pb-6 last:pb-0">
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-2 gap-2">
-                    <h3 className="text-base md:text-xl font-semibold text-foreground">{edu.degree}</h3>
-                    <Badge variant={edu.status === 'In Progress' ? 'default' : 'secondary'} className="ml-2">
-                      {edu.status}
-                    </Badge>
-                  </div>
-                  <p className="text-sm md:text-base text-muted-foreground font-medium">{edu.institution}</p>
-                  <div className="flex items-center gap-2 mt-2 text-sm text-muted-foreground">
-                    <Calendar size={14} />
-                    <span>{edu.period}</span>
-                  </div>
-                </div>)}
-            </CardContent>
-          </Card>
-        </div>
-      </section>
+          {/* STEP 2: HANDLE (@imdvichrn) */}
+          <div className="hero-step-2 text-xs sm:text-sm font-mono text-primary font-medium tracking-wide text-left md:text-center flex items-center gap-1.5">
+            <span>@imdvichrn</span>
+            <VerifiedCheckIcon size={13} className="text-primary inline-block" />
+          </div>
 
-      {/* Highlights Section */}
-      <section id="highlights" className="py-10 md:py-20 px-3 md:px-4">
-        <div ref={highlightsRef} className={`max-w-6xl mx-auto transition-all duration-700 delay-400 ${highlightsInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <Card className="glass-panel border-glass-border hover-scale">
-            <CardHeader className="px-4 md:px-6">
-              <WindowChrome className="mb-2 md:mb-4" />
-              <CardTitle className="text-xl md:text-3xl font-bold flex items-center gap-2 md:gap-3">
-                <Star className="text-primary w-5 h-5 md:w-6 md:h-6" />
-                Key Highlights
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="px-4 md:px-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-                {highlights.map((highlight, index) => <div key={index} className="flex items-start gap-2 md:gap-3 p-3 md:p-4 rounded-lg bg-primary/5 border border-primary/10">
-                    <Star className="text-primary mt-0.5 flex-shrink-0" size={14} />
-                    <span className="text-sm md:text-base text-muted-foreground">{highlight}</span>
-                  </div>)}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
+          {/* STEP 3: DISPLAY NAME (Instrument Serif) */}
+          <h1 className="hero-step-3 mt-1.5 sm:mt-2.5 font-display text-3xl sm:text-5xl md:text-6xl font-normal tracking-tight text-foreground leading-[1.08] text-left md:text-center">
+            Geddada Devicharan
+          </h1>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-10 md:py-20 px-3 md:px-4 bg-muted/30">
-        <div ref={contactRef} className={`max-w-4xl mx-auto transition-all duration-700 delay-500 ${contactInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <ContactForm />
-        </div>
-      </section>
+          {/* STEP 4: DISCIPLINE STATEMENT (Balanced & Clean) */}
+          <div className="hero-step-4 mt-3 sm:mt-4 text-xs sm:text-base md:text-lg text-foreground/90 font-normal tracking-normal max-w-lg mx-0 md:mx-auto leading-snug px-0 md:px-2 text-left md:text-center">
+            Digital Product Builder · Video Editor · Business Systems
+          </div>
 
-      {/* Footer */}
-      <footer className="py-8 px-4 border-t border-glass-border glass-panel">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center space-y-4">
-            {/* Social Media Links */}
-            <nav className="flex justify-center items-center gap-6" aria-label="Social media links">
+          {/* STEP 5: PERSONAL INTRO (Calm, human, readable) */}
+          <p className="hero-step-5 mt-2.5 sm:mt-4 text-xs sm:text-sm md:text-base text-muted-foreground max-w-md sm:max-w-lg mx-0 md:mx-auto leading-relaxed font-normal px-0 md:px-2 text-left md:text-center">
+            Designing minimal software systems, finishing commercial post-production video, and managing digital infrastructure from Andhra Pradesh, India.
+          </p>
+
+          {/* STEP 6: ACTIONS (Physical depth & micro-lift on hover, press down state) */}
+          <div className="hero-step-6 mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-start md:justify-center gap-3 w-full max-w-xs sm:max-w-md mx-0 md:mx-auto">
+            
+            {/* Primary Action */}
+            <a 
+              href="#work-map"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 h-11 sm:h-12 rounded-xl text-xs sm:text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/95 depth-interactive shadow-[0_2px_10px_rgba(0,122,255,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shrink-0"
+            >
+              <span>Explore my work</span>
+              <ArrowRight size={14} strokeWidth={2} />
+            </a>
+
+            {/* Secondary Action: Download CV with micro-feedback */}
+            <DownloadCVButton />
+
+            {/* Tertiary Action: Get in touch */}
+            <Link 
+              to="/contact"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-4 h-10 sm:h-12 rounded-xl text-xs sm:text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/40 depth-interactive transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shrink-0"
+            >
+              <span>Get in touch</span>
+            </Link>
+
+          </div>
+
+          {/* STEP 7: LOCATION & OFFICIAL CHANNELS */}
+          <div className="hero-step-7 mt-6 sm:mt-8 flex flex-col items-start md:items-center gap-2 text-xs text-muted-foreground max-w-md mx-0 md:mx-auto">
+            <div className="flex items-center gap-1.5 font-mono text-[11px] sm:text-xs text-muted-foreground/90">
+              <MapPin size={12} className="text-primary shrink-0" strokeWidth={1.75} />
+              <span>Visakhapatnam & Vizianagaram, AP, India</span>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-start md:justify-center gap-x-3 sm:gap-x-4 gap-y-1.5 text-xs font-mono text-muted-foreground pt-0.5">
+              <a 
+                href="mailto:devicharangeddada@gmail.com" 
+                className="hover:text-foreground transition-colors inline-flex items-center gap-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                aria-label="Send email to Devicharan"
+              >
+                <Mail size={12} className="text-primary shrink-0" strokeWidth={1.75} />
+                <span>Email</span>
+              </a>
+              <span className="text-border" aria-hidden="true">·</span>
+              <a 
+                href="https://github.com/imdvichrn/imdvichrn" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-foreground transition-colors inline-flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                aria-label="View GitHub Profile"
+              >
+                <OfficialGithubIcon size={13} className="shrink-0" />
+                <span>GitHub</span>
+              </a>
+              <span className="text-border" aria-hidden="true">·</span>
               <a 
                 href="https://www.linkedin.com/in/geddadadevicharan" 
                 target="_blank" 
-                rel="noopener noreferrer" 
-                aria-label="Visit LinkedIn Profile"
-                className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale inline-flex items-center justify-center"
+                rel="noopener noreferrer"
+                className="hover:text-foreground transition-colors inline-flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                aria-label="View LinkedIn Profile"
               >
-                <Linkedin size={20} className="text-foreground/70 hover:text-primary transition-colors" aria-hidden="true" />
+                <OfficialLinkedinIcon size={13} className="shrink-0" />
+                <span>LinkedIn</span>
               </a>
-
+              <span className="text-border" aria-hidden="true">·</span>
               <a 
-                href="https://www.instagram.com/imdvichrn" 
+                href="https://instagram.com/imdvichrn" 
                 target="_blank" 
-                rel="noopener noreferrer" 
-                aria-label="Visit Instagram Profile"
-                className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale inline-flex items-center justify-center"
+                rel="noopener noreferrer"
+                className="hover:text-foreground transition-colors inline-flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+                aria-label="View Instagram Profile"
               >
-                <Instagram size={20} className="text-foreground/70 hover:text-primary transition-colors" aria-hidden="true" />
+                <OfficialInstagramIcon size={13} className="shrink-0" />
+                <span>Instagram</span>
               </a>
+            </div>
+          </div>
 
-              <a 
-                href="https://www.facebook.com/imdvichrn" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                aria-label="Visit Facebook Profile"
-                className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale inline-flex items-center justify-center"
+        </div>
+      </section>
+
+      {/* =========================================================================
+          2. MAP OF WORK — 4 CLEAR DESTINATIONS (CONTAINED SURFACE SEPARATION)
+          ========================================================================= */}
+      <section id="work-map" className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1140px] mx-auto border-t border-border/40">
+        <div className="space-y-12">
+          
+          <ScrollReveal distance={16}>
+            <div className="space-y-3 max-w-2xl">
+              <div className="text-xs font-mono uppercase tracking-widest text-primary font-medium">
+                DISCIPLINES & SPACES
+              </div>
+              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-foreground">
+                What I build & create.
+              </h2>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                Four dedicated spaces covering software products, high-velocity post-production, managed web ecosystems, and automated business systems.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {primaryPathways.map((pathway, idx) => {
+              const Icon = pathway.icon;
+              return (
+                <ScrollReveal key={pathway.id} staggerIndex={idx} distance={18}>
+                  <Link
+                    to={pathway.path}
+                    className="p-8 sm:p-10 rounded-2xl depth-widget depth-interactive hover:border-foreground/30 transition-all duration-200 flex flex-col justify-between space-y-6 group h-full"
+                  >
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div className="w-11 h-11 rounded-xl bg-muted/70 border border-border/80 flex items-center justify-center text-foreground group-hover:text-primary transition-colors">
+                          <Icon size={22} strokeWidth={1.6} />
+                        </div>
+                        <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground flex items-center gap-1 group-hover:text-foreground">
+                          <span>Enter space</span>
+                          <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        </span>
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <div className="text-xs font-mono text-primary font-medium">
+                          {pathway.kicker}
+                        </div>
+                        <h3 className="font-display text-2xl sm:text-3xl font-normal text-foreground group-hover:text-primary transition-colors">
+                          {pathway.title}
+                        </h3>
+                      </div>
+
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {pathway.summary}
+                      </p>
+                    </div>
+
+                    <div className="pt-4 border-t border-border/50 text-xs font-mono text-foreground/80 font-medium flex items-center justify-between">
+                      <span>{pathway.evidence}</span>
+                      <span className="text-muted-foreground group-hover:text-primary transition-colors">→</span>
+                    </div>
+                  </Link>
+                </ScrollReveal>
+              );
+            })}
+          </div>
+
+        </div>
+      </section>
+
+      {/* =========================================================================
+          3. FEATURED HIGHLIGHTS (EXAMFLOWOS & REEL)
+          ========================================================================= */}
+      <section id="work" className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1140px] mx-auto border-t border-border/40">
+        <div className="space-y-16">
+          
+          <ScrollReveal distance={16}>
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border/40">
+              <div className="space-y-3 max-w-2xl">
+                <div className="text-xs font-mono uppercase tracking-widest text-primary font-medium">
+                  HIGHLIGHTS
+                </div>
+                <h2 className="font-display text-4xl sm:text-5xl font-normal tracking-tight text-foreground">
+                  Selected work in depth.
+                </h2>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  ExamFlowOS, commercial video finishing in DaVinci Resolve Studio, and local business digital architectures.
+                </p>
+              </div>
+              
+              <Link 
+                to="/work" 
+                className="text-xs font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5 shrink-0"
               >
-                <Facebook size={20} className="text-foreground/70 hover:text-primary transition-colors" aria-hidden="true" />
-              </a>
-            </nav>
+                <span>Explore All Work</span>
+                <ArrowRight size={13} />
+              </Link>
+            </div>
+          </ScrollReveal>
+
+          {/* ExamFlowOS Authentic Window */}
+          <ScrollReveal distance={20} staggerIndex={1}>
+            <article className="rounded-2xl depth-widget overflow-hidden">
+              <WindowChrome 
+                title="ExamFlowOS — Computer-Based Testing & Preparation Platform"
+                rightElement={
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <span className="text-xs font-mono text-emerald-500 font-medium">Live</span>
+                  </div>
+                }
+              />
+
+              <div className="p-8 sm:p-12 space-y-8">
+                <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6 pb-6 border-b border-border/40">
+                  <div className="flex items-start gap-4 sm:gap-5">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl overflow-hidden border border-border bg-card/80 shrink-0 shadow-sm mt-0.5">
+                      <img 
+                        src="/examflow-logo.jpg" 
+                        alt="ExamFlowOS official app logo" 
+                        width={56}
+                        height={56}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="space-y-2 max-w-2xl">
+                      <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-muted-foreground">
+                        <span className="text-primary font-semibold uppercase tracking-wider">Flagship Software</span>
+                        <span aria-hidden="true">·</span>
+                        <span className="text-foreground font-semibold">10,000+ Total Users</span>
+                        <span aria-hidden="true">·</span>
+                        <span className="text-foreground/90 font-medium">~700 Active</span>
+                        <span aria-hidden="true">·</span>
+                        <span className="text-muted-foreground">Free for Students</span>
+                      </div>
+                      <h3 className="font-display text-2xl sm:text-4xl font-normal text-foreground">
+                        ExamFlowOS
+                      </h3>
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed pt-1">
+                        A free, lightweight exam preparation and Computer-Based Testing (CBT) platform built for competitive entrance exams in Andhra Pradesh and Telangana (ECET, POLYCET, ICET). Designed with personal Google Drive sync so student history persists without recurring server costs.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-3 shrink-0 pt-2 lg:pt-0">
+                    <a 
+                      href="https://examflowos.in" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-lg text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/95 depth-interactive shadow-sm"
+                    >
+                      <span>Visit ExamFlowOS</span>
+                      <ExternalLink size={13} />
+                    </a>
+                    <Link 
+                      to="/software"
+                      className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-lg text-xs font-medium depth-surface depth-interactive hover:border-foreground/40 text-foreground transition-colors"
+                    >
+                      <span>Case Study</span>
+                      <ArrowRight size={13} />
+                    </Link>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-mono text-muted-foreground">
+                  <div className="p-4 rounded-xl bg-background/50 border border-border/50">
+                    <span className="text-primary font-bold text-sm block">10K+ Users</span>
+                    <span>Registered accounts</span>
+                  </div>
+                  <div className="p-4 rounded-xl bg-background/50 border border-border/50">
+                    <span className="text-foreground font-bold text-sm block">~700 Active</span>
+                    <span>Regular student test-takers</span>
+                  </div>
+                  <div className="p-4 rounded-xl bg-background/50 border border-border/50">
+                    <span className="text-foreground font-bold text-sm block">100% Free</span>
+                    <span>Zero student paywalls</span>
+                  </div>
+                  <div className="p-4 rounded-xl bg-background/50 border border-border/50">
+                    <span className="text-primary font-bold text-sm block">Google Drive</span>
+                    <span>Client-side cloud sync</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </ScrollReveal>
+
+          {/* Sri Lahari Studios & Video Deliverables */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             
-            <p className="text-xs text-foreground/60">© 2026 devicharangeddada</p>
-            <FooterMicroBio />
+            <ScrollReveal distance={18} staggerIndex={0}>
+              <article className="p-8 sm:p-10 rounded-2xl depth-widget depth-interactive hover:border-foreground/30 space-y-6 flex flex-col justify-between h-full">
+                <div className="space-y-4">
+                  <div className="text-xs font-mono text-primary font-semibold uppercase">
+                    Business Digital Ecosystem
+                  </div>
+                  <h3 className="font-display text-2xl sm:text-3xl font-normal text-foreground">
+                    Sri Lahari Studios OS
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Modernized the digital presence and client intake of a 10-year operating photography studio in Kothavalasa and Vizag with responsive web architecture, regional SEO, and automated inquiry routing.
+                  </p>
+                  <div className="text-xs font-mono text-muted-foreground space-y-1.5 pt-1">
+                    <div>• Responsive studio showcase web platform</div>
+                    <div>• Regional search dominance across Vizag & Vizianagaram</div>
+                    <div>• Direct WhatsApp client intake & triage</div>
+                  </div>
+                </div>
+
+                <div className="pt-6 border-t border-border/50">
+                  <Link 
+                    to="/project/sri-lahari-studios"
+                    className="text-xs font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5"
+                  >
+                    <span>Read Studio Case Study</span>
+                    <ArrowRight size={13} />
+                  </Link>
+                </div>
+              </article>
+            </ScrollReveal>
+
+            <ScrollReveal distance={18} staggerIndex={1}>
+              <article className="p-8 sm:p-10 rounded-2xl depth-widget depth-interactive hover:border-foreground/30 space-y-6 flex flex-col justify-between h-full">
+                <div className="space-y-4">
+                  <div className="text-xs font-mono text-primary font-semibold uppercase">
+                    700+ Video Deliverables
+                  </div>
+                  <h3 className="font-display text-2xl sm:text-3xl font-normal text-foreground">
+                    Video Post-Production & Color
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    High-velocity creative post-production in DaVinci Resolve Studio on macOS across commercial promotions, music events, and social campaigns.
+                  </p>
+                  <div className="text-xs font-mono text-muted-foreground space-y-1.5 pt-1">
+                    <div>• Node-based ACES / DaVinci YRGB color science</div>
+                    <div>• Fairlight ITU-R BS.1770 broadcast audio mastering</div>
+                    <div>• Creator of Perfect Pack ($10 USD creative asset kit)</div>
+                  </div>
+                </div>
+
+                <div className="pt-6 border-t border-border/40 flex items-center justify-between">
+                  <Link 
+                    to="/video"
+                    className="text-xs font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5"
+                  >
+                    <span>Explore Video Room</span>
+                    <ArrowRight size={13} />
+                  </Link>
+                  <span className="text-xs font-mono text-muted-foreground">DaVinci Resolve Studio</span>
+                </div>
+              </article>
+            </ScrollReveal>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* =========================================================================
+          4. WRITING & BUILD LOGS
+          ========================================================================= */}
+      <section id="writing" className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1140px] mx-auto border-t border-border/40">
+        <div className="space-y-12">
+          
+          <ScrollReveal distance={16}>
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border/40">
+              <div className="space-y-3 max-w-2xl">
+                <div className="text-xs font-mono uppercase tracking-widest text-primary font-medium">
+                  WRITING
+                </div>
+                <h2 className="font-display text-4xl sm:text-5xl font-normal tracking-tight text-foreground">
+                  Technical build logs.
+                </h2>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  Engineering reflections structured as: What I Built · How I Built It · Why · What Went Wrong · What Worked · Lessons.
+                </p>
+              </div>
+
+              <Link 
+                to="/writing" 
+                className="text-xs font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5 shrink-0"
+              >
+                <span>View All Logs</span>
+                <ArrowRight size={13} />
+              </Link>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {articles.map((art, idx) => (
+              <ScrollReveal key={art.id} staggerIndex={idx} distance={18}>
+                <article 
+                  className="p-8 rounded-2xl border border-border/60 bg-card/40 backdrop-blur-xs flex flex-col justify-between space-y-6 hover:border-foreground/40 transition-all duration-200 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.25)] h-full"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between text-xs font-mono text-muted-foreground">
+                      <span className="text-primary font-semibold">{art.category}</span>
+                      <span>{art.readTime}</span>
+                    </div>
+
+                    <h3 className="font-display text-2xl font-normal text-foreground leading-snug">
+                      {art.title}
+                    </h3>
+
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {art.intro}
+                    </p>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setSelectedArticle(art)}
+                    className="w-full py-2.5 px-4 rounded-lg text-xs font-medium border border-border/80 hover:border-foreground/50 bg-background/60 text-foreground transition-colors flex items-center justify-center gap-2"
+                  >
+                    <BookOpen size={13} />
+                    <span>Read Reflection</span>
+                  </button>
+                </article>
+              </ScrollReveal>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ARTICLE READER MODAL */}
+      {selectedArticle && (
+        <div 
+          className="fixed inset-0 z-50 bg-background/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="relative w-full max-w-[760px] bg-card border border-border/60 rounded-2xl shadow-2xl p-6 sm:p-12 my-8 animate-in fade-in-0 zoom-in-95 duration-200">
+            <button 
+              onClick={() => setSelectedArticle(null)}
+              className="absolute top-6 right-6 p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="Close article"
+            >
+              <X size={18} />
+            </button>
+
+            <div className="space-y-8">
+              <div className="space-y-2 border-b border-border/40 pb-6">
+                <div className="text-xs font-mono text-primary font-medium">
+                  {selectedArticle.category} · {selectedArticle.readTime}
+                </div>
+                <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-normal text-foreground">
+                  {selectedArticle.title}
+                </h1>
+                <p className="text-xs text-muted-foreground">
+                  By Geddada Devicharan (@imdvichrn) · Visakhapatnam & Vizianagaram
+                </p>
+              </div>
+
+              <div className="font-sans text-[16px] sm:text-[17px] leading-[1.8] text-foreground/90 space-y-6 max-w-[680px]">
+                <div>
+                  <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-foreground mb-1">
+                    1. What I Built
+                  </h2>
+                  <p>{selectedArticle.content.whatIBuilt}</p>
+                </div>
+
+                <div>
+                  <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-foreground mb-1">
+                    2. How I Built It
+                  </h2>
+                  <p>{selectedArticle.content.howIBuiltIt}</p>
+                </div>
+
+                <div>
+                  <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-foreground mb-1">
+                    3. Why I Built It
+                  </h2>
+                  <p>{selectedArticle.content.whyIBuiltIt}</p>
+                </div>
+
+                <div>
+                  <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-amber-500 mb-1">
+                    4. What Went Wrong
+                  </h2>
+                  <p>{selectedArticle.content.whatWentWrong}</p>
+                </div>
+
+                <div>
+                  <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-500 mb-1">
+                    5. What Worked
+                  </h2>
+                  <p>{selectedArticle.content.whatWorked}</p>
+                </div>
+
+                <div>
+                  <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-primary mb-1">
+                    6. What I Learned
+                  </h2>
+                  <p>{selectedArticle.content.whatILearned}</p>
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-border/40 flex justify-end">
+                <button 
+                  onClick={() => setSelectedArticle(null)} 
+                  className="px-6 py-2.5 rounded-lg text-xs font-medium bg-foreground text-background hover:bg-foreground/90 transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
           </div>
         </div>
+      )}
+
+      {/* =========================================================================
+          5. ABOUT & BACKGROUND (NO AGE / DOB)
+          ========================================================================= */}
+      <section id="about" className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1140px] mx-auto border-t border-border/40">
+        <div className="space-y-12">
+          
+          <ScrollReveal distance={16}>
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border/40">
+              <div className="space-y-3 max-w-2xl">
+                <div className="text-xs font-mono uppercase tracking-widest text-primary font-medium">
+                  BACKGROUND
+                </div>
+                <h2 className="font-display text-4xl sm:text-5xl font-normal tracking-tight text-foreground">
+                  About Geddada Devicharan.
+                </h2>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  Digital Product Builder, Video Editor & Business Systems Creator based in Andhra Pradesh.
+                </p>
+              </div>
+
+              <Link 
+                to="/about" 
+                className="text-xs font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5 shrink-0"
+              >
+                <span>Full Biography</span>
+                <ArrowRight size={13} />
+              </Link>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            
+            <ScrollReveal className="lg:col-span-7 space-y-6 text-base text-muted-foreground leading-relaxed" distance={16} staggerIndex={0}>
+              <p>
+                Based in Visakhapatnam and Vizianagaram, Andhra Pradesh. I operate across software engineering, video post-production (700+ deliverables in DaVinci Resolve Studio), website management (8+ managed websites including Sri Lahari Studios and Annapurna Foundation), and practical business automation.
+              </p>
+              <p>
+                My philosophy is straightforward: design simple systems that solve genuine friction, respect human attention, and operate without fragile dependencies.
+              </p>
+
+              <div className="pt-4 border-t border-border/40 grid grid-cols-2 sm:grid-cols-3 gap-4 text-xs font-mono text-muted-foreground">
+                <div>
+                  <span className="text-foreground block font-semibold">Name</span>
+                  Geddada Devicharan
+                </div>
+                <div>
+                  <span className="text-foreground block font-semibold">Identity</span>
+                  @imdvichrn
+                </div>
+                <div>
+                  <span className="text-foreground block font-semibold">Location</span>
+                  Visakhapatnam & Vizianagaram, AP
+                </div>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal className="lg:col-span-5 space-y-6" distance={16} staggerIndex={1}>
+              <div className="p-8 rounded-2xl border border-border/60 bg-card/40 backdrop-blur-xs space-y-4 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.25)]">
+                <div className="flex items-center gap-2 font-semibold text-foreground text-sm">
+                  <GraduationCap size={18} className="text-primary" />
+                  <span>Academic Rigor</span>
+                </div>
+                <div className="space-y-3.5 text-xs text-muted-foreground">
+                  <div className="border-l-2 border-primary/50 pl-3 space-y-0.5">
+                    <div className="font-semibold text-foreground">B.Tech Electrical & Electronics Engineering</div>
+                    <div>Final Year · Andhra University affiliated college, Vizag</div>
+                  </div>
+                  <div className="border-l-2 border-border pl-3 space-y-0.5">
+                    <div className="font-semibold text-foreground">Diploma in EEE</div>
+                    <div>Completed · M.R.A.G.R. Govt Polytechnic, Vizianagaram</div>
+                  </div>
+                  <div className="border-l-2 border-border pl-3 space-y-0.5">
+                    <div className="font-semibold text-foreground">BHEL Visakhapatnam Training</div>
+                    <div>Industrial training at Bharat Heavy Electricals Limited</div>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* =========================================================================
+          6. CONTACT & COMMUNICATION
+          ========================================================================= */}
+      <section id="contact" className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1140px] mx-auto border-t border-border/40">
+        <ScrollReveal distance={18}>
+          <div className="max-w-3xl mx-auto space-y-12 text-center">
+            
+            <div className="space-y-3">
+              <div className="text-xs font-mono uppercase tracking-widest text-primary font-medium">
+                DIRECT CHANNELS
+              </div>
+              <h2 className="font-display text-4xl sm:text-5xl font-normal tracking-tight text-foreground">
+                Direct communication.
+              </h2>
+              <p className="text-base text-muted-foreground max-w-lg mx-auto leading-relaxed">
+                Reach out for software products, video post-production, website management, and business automations.
+              </p>
+            </div>
+
+            <div className="p-8 sm:p-12 rounded-2xl border border-border/60 bg-card/40 backdrop-blur-xs text-left space-y-6 shadow-[0_6px_28px_-4px_rgba(0,0,0,0.3)]">
+              <div className="space-y-1">
+                <h3 className="text-xl font-semibold text-foreground">
+                  Send a Direct Message
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Leave a note below with your project context or inquiry.
+                </p>
+              </div>
+              <ContactForm />
+            </div>
+
+          </div>
+        </ScrollReveal>
+      </section>
+
+      {/* =========================================================================
+          7. FOOTER
+          ========================================================================= */}
+      <footer className="py-12 sm:py-16 px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1140px] mx-auto border-t border-border/40">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+          
+          <div className="space-y-1">
+            <p className="text-base font-semibold text-foreground">
+              Geddada Devicharan
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Digital Product Builder, Video Editor & Business Systems Creator.
+            </p>
+            <p className="text-[11px] font-mono text-muted-foreground/60 pt-1">
+              Visakhapatnam & Vizianagaram, AP, India · © {new Date().getFullYear()}
+            </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
+            <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
+            <Link to="/software" className="hover:text-foreground transition-colors">Software</Link>
+            <Link to="/video" className="hover:text-foreground transition-colors">Video</Link>
+            <Link to="/web" className="hover:text-foreground transition-colors">Web</Link>
+            <Link to="/systems" className="hover:text-foreground transition-colors">Systems</Link>
+            <Link to="/writing" className="hover:text-foreground transition-colors">Writing</Link>
+            <Link to="/about" className="hover:text-foreground transition-colors">About</Link>
+            <Link to="/contact" className="hover:text-foreground transition-colors">Contact</Link>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <a 
+              href="https://github.com/imdvichrn/imdvichrn" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label="GitHub"
+              className="p-2 text-muted-foreground hover:text-foreground depth-interactive transition-colors"
+            >
+              <OfficialGithubIcon size={16} />
+            </a>
+            <a 
+              href="https://www.linkedin.com/in/geddadadevicharan" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label="LinkedIn"
+              className="p-2 text-muted-foreground hover:text-foreground depth-interactive transition-colors"
+            >
+              <OfficialLinkedinIcon size={16} />
+            </a>
+            <a 
+              href="https://www.instagram.com/imdvichrn" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label="Instagram"
+              className="p-2 text-muted-foreground hover:text-foreground depth-interactive transition-colors"
+            >
+              <OfficialInstagramIcon size={16} />
+            </a>
+          </div>
+
+        </div>
+
+        <FooterMicroBio />
       </footer>
 
-    </div>;
+    </div>
+  );
 }
+
+export default Portfolio;

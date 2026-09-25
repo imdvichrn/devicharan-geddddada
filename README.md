@@ -1,17 +1,20 @@
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
+</div>
 
-This project is a modern web application showcasing a full-stack-ready frontend architecture optimized for performance, scalability, and clean developer experience. Built using Vite, React, TypeScript, Tailwind CSS, and shadcn/ui, it leverages cutting-edge web technologies to ensure a fast, maintainable, and highly modular codebase.
+# Run and deploy your AI Studio app
 
-Key Highlights:
+This contains everything you need to run your app locally.
 
-⚡ Vite for ultra-fast build times and optimized hot module replacement (HMR).
+View your app in AI Studio: https://ai.studio/apps/152e45b6-a3ed-48bc-ab7f-53b3f0cf5877
 
-💻 React + TypeScript for type-safe component architecture and enhanced developer productivity.
+## Run Locally
 
-🎨 Tailwind CSS & shadcn/ui for a consistent, responsive, and professional UI system.
+**Prerequisites:**  Node.js
 
-🔄 Cross-platform flexibility, allowing edits via GitHub or local IDEs with instant synchronization.
 
-🚀 One-click deployment with built-in support for custom domains and live publishing.
-
-This project reflects my expertise in modern frontend development, UI engineering, and efficient DevOps practices, demonstrating how to integrate AI-driven development tools with robust design systems to produce elegant, high-performance web applications.
-Created and maintained by imdvichrn.
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`

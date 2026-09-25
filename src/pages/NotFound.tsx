@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Home, AlertCircle } from "lucide-react";
+import { PageShell } from "@/components/PageShell";
 
 const NotFound = () => {
   const location = useLocation();
@@ -12,35 +13,34 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <>
+    <PageShell maxWidth="narrow" className="items-center justify-center">
       <Helmet>
         <title>Page Not Found | Geddada Devicharan</title>
         <meta name="description" content="The page you're looking for doesn't exist. Return to the Geddada Devicharan portfolio — AI systems, editing & workflow design." />
         <meta name="robots" content="noindex, follow" />
         <link rel="canonical" href="https://geddadadevicharan.vercel.app" />
       </Helmet>
-      <div className="flex min-h-screen items-center justify-center bg-background">
-        <div className="text-center space-y-6 max-w-md mx-auto px-4">
-          <div className="flex justify-center">
-            <AlertCircle className="h-20 w-20 text-muted-foreground" />
-          </div>
-          <div className="space-y-2">
-            <h1 className="text-6xl font-bold text-foreground">404</h1>
-            <h2 className="text-2xl font-semibold text-foreground">Page Not Found</h2>
-            <p className="text-muted-foreground">
-              Oops! The page you're looking for doesn't exist.
-            </p>
-          </div>
-          <Button 
-            onClick={() => window.location.href = '/'}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground"
-          >
-            <Home className="mr-2 h-4 w-4" />
-            Return to Home
-          </Button>
+      
+      <div className="text-center space-y-6 max-w-md mx-auto my-auto">
+        <div className="flex justify-center">
+          <AlertCircle className="h-20 w-20 text-muted-foreground" />
         </div>
+        <div className="space-y-2">
+          <h1 className="text-6xl font-bold text-foreground">404</h1>
+          <h2 className="text-2xl font-semibold text-foreground">Page Not Found</h2>
+          <p className="text-muted-foreground">
+            Oops! The page you're looking for doesn't exist.
+          </p>
+        </div>
+        <Button 
+          onClick={() => window.location.href = '/'}
+          className="bg-primary hover:bg-primary/90 text-primary-foreground"
+        >
+          <Home className="mr-2 h-4 w-4" />
+          Return to Home
+        </Button>
       </div>
-    </>
+    </PageShell>
   );
 };
 

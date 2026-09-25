@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
-import { Navigation } from '@/components/Navigation';
 import { WindowChrome } from '@/components/WindowChrome';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { PageShell } from '@/components/PageShell';
 import {
   ArrowLeft,
   Calendar,
@@ -186,7 +186,7 @@ const TOC = [
 
 export default function ExamFlowOSGuide() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <PageShell maxWidth="default">
       <Helmet>
         <title>{TITLE} | Geddada Devicharan</title>
         <meta name="description" content={DESCRIPTION} />
@@ -210,11 +210,8 @@ export default function ExamFlowOSGuide() {
         <script type="application/ld+json">{JSON.stringify(howToSchema)}</script>
       </Helmet>
 
-      <Navigation />
-
-      <main className="pt-24 pb-24">
-        <div className="container mx-auto px-4 max-w-4xl">
-          {/* Breadcrumb */}
+      <div>
+        {/* Breadcrumb */}
           <nav aria-label="Breadcrumb" className="mb-6 text-sm text-muted-foreground">
             <ol className="flex flex-wrap items-center gap-2">
               <li>
@@ -710,7 +707,6 @@ export default function ExamFlowOSGuide() {
             </div>
           </motion.article>
         </div>
-      </main>
-    </div>
+      </PageShell>
   );
 }

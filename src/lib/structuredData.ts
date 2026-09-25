@@ -8,11 +8,10 @@ const PERSON_NAME = "Geddada Devicharan";
 const PERSON_ALIASES = ["imdvichrn"];
 
 const SOCIAL_PROFILES = [
-  "https://www.linkedin.com/in/geddadadevicharan",
-  "https://www.instagram.com/imdvichrn",
   "https://github.com/imdvichrn",
+  "https://www.instagram.com/imdvichrn",
+  "https://www.linkedin.com/in/geddadadevicharan",
   "https://www.facebook.com/imdvichrn",
-  "https://x.com/imdvichrn",
 ];
 
 export const generatePersonSchema = () => ({
@@ -20,32 +19,25 @@ export const generatePersonSchema = () => ({
   "@type": "Person",
   "@id": `${BASE_URL}/#person`,
   "name": PERSON_NAME,
-  "alternateName": PERSON_ALIASES,
-  "url": BASE_URL,
+  "alternateName": ["imdvichrn", "@imdvichrn"],
+  "url": `${BASE_URL}/`,
   "image": `${BASE_URL}/profile-avatar.png`,
-  "jobTitle": "AI Systems Architect",
+  "jobTitle": "Digital Product Builder · Video Editor · Creator",
   "description":
-    "Geddada Devicharan (imdvichrn) — AI Systems Architect. Creator of ExamFlowOS, Echoless, and Perfect Pack. Builds AI workflows, automation systems, and cinematic video projects.",
+    "Geddada Devicharan is a multidisciplinary digital creator building products, websites, digital systems, and visual experiences across software, video, and creative technology.",
   "knowsAbout": [
-    "AI workflows",
-    "AI automation",
-    "AI study system",
-    "Productivity systems",
-    "Reels editing",
-    "Video editing",
-    "DaVinci Resolve",
-    "Color grading",
-    "Fusion VFX",
-    "Sound design",
-    "React development",
+    "Software Development",
+    "Web Development",
+    "React",
     "TypeScript",
+    "Video Editing",
+    "DaVinci Resolve Studio",
+    "Color Grading",
+    "Fairlight Audio",
+    "Business Systems",
+    "Automation",
     "ExamFlowOS",
-    "Echoless AI assistant",
-    "Creator economy India",
-  ],
-  "brand": [
-    { "@type": "Brand", "name": "Echoless", "alternateName": ["Echoess", "Echoess AI"] },
-    { "@type": "Brand", "name": "ExamFlowOS" },
+    "Perfect Pack",
   ],
   "sameAs": SOCIAL_PROFILES,
   "address": {
@@ -61,17 +53,13 @@ export const generateWebsiteSchema = () => ({
   "@type": "WebSite",
   "@id": `${BASE_URL}/#website`,
   "name": "Geddada Devicharan",
-  "alternateName": ["imdvichrn"],
-  "url": BASE_URL,
-  "description": "Official portfolio of Geddada Devicharan (imdvichrn) — AI Systems Architect building AI workflows, automation, and cinematic video projects.",
+  "alternateName": ["imdvichrn", "Geddada Devicharan Portfolio"],
+  "url": `${BASE_URL}/`,
+  "description":
+    "Geddada Devicharan is a multidisciplinary digital creator building products, websites, digital systems, and visual experiences across software, video, and creative technology.",
   "inLanguage": "en-IN",
   "author": { "@id": `${BASE_URL}/#person` },
   "publisher": { "@id": `${BASE_URL}/#person` },
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": `${BASE_URL}/?q={search_term_string}`,
-    "query-input": "required name=search_term_string",
-  },
 });
 
 export const generateOrganizationSchema = () => ({
@@ -136,7 +124,7 @@ export const generateExamFlowOSSchema = () => ({
   "applicationCategory": "ProductivityApplication",
   "applicationSubCategory": "AI Study System",
   "operatingSystem": "Web (Browser-based, runs on Windows, macOS, Linux, Android, iOS)",
-  "url": "https://examflowos.vercel.app",
+  "url": "https://examflowos.in",
   "sameAs": [`${BASE_URL}/project/examflow-os`],
   "image": `${BASE_URL}/examflow-logo.jpg`,
   "description":

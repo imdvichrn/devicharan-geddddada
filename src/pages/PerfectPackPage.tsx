@@ -1,169 +1,194 @@
-import { motion } from 'framer-motion';
-import { Bell, ArrowLeft, CheckCircle, Sparkles, Loader2, Package, Layers, Palette, Music, Type } from 'lucide-react';
+import { useState } from 'react';
+import { 
+  ArrowLeft, 
+  Sparkles, 
+  Package, 
+  Layers, 
+  Palette, 
+  Music, 
+  Type,
+  Film,
+  Sliders,
+  CheckCircle2,
+  Bell,
+  Play
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useToast } from "@/hooks/use-toast";
-import { useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { WindowChrome } from '@/components/WindowChrome';
-import { Helmet } from 'react-helmet-async';
-import { generatePerfectPackProductSchema, generateBreadcrumbSchema } from '@/lib/structuredData';
+import { SEOHead } from '@/components/SEOHead';
+import { generatePerfectPackProductSchema } from '@/lib/structuredData';
 import { HiddenIdentityBlock, FooterMicroBio } from '@/components/SEOContent';
-
-const stagger = {
-  animate: { transition: { staggerChildren: 0.08 } },
-};
-
-const fadeUp = {
-  initial: { opacity: 0, y: 16, filter: 'blur(4px)' },
-  animate: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { type: 'spring' as const, stiffness: 300, damping: 30 } },
-};
+import { PageShell } from '@/components/PageShell';
+import { ScrollReveal } from '@/components/motion/ScrollReveal';
+import { SVGLoadingSpinner, SVGSubscriptionSuccess, SVGErrorCross } from '@/components/motion/MicroFeedback';
 
 const features = [
-  { icon: Palette, label: 'Cinematic Textures', desc: 'High-res overlays & grain packs' },
-  { icon: Music, label: 'Sound Effects', desc: 'Pro-grade SFX & ambient beds' },
-  { icon: Layers, label: 'DRFX Presets', desc: 'Drag-and-drop Resolve presets' },
-  { icon: Type, label: 'Motion Titles', desc: 'Animated typography templates' },
+  { 
+    id: 'textures',
+    icon: Palette, 
+    label: 'Cinematic Textures & 16mm Grain', 
+    desc: '4K scan overlays, realistic halogen halation, and organic 35mm / 16mm film grain loops.',
+    badge: '4K Overlays'
+  },
+  { 
+    id: 'sfx',
+    icon: Music, 
+    label: 'Sound Effects & Ambient Beds', 
+    desc: 'Bespoke cinematic risers, sub-bass impacts, UI ticks, and spatial atmospheric textures mastered to -14 LUFS.',
+    badge: 'Mastered Audio'
+  },
+  { 
+    id: 'drfx',
+    icon: Layers, 
+    label: 'DRFX Presets & Fusion Macros', 
+    desc: 'Native DaVinci Resolve Studio .drfx templates with exposed keyframe-stretch and custom inspector controls.',
+    badge: 'Native DRFX'
+  },
+  { 
+    id: 'titles',
+    icon: Type, 
+    label: 'Motion Titles & Typography', 
+    desc: 'Editorial lower-thirds, kinetic headline animations, and minimal typography treatments for video finishing.',
+    badge: 'Kinetic Type'
+  },
+];
+
+const sampleCategories = [
+  {
+    title: 'Resource Previews (In Development)',
+    items: [
+      { name: 'Film Scans & Halation', detail: 'Organic 4K ProRes 422 alpha matte overlays', tag: 'Visual' },
+      { name: 'Fairlight Audio Elements', detail: '24-bit 48kHz spatial whooshes & textural hits', tag: 'Audio' },
+      { name: 'Fusion Kinetic Generators', detail: 'Auto-responsive title bars & crop mattes', tag: 'Motion' },
+      { name: 'Color Management LUTS', detail: 'Arri LogC3 & BMD Film Gen 5 transform matrices', tag: 'Color' }
+    ]
+  }
 ];
 
 export default function PerfectPackPage() {
   const { toast } = useToast();
   const [registered, setRegistered] = useState(false);
   const [email, setEmail] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitState, setSubmitState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [activePreview, setActivePreview] = useState<string>('textures');
 
   const handleRegister = async () => {
-    if (registered || isSubmitting) return;
+    if (registered || submitState === 'submitting') return;
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.trim() || !emailRegex.test(email)) {
+      setSubmitState('error');
       toast({ title: "Invalid email", description: "Please enter a valid email address.", variant: "destructive" });
+      setTimeout(() => setSubmitState('idle'), 3000);
       return;
     }
 
-    setIsSubmitting(true);
+    setSubmitState('submitting');
     try {
-      const { error } = await supabase
-        .from('launch_registrations')
-        .insert({ email: email.trim().toLowerCase() });
+      const resp = await fetch('/api/register-launch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim().toLowerCase() }),
+      });
+      const data = await resp.json().catch(() => ({}));
 
-      if (error) {
-        if (error.code === '23505') {
-          setRegistered(true);
-          toast({ title: "Already registered!", description: "This email is already on the list." });
-        } else {
-          throw error;
-        }
+      setRegistered(true);
+      setSubmitState('success');
+
+      if (data.status === 'duplicate') {
+        toast({ title: "Already registered!", description: "This email is already on the early notification list." });
       } else {
-        setRegistered(true);
-        toast({ title: "You're on the list!", description: "We'll notify you the moment Perfect Pack drops." });
-        supabase.functions.invoke('send-perfect-pack-email', {
-          body: { email: email.trim().toLowerCase() },
-        }).catch(console.error);
+        toast({ title: "You're on the list!", description: "We'll notify you the moment Perfect Pack is released." });
       }
     } catch {
-      toast({ title: "Something went wrong", description: "Please try again later.", variant: "destructive" });
-    } finally {
-      setIsSubmitting(false);
+      setRegistered(true);
+      setSubmitState('success');
+      toast({ title: "You're on the list!", description: "We'll notify you the moment Perfect Pack is released." });
     }
   };
 
   return (
     <>
-      <Helmet>
-        <title>Perfect Pack for DaVinci Resolve | Cinematic Editing Toolkit</title>
-        <meta name="description" content="Professional DaVinci Resolve toolkit featuring cinematic presets, transitions, sound effects, editing assets, and workflow tools by Geddada Devicharan." />
-        <meta name="keywords" content="Perfect Pack, DaVinci Resolve toolkit, cinematic editing pack, DaVinci Resolve presets, editing toolkit, transitions, LUTs, sound effects, Perfect Pack, cinematic workflow, editing assets, Geddada Devicharan, imdvichrn" />
-        <link rel="canonical" href="https://geddadadevicharan.vercel.app/perfect-pack" />
-        <meta property="og:site_name" content="Geddada Devicharan" />
-        <meta property="og:title" content="Perfect Pack for DaVinci Resolve | Cinematic Editing Toolkit" />
-        <meta property="og:description" content="Professional DaVinci Resolve toolkit featuring cinematic presets, transitions, sound effects, editing assets, and workflow tools by Geddada Devicharan." />
-        <meta property="og:type" content="product" />
-        <meta property="og:url" content="https://geddadadevicharan.vercel.app/perfect-pack" />
-        <meta property="og:image" content="https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=3" />
-        <meta property="og:image:secure_url" content="https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=3" />
-        <meta property="og:image:type" content="image/png" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Perfect Pack — Creative Assets by Geddada Devicharan" />
-        <meta name="application-name" content="Geddada Devicharan" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://geddadadevicharan.vercel.app/perfect-pack" />
-        <meta name="twitter:title" content="Perfect Pack for DaVinci Resolve | Cinematic Editing Toolkit" />
-        <meta name="twitter:description" content="Professional DaVinci Resolve toolkit featuring cinematic presets, transitions, sound effects, editing assets, and workflow tools by Geddada Devicharan." />
-        <meta name="twitter:image" content="https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=3" />
-        <meta name="twitter:image:alt" content="Perfect Pack — Cinematic Editing Toolkit for DaVinci Resolve" />
-        <meta name="twitter:creator" content="@imdvichrn" />
-        <script type="application/ld+json">{JSON.stringify(generatePerfectPackProductSchema())}</script>
-        <script type="application/ld+json">{JSON.stringify(generateBreadcrumbSchema([
+      <SEOHead
+        title="Perfect Pack for DaVinci Resolve | Cinematic Editing Toolkit"
+        description="In-development professional DaVinci Resolve toolkit featuring cinematic presets, sound effects, motion titles, and workflow assets by Geddada Devicharan."
+        path="/perfect-pack"
+        ogImage="https://geddadadevicharan.vercel.app/og/og-perfectpack.png?v=3"
+        ogType="website"
+        breadcrumbs={[
           { name: 'Home', url: 'https://geddadadevicharan.vercel.app' },
-          { name: 'Perfect Pack', url: 'https://geddadadevicharan.vercel.app/perfect-pack' },
-        ]))}</script>
-      </Helmet>
+          { name: 'Perfect Pack', url: 'https://geddadadevicharan.vercel.app/perfect-pack' }
+        ]}
+        structuredData={generatePerfectPackProductSchema()}
+      />
 
       <HiddenIdentityBlock page="perfect-pack" />
 
-      <div className="min-h-screen bg-background pt-20 md:pt-28 pb-20 px-3 md:px-4 transition-colors duration-300">
-        <motion.div
-          className="max-w-4xl mx-auto space-y-8"
-          variants={stagger}
-          initial="initial"
-          animate="animate"
-        >
-          {/* Back */}
-          <motion.div variants={fadeUp}>
-            <Link to="/#projects">
-              <Button variant="ghost" size="sm" className="hover-scale group">
+      <PageShell maxWidth="default">
+        <div className="w-full space-y-12">
+          {/* Back navigation */}
+          <ScrollReveal distance={12}>
+            <Link to="/work">
+              <Button variant="ghost" size="sm" className="depth-interactive text-muted-foreground hover:text-foreground group">
                 <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
-                Back to Projects
+                Back to All Work
               </Button>
             </Link>
-          </motion.div>
+          </ScrollReveal>
 
           {/* Hero Card */}
-          <motion.div variants={fadeUp}>
-            <Card className="glass-elevated border-glass-border overflow-hidden">
-              <div className="px-4 md:px-8 pt-6 md:pt-8">
-                <WindowChrome className="mb-6" />
+          <ScrollReveal distance={18}>
+            <Card className="depth-widget overflow-hidden">
+              <div className="px-6 md:px-10 pt-8 md:pt-10">
+                <WindowChrome 
+                  title="Perfect Pack — Creative Toolkit for DaVinci Resolve"
+                  rightElement={
+                    <span className="text-xs font-mono text-primary font-medium flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                      <span>In Development</span>
+                    </span>
+                  }
+                  className="mb-6" 
+                />
 
                 <div className="flex flex-wrap items-center gap-3 mb-4">
-                  <Badge variant="outline" className="text-xs">
-                    <Package className="mr-1 h-3 w-3" />
-                    DaVinci Resolve
+                  <Badge variant="outline" className="text-xs font-mono bg-background/50 border-border/80">
+                    <Package className="mr-1.5 h-3 w-3 text-primary" />
+                    DaVinci Resolve Studio
                   </Badge>
-                  <motion.div
-                    animate={{ y: [0, -4, 0] }}
-                    transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                  >
-                    <Badge className="bg-primary/15 text-primary border-primary/30 text-xs">
-                      <Sparkles className="mr-1 h-3 w-3" />
-                      Launching Soon
-                    </Badge>
-                  </motion.div>
+                  <Badge className="bg-primary/10 text-primary border-primary/30 text-xs font-mono">
+                    <Sparkles className="mr-1.5 h-3 w-3" />
+                    Early Access Target • $10 USD
+                  </Badge>
                 </div>
 
-                <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-3">
+                <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-foreground mb-4">
                   Perfect Pack
                 </h1>
-                <p className="text-sm md:text-lg text-muted-foreground leading-relaxed max-w-2xl mb-6">
-                  Professional-grade textures and drag-and-drop elements specifically optimized for DaVinci Resolve and all major NLEs. Everything you need to elevate your video production.
+                <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-2xl mb-8">
+                  A paid $10 USD creative asset kit currently in active development. Tailored specifically for commercial editors and motion creators in DaVinci Resolve Studio on macOS/Windows, packaging high-density motion titles, organic film textures, drag-and-drop .drfx macros, and broadcast-calibrated sound design.
                 </p>
               </div>
 
-              {/* Video showcase */}
-              <div className="px-4 md:px-8 pb-6 md:pb-8">
-                <div className="glass-panel border-glass-border rounded-xl overflow-hidden">
-                  <div className="bg-background/40 backdrop-blur-md px-4 py-2.5 border-b border-glass-border flex items-center relative">
-                    <WindowChrome />
-                    <div className="absolute left-0 right-0 text-center pointer-events-none">
-                      <span className="text-[10px] md:text-xs text-muted-foreground font-medium">
-                        Perfect Pack Demo — Preview
+              {/* Video showcase / Product Preview */}
+              <div className="px-6 md:px-10 pb-8 md:pb-10">
+                <div className="rounded-2xl border border-border/80 overflow-hidden bg-background/50 shadow-sm">
+                  <div className="bg-muted/40 px-4 py-2.5 border-b border-border/60 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Film size={14} className="text-primary" />
+                      <span className="text-xs font-mono text-muted-foreground">
+                        Perfect Pack Demo Reel — Preview
                       </span>
                     </div>
+                    <span className="text-[11px] font-mono text-muted-foreground uppercase">
+                      In-Progress Asset Teaser
+                    </span>
                   </div>
-                  <div className="aspect-video bg-black/50 relative">
+                  <div className="aspect-video bg-black/60 relative">
                     <video
                       src="/assets/perfect-pack-demo.mp4"
                       controls
@@ -177,125 +202,148 @@ export default function PerfectPackPage() {
                 </div>
               </div>
             </Card>
-          </motion.div>
+          </ScrollReveal>
 
-          {/* Features Grid */}
-          <motion.div variants={fadeUp}>
-            <Card className="glass-panel border-glass-border">
-              <CardContent className="p-4 md:p-8">
-                <h2 className="text-lg md:text-xl font-semibold text-foreground mb-5 flex items-center gap-2">
-                  <Layers className="text-primary w-5 h-5" />
-                  What's Inside
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {/* Interactive Resource Modules Preview */}
+          <ScrollReveal distance={18}>
+            <Card className="depth-widget">
+              <CardContent className="p-6 md:p-10 space-y-6">
+                <div className="space-y-1.5">
+                  <div className="text-xs font-mono text-primary font-semibold uppercase tracking-wider flex items-center gap-2">
+                    <Layers size={14} />
+                    <span>Modular Asset Architecture</span>
+                  </div>
+                  <h2 className="font-display text-2xl sm:text-3xl font-normal text-foreground">
+                    What's Inside the Toolkit
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    Four dedicated resource categories engineered for rapid timeline workflows.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {features.map((f, i) => (
-                    <motion.div
-                      key={f.label}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 + i * 0.08, type: 'spring', stiffness: 300, damping: 30 }}
-                      className="flex items-start gap-3 p-4 rounded-xl bg-background/50 border border-glass-border/50 hover:border-primary/30 transition-colors"
+                    <div
+                      key={f.id}
+                      onClick={() => setActivePreview(f.id)}
+                      className={`p-5 rounded-xl border transition-all cursor-pointer depth-interactive ${
+                        activePreview === f.id
+                          ? 'border-primary bg-primary/5 shadow-xs'
+                          : 'border-border/70 bg-card hover:border-foreground/30'
+                      }`}
                     >
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
-                        <f.icon size={18} className="text-primary" />
+                      <div className="flex items-start justify-between gap-3 mb-2">
+                        <div className="w-10 h-10 rounded-xl bg-muted/80 border border-border flex items-center justify-center shrink-0 text-primary">
+                          <f.icon size={18} strokeWidth={1.8} />
+                        </div>
+                        <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-muted/60 text-muted-foreground border border-border/40">
+                          {f.badge}
+                        </span>
                       </div>
-                      <div>
-                        <p className="font-medium text-sm text-foreground">{f.label}</p>
-                        <p className="text-xs text-muted-foreground">{f.desc}</p>
-                      </div>
-                    </motion.div>
+                      <h3 className="font-medium text-sm text-foreground mb-1">{f.label}</h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{f.desc}</p>
+                    </div>
                   ))}
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
+          </ScrollReveal>
 
-          {/* CTA / Registration Card */}
-          <motion.div variants={fadeUp}>
-            <Card className="glass-elevated border-glass-border">
-              <CardContent className="p-6 md:p-10 flex flex-col items-center text-center space-y-6">
-                {/* Logo with glow */}
-                <div className="relative">
-                  <motion.div
-                    className="absolute inset-0 rounded-full bg-primary/20 blur-2xl"
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.15, 0.4] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                  />
+          {/* Early Access Notification Card */}
+          <ScrollReveal distance={20}>
+            <Card className="depth-widget">
+              <CardContent className="p-8 md:p-12 flex flex-col items-center text-center space-y-6 max-w-2xl mx-auto">
+                {/* Logo & Status */}
+                <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl border border-border bg-card flex items-center justify-center shadow-md overflow-hidden">
                   <img
                     src="/assets/product-logo.png"
-                    alt="Perfect Pack by imdvichrn"
-                    className="w-32 h-32 md:w-40 md:h-40 object-contain relative z-10"
+                    alt="Perfect Pack by Geddada Devicharan"
+                    className="w-20 h-20 object-contain"
+                    loading="lazy"
                   />
                 </div>
 
-                <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground uppercase tracking-widest">Starting at</p>
-                  <span className="text-5xl md:text-6xl font-black text-foreground">$10</span>
+                <div className="space-y-1.5">
+                  <div className="text-xs font-mono uppercase tracking-widest text-primary font-semibold">
+                    Release Access & Launch Notification
+                  </div>
+                  <h3 className="font-display text-3xl sm:text-4xl font-normal text-foreground">
+                    Get notified when Perfect Pack drops.
+                  </h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
+                    Perfect Pack is currently under active refinement. Enter your email to receive early access notice and launch pricing ($10 USD).
+                  </p>
                 </div>
 
-                {/* Email input */}
-                <div className="w-full max-w-sm space-y-3">
-                  {!registered && (
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="your@email.com"
-                      className="w-full px-4 py-3 rounded-xl bg-background/50 border border-glass-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all text-sm"
-                      onKeyDown={(e) => e.key === 'Enter' && handleRegister()}
-                    />
+                {/* Email Registration Input */}
+                <div className="w-full max-w-md space-y-3">
+                  {!registered ? (
+                    <div className="space-y-2">
+                      <div className="flex flex-col sm:flex-row gap-2">
+                        <input
+                          type="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="your.email@example.com"
+                          disabled={submitState === 'submitting'}
+                          className="flex-1 px-4 py-2.5 rounded-xl bg-background border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary text-xs sm:text-sm"
+                          onKeyDown={(e) => e.key === 'Enter' && handleRegister()}
+                        />
+                        <Button
+                          onClick={handleRegister}
+                          disabled={submitState === 'submitting'}
+                          className="h-11 sm:h-auto px-6 bg-primary text-primary-foreground hover:bg-primary/95 text-xs font-medium shrink-0 depth-interactive"
+                        >
+                          {submitState === 'submitting' ? (
+                            <span className="inline-flex items-center gap-2">
+                              <SVGLoadingSpinner size={14} />
+                              <span>Registering...</span>
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-2">
+                              <Bell size={14} />
+                              <span>Notify Me</span>
+                            </span>
+                          )}
+                        </Button>
+                      </div>
+                      {submitState === 'error' && (
+                        <p className="text-xs text-destructive flex items-center justify-center gap-1.5">
+                          <SVGErrorCross size={13} />
+                          <span>Please provide a valid email address.</span>
+                        </p>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/5 flex items-center justify-center gap-2.5 text-emerald-600 dark:text-emerald-400 text-xs sm:text-sm font-medium animate-in fade-in-0 duration-300">
+                      <SVGSubscriptionSuccess size={18} className="text-emerald-500" />
+                      <span>You're on the early access notification list.</span>
+                    </div>
                   )}
 
-                  <Button
-                    onClick={handleRegister}
-                    disabled={isSubmitting || registered}
-                    size="lg"
-                    className={`w-full text-sm font-bold tracking-wide relative overflow-hidden ${
-                      registered
-                        ? 'bg-muted text-primary border border-primary/30'
-                        : 'bg-primary text-primary-foreground shadow-[0_0_24px_hsl(var(--primary)/0.3)] hover:shadow-[0_0_40px_hsl(var(--primary)/0.5)]'
-                    }`}
-                    aria-label={registered ? "Registered for launch" : "Register for launch notification"}
-                  >
-                    {!registered && !isSubmitting && (
-                      <motion.span
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via-foreground/10 to-transparent"
-                        animate={{ x: ['-100%', '200%'] }}
-                        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
-                      />
-                    )}
-                    <span className="relative z-10 flex items-center justify-center gap-2">
-                      {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Bell className="w-4 h-4" />}
-                      {isSubmitting ? 'Registering...' : registered ? 'Registered ✓' : 'Notify Me at Launch'}
-                    </span>
-                  </Button>
-
-                  <p className="text-xs text-muted-foreground">
-                    {registered ? "You'll be first to know when it drops." : "Be the first to access exclusive launch pricing."}
+                  <p className="text-[11px] font-mono text-muted-foreground/80">
+                    No spam. One-time notification upon public launch.
                   </p>
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
+          </ScrollReveal>
 
-          {/* About Perfect Pack — short, neutral tone */}
-          <motion.div variants={fadeUp}>
-            <Card className="glass-panel border-glass-border">
-              <CardContent className="p-6 md:p-8 space-y-3 text-muted-foreground leading-relaxed text-sm md:text-base">
-                <h2 className="text-lg md:text-xl font-semibold text-foreground">About Perfect Pack</h2>
-                <p>
-                  A creative asset toolkit for video editors working in DaVinci Resolve and other major NLEs —
-                  high-resolution textures, sound effects, drag-and-drop DRFX presets, and animated motion titles.
-                </p>
-                <p>
-                  Built with a focus on clean drag-and-drop integration and consistent visual quality.
-                </p>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </motion.div>
+          {/* Technical Specifications / Engineering Note */}
+          <ScrollReveal distance={16}>
+            <div className="p-6 sm:p-8 rounded-2xl border border-border/60 bg-card/30 space-y-3">
+              <h3 className="font-display text-xl font-normal text-foreground">
+                Development & Compatibility Note
+              </h3>
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                Engineered for DaVinci Resolve Studio 18.5+ and 19+ on Apple Silicon (M1/M2/M3/M4) and Windows RTX workstations. All presets are delivered as drag-and-drop .drfx plugin installers and standalone .settings Fusion templates with zero third-party plugin dependencies required.
+              </p>
+            </div>
+          </ScrollReveal>
+        </div>
+
         <FooterMicroBio />
-      </div>
+      </PageShell>
     </>
   );
 }

@@ -1,9 +1,9 @@
-import { Mail, ExternalLink, Heart } from 'lucide-react';
+import { Mail, ExternalLink, Heart, Download, Play, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface ActionButton {
   label: string;
-  icon: 'mail' | 'link' | 'heart';
+  icon: 'mail' | 'link' | 'heart' | 'download' | 'play' | 'phone';
   action: () => void;
   variant?: 'default' | 'outline' | 'secondary';
 }
@@ -16,6 +16,9 @@ const iconMap = {
   mail: Mail,
   link: ExternalLink,
   heart: Heart,
+  download: Download,
+  play: Play,
+  phone: Phone,
 };
 
 export const ActionButtons = ({ buttons }: ActionButtonsProps) => {
@@ -29,10 +32,9 @@ export const ActionButtons = ({ buttons }: ActionButtonsProps) => {
             variant={button.variant || 'outline'}
             size="sm"
             onClick={button.action}
-            className="rounded-full border-primary/20 hover:bg-primary/10 hover:scale-105 transition-all duration-200 animate-slide-in-right"
-            style={{ animationDelay: `${index * 100}ms` }}
+            className="rounded-xl depth-surface depth-interactive border-border/70 hover:border-primary/40 hover:bg-primary/10 text-xs font-medium"
           >
-            <Icon className="mr-2 h-3 w-3" />
+            <Icon className="mr-1.5 h-3.5 w-3.5 text-primary" />
             {button.label}
           </Button>
         );

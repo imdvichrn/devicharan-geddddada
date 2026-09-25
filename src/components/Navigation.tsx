@@ -1,209 +1,273 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Moon, Sun, Menu, X } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
-import { motion, AnimatePresence } from 'framer-motion';
-
-const navItems = [
-  { id: 'home', label: 'Home', href: '#home' },
-  { id: 'about', label: 'About', href: '#about' },
-  { id: 'skills', label: 'Skills', href: '#skills' },
-  { id: 'projects', label: 'Projects', href: '#projects' },
-  { id: 'education', label: 'Education', href: '#education' },
-  { id: 'contact', label: 'Contact', href: '#contact' },
-];
-
-const productLink = {
-  label: 'Perfect Pack',
-  path: '/perfect-pack',
-  isProduct: true
-};
 
 export function Navigation() {
-  const [activeSection, setActiveSection] = useState('home');
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
-  const navigate = useNavigate();
-  const isHomePage = location.pathname === '/';
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Scroll tracking refs to avoid per-pixel re-renders
+  const lastScrollY = useRef(0);
+  const ticking = useRef(false);
+  const scrollThreshold = 14;
 
   useEffect(() => {
-    let ticking = false;
     const handleScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        const sections = navItems.map(item => document.getElementById(item.id));
-        const scrollY = window.scrollY + 100;
-        for (let i = sections.length - 1; i >= 0; i--) {
-          const section = sections[i];
-          if (section && section.offsetTop <= scrollY) {
-            setActiveSection(navItems[i].id);
-            break;
+      if (!ticking.current) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          const delta = currentScrollY - lastScrollY.current;
+
+          // Check if scrolled past top buffer
+          setIsScrolled(currentScrollY > 20);
+
+          // Scroll direction logic with threshold
+          if (currentScrollY <= 60) {
+            // Always show header near the very top of the page
+            setIsVisible(true);
+          } else if (delta > scrollThreshold) {
+            // Scrolling down meaningfully -> hide header
+            setIsVisible(false);
+          } else if (delta < -scrollThreshold) {
+            // Scrolling up meaningfully -> show header
+            setIsVisible(true);
           }
-        }
-        ticking = false;
-      });
+
+          lastScrollY.current = currentScrollY;
+          ticking.current = false;
+        });
+        ticking.current = true;
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = useCallback((sectionId: string) => {
-    if (isHomePage) {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        const navHeight = 64;
-        const y = element.getBoundingClientRect().top + window.scrollY - navHeight;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-      }
-    } else {
-      // SPA navigate (no full reload) — scroll handled by hash effect on Portfolio
-      navigate('/#' + sectionId);
+  // Close menus on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      const originalStyle = window.getComputedStyle(document.body).overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalStyle;
+      };
     }
-    setIsMenuOpen(false);
-  }, [isHomePage, navigate]);
+  }, [isMobileMenuOpen]);
+
+  // Handle Escape key to close open menus
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      setIsMobileMenuOpen(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleKeyDown]);
+
+  const isWorkActive = [
+    '/work', 
+    '/software', 
+    '/products', 
+    '/video', 
+    '/video-editing', 
+    '/web', 
+    '/websites', 
+    '/systems', 
+    '/perfect-pack', 
+    '/project'
+  ].some((prefix) => location.pathname === prefix || location.pathname.startsWith(`${prefix}/`));
+
+  const navItems = [
+    { label: 'Home', path: '/', isActive: location.pathname === '/' },
+    { label: 'Work', path: '/work', isActive: isWorkActive },
+    { label: 'Writing', path: '/writing', isActive: location.pathname.startsWith('/writing') },
+    { label: 'Experiments', path: '/experiments', isActive: location.pathname.startsWith('/experiments') },
+    { label: 'About', path: '/about', isActive: location.pathname.startsWith('/about') || location.pathname.startsWith('/skills') },
+    { label: 'Contact', path: '/contact', isActive: location.pathname.startsWith('/contact') },
+  ];
+
+  const isHeaderVisible = isVisible || isMobileMenuOpen;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-glass-border">
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-12 md:h-16">
-          {/* Logo */}
-          <div className="flex-shrink-0">
+    <>
+      <header 
+        className={`fixed top-0 left-0 right-0 z-40 w-full transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          isHeaderVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'
+        } ${
+          isScrolled && !isMobileMenuOpen
+            ? 'bg-background/85 backdrop-blur-md border-b border-border/30 shadow-[0_4px_24px_rgba(0,0,0,0.08)]' 
+            : 'bg-transparent border-b border-transparent'
+        }`}
+      >
+        <div className="max-w-[1240px] mx-auto page-shell-gutter h-[var(--header-height)] flex items-center justify-between">
+          
+          {/* Brand Anchor: Devicharan (@imdvichrn) */}
+          <Link 
+            to="/" 
+            className="flex items-center gap-2 text-sm font-medium tracking-tight text-foreground hover:opacity-85 transition-opacity focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded px-1"
+            aria-label="Geddada Devicharan home"
+          >
+            <span className="font-semibold tracking-tight text-base sm:text-sm">Devicharan</span>
+            <span className="text-[11px] text-muted-foreground/60 hidden sm:inline font-mono">
+              @imdvichrn
+            </span>
+          </Link>
+
+          {/* Desktop Navigation with Soft Rounded Bubble Active State */}
+          <nav 
+            aria-label="Primary navigation"
+            className="hidden md:flex items-center gap-1.5 text-xs font-medium"
+          >
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`px-3.5 py-1.5 rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary ${
+                  item.isActive 
+                    ? 'bg-primary/10 text-primary font-semibold border border-primary/25 shadow-xs' 
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/40 border border-transparent'
+                }`}
+              >
+                <span>{item.label}</span>
+              </Link>
+            ))}
+          </nav>
+
+          {/* Right Action: Interactive Theme toggle + Mobile Menu Button */}
+          <div className="flex items-center gap-2">
             <button
-              onClick={() => scrollToSection('home')}
-              className="text-base md:text-xl font-bold text-foreground hover:text-primary transition-all duration-300 hover-scale relative group"
+              type="button"
+              onClick={toggleTheme}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="h-9 w-9 rounded-xl depth-surface depth-interactive text-muted-foreground hover:text-foreground flex items-center justify-center shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
-              <span className="relative z-10 bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent bg-[length:200%_100%] group-hover:animate-gradient-shift drop-shadow-[0_0_8px_hsl(var(--primary)/0.3)]">
-                Devicharan
-              </span>
-              <span className="absolute inset-0 blur-lg opacity-0 group-hover:opacity-40 bg-gradient-to-r from-primary/50 to-accent/50 transition-opacity duration-300 rounded-lg" />
+              {theme === 'dark' ? (
+                <Sun size={15} aria-hidden="true" className="text-amber-400" />
+              ) : (
+                <Moon size={15} aria-hidden="true" className="text-foreground" />
+              )}
+            </button>
+
+            {/* Mobile hamburger button */}
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
+              aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              className="md:hidden h-9 w-9 rounded-xl depth-surface depth-interactive text-muted-foreground hover:text-foreground flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              {isMobileMenuOpen ? (
+                <X size={18} aria-hidden="true" />
+              ) : (
+                <Menu size={18} aria-hidden="true" />
+              )}
             </button>
           </div>
 
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover-scale cursor-pointer ${
-                    activeSection === item.id
-                      ? 'text-primary bg-primary/10'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                  }`}
-                  aria-label={`Go to Geddada Devicharan's ${item.label} section`}
-                >
-                  {item.label}
-                </button>
-              ))}
-              
-              {/* Perfect Pack Product Link with New Badge */}
-              <Link 
-                to={productLink.path}
-                className="relative group px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover-scale text-muted-foreground hover:text-primary hover:bg-muted/50"
-                aria-label="View Perfect Pack All-In-One Creative Assets - Drag & Drop Integration for Professional Editors"
+        </div>
+      </header>
+
+      {/* Unclipped Full-Viewport Mobile Navigation Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          id="mobile-menu"
+          ref={menuRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile navigation"
+          className="md:hidden fixed inset-0 z-50 bg-background flex flex-col justify-between overflow-y-auto overflow-x-hidden animate-in fade-in-0 duration-200"
+          style={{ height: '100dvh' }}
+        >
+          {/* Mobile Menu Top Header Bar */}
+          <div className="h-16 px-4 flex items-center justify-between border-b border-border/40 shrink-0">
+            <Link 
+              to="/" 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center gap-2 text-sm font-semibold tracking-tight text-foreground"
+            >
+              <span>Devicharan</span>
+              <span className="text-[11px] text-muted-foreground/70 font-mono">@imdvichrn</span>
+            </Link>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={toggleTheme}
+                aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                className="h-9 w-9 rounded-xl border border-border/50 bg-card/50 text-muted-foreground hover:text-foreground flex items-center justify-center"
               >
-                {productLink.label}
-                <span className="absolute -top-3 -right-4 px-1.5 py-0.5 text-[10px] font-bold bg-primary text-primary-foreground rounded-full animate-pulse whitespace-nowrap">
-                  New
-                </span>
-              </Link>
+                {theme === 'dark' ? (
+                  <Sun size={15} aria-hidden="true" className="text-amber-400" />
+                ) : (
+                  <Moon size={15} aria-hidden="true" className="text-foreground" />
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setIsMobileMenuOpen(false)}
+                aria-label="Close navigation menu"
+                className="h-9 w-9 rounded-xl border border-border/50 bg-card/50 text-muted-foreground hover:text-foreground flex items-center justify-center"
+              >
+                <X size={18} aria-hidden="true" />
+              </button>
             </div>
           </div>
 
-          {/* Theme Toggle */}
-          <div className="flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={toggleTheme}
-              className="w-9 h-9 p-0 hover-scale relative group overflow-visible"
-              aria-label="Toggle theme"
-            >
-              <span className="absolute inset-0 rounded-md bg-gradient-to-br from-primary/20 to-accent/20 opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-300" />
-              {theme === 'light' ? (
-                <Moon size={18} className="relative z-10 drop-shadow-[0_0_6px_hsl(var(--primary)/0.5)] group-hover:drop-shadow-[0_0_10px_hsl(var(--primary)/0.7)] transition-all duration-300" />
-              ) : (
-                <Sun size={18} className="relative z-10 drop-shadow-[0_0_6px_hsl(45_100%_60%/0.5)] group-hover:drop-shadow-[0_0_12px_hsl(45_100%_60%/0.8)] transition-all duration-300" />
-              )}
-            </Button>
-
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="w-9 h-9 p-0 relative group"
-                aria-label="Toggle menu"
-              >
-                <span className="absolute inset-0 rounded-md bg-gradient-to-br from-primary/20 to-accent/20 opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-300" />
-                {isMenuOpen ? (
-                  <X size={18} className="relative z-10 drop-shadow-[0_0_6px_hsl(var(--primary)/0.5)] transition-all duration-300" />
-                ) : (
-                  <Menu size={18} className="relative z-10 drop-shadow-[0_0_6px_hsl(var(--primary)/0.5)] transition-all duration-300" />
-                )}
-              </Button>
+          {/* Navigation Links with 50px+ Touch Target & Clear Active State */}
+          <div className="p-4 space-y-1.5 flex-1 min-h-0 overflow-y-auto">
+            <div className="text-[10px] font-mono uppercase tracking-widest text-primary font-medium px-4 py-2">
+              Navigation
             </div>
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`flex items-center justify-between px-4 py-3.5 rounded-xl transition-all duration-150 min-h-[50px] ${
+                  item.isActive 
+                    ? 'bg-primary/10 text-primary font-semibold border border-primary/25 shadow-xs' 
+                    : 'text-foreground hover:bg-muted/50 border border-transparent'
+                }`}
+              >
+                <span className="text-base font-medium">{item.label}</span>
+                {item.isActive ? (
+                  <span className="w-2 h-2 rounded-full bg-primary" />
+                ) : (
+                  <span className="text-xs font-mono text-muted-foreground/50">→</span>
+                )}
+              </Link>
+            ))}
+          </div>
+
+          {/* Footer note with safe-area spacing */}
+          <div className="p-4 pt-3 border-t border-border/40 shrink-0 pb-[max(1.25rem,env(safe-area-inset-bottom))] space-y-2">
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-mono text-[11px] text-foreground font-medium">Geddada Devicharan</span>
+              <span className="text-[11px] text-muted-foreground font-mono">AP, India</span>
+            </div>
+            <p className="text-[11px] text-muted-foreground">
+              Digital Product Builder · Video Editor · Business Systems
+            </p>
           </div>
         </div>
-
-        {/* Mobile Navigation */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div 
-              className="md:hidden overflow-hidden"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            >
-              <div className="px-2 pt-2 pb-3 space-y-1 border-t border-glass-border">
-                {navItems.map((item, i) => (
-                  <motion.button
-                    key={item.id}
-                    initial={{ opacity: 0, x: -12 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.04, type: 'spring', stiffness: 400, damping: 25 }}
-                    onClick={() => scrollToSection(item.id)}
-                    className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer ${
-                      activeSection === item.id
-                        ? 'text-primary bg-primary/10'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                    }`}
-                    aria-label={`Go to Geddada Devicharan's ${item.label} section`}
-                  >
-                    {item.label}
-                  </motion.button>
-                ))}
-                
-                {/* Perfect Pack Product Link - Mobile */}
-                <motion.div
-                  initial={{ opacity: 0, x: -12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: navItems.length * 0.04, type: 'spring', stiffness: 400, damping: 25 }}
-                >
-                  <Link 
-                    to={productLink.path}
-                    onClick={() => setIsMenuOpen(false)}
-                    className="relative block w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors text-muted-foreground hover:text-primary hover:bg-muted/50"
-                    aria-label="View Perfect Pack All-In-One Creative Assets - Drag & Drop Integration for Professional Editors"
-                  >
-                    {productLink.label}
-                    <span className="absolute -top-2 right-3 px-1.5 py-0.5 text-[10px] font-bold bg-primary text-primary-foreground rounded-full animate-pulse whitespace-nowrap">
-                      New
-                    </span>
-                  </Link>
-                </motion.div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </nav>
+      )}
+    </>
   );
 }
+
+export default Navigation;

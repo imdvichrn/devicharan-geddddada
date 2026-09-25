@@ -1,300 +1,399 @@
-import { Navigation } from '@/components/Navigation';
-import { WindowChrome } from '@/components/WindowChrome';
-import { VideoEmbed } from '@/components/VideoEmbed';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft, Calendar, Wrench, Target, Layers, Linkedin, Instagram, Facebook } from 'lucide-react';
+import { SEOHead } from '@/components/SEOHead';
 import { Link } from 'react-router-dom';
-import { useInView } from 'react-intersection-observer';
-import { Helmet } from 'react-helmet-async';
+import { 
+  ArrowLeft, 
+  ChevronRight, 
+  Film, 
+  Palette, 
+  Volume2, 
+  Sliders, 
+  Sparkles,
+  ExternalLink,
+  Monitor,
+  CheckCircle2,
+  ArrowUpRight
+} from 'lucide-react';
+import { VideoWindow } from '@/components/VideoWindow';
+import { WindowChrome } from '@/components/WindowChrome';
+import { PageShell } from '@/components/PageShell';
 import { generateBreadcrumbSchema, generateVideoObjectSchema, generateCreativeWorkSchema } from '@/lib/structuredData';
 
-
-export default function VideoEditingPostProduction() {
-  const [heroRef, heroInView] = useInView({ triggerOnce: true, threshold: 0.1 });
-  const [videoRef, videoInView] = useInView({ triggerOnce: true, threshold: 0.1 });
-  const [processRef, processInView] = useInView({ triggerOnce: true, threshold: 0.1 });
-
+export function VideoEditingPostProduction() {
   const title = "Video Editing & Post-Production";
-  const description = "Professional post-production showcase featuring advanced editing techniques, color correction, and seamless transitions. This portfolio demonstrates expertise in utilizing industry-standard tools like Adobe Premiere Pro and DaVinci Resolve to create polished, cinema-quality final deliverables with professional sound design and advanced 3D workflows.";
-  const year = "2025";
-  const youtubeId = "cmk8S96EDQ0";
-  
+  const description = "High-volume commercial post-production operating in DaVinci Resolve Studio on macOS. Over 700 client video projects delivered across commercial spots, short-form reels, color grading, Fusion motion graphics, and Fairlight audio mastering.";
+  const year = "2024–Present";
+  const primaryVideoId = "cmk8S96EDQ0";
+
   const tools = [
-    "Adobe Premiere Pro",
-    "DaVinci Resolve",
-    "3D Modeling",
-    "Color Grading",
-    "Professional Sound Design",
-    "Fusion-Oriented Motion Graphics",
-    "Audio Synchronization"
-  ];
-  
-  const roles = [
-    "Lead Video Editor & Post-Production Specialist",
-    "Sound Engineer",
-    "Colorist",
-    "Audio Engineer"
+    "DaVinci Resolve Studio",
+    "Color Grading (CST Workflows)",
+    "Fusion Motion Graphics",
+    "Fairlight Audio Mastering",
+    "Speed Ramping & Rhythm",
+    "Multi-Camera Sync"
   ];
 
-  const process = [
+  const roles = [
+    "Video Editor",
+    "Post-Production Specialist",
+    "Colorist",
+    "Motion Designer"
+  ];
+
+  const formats = [
     {
-      title: "Project Overview",
-      description: "A deep dive into the creative vision and editing style. Each post-production project begins with understanding the narrative intent and visual goals. I analyze the source material to identify key moments, develop a cohesive visual language, and plan the overall pacing and flow to ensure maximum impact and engagement."
+      num: "01",
+      title: "Short-Form Content & Social Reels",
+      count: "250+ Delivered",
+      desc: "Fast-paced, hook-driven edits engineered for high retention across Instagram Reels and YouTube Shorts. Focus on tight pacing, dynamic sound layering, and visual continuity."
     },
     {
-      title: "Technical Execution",
-      description: "Details on the software and tools used for post-production. The workflow utilizes DaVinci Resolve for timeline editing and color grading, CapCut for quick turnarounds and social media content, and professional audio tools for sound design. Each tool is selected based on project requirements, timeline constraints, and desired output quality."
+      num: "02",
+      title: "Product Ads & Commercial Spots",
+      count: "120+ Delivered",
+      desc: "Polished brand promos, studio product showcases, and launch commercials featuring crisp typography, callout animations, and broadcast-ready audio polish."
     },
     {
-      title: "Key Highlights",
-      description: "Specific techniques employed throughout the editing process include advanced color grading with precision curves and LUTs, seamless transition design that maintains visual flow, audio synchronization ensuring perfect alignment between dialogue/music and visuals, and professional sound design adding depth and clarity to the final product."
+      num: "03",
+      title: "Song Shoots & Music Videos",
+      count: "80+ Delivered",
+      desc: "Rhythmic cutting aligned precisely with musical beats, mood-driven color palettes, speed ramping, and cinematic storytelling for musical productions."
     },
     {
-      title: "Color Correction & Grading",
-      description: "Professional color correction ensures consistency and balance across all footage. Creative color grading is applied to enhance mood, establish visual identity, and guide viewer attention. Techniques include primary color correction, secondary color grading using curves and hue ranges, and the application of custom LUTs for cohesive look development."
+      num: "04",
+      title: "Creative & Event Productions",
+      count: "250+ Delivered",
+      desc: "Multi-camera timeline synchronization, chronological storytelling, and comprehensive audio levelling for studio events, documentaries, and wedding films."
+    }
+  ];
+
+  const workflowModules = [
+    {
+      icon: Film,
+      title: "Timeline Editing & Pacing",
+      desc: "Precision ripple and roll edits, dynamic speed ramping, and narrative rhythm optimized for viewer attention and seamless scene transitions."
     },
     {
-      title: "Audio Synchronization",
-      description: "Frame-perfect synchronization between audio elements and visual content. This includes dialogue alignment, music syncing to beat points, sound effects placement, and audio level mixing to ensure professional clarity and balance throughout the entire piece."
+      icon: Palette,
+      title: "Node-Based Color Grading",
+      desc: "Color Space Transform (CST) node pipelines, primary exposure balancing, custom curves, hue-vs-hue tuning, and cohesive visual look development."
     },
     {
-      title: "Final Delivery",
-      description: "Optimized exports for various platforms and formats. Final deliverables are rendered at the highest quality standards suitable for their intended distribution channels, whether for broadcast, streaming platforms, or social media sharing."
+      icon: Sparkles,
+      title: "Fusion Motion Design",
+      desc: "Integrated node-based compositing, kinetic titles, lower thirds, callout tracking, and graphic overlays created natively in DaVinci Fusion."
+    },
+    {
+      icon: Volume2,
+      title: "Fairlight Audio Mastering",
+      desc: "Dialogue cleaning, noise reduction, EQ notch filtering, multi-track sound effects layering, and loudness normalization for broadcast standards."
     }
   ];
 
   return (
-    <>
-      <Helmet>
-        <title>{title} | Geddada Devicharan</title>
-        <meta name="description" content="Video Editing & Post-Production - Professional post-production portfolio by Geddada Devicharan featuring color grading, audio design, and cinematic editing techniques." />
-        <link rel="canonical" href="https://geddadadevicharan.vercel.app/projects/video-editing-post-production" />
-        
-        {/* Breadcrumb Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify(generateBreadcrumbSchema([
-            { name: "Home", url: "https://geddadadevicharan.vercel.app" },
-            { name: "Projects", url: "https://geddadadevicharan.vercel.app/#projects" },
-            { name: title, url: "https://geddadadevicharan.vercel.app/projects/video-editing-post-production" }
-          ]))}
-        </script>
-        
-        {/* VideoObject Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify(generateVideoObjectSchema({
+    <PageShell maxWidth="wide">
+      <SEOHead
+        title={`${title} — 700+ Deliverables | Geddada Devicharan`}
+        description={description}
+        path="/projects/video-editing-post-production"
+        breadcrumbs={[
+          { name: "Home", url: "https://geddadadevicharan.vercel.app" },
+          { name: "Work", url: "https://geddadadevicharan.vercel.app/work" },
+          { name: title, url: "https://geddadadevicharan.vercel.app/projects/video-editing-post-production" }
+        ]}
+        structuredData={[
+          generateVideoObjectSchema({
             title: title,
             description: description,
-            youtubeId: youtubeId,
-            uploadDate: "2025-01-01"
-          }))}
-        </script>
-        
-        {/* CreativeWork Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify(generateCreativeWorkSchema({
+            youtubeId: primaryVideoId,
+            uploadDate: "2024-01-01"
+          }),
+          generateCreativeWorkSchema({
             title: title,
             description: description,
             tools: tools,
             roles: roles,
             year: year
-          }))}
-        </script>
-      </Helmet>
-      
-      <div className="min-h-screen bg-background">
-        <Navigation />
+          })
+        ]}
+      />
+
+      <main className="space-y-16 sm:space-y-24">
         
-        {/* Hero Section */}
-        <section className="pt-20 md:pt-28 pb-10 md:pb-16 px-3 md:px-4">
-          <div 
-            ref={heroRef}
-            className={`max-w-4xl mx-auto transition-all duration-700 ${heroInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+        {/* Top Wayfinding & Navigation */}
+        <div className="flex items-center justify-between gap-4 pt-2">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
+            <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
+            <ChevronRight size={12} />
+            <Link to="/work" className="hover:text-foreground transition-colors">Work</Link>
+            <ChevronRight size={12} />
+            <span className="text-foreground font-medium">Video Editing</span>
+          </nav>
+
+          <Link
+            to="/work"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-foreground transition-colors group"
           >
-            {/* Back Button */}
-            <Link to="/#projects">
-              <Button variant="ghost" size="sm" className="mb-6 hover-scale group">
-                <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
-                Back to Projects
-              </Button>
-            </Link>
+            <ArrowLeft size={13} className="group-hover:-translate-x-1 transition-transform" />
+            <span className="hidden sm:inline">Back to Work</span>
+          </Link>
+        </div>
 
-            <Card className="glass-elevated border-glass-border">
-              <CardHeader className="px-4 md:px-8 pb-4">
-                <WindowChrome className="mb-4 md:mb-6" />
-                <div className="space-y-4">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <Badge variant="outline" className="text-xs">
-                      <Calendar className="mr-1 h-3 w-3" />
-                      {year}
-                    </Badge>
-                  </div>
-                  <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                    {title}
-                  </h1>
-                  <p className="text-sm md:text-lg text-muted-foreground leading-relaxed">
-                    {description}
-                  </p>
-                </div>
-              </CardHeader>
-              
-              <CardContent className="px-4 md:px-8 space-y-6 md:space-y-8">
-                {/* Tools Used */}
-                <div className="space-y-3">
-                  <h2 className="text-lg md:text-xl font-semibold flex items-center gap-2 text-foreground">
-                    <Wrench className="text-primary w-5 h-5" />
-                    Tools Used
-                  </h2>
-                  <div className="flex flex-wrap gap-2">
-                    {tools.map(tool => (
-                      <Badge 
-                        key={tool} 
-                        variant="secondary" 
-                        className="px-3 py-1 bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-all duration-200"
-                      >
-                        {tool}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
+        {/* =========================================================================
+            1. HERO & POSITIONING (Spacious Editorial Style)
+            ========================================================================= */}
+        <header className="space-y-8 max-w-4xl">
+          <div className="space-y-4">
+            <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
+              <span className="px-2.5 py-1 rounded-md bg-primary/10 text-primary font-semibold uppercase tracking-wider border border-primary/20">
+                Post-Production · DaVinci Resolve Studio
+              </span>
+              <span className="text-muted-foreground">·</span>
+              <span className="text-muted-foreground">700+ Client Projects</span>
+              <span className="text-muted-foreground">·</span>
+              <span className="text-muted-foreground">{year}</span>
+            </div>
 
-                {/* Role / Focus Areas */}
-                <div className="space-y-3">
-                  <h2 className="text-lg md:text-xl font-semibold flex items-center gap-2 text-foreground">
-                    <Target className="text-primary w-5 h-5" />
-                    Role & Focus Areas
-                  </h2>
-                  <div className="flex flex-wrap gap-2">
-                    {roles.map(role => (
-                      <Badge 
-                        key={role} 
-                        variant="outline" 
-                        className="px-3 py-1 border-accent/30 text-accent-foreground"
-                      >
-                        {role}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-foreground leading-[1.05]">
+              Video Editing & Post-Production
+            </h1>
+
+            <p className="text-lg sm:text-2xl font-light text-muted-foreground leading-relaxed">
+              "700+ client video projects delivered with precision pacing, node-based color grading, and broadcast audio."
+            </p>
           </div>
-        </section>
 
-        {/* Video Player Section */}
-        <section className="py-10 md:py-16 px-3 md:px-4 bg-muted/30">
-          <div 
-            ref={videoRef}
-            className={`max-w-4xl mx-auto transition-all duration-700 delay-100 ${videoInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-          >
-            <Card className="glass-panel border-glass-border hover-scale">
-              <CardHeader className="px-4 md:px-8">
-                <WindowChrome className="mb-4" />
-                <CardTitle className="text-xl md:text-2xl font-bold">
-                  Project Showcase
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="px-4 md:px-8 pb-8 space-y-8">
-                {/* Featured Video — Latest Release */}
-                <div className="space-y-3">
-                  <h3 className="text-base md:text-lg font-medium text-foreground">
-                    Featured — Latest Release
-                  </h3>
-                  <VideoEmbed 
-                    youtubeId={youtubeId} 
-                    title="ExamFlow OS — Cinematic Showcase by Geddada Devicharan"
-                    className="shadow-lg"
-                  />
-                </div>
+          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-3xl">
+            As a video editor, post-production specialist, and colorist operating in <strong className="text-foreground font-medium">DaVinci Resolve Studio</strong> on macOS, I handle the full post-production lifecycle for commercial spots, short-form social reels, product advertisements, song shoots, and creative productions.
+          </p>
 
-                {/* Primary Video */}
-                <div className="space-y-3">
-                  <h3 className="text-base md:text-lg font-medium text-foreground">
-                    Main Showcase
-                  </h3>
-                  <VideoEmbed 
-                    youtubeId="N68iysGT2DU" 
-                    title="Video Editing & Post-Production Showcase"
-                    className="shadow-lg"
-                  />
-                </div>
-                
-                {/* Secondary Video */}
-                <div className="space-y-3">
-                  <h3 className="text-base md:text-lg font-medium text-foreground">
-                    Additional Work
-                  </h3>
-                  <VideoEmbed 
-                    youtubeId="fkniR6CZWsY" 
-                    title="Additional Post-Production Showcase"
-                    className="shadow-lg"
-                  />
-                </div>
-              </CardContent>
-            </Card>
+          {/* Specialty Tags */}
+          <div className="flex flex-wrap gap-2 pt-2">
+            {tools.map((tool) => (
+              <span 
+                key={tool}
+                className="px-3 py-1.5 rounded-lg border border-border/60 bg-card/40 text-xs font-mono text-foreground/90"
+              >
+                {tool}
+              </span>
+            ))}
           </div>
-        </section>
+        </header>
 
-        {/* Process Section */}
-        <section className="py-10 md:py-16 px-3 md:px-4">
-          <div 
-            ref={processRef}
-            className={`max-w-4xl mx-auto transition-all duration-700 delay-200 ${processInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-          >
-            <Card className="glass-panel border-glass-border hover-scale">
-              <CardHeader className="px-4 md:px-8">
-                <WindowChrome className="mb-4" />
-                <CardTitle className="text-xl md:text-2xl font-bold flex items-center gap-3">
-                  <Layers className="text-primary w-5 h-5 md:w-6 md:h-6" />
-                  Process & Approach
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="px-4 md:px-8 space-y-6">
-                {process.map((step, index) => (
-                  <div 
-                    key={index} 
-                    className="border-l-4 border-primary/30 pl-4 md:pl-6 py-2"
-                  >
-                    <h3 className="text-base md:text-lg font-semibold text-foreground mb-2">
-                      {step.title}
-                    </h3>
-                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                      {step.description}
-                    </p>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
+        {/* =========================================================================
+            2. HERO FEATURED SHOWCASE (Dominant Large Video Frame)
+            ========================================================================= */}
+        <section className="space-y-4">
+          <div className="text-xs font-mono uppercase tracking-widest text-primary font-medium">
+            FEATURED REEL · CINEMATIC SHOWCASE
           </div>
-        </section>
 
-        {/* Footer */}
-        <footer className="py-8 px-4 border-t border-glass-border glass-panel">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center space-y-4">
-              <div className="flex justify-center items-center gap-6">
-                <a href="https://www.linkedin.com/in/geddadadevicharan" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
-                  <Button variant="ghost" size="sm" className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale">
-                    <Linkedin size={20} className="text-muted-foreground hover:text-primary transition-colors" />
-                  </Button>
-                </a>
-                <a href="https://www.instagram.com/imdvichrn" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile">
-                  <Button variant="ghost" size="sm" className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale">
-                    <Instagram size={20} className="text-muted-foreground hover:text-primary transition-colors" />
-                  </Button>
-                </a>
-                <a href="https://www.facebook.com/imdvichrn" target="_blank" rel="noopener noreferrer" aria-label="Facebook Profile">
-                  <Button variant="ghost" size="sm" className="p-3 h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-200 hover-scale">
-                    <Facebook size={20} className="text-muted-foreground hover:text-primary transition-colors" />
-                  </Button>
-                </a>
-              </div>
-              <p className="text-muted-foreground">© 2026 Geddada Devicharan (@imdvichrn). All rights reserved.</p>
+          <VideoWindow 
+            youtubeId={primaryVideoId}
+            title="ExamFlowOS — Cinematic Product Trailer & Editing Showcase"
+            className="w-full shadow-[0_12px_40px_-8px_rgba(0,0,0,0.35)]"
+          />
+
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl border border-border/40 bg-card/20 text-xs text-muted-foreground">
+            <div>
+              <strong className="text-foreground font-medium">Featured Deliverable:</strong> High-impact commercial trailer combining dynamic cutting, custom title callouts, and clean color grading.
+            </div>
+            <div className="font-mono text-primary text-[11px] shrink-0">
+              Environment: DaVinci Resolve Studio (macOS)
             </div>
           </div>
-        </footer>
-      </div>
-    </>
+        </section>
+
+        {/* =========================================================================
+            3. PRODUCTION SCOPE & FORMATS (Spacious Editorial Layout)
+            ========================================================================= */}
+        <section className="space-y-8 pt-8 border-t border-border/40">
+          <div className="space-y-2 max-w-3xl">
+            <div className="text-xs font-mono uppercase tracking-widest text-primary font-medium">
+              01 · PRODUCTION SCOPE
+            </div>
+            <h2 className="font-display text-3xl sm:text-5xl font-normal tracking-tight text-foreground">
+              700+ Delivered Projects Across Formats
+            </h2>
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+              Consistently executing high-volume client deliverables while maintaining tight visual standards and audio clarity.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {formats.map((fmt) => (
+              <div 
+                key={fmt.num}
+                className="p-6 sm:p-8 rounded-2xl border border-border/60 bg-card/30 backdrop-blur-xs space-y-4 flex flex-col justify-between"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between text-xs font-mono">
+                    <span className="text-primary font-semibold">{fmt.num}</span>
+                    <span className="text-muted-foreground bg-background/60 border border-border/40 px-2.5 py-1 rounded-md">
+                      {fmt.count}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground">
+                    {fmt.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                    {fmt.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* =========================================================================
+            4. TECHNICAL POST-PRODUCTION PIPELINE
+            ========================================================================= */}
+        <section className="space-y-8 pt-8 border-t border-border/40">
+          <div className="space-y-2 max-w-3xl">
+            <div className="text-xs font-mono uppercase tracking-widest text-primary font-medium">
+              02 · WORKSTATION PIPELINE
+            </div>
+            <h2 className="font-display text-3xl sm:text-5xl font-normal tracking-tight text-foreground">
+              DaVinci Resolve Studio Workflow
+            </h2>
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+              Operating natively on macOS with hardware-accelerated timeline editing, node-based color management, and broadcast audio tools.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {workflowModules.map((mod) => {
+              const Icon = mod.icon;
+              return (
+                <div 
+                  key={mod.title}
+                  className="p-6 rounded-2xl border border-border/50 bg-card/30 space-y-3"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0">
+                    <Icon size={20} />
+                  </div>
+                  <h3 className="text-base font-semibold text-foreground font-mono">
+                    {mod.title}
+                  </h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    {mod.desc}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* =========================================================================
+            5. ADDITIONAL SHOWCASE GALLERY (Large Media Previews)
+            ========================================================================= */}
+        <section className="space-y-8 pt-8 border-t border-border/40">
+          <div className="space-y-2 max-w-3xl">
+            <div className="text-xs font-mono uppercase tracking-widest text-primary font-medium">
+              03 · ADDITIONAL SHOWCASES
+            </div>
+            <h2 className="font-display text-3xl sm:text-5xl font-normal tracking-tight text-foreground">
+              Selected Editing & Post-Production Cuts
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="space-y-3">
+              <VideoWindow 
+                youtubeId="N68iysGT2DU"
+                title="Commercial Post-Production Showcase"
+                className="w-full shadow-lg"
+              />
+              <div className="px-2 space-y-1">
+                <h3 className="text-sm font-semibold text-foreground">Commercial & Promos Showcase</h3>
+                <p className="text-xs text-muted-foreground">Focusing on graphic callouts, rhythmic cutting, and clean audio balancing.</p>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <VideoWindow 
+                youtubeId="fkniR6CZWsY"
+                title="Additional Creative Post-Production Reel"
+                className="w-full shadow-lg"
+              />
+              <div className="px-2 space-y-1">
+                <h3 className="text-sm font-semibold text-foreground">Creative & Short-Form Reel</h3>
+                <p className="text-xs text-muted-foreground">Highlighting speed ramping, color correction, and mood-driven music syncing.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* =========================================================================
+            6. POST-PRODUCTION PRINCIPLES
+            ========================================================================= */}
+        <section className="p-8 sm:p-12 rounded-2xl border border-border/50 bg-card/30 space-y-6">
+          <div className="space-y-1">
+            <div className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+              04 · PHILOSOPHY
+            </div>
+            <h3 className="font-display text-2xl sm:text-4xl font-normal text-foreground">
+              Editorial Discipline
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs sm:text-sm text-muted-foreground leading-relaxed pt-2">
+            <div className="space-y-2 border-t border-border/40 pt-4">
+              <strong className="text-foreground block font-mono text-xs">Pacing Drives Emotion</strong>
+              Cutting on action and aligning transition speed to underlying audio beats keeps audiences engaged without visual fatigue.
+            </div>
+            <div className="space-y-2 border-t border-border/40 pt-4">
+              <strong className="text-foreground block font-mono text-xs">Color Serves Intent</strong>
+              Grade palette choices are designed to guide viewer eye position and mood, maintaining natural skin tones and consistent contrast.
+            </div>
+            <div className="space-y-2 border-t border-border/40 pt-4">
+              <strong className="text-foreground block font-mono text-xs">Audio Is Half the Film</strong>
+              Clean dialogue leveling, surgical EQ filtering, and precise sound effects placement transform raw edits into polished productions.
+            </div>
+          </div>
+        </section>
+
+        {/* =========================================================================
+            7. BOTTOM WAYFINDING & CALL TO ACTION
+            ========================================================================= */}
+        <section className="p-8 sm:p-12 rounded-2xl border border-border/60 bg-card/40 space-y-8">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-border/40">
+            <div className="space-y-2">
+              <div className="text-xs font-mono text-primary font-medium uppercase tracking-wider">
+                COMMISSIONS & COLLABORATIONS
+              </div>
+              <h3 className="font-display text-2xl sm:text-4xl font-normal text-foreground">
+                Need Professional Post-Production?
+              </h3>
+              <p className="text-sm sm:text-base text-muted-foreground max-w-xl">
+                Available for commercial post-production, short-form editing, and color grading projects.
+              </p>
+            </div>
+
+            <Link 
+              to="/contact"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-xs font-medium bg-foreground text-background hover:bg-foreground/90 transition-colors shrink-0 shadow-md"
+            >
+              <span>Get in Touch</span>
+              <ArrowUpRight size={14} />
+            </Link>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-muted-foreground">
+            <Link to="/work" className="hover:text-foreground transition-colors inline-flex items-center gap-1">
+              <ArrowLeft size={12} />
+              <span>Return to Work Overview</span>
+            </Link>
+            <Link to="/project/examflow-os" className="hover:text-foreground transition-colors inline-flex items-center gap-1">
+              <span>View Case Study: ExamFlowOS</span>
+              <ChevronRight size={12} />
+            </Link>
+          </div>
+        </section>
+
+      </main>
+    </PageShell>
   );
 }
+
+export default VideoEditingPostProduction;

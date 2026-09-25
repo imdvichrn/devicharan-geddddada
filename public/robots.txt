@@ -1,13 +1,22 @@
+# robots.txt for https://geddadadevicharan.vercel.app/
+# Official Digital Portfolio of Geddada Devicharan (@imdvichrn)
+
 User-agent: *
 Allow: /
+Disallow: /admin/
 Disallow: /admin
+Disallow: /api/private/
+Disallow: /internal/
+Disallow: /drafts/
+Disallow: /private/
 
-# Official portfolio website of Geddada Devicharan (imdvichrn)
-# Portfolio of AI systems creator, workflow designer, video editor, and automation systems developer
-# Brands: Echoless, ExamFlow OS, Perfect Pack
-# Projects: ExamFlowOS study system, Echoless AI workflow system, Perfect Pack DaVinci Resolve toolkit
+# Explicitly allow search engines & AI engine crawlers (AEO / GEO optimization)
+User-agent: Googlebot
+Allow: /
 
-# Explicitly allow major AI / answer engines (GEO + AEO)
+User-agent: Bingbot
+Allow: /
+
 User-agent: GPTBot
 Allow: /
 
@@ -44,9 +53,6 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
-User-agent: Bingbot
-Allow: /
-
 User-agent: CCBot
 Allow: /
 
@@ -65,5 +71,6 @@ Allow: /
 User-agent: DuckAssistBot
 Allow: /
 
+# Sitemaps
 Sitemap: https://geddadadevicharan.vercel.app/sitemap.xml
 Sitemap: https://geddadadevicharan.vercel.app/sitemap-index.xml

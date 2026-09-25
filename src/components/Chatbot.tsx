@@ -8,6 +8,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { ActionButtons } from './ActionButtons';
 import { useToast } from '@/hooks/use-toast';
 import { streamChatMessage, sendChatMessage, getUserNameFromStorage, saveUserNameToStorage, parseUserNameFromMessage } from '@/services/chatService';
+import { defaultEngine } from '@/echoless/engine';
+import { runNaturalnessPipeline } from '@/echoless/naturalness';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ActionButton {
@@ -60,12 +62,8 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
   const initialMessages: Message[] = [
     {
       role: 'assistant',
-      content: `Hey! 👋 I'm Echoless, Devicharan's personal assistant. What do you want to know?`,
+      content: `Hey. I'm Echoless. What would you like to explore across Devicharan's software products, video post-production, or digital systems?`,
       timestamp: new Date(),
-      buttons: [
-        { label: '🎬 See My Work', icon: 'play' as const, action: 'scroll-projects' },
-        { label: '💬 Get in Touch', icon: 'mail' as const, action: 'contact-page' }
-      ]
     }
   ];
 
@@ -75,33 +73,55 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
   const [showQuickActions, setShowQuickActions] = useState(messages.length === 1);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [modelMode, setModelMode] = useState<'general' | 'fast' | 'complex'>('general');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const textBufferRef = useRef<string>("");
+  const streamActiveRef = useRef<boolean>(false);
+  const currentResponseTextRef = useRef<string>("");
+  const streamIntervalRef = useRef<any>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  // Quick Actions Configuration with new button types
+  // Quick Actions Configuration
   const quickActions: QuickAction[] = [
+    {
+      id: 'examflow-os',
+      label: 'ExamFlowOS',
+      icon: <img src="/examflow-logo.jpg" alt="ExamFlowOS logo" className="w-4 h-4 rounded-xs object-cover" loading="lazy" decoding="async" />,
+      description: '10K+ users CBT testing platform (100% Free)',
+      action: () => {
+        window.open('https://examflowos.in', '_blank', 'noopener,noreferrer');
+      }
+    },
+    {
+      id: 'explore-work',
+      label: 'Explore Work',
+      icon: <Film size={16} className="text-primary" />,
+      description: 'Software, 700+ video projects, web ecosystems',
+      action: () => {
+        navigate('/work');
+        setIsOpen(false);
+      }
+    },
     {
       id: 'download-cv',
       label: 'Download CV',
       icon: <Download size={16} className="text-blue-400" />,
-      description: 'Get my resume and qualifications',
+      description: 'Get verified resume & qualifications',
       action: () => {
-        const link = document.createElement('a');
-        link.href = '/cv.pdf';
-        link.download = 'Geddada_Devicharan_CV.pdf';
-        link.click();
+        window.open('/Geddada_Devicharan_CV.pdf', '_blank', 'noopener,noreferrer');
         toast({
-          title: "CV Downloaded!",
-          description: "Your CV is ready to go",
+          title: "CV Opened",
+          description: "Geddada Devicharan's CV has been opened in a new tab.",
         });
       }
     },
     {
       id: 'book-call',
-      label: 'Book a Call',
+      label: 'Direct Contact',
       icon: <Phone size={16} className="text-emerald-400" />,
-      description: 'Schedule a consultation with me',
+      description: 'Connect directly on WhatsApp or email',
       action: () => {
         window.open('https://wa.me/916303468707', '_blank');
       }
@@ -112,39 +132,48 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
     toggleChat: () => setIsOpen(!isOpen)
   }));
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToBottom = (behavior: ScrollBehavior = 'smooth') => {
+    messagesEndRef.current?.scrollIntoView({ behavior });
   };
 
+  const smartScrollToBottom = (force = false) => {
+    const container = messagesContainerRef.current;
+    if (!container) return;
+    
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isAtBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 100;
+    
+    if (force || isAtBottom) {
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior: prefersReducedMotion ? 'auto' : 'smooth'
+      });
+    }
+  };
+
+  // Scroll on user messages or initial load
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    const lastMessage = messages[messages.length - 1];
+    if (messages.length === 1 || lastMessage?.role === 'user') {
+      scrollToBottom();
+    }
+  }, [messages.length]);
 
-  // Link Detection System - Detect when user asks for social media or GitHub
-  const detectSocialMediaRequest = (userInput: string): string | null => {
-    const lowerInput = userInput.toLowerCase();
-    
-    if (lowerInput.includes('linkedin') || lowerInput.includes('linked in') || lowerInput.includes('linkdin')) {
-      return 'linkedin';
+  // Scroll to bottom when chatbot is opened
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => scrollToBottom('auto'), 80);
     }
-    if (lowerInput.includes('instagram') || lowerInput.includes('insta') || lowerInput.includes('ig')) {
-      return 'instagram';
-    }
-    if (lowerInput.includes('facebook') || lowerInput.includes('fb')) {
-      return 'facebook';
-    }
-    if (lowerInput.includes('twitter') || lowerInput.includes('x.com') || lowerInput.includes('tweet')) {
-      return 'twitter';
-    }
-    if (lowerInput.includes('github') || lowerInput.includes('git hub') || lowerInput.includes('git')) {
-      return 'github';
-    }
-    if (lowerInput.includes('email') || lowerInput.includes('mail') || lowerInput.includes('contact') || lowerInput.includes('reach')) {
-      return 'email';
-    }
-    
-    return null;
-  };
+  }, [isOpen]);
+
+  // Cleanup stream interval on unmount
+  useEffect(() => {
+    return () => {
+      if (streamIntervalRef.current) {
+        clearInterval(streamIntervalRef.current);
+      }
+    };
+  }, []);
 
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -196,66 +225,6 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
     setMessages(prev => [...prev, newUserMessage]);
     setIsLoading(true);
 
-    // Check for social media link requests
-    const detectedSocial = detectSocialMediaRequest(userMessage);
-    
-    if (detectedSocial) {
-      // Social media detected - respond with button-based redirect
-      const socialResponses: Record<string, { text: string; buttons: ActionButton[] }> = {
-        linkedin: {
-          text: `Sure thing! Here's Devicharan's LinkedIn — he shares editing tips and industry insights there. Feel free to connect! 🤝`,
-          buttons: [
-            { label: '🔗 Open LinkedIn', icon: 'link' as const, action: 'linkedin' }
-          ]
-        },
-        instagram: {
-          text: `Great choice! You'll find behind-the-scenes content and portfolio highlights on his Instagram. Check it out! 📸`,
-          buttons: [
-            { label: '📸 Open Instagram', icon: 'link' as const, action: 'instagram' }
-          ]
-        },
-        facebook: {
-          text: `Here's the Facebook page! Drop a message or follow for updates on creative projects. 👋`,
-          buttons: [
-            { label: '👥 Open Facebook', icon: 'link' as const, action: 'facebook' }
-          ]
-        },
-        twitter: {
-          text: `Nice! Devicharan shares quick tips and creative thoughts on X/Twitter. Give it a follow! 🐦`,
-          buttons: [
-            { label: '🐦 Open Twitter/X', icon: 'link' as const, action: 'twitter' }
-          ]
-        },
-        github: {
-          text: `Looking for code? Here's the GitHub profile with all the projects and repositories! 💻`,
-          buttons: [
-            { label: '💻 Open GitHub', icon: 'link' as const, action: 'github' }
-          ]
-        },
-        email: {
-          text: `Want to get in touch? No problem! Pick your preferred way to reach out below. I'll make sure Devicharan gets back to you! 📬`,
-          buttons: [
-            { label: '📧 Send Email', icon: 'mail' as const, action: 'email' },
-            { label: '💬 WhatsApp', icon: 'phone' as const, action: 'whatsapp' }
-          ]
-        }
-      };
-
-      const response = socialResponses[detectedSocial];
-      const assistantMessage: Message = {
-        role: 'assistant',
-        content: response.text,
-        buttons: response.buttons,
-        timestamp: new Date()
-      };
-
-      setTimeout(() => {
-        setMessages(prev => [...prev, assistantMessage]);
-        setIsLoading(false);
-      }, 500);
-      return;
-    }
-
     try {
       // Build API messages from conversation history
       const apiMessages = [...messages, newUserMessage].map(m => ({
@@ -263,63 +232,153 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
         content: m.content,
       }));
 
-      let assistantSoFar = "";
+      // Initialize streaming states
+      textBufferRef.current = "";
+      streamActiveRef.current = true;
+      currentResponseTextRef.current = "";
 
-      const upsertAssistant = (nextChunk: string) => {
-        assistantSoFar += nextChunk;
+      const finalizeAssistantMessage = (rawText: string) => {
+        const { refinedText, actions } = runNaturalnessPipeline(rawText, {
+          userPrompt: userMessage,
+          recentHistory: messages,
+        });
+
         setMessages(prev => {
           const last = prev[prev.length - 1];
-          if (last?.role === "assistant" && !last.buttons) {
+          const actionButtons: ActionButton[] | undefined =
+            actions.length > 0
+              ? actions.map(a => ({
+                  label: a.label,
+                  action: a.id,
+                  icon: 'link' as const,
+                }))
+              : undefined;
+
+          if (last?.role === "assistant") {
             return prev.map((m, i) =>
               i === prev.length - 1
-                ? { ...m, content: assistantSoFar }
+                ? {
+                    ...m,
+                    content: refinedText,
+                    buttons: actionButtons,
+                  }
                 : m
             );
           }
           return [
             ...prev,
-            { role: "assistant" as const, content: assistantSoFar, timestamp: new Date() },
+            {
+              role: "assistant" as const,
+              content: refinedText,
+              buttons: actionButtons,
+              timestamp: new Date(),
+            },
           ];
         });
       };
 
+      const startStreamConsumption = () => {
+        if (streamIntervalRef.current) {
+          clearInterval(streamIntervalRef.current);
+        }
+
+        streamIntervalRef.current = setInterval(() => {
+          if (textBufferRef.current.length === 0) {
+            if (!streamActiveRef.current) {
+              finalizeAssistantMessage(currentResponseTextRef.current);
+              smartScrollToBottom(true);
+              clearInterval(streamIntervalRef.current!);
+              streamIntervalRef.current = null;
+            }
+            return;
+          }
+
+          if (!streamActiveRef.current) {
+            const remaining = textBufferRef.current;
+            textBufferRef.current = "";
+            currentResponseTextRef.current += remaining;
+            
+            finalizeAssistantMessage(currentResponseTextRef.current);
+            smartScrollToBottom(true);
+            
+            clearInterval(streamIntervalRef.current!);
+            streamIntervalRef.current = null;
+            return;
+          }
+
+          const bufferLength = textBufferRef.current.length;
+          let takeLength = 4;
+          
+          if (bufferLength > 200) {
+            takeLength = 28;
+          } else if (bufferLength > 90) {
+            takeLength = 16;
+          } else if (bufferLength > 40) {
+            takeLength = 8;
+          } else if (bufferLength > 15) {
+            takeLength = 5;
+          }
+          
+          const chunkToAppend = textBufferRef.current.slice(0, takeLength);
+          textBufferRef.current = textBufferRef.current.slice(takeLength);
+          currentResponseTextRef.current += chunkToAppend;
+
+          // Transition smoothly from thinking indicator to rendered bubble on first chunk
+          setIsLoading(false);
+
+          setMessages(prev => {
+            const last = prev[prev.length - 1];
+            if (last?.role === "assistant" && !last.buttons) {
+              return prev.map((m, i) =>
+                i === prev.length - 1
+                  ? { ...m, content: currentResponseTextRef.current }
+                  : m
+              );
+            }
+            return [
+              ...prev,
+              { role: "assistant" as const, content: currentResponseTextRef.current, timestamp: new Date() },
+            ];
+          });
+
+          smartScrollToBottom(false);
+        }, 35);
+      };
+
+      const upsertAssistantChunk = (nextChunk: string) => {
+        textBufferRef.current += nextChunk;
+        if (!streamIntervalRef.current) {
+          startStreamConsumption();
+        }
+      };
+
       await streamChatMessage({
         messages: apiMessages,
+        taskType: modelMode,
+        modelPreference: modelMode,
         onDelta: (chunk) => {
-          setIsLoading(false);
-          upsertAssistant(chunk);
+          upsertAssistantChunk(chunk);
         },
         onDone: () => {
-          setIsLoading(false);
-          toast({
-            title: "Message Sent Successfully!",
-            description: "Geddada Devicharan will get back to you shortly.",
-          });
+          streamActiveRef.current = false;
         },
         onError: (error) => {
-          console.error("Chat stream error:", error);
-          throw error; // Pass to the catch block
+          console.warn("Chat notice:", error);
+          setIsLoading(false);
+          streamActiveRef.current = false;
+          upsertAssistantChunk(defaultEngine.getHonestUnavailableResponse());
         },
       });
     } catch (error) {
-      console.error('Chat error:', error);
+      console.warn('Chat notice caught:', error);
       setMessages(prev => [
         ...prev,
         {
           role: 'assistant' as const,
-          content: `Something went wrong. You can reach Devicharan at:\n\n📧 devicharangeddada@gmail.com`,
-          buttons: [
-            { label: 'Send Email', icon: 'mail' as const, action: 'email' },
-            { label: 'WhatsApp', icon: 'phone' as const, action: 'whatsapp' }
-          ],
+          content: defaultEngine.getHonestUnavailableResponse(),
           timestamp: new Date()
         }
       ]);
-      toast({
-        variant: "destructive",
-        title: "Message Failed",
-        description: "Something went wrong. Please try again.",
-      });
     } finally {
       setIsLoading(false);
     }
@@ -327,21 +386,42 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
 
   const handleButtonAction = (action: string) => {
     switch (action) {
+      case 'examflowos':
+        window.open('https://examflowos.in', '_blank', 'noopener,noreferrer');
+        break;
+      case 'software':
+        navigate('/software');
+        setIsOpen(false);
+        break;
+      case 'video':
+        navigate('/video');
+        setIsOpen(false);
+        break;
+      case 'web':
+        navigate('/web');
+        setIsOpen(false);
+        break;
+      case 'systems':
+        navigate('/systems');
+        setIsOpen(false);
+        break;
+      case 'writing':
+        navigate('/writing');
+        setIsOpen(false);
+        break;
       case 'view-showreel':
-        navigate('/project/scenesync-edits');
+        navigate('/video');
         setIsOpen(false);
         break;
       case 'scroll-projects':
-        scrollToSection('projects');
-        break;
       case 'view-portfolio':
-        scrollToSection('projects');
+      case 'projects':
+        navigate('/work');
+        setIsOpen(false);
         break;
+      case 'cv':
       case 'download-cv':
-        const link = document.createElement('a');
-        link.href = '/cv.pdf';
-        link.download = 'Geddada_Devicharan_CV.pdf';
-        link.click();
+        window.open('/Geddada_Devicharan_CV.pdf', '_blank', 'noopener,noreferrer');
         break;
       case 'book-call':
         window.open('https://wa.me/916303468707', '_blank');
@@ -367,17 +447,15 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
       case 'whatsapp':
         window.open('https://wa.me/916303468707', '_blank');
         break;
-      case 'projects':
-        scrollToSection('projects');
-        break;
       case 'contact-page':
-        scrollToSection('contact');
+        navigate('/contact');
+        setIsOpen(false);
         break;
       case 'share':
         if (navigator.share) {
           navigator.share({
-            title: 'Devicharan Portfolio',
-            text: 'Check out Devicharan\'s post-production portfolio!',
+            title: 'Geddada Devicharan Portfolio',
+            text: 'Explore Devicharan\'s software, systems, and post-production portfolio.',
             url: window.location.href
           }).catch(console.error);
         } else {
@@ -388,16 +466,17 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
           });
         }
         break;
-      // Handle project links
       default:
         if (action.startsWith('project-')) {
           const projectLink = action.replace('project-', '');
           if (projectLink.includes('video')) {
-            navigate('/projects/video-editing-post-production');
-          } else if (projectLink.includes('scenesync')) {
-            navigate('/project/scenesync-edits');
+            navigate('/video');
+          } else if (projectLink.includes('examflow')) {
+            navigate('/software');
           } else if (projectLink.includes('perfect-pack')) {
-            navigate('/project/perfect-pack-plugin');
+            navigate('/perfect-pack');
+          } else {
+            navigate('/work');
           }
           setIsOpen(false);
         }
@@ -471,7 +550,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
       }
     }
 
-    return links;
+    return links.slice(0, 2);
   };
 
   const renderContentWithLinks = (content: string): string => {
@@ -482,37 +561,63 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
     return cleaned;
   };
 
-  const getLinkGlowColor = (url: string): string => {
-    if (url.includes('linkedin')) return 'from-blue-500 to-blue-600 shadow-blue-500/50';
-    if (url.includes('instagram')) return 'from-pink-500 to-purple-600 shadow-pink-500/50';
-    if (url.includes('facebook')) return 'from-blue-600 to-blue-700 shadow-blue-600/50';
-    if (url.includes('twitter') || url.includes('x.com')) return 'from-sky-400 to-sky-600 shadow-sky-500/50';
-    if (url.includes('github')) return 'from-gray-600 to-gray-800 shadow-gray-500/50';
-    if (url.includes('wa.me') || url.includes('whatsapp')) return 'from-emerald-500 to-teal-600 shadow-emerald-500/50';
-    if (url.includes('examflowos')) return 'from-blue-500 to-indigo-600 shadow-blue-500/50';
-    if (url.startsWith('/')) return 'from-indigo-500 to-purple-600 shadow-indigo-500/50';
-    return 'from-indigo-500 to-blue-600 shadow-indigo-500/50';
+  const getActionStyle = (actionOrUrl: string) => {
+    const a = actionOrUrl.toLowerCase();
+    if (a.includes('instagram')) {
+      // Restrained Instagram-inspired accent (subtle warm rose/amber glass border)
+      return 'bg-gradient-to-r from-rose-500/10 via-pink-500/10 to-amber-500/10 hover:from-rose-500/15 hover:to-amber-500/15 text-rose-100 border border-rose-400/30 hover:border-rose-400/50 shadow-xs';
+    }
+    if (a.includes('github')) {
+      // Neutral monochrome
+      return 'bg-zinc-800/60 hover:bg-zinc-700/60 text-zinc-200 border border-zinc-700/60 hover:border-zinc-500/70 shadow-xs';
+    }
+    if (a.includes('linkedin') || a.includes('facebook') || a.includes('twitter') || a.includes('x.com')) {
+      // Restrained blue
+      return 'bg-sky-500/10 hover:bg-sky-500/20 text-sky-200 border border-sky-400/30 hover:border-sky-400/50 shadow-xs';
+    }
+    if (a.includes('whatsapp') || a.includes('wa.me')) {
+      // Restrained green
+      return 'bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 hover:border-emerald-400/50 shadow-xs';
+    }
+    if (a.includes('video') || a.includes('showreel')) {
+      // Cinematic violet/blue
+      return 'bg-violet-500/10 hover:bg-violet-500/20 text-violet-200 border border-violet-400/30 hover:border-violet-400/50 shadow-xs';
+    }
+    if (a.includes('software') || a.includes('examflow') || a.includes('web')) {
+      // Sapphire blue
+      return 'bg-blue-500/10 hover:bg-blue-500/20 text-blue-200 border border-blue-400/30 hover:border-blue-400/50 shadow-xs';
+    }
+    if (a.includes('cv') || a.includes('resume') || a.includes('.pdf')) {
+      // Neutral document treatment
+      return 'bg-slate-700/30 hover:bg-slate-700/50 text-slate-200 border border-slate-600/40 hover:border-slate-400/60 shadow-xs';
+    }
+    // Apple-inspired unified glass pill
+    return 'bg-muted/40 hover:bg-muted/60 text-chat-text border border-chat-border/50 hover:border-primary/40 shadow-xs';
   };
 
   return (
     <>
       {/* Echo Less Toggle Button - Always-floating Siri Orb */}
       <motion.div
-        className="fixed bottom-6 right-6 z-[9999] pointer-events-auto"
-        whileHover={{ scale: 1.15 }}
+        className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-[9999] pointer-events-auto"
+        style={{
+          bottom: 'max(1.5rem, env(safe-area-inset-bottom) + 0.5rem)',
+          right: 'max(1.5rem, env(safe-area-inset-right) + 0.5rem)',
+        }}
+        whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
       >
         <Button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-16 h-16 md:w-20 md:h-20 rounded-full shadow-2xl transition-all duration-200 overflow-hidden bg-transparent hover:bg-transparent border-0 outline-none ring-0 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:outline-none flex items-center justify-center p-0"
+          className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full shadow-2xl transition-all duration-200 overflow-hidden bg-transparent hover:bg-transparent border-0 outline-none ring-0 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:outline-none flex items-center justify-center p-0 cursor-pointer"
           style={{ border: 'none', outline: 'none' }}
           aria-label="Chat Support - Click to talk with Echoless"
         >
           {/* Continuous looping Siri Orb - runs regardless of chat state */}
           <motion.div
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 2, repeat: Infinity, repeatType: 'loop' }}
-            className="w-14 h-14 md:w-[72px] md:h-[72px] rounded-full overflow-hidden"
+            animate={{ scale: [1, 1.08, 1] }}
+            transition={{ duration: 2.2, repeat: Infinity, repeatType: 'loop' }}
+            className="w-10 h-10 sm:w-14 sm:h-14 md:w-[72px] md:h-[72px] rounded-full overflow-hidden flex items-center justify-center"
             style={{ borderRadius: '50%', border: 'none', outline: 'none' }}
           >
             <SiriOrb className="w-full h-full" />
@@ -524,11 +629,14 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            initial={{ opacity: 0, scale: 0.85, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="fixed bottom-24 left-3 right-3 md:left-auto md:right-6 md:w-96 max-w-[calc(100vw-1.5rem)] h-[min(500px,calc(100vh-7rem))] z-[9998] flex flex-col"
+            exit={{ opacity: 0, scale: 0.85, y: 16 }}
+            transition={{ type: 'spring', stiffness: 320, damping: 28 }}
+            className="fixed left-3 right-3 sm:left-auto sm:right-6 sm:w-96 max-w-[calc(100vw-1.5rem)] h-[min(520px,calc(100dvh-5.5rem))] z-[9998] flex flex-col"
+            style={{
+              bottom: 'max(4.5rem, calc(env(safe-area-inset-bottom) + 4.25rem))',
+            }}
           >
             {/* Glass Panel Container */}
             <div className="relative h-full rounded-2xl overflow-hidden shadow-2xl border border-chat-border bg-chat-bg/95 backdrop-blur-xl flex flex-col">
@@ -538,28 +646,28 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
               </div>
 
               {/* Header */}
-              <div className="relative z-10 p-4 border-b border-chat-border/50 flex-shrink-0">
+              <div className="relative z-10 px-4 py-3 border-b border-chat-border/50 flex-shrink-0 bg-background/40 backdrop-blur-md">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3 flex-1">
+                  <div className="flex items-center gap-2.5 flex-1">
                     <motion.div
                       animate={{ rotate: 360 }}
                       transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                      className="w-3 h-3 rounded-full bg-gradient-to-r from-primary to-accent"
+                      className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-primary to-accent"
                     />
                     <div>
-                      <h3 className="font-semibold text-sm text-chat-text">Echoless</h3>
-                      <p className="text-xs text-chat-text-muted flex items-center gap-1">
+                      <h3 className="font-semibold text-xs tracking-wide uppercase text-chat-text">Echoless</h3>
+                      <p className="text-[11px] text-chat-text-muted flex items-center gap-1.5">
                         <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
-                        Online • Personal Assistant
+                        Online
                       </p>
                     </div>
                   </div>
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="text-chat-text-muted hover:text-chat-text transition-colors"
+                    className="text-chat-text-muted hover:text-chat-text transition-colors p-1.5 rounded-md hover:bg-muted/30 cursor-pointer"
                     aria-label="Close chat"
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
@@ -567,7 +675,10 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
               </div>
 
               {/* Messages Container - Scrollable */}
-              <div className="relative z-10 flex-1 min-h-0 overflow-y-auto p-4 space-y-3">
+              <div 
+                ref={messagesContainerRef}
+                className="relative z-10 flex-1 min-h-0 overflow-y-auto p-4 space-y-3"
+              >
                 {/* Quick Actions Display */}
                 {showQuickActions && messages.length === 1 && (
                   <motion.div
@@ -602,9 +713,9 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
                 {messages.map((message, index) => (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                    initial={{ opacity: 0, scale: 0.98, y: 4 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
-                    transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+                    transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
                     className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
                     <motion.div
@@ -619,87 +730,49 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
                         {message.role === 'assistant' ? renderContentWithLinks(message.content) : message.content}
                       </div>
 
-                      {/* Auto-detected link buttons from content */}
-                      {message.role === 'assistant' && (() => {
-                        const links = extractLinks(message.content);
-                        if (links.length === 0) return null;
+                      {/* Action Buttons (Unified Apple/macOS Design System) */}
+                      {(() => {
+                        const displayButtons = message.buttons && message.buttons.length > 0 ? message.buttons : [];
+
+                        if (!displayButtons || displayButtons.length === 0) return null;
+
                         return (
                           <motion.div
-                            initial={{ opacity: 0, y: 5 }}
+                            initial={{ opacity: 0, y: 3 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.3 }}
-                            className="mt-3 flex flex-col gap-2"
+                            transition={{ delay: 0.15 }}
+                            className="mt-3 flex flex-col gap-1.5"
                           >
-                            {links.map((link, idx) => {
-                              const glowClass = getLinkGlowColor(link.url);
-                              return (
-                                <motion.button
-                                  key={idx}
-                                  whileHover={{ scale: 1.03, boxShadow: '0 0 20px rgba(99, 102, 241, 0.5)' }}
-                                  whileTap={{ scale: 0.97 }}
-                                  onClick={() => {
-                                    if (link.isInternal) {
-                                      navigate(link.url);
+                            {displayButtons.map((btn, idx) => (
+                              <motion.button
+                                key={idx}
+                                whileHover={{ scale: 1.015, y: -1 }}
+                                whileTap={{ scale: 0.985 }}
+                                onClick={() => {
+                                  if (btn.action.startsWith('http') || btn.action.startsWith('/')) {
+                                    if (btn.action.startsWith('/')) {
+                                      navigate(btn.action);
                                       setIsOpen(false);
                                     } else {
-                                      window.open(link.url, '_blank', 'noopener,noreferrer');
+                                      window.open(btn.action, '_blank', 'noopener,noreferrer');
                                     }
-                                  }}
-                                  className={`w-full px-4 py-2.5 rounded-xl font-medium text-sm flex items-center justify-center gap-2 transition-all duration-300 bg-gradient-to-r ${glowClass} text-primary-foreground shadow-lg hover:shadow-xl`}
-                                >
-                                  <Sparkles size={14} />
-                                  {link.label}
-                                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                                </motion.button>
-                              );
-                            })}
+                                  } else {
+                                    handleButtonAction(btn.action);
+                                  }
+                                }}
+                                className={`w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium flex items-center justify-between gap-2 transition-all duration-200 backdrop-blur-md cursor-pointer ${getActionStyle(btn.action)}`}
+                              >
+                                <span className="flex items-center gap-2 truncate">
+                                  <span className="truncate">{btn.label}</span>
+                                </span>
+                                <svg className="w-3.5 h-3.5 opacity-65 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                </svg>
+                              </motion.button>
+                            ))}
                           </motion.div>
                         );
                       })()}
-
-                      {/* Quick Reply Buttons - Full Width Secondary Style */}
-                      {message.buttons && message.buttons.length > 0 && (
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.2 }}
-                          className="mt-3 flex flex-col gap-2"
-                        >
-                          {message.buttons.map((btn, idx) => {
-                            // Check if this is a social media button for special glow styling
-                            const isSocialButton = ['linkedin', 'instagram', 'facebook', 'twitter', 'github', 'email', 'whatsapp'].some(
-                              social => btn.action.includes(social)
-                            );
-                            
-                            // Get platform-specific colors for glow effect
-                            const getGlowColor = (action: string) => {
-                              if (action.includes('linkedin')) return 'from-blue-500 to-blue-600 shadow-blue-500/50';
-                              if (action.includes('instagram')) return 'from-pink-500 to-purple-600 shadow-pink-500/50';
-                              if (action.includes('facebook')) return 'from-blue-600 to-blue-700 shadow-blue-600/50';
-                              if (action.includes('twitter')) return 'from-sky-400 to-sky-600 shadow-sky-500/50';
-                              if (action.includes('github')) return 'from-gray-600 to-gray-800 shadow-gray-500/50';
-                              if (action.includes('email') || action.includes('whatsapp')) return 'from-emerald-500 to-teal-600 shadow-emerald-500/50';
-                              return 'from-indigo-500 to-blue-600 shadow-indigo-500/50';
-                            };
-
-                            return (
-                              <motion.button
-                                key={idx}
-                                whileHover={{ scale: 1.03, boxShadow: isSocialButton ? '0 0 20px rgba(99, 102, 241, 0.6)' : undefined }}
-                                whileTap={{ scale: 0.97 }}
-                                onClick={() => handleButtonAction(btn.action)}
-                                className={`w-full px-4 py-2.5 rounded-xl font-medium text-sm flex items-center justify-center gap-2 transition-all duration-300 ${
-                                  isSocialButton 
-                                    ? `bg-gradient-to-r ${getGlowColor(btn.action)} text-primary-foreground shadow-lg hover:shadow-xl`
-                                    : 'border border-chat-border bg-primary/10 hover:bg-primary/20 text-chat-text hover:text-chat-text'
-                                }`}
-                              >
-                                {btn.label}
-                              </motion.button>
-                            );
-                          })}
-                        </motion.div>
-                      )}
 
                       {/* Timestamp */}
                       {message.timestamp && (
@@ -711,32 +784,36 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
                   </motion.div>
                 ))}
 
-                {/* Thinking Animation */}
+                {/* Thinking Animation using Siri visual language */}
                 {isLoading && (
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
+                    initial={{ opacity: 0, scale: 0.98, y: 4 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                     className="flex justify-start"
                   >
-                    <div className="bg-chat-bubble-bot border border-chat-border/50 text-chat-text p-3 rounded-2xl rounded-bl-none backdrop-blur-sm flex items-center gap-2">
-                      <div className="flex gap-1">
-                        <motion.div
-                          animate={{ y: [0, -4, 0] }}
-                          transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
-                          className="w-2 h-2 rounded-full bg-primary"
+                    <div className="bg-chat-bubble-bot border border-chat-border/50 text-chat-text px-3 py-2 rounded-2xl rounded-bl-none backdrop-blur-md flex items-center gap-2.5 shadow-xs">
+                      <div className="w-4 h-4 rounded-full overflow-hidden flex items-center justify-center">
+                        <SiriOrb className="w-full h-full" />
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <motion.span
+                          animate={{ opacity: [0.35, 1, 0.35] }}
+                          transition={{ duration: 1.2, repeat: Infinity, delay: 0 }}
+                          className="w-1.5 h-1.5 rounded-full bg-primary/80"
                         />
-                        <motion.div
-                          animate={{ y: [0, -4, 0] }}
-                          transition={{ duration: 0.6, repeat: Infinity, delay: 0.1 }}
-                          className="w-2 h-2 rounded-full bg-primary"
+                        <motion.span
+                          animate={{ opacity: [0.35, 1, 0.35] }}
+                          transition={{ duration: 1.2, repeat: Infinity, delay: 0.2 }}
+                          className="w-1.5 h-1.5 rounded-full bg-primary/80"
                         />
-                        <motion.div
-                          animate={{ y: [0, -4, 0] }}
-                          transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
-                          className="w-2 h-2 rounded-full bg-primary"
+                        <motion.span
+                          animate={{ opacity: [0.35, 1, 0.35] }}
+                          transition={{ duration: 1.2, repeat: Infinity, delay: 0.4 }}
+                          className="w-1.5 h-1.5 rounded-full bg-primary/80"
                         />
                       </div>
-                      <span className="ml-1 text-xs">Thinking...</span>
                     </div>
                   </motion.div>
                 )}

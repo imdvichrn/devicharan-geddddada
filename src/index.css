@@ -1,6 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../tailwind.config.ts";
 
 @keyframes gradient-shift {
   0% { background-position: 0% 50%; }
@@ -12,6 +11,26 @@
   animation: gradient-shift 2s ease-in-out infinite;
 }
 
+@keyframes stroke-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-2px); }
+  40%, 80% { transform: translateX(2px); }
+}
+
+.font-editorial {
+  font-family: 'Source Serif 4', Georgia, Cambria, 'Times New Roman', Times, serif;
+}
+
+.font-display {
+  font-family: 'Instrument Serif', 'Source Serif 4', Georgia, serif;
+}
+
 /* MacOS-inspired design system with glassmorphism and smooth animations.
 All colors MUST be HSL for proper theming.
 */
@@ -19,50 +38,50 @@ All colors MUST be HSL for proper theming.
 @layer base {
   :root {
     /* Base colors - Light: clean, editorial, warm-neutral */
-    --background: 225 15% 97%;
-    --foreground: 225 25% 10%;
+    --background: 220 14% 97%;
+    --foreground: 224 24% 10%;
 
     /* Glass panel backgrounds */
-    --glass: 225 15% 98%;
-    --glass-border: 225 12% 88%;
-    --glass-shadow: 225 20% 20%;
+    --glass: 220 15% 98%;
+    --glass-border: 220 12% 88%;
+    --glass-shadow: 224 20% 16%;
 
     /* Card and surface colors */
     --card: 0 0% 100%;
-    --card-foreground: 225 25% 12%;
+    --card-foreground: 224 24% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 225 25% 10%;
+    --popover-foreground: 224 24% 10%;
 
-    /* Primary - deep sapphire blue */
-    --primary: 220 85% 52%;
+    /* Primary - Apple System Blue Light (#007AFF) */
+    --primary: 211 100% 50%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 220 90% 68%;
+    --primary-glow: 211 100% 60%;
 
-    /* Secondary - cool neutral */
-    --secondary: 225 12% 93%;
-    --secondary-foreground: 225 20% 22%;
+    /* Secondary - restrained neutral */
+    --secondary: 220 12% 93%;
+    --secondary-foreground: 224 20% 22%;
 
     /* Muted backgrounds */
-    --muted: 225 12% 95%;
-    --muted-foreground: 225 8% 42%;
+    --muted: 220 12% 95%;
+    --muted-foreground: 220 8% 42%;
 
-    /* Accent - rich amethyst */
-    --accent: 262 80% 58%;
+    /* Accent - Apple System Blue */
+    --accent: 211 100% 50%;
     --accent-foreground: 0 0% 100%;
 
     /* Status colors */
     --destructive: 0 72% 55%;
     --destructive-foreground: 0 0% 100%;
-    --success: 152 60% 38%;
+    --success: 142 70% 36%;
     --success-foreground: 0 0% 100%;
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
 
     /* Interactive elements */
-    --border: 225 12% 90%;
-    --input: 225 12% 93%;
-    --ring: 220 85% 52%;
+    --border: 220 13% 89%;
+    --input: 220 12% 92%;
+    --ring: 211 100% 50%;
 
     /* Window chrome colors */
     --window-red: 0 85% 60%;
@@ -70,6 +89,51 @@ All colors MUST be HSL for proper theming.
     --window-green: 130 80% 45%;
 
     --radius: 1rem;
+
+    /* =========================================================================
+       CENTRAL FLUID SPACING SYSTEM (CSS clamp() strategy)
+       Eliminates fixed pixel breakpoints in favor of smooth, continuous viewport scaling
+       ========================================================================= */
+    
+    /* Header Dimensions & Clearances */
+    --header-height: clamp(3.75rem, 3.35rem + 1vw, 4.5rem);
+    --header-to-content-gap: clamp(1.25rem, 0.5rem + 2.5vw, 3.5rem);
+    
+    /* Global Page Offsets (Header clearance + intentional breathing room) */
+    --page-pt: clamp(5.25rem, 4.1rem + 3.8vw, 8.5rem);
+    --page-pb: clamp(4rem, 2.75rem + 3.2vw, 7.5rem);
+    --page-px: clamp(1rem, 0.4rem + 2.4vw, 3rem);
+    
+    /* Section & Content Layout Intervals */
+    --section-gap: clamp(2.5rem, 1.6rem + 3.5vw, 6rem);
+    --section-gap-sm: clamp(1.75rem, 1.2rem + 2vw, 3.5rem);
+    
+    /* Fluid Scale Steps for Micro & Macro Layouts */
+    --space-fluid-xs: clamp(0.5rem, 0.38rem + 0.35vw, 0.75rem);
+    --space-fluid-sm: clamp(0.875rem, 0.68rem + 0.6vw, 1.25rem);
+    --space-fluid-md: clamp(1.25rem, 0.92rem + 1.1vw, 2rem);
+    --space-fluid-lg: clamp(2rem, 1.35rem + 2.1vw, 3.5rem);
+    --space-fluid-xl: clamp(3rem, 1.95rem + 3.3vw, 5.5rem);
+
+    /* =========================================================================
+       CENTRAL FLUID TYPOGRAPHY SYSTEM (CSS clamp() strategy)
+       Scales font sizes proportionally with viewport width
+       ========================================================================= */
+    --font-fluid-h1: clamp(1.875rem, 1.35rem + 2.6vw, 3.25rem);
+    --font-fluid-h2: clamp(1.5rem, 1.15rem + 1.75vw, 2.25rem);
+    --font-fluid-h3: clamp(1.25rem, 1.05rem + 1vw, 1.75rem);
+    --font-fluid-h4: clamp(1.125rem, 0.98rem + 0.7vw, 1.375rem);
+    --font-fluid-p: clamp(0.9375rem, 0.88rem + 0.3vw, 1.0625rem);
+    --font-fluid-lead: clamp(1.0625rem, 0.95rem + 0.55vw, 1.375rem);
+    --font-fluid-sm: clamp(0.8125rem, 0.77rem + 0.2vw, 0.875rem);
+
+    /* Signature Background System (BackgroundLoop) */
+    --bg-tone: 225 15% 97%;
+    --bg-accent-intensity: 0.08;
+    --bg-line-opacity: 0.045;
+    --bg-particle-opacity: 0.12;
+    --bg-glow-intensity: 0.06;
+    --bg-anim-speed: 0.8;
 
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
@@ -119,66 +183,74 @@ All colors MUST be HSL for proper theming.
   }
 
   .dark {
-    /* Base colors - Dark: cinematic, rich, deep */
-    --background: 225 30% 6%;
-    --foreground: 225 10% 94%;
+    /* Base colors - Dark: cinematic, rich charcoal, warm neutral depth */
+    --background: 224 24% 7%;
+    --foreground: 220 15% 96%;
 
     /* Glass panel backgrounds */
-    --glass: 225 25% 9%;
-    --glass-border: 225 20% 18%;
-    --glass-shadow: 225 30% 3%;
+    --glass: 224 22% 10%;
+    --glass-border: 224 18% 18%;
+    --glass-shadow: 224 35% 3%;
 
     /* Card and surface colors */
-    --card: 225 25% 10%;
-    --card-foreground: 225 10% 90%;
+    --card: 224 22% 9%;
+    --card-foreground: 220 15% 94%;
 
-    --popover: 225 25% 9%;
-    --popover-foreground: 225 10% 94%;
+    --popover: 224 22% 9%;
+    --popover-foreground: 220 15% 96%;
 
-    /* Primary - vivid electric blue */
-    --primary: 215 100% 60%;
-    --primary-foreground: 225 30% 6%;
-    --primary-glow: 215 100% 75%;
+    /* Primary - Apple System Blue Dark (#0A84FF) */
+    --primary: 210 100% 52%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 210 100% 64%;
 
     /* Secondary */
-    --secondary: 225 20% 16%;
-    --secondary-foreground: 225 10% 85%;
+    --secondary: 224 18% 15%;
+    --secondary-foreground: 220 12% 88%;
 
     /* Muted backgrounds */
-    --muted: 225 20% 13%;
-    --muted-foreground: 225 8% 65%;
+    --muted: 224 18% 12%;
+    --muted-foreground: 220 10% 65%;
 
-    /* Accent - luminous violet */
-    --accent: 262 85% 72%;
-    --accent-foreground: 225 30% 6%;
+    /* Accent - Apple System Blue */
+    --accent: 210 100% 52%;
+    --accent-foreground: 0 0% 100%;
 
     /* Status colors */
     --destructive: 0 72% 60%;
-    --destructive-foreground: 225 30% 6%;
-    --success: 152 60% 45%;
-    --success-foreground: 225 30% 6%;
-    --warning: 38 92% 58%;
-    --warning-foreground: 225 30% 6%;
+    --destructive-foreground: 224 25% 6%;
+    --success: 142 70% 45%;
+    --success-foreground: 224 25% 6%;
+    --warning: 38 92% 56%;
+    --warning-foreground: 224 25% 6%;
 
     /* Interactive elements */
-    --border: 225 18% 20%;
-    --input: 225 20% 16%;
-    --ring: 215 100% 60%;
+    --border: 224 16% 18%;
+    --input: 224 18% 14%;
+    --ring: 210 100% 52%;
 
-    /* Hero (same in dark - always cinematic) */
-    --hero-bg: 225 40% 5%;
-    --hero-bg-mid: 225 35% 12%;
-    --hero-text: 225 20% 95%;
-    --hero-text-muted: 220 30% 80%;
-    --hero-accent: 215 100% 65%;
-    --hero-accent-muted: 215 60% 50%;
+    /* Signature Background System (BackgroundLoop) */
+    --bg-tone: 224 24% 7%;
+    --bg-accent-intensity: 0.14;
+    --bg-line-opacity: 0.07;
+    --bg-particle-opacity: 0.22;
+    --bg-glow-intensity: 0.14;
+    --bg-anim-speed: 1.0;
+
+    /* Hero */
+    --hero-bg: 224 30% 6%;
+    --hero-bg-mid: 224 25% 10%;
+    --hero-text: 220 15% 96%;
+    --hero-text-muted: 220 15% 75%;
+    --hero-accent: 210 100% 52%;
+    --hero-accent-muted: 210 60% 45%;
 
     /* Chatbot panel */
     --chat-bg: 225 30% 7%;
     --chat-border: 220 30% 20%;
     --chat-text: 225 10% 92%;
     --chat-text-muted: 220 15% 60%;
-    --chat-bubble-user: 215 100% 52%;
+    --chat-bubble-user: 210 100% 52%;
     --chat-bubble-bot: 225 25% 14%;
     --chat-input-bg: 225 25% 11%;
 
@@ -189,7 +261,148 @@ All colors MUST be HSL for proper theming.
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 210 100% 52%;
+  }
+}
+
+/* =========================================================================
+   COORDINATED PHYSICAL THEME TRANSITION (350–550ms Smooth Easing)
+   Interpolates background, surfaces, borders, shadows, text, & accents together
+   ========================================================================= */
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition: background-color 450ms cubic-bezier(0.16, 1, 0.3, 1),
+              color 450ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 450ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 450ms cubic-bezier(0.16, 1, 0.3, 1),
+              fill 450ms cubic-bezier(0.16, 1, 0.3, 1),
+              stroke 450ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* =========================================================================
+   4-TIER SUBTLE DEPTH & PHYSICAL WIDGET SYSTEM
+   Level 0: Background Base
+   Level 1: Surface
+   Level 2: Widget Tile
+   Level 3: Interactive Micro-Lift
+   ========================================================================= */
+
+.depth-surface {
+  background-color: hsl(var(--card));
+  border: 1px solid hsl(var(--border) / 0.8);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+}
+
+.dark .depth-surface {
+  background-color: hsl(var(--card));
+  border: 1px solid hsl(var(--border) / 0.7);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25), 0 1px 2px -1px rgba(0, 0, 0, 0.2);
+}
+
+.depth-widget {
+  background-color: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  box-shadow: 
+    0 1px 3px 0 rgba(0, 0, 0, 0.05),
+    0 4px 12px -2px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
+  border-radius: 1rem;
+}
+
+.dark .depth-widget {
+  background-color: hsl(var(--card));
+  border: 1px solid hsl(var(--border) / 0.85);
+  box-shadow: 
+    0 2px 6px 0 rgba(0, 0, 0, 0.3),
+    0 8px 24px -4px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+}
+
+.depth-interactive {
+  transition: transform 180ms cubic-bezier(0.2, 0, 0, 1),
+              box-shadow 180ms cubic-bezier(0.2, 0, 0, 1),
+              border-color 180ms cubic-bezier(0.2, 0, 0, 1),
+              background-color 180ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.depth-interactive:hover {
+  transform: translateY(-1.5px);
+  border-color: hsl(var(--foreground) / 0.25);
+  box-shadow: 
+    0 4px 12px -2px rgba(0, 0, 0, 0.08),
+    0 8px 24px -4px rgba(0, 0, 0, 0.04);
+}
+
+.dark .depth-interactive:hover {
+  transform: translateY(-1.5px);
+  border-color: hsl(var(--foreground) / 0.3);
+  box-shadow: 
+    0 6px 16px -2px rgba(0, 0, 0, 0.4),
+    0 12px 32px -4px rgba(0, 0, 0, 0.3);
+}
+
+.depth-interactive:active {
+  transform: translateY(1px);
+  box-shadow: 
+    0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Mobile-adapted tactile press */
+@media (max-width: 640px) {
+  .depth-interactive:hover {
+    transform: translateY(-0.75px);
+  }
+  .depth-interactive:active {
+    transform: translateY(0.75px);
+  }
+}
+
+/* =========================================================================
+   PROGRESSIVE HERO COMPOSITION SYSTEM
+   Sequential settling: Background -> Avatar -> Handle -> Name -> Discipline -> Description -> Actions
+   ========================================================================= */
+
+@keyframes hero-fade-settle {
+  0% {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0);
+  }
+}
+
+.hero-step-1 { animation: hero-fade-settle 650ms cubic-bezier(0.16, 1, 0.3, 1) 40ms both; }
+.hero-step-2 { animation: hero-fade-settle 650ms cubic-bezier(0.16, 1, 0.3, 1) 160ms both; }
+.hero-step-3 { animation: hero-fade-settle 650ms cubic-bezier(0.16, 1, 0.3, 1) 280ms both; }
+.hero-step-4 { animation: hero-fade-settle 650ms cubic-bezier(0.16, 1, 0.3, 1) 400ms both; }
+.hero-step-5 { animation: hero-fade-settle 650ms cubic-bezier(0.16, 1, 0.3, 1) 520ms both; }
+.hero-step-6 { animation: hero-fade-settle 650ms cubic-bezier(0.16, 1, 0.3, 1) 640ms both; }
+.hero-step-7 { animation: hero-fade-settle 650ms cubic-bezier(0.16, 1, 0.3, 1) 760ms both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-step-1,
+  .hero-step-2,
+  .hero-step-3,
+  .hero-step-4,
+  .hero-step-5,
+  .hero-step-6,
+  .hero-step-7 {
+    animation: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+  
+  .depth-interactive:hover,
+  .depth-interactive:active {
+    transform: none !important;
   }
 }
 
@@ -207,6 +420,39 @@ All colors MUST be HSL for proper theming.
     @apply bg-background text-foreground font-sans antialiased;
     transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
     overscroll-behavior: none;
+  }
+
+  /* =========================================================================
+     FLUID BASE TYPOGRAPHY SCALE
+     Consistent proportional scaling across viewports
+     ========================================================================= */
+  h1 {
+    font-size: var(--font-fluid-h1);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+  }
+
+  h2 {
+    font-size: var(--font-fluid-h2);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+
+  h3 {
+    font-size: var(--font-fluid-h3);
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+  }
+
+  h4 {
+    font-size: var(--font-fluid-h4);
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    font-size: var(--font-fluid-p);
+    line-height: 1.65;
   }
 
   /* Glass morphism utility classes */
@@ -598,5 +844,119 @@ All colors MUST be HSL for proper theming.
 
   .product-premium-btn:hover::after { 
     left: 150%; 
+  }
+
+  /* =========================================================================
+     FLUID SPACING UTILITY CLASSES
+     ========================================================================= */
+  .page-shell-top {
+    padding-top: var(--page-pt);
+  }
+
+  .page-shell-bottom {
+    padding-bottom: var(--page-pb);
+  }
+
+  .page-shell-gutter {
+    padding-left: var(--page-px);
+    padding-right: var(--page-px);
+  }
+
+  .page-shell-fluid {
+    padding-top: var(--page-pt);
+    padding-bottom: var(--page-pb);
+    padding-left: var(--page-px);
+    padding-right: var(--page-px);
+  }
+
+  .header-gap-fluid {
+    margin-top: var(--header-to-content-gap);
+  }
+
+  .section-gap-fluid {
+    gap: var(--section-gap);
+  }
+
+  .section-space-fluid {
+    margin-top: var(--section-gap);
+    margin-bottom: var(--section-gap);
+  }
+
+  .gap-fluid-xs {
+    gap: var(--space-fluid-xs);
+  }
+
+  .gap-fluid-sm {
+    gap: var(--space-fluid-sm);
+  }
+
+  .gap-fluid-md {
+    gap: var(--space-fluid-md);
+  }
+
+  .gap-fluid-lg {
+    gap: var(--space-fluid-lg);
+  }
+
+  .gap-fluid-xl {
+    gap: var(--space-fluid-xl);
+  }
+
+  .space-y-fluid-sm > :not([hidden]) ~ :not([hidden]) {
+    margin-top: var(--space-fluid-sm);
+  }
+
+  .space-y-fluid-md > :not([hidden]) ~ :not([hidden]) {
+    margin-top: var(--space-fluid-md);
+  }
+
+  .space-y-fluid-lg > :not([hidden]) ~ :not([hidden]) {
+    margin-top: var(--space-fluid-lg);
+  }
+
+  .space-y-fluid-xl > :not([hidden]) ~ :not([hidden]) {
+    margin-top: var(--space-fluid-xl);
+  }
+
+  /* =========================================================================
+     FLUID TYPOGRAPHY UTILITY CLASSES
+     ========================================================================= */
+  .text-fluid-h1 {
+    font-size: var(--font-fluid-h1);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+  }
+
+  .text-fluid-h2 {
+    font-size: var(--font-fluid-h2);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+
+  .text-fluid-h3 {
+    font-size: var(--font-fluid-h3);
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+  }
+
+  .text-fluid-h4 {
+    font-size: var(--font-fluid-h4);
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+
+  .text-fluid-p {
+    font-size: var(--font-fluid-p);
+    line-height: 1.65;
+  }
+
+  .text-fluid-lead {
+    font-size: var(--font-fluid-lead);
+    line-height: 1.6;
+  }
+
+  .text-fluid-sm {
+    font-size: var(--font-fluid-sm);
+    line-height: 1.5;
   }
 }

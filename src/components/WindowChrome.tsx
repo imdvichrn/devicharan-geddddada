@@ -1,118 +1,59 @@
-import Echoless from "./Echoless";
-  <Echoless />
+import React from 'react';
+
 interface WindowChromeProps {
+  title?: string;
   className?: string;
-}
-
-import { useContext } from 'react';
-// We'll use a context to control the chatbot panel from the window chrome
-// but fallback to window events if not available
-
-export function WindowChrome({ className = "", onClose, onMinimize, onZoom }: WindowChromeProps & {
   onClose?: () => void;
   onMinimize?: () => void;
   onZoom?: () => void;
-}) {
-  const handleClose = () => {
-    if (onClose) {
-      onClose();
-    } else {
-      // Close current window/tab or minimize if that fails
-      try {
-        window.close();
-      } catch (e) {
-        // If window.close() fails, try to minimize to taskbar
-        if ('minimize' in window && typeof (window as any).minimize === 'function') {
-          (window as any).minimize();
-        } else {
-          // Fallback: blur/unfocus the window
-          window.blur();
-        }
-      }
-    }
-  };
+  rightElement?: React.ReactNode;
+}
 
-  const handleMinimize = () => {
-    if (onMinimize) {
-      onMinimize();
-    } else {
-      // Try different minimize approaches
-      try {
-        if ('minimize' in window && typeof (window as any).minimize === 'function') {
-          (window as any).minimize();
-        } else if (document.fullscreenElement) {
-          document.exitFullscreen();
-        } else {
-          // Simulate minimize by blurring and reducing visibility
-          window.blur();
-          document.body.style.visibility = 'hidden';
-          setTimeout(() => {
-            document.body.style.visibility = 'visible';
-            window.focus();
-          }, 1000);
-        }
-      } catch (e) {
-        console.log('Minimize not supported in this environment');
-      }
-    }
-  };
-
-  const handleZoom = () => {
-    if (onZoom) {
-      onZoom();
-    } else {
-      // Toggle fullscreen mode
-      try {
-        if (document.fullscreenElement) {
-          document.exitFullscreen();
-        } else {
-          document.documentElement.requestFullscreen();
-        }
-      } catch (e) {
-        // Fallback: toggle between normal and maximized viewport
-        if (document.body.style.transform === 'scale(1.1)') {
-          document.body.style.transform = 'scale(1)';
-          document.body.style.transformOrigin = 'top left';
-        } else {
-          document.body.style.transform = 'scale(1.1)';
-          document.body.style.transformOrigin = 'top left';
-          setTimeout(() => {
-            document.body.style.transform = 'scale(1)';
-          }, 500);
-        }
-      }
-    }
-  };
-
+export function WindowChrome({
+  title,
+  className = "",
+  onClose,
+  onMinimize,
+  onZoom,
+  rightElement
+}: WindowChromeProps) {
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      <button
-        type="button"
-        className="window-dot red focus:outline-none hover:scale-110 active:scale-95 transition-transform"
-        title="Close"
-        tabIndex={0}
-        onClick={handleClose}
-        aria-label="Close"
-        style={{ cursor: 'pointer' }}
-      />
-      <button
-        type="button"
-        className="window-dot yellow focus:outline-none hover:scale-110 active:scale-95 transition-transform"
-        title="Minimize"
-        tabIndex={0}
-        onClick={handleMinimize}
-        aria-label="Minimize"
-        style={{ cursor: 'pointer' }}
-      />
-      <button
-        type="button"
-        className="window-dot green focus:outline-none hover:scale-110 active:scale-95 transition-transform"
-        title="Fullscreen"
-        tabIndex={0}
-        onClick={handleZoom}
-        aria-label="Toggle Fullscreen"
-        style={{ cursor: 'pointer' }}
-      />
+    <div className={`h-10 px-4 flex items-center justify-between border-b border-border/40 bg-muted/30 select-none ${className}`}>
+      {/* Traffic Lights - Precise macOS 12px dots with 8px gap */}
+      <div className="flex items-center gap-2 shrink-0">
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close window"
+          className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e]/40 hover:opacity-90 active:scale-95 transition-transform focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-red-400"
+        />
+        <button
+          type="button"
+          onClick={onMinimize}
+          aria-label="Minimize window"
+          className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]/40 hover:opacity-90 active:scale-95 transition-transform focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber-400"
+        />
+        <button
+          type="button"
+          onClick={onZoom}
+          aria-label="Maximize window"
+          className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]/40 hover:opacity-90 active:scale-95 transition-transform focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400"
+        />
+      </div>
+
+      {/* Center Title */}
+      {title && (
+        <div className="text-xs font-mono text-muted-foreground truncate px-3 text-center pointer-events-none">
+          {title}
+        </div>
+      )}
+
+      {/* Right Element or Spacer for symmetry */}
+      <div className="flex items-center gap-2 shrink-0">
+        {rightElement || <div className="w-14" />}
+      </div>
     </div>
   );
 }
+
+export default WindowChrome;
