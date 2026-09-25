@@ -19,8 +19,8 @@ export function AboutPage() {
   return (
     <PageShell>
       <SEOHead
-        title="About | Geddada Devicharan (@imdvichrn)"
-        description="Geddada Devicharan (@imdvichrn) — Digital Product Builder, Video Editor & Business Systems Creator based in Visakhapatnam & Vizianagaram, AP, India."
+        title="About — Geddada Devicharan"
+        description="Geddada Devicharan — Digital Product Builder, Video Editor & Business Systems Creator based in Visakhapatnam & Vizianagaram, AP, India."
         path="/about"
         breadcrumbs={[
           { name: 'Home', url: 'https://geddadadevicharan.vercel.app' },

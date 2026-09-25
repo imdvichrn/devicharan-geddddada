@@ -117,7 +117,7 @@ export function ExperimentsPage() {
   return (
     <PageShell maxWidth="default">
       <SEOHead
-        title="Experiments & Research | Geddada Devicharan"
+        title="Experiments & Research — Geddada Devicharan"
         description="Experiments in software architecture, cognitive psychology, clean energy systems, and personal optimization research by Geddada Devicharan."
         path="/experiments"
         breadcrumbs={[

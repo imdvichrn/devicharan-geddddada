@@ -58,7 +58,7 @@ const primaryPathways = [
     title: 'Video & Post-Production',
     path: '/video',
     kicker: 'Creative Studio',
-    summary: 'High-throughput commercial finishing, node-based ACES/YRGB color science, and Fairlight audio mastering in DaVinci Resolve Studio.',
+    summary: 'High-volume post-production finishing, node-based color grading, and Fairlight audio mastering in DaVinci Resolve Studio on macOS.',
     evidence: '700+ Client Video Projects Delivered',
     icon: VideoStudioIcon,
   },
@@ -107,7 +107,7 @@ const articles = [
     intro: 'Key workflows, node structures, and Fairlight audio mastering pipelines refined across 700+ completed commercial video projects.',
     content: {
       whatIBuilt: 'A standardized high-velocity post-production operating system on macOS using DaVinci Resolve Studio for commercial promotions, events, and dynamic short-form storytelling.',
-      howIBuiltIt: 'Standardized timeline templates, fixed node-tree color grading structures (ACES/DaVinci YRGB Color Managed), custom Fusion kinetic text macros, and Fairlight multi-bus audio mastering.',
+      howIBuiltIt: 'Standardized timeline templates, fixed node-tree color grading structures, custom Fusion kinetic text macros, and Fairlight multi-bus audio mastering.',
       whyIBuiltIt: 'Delivering 700+ client projects with high retention requires eliminating decision fatigue on repetitive technical steps like color management and loudness calibration.',
       whatWentWrong: 'Early projects suffered from inconsistent audio across different mobile loudspeakers and headphone monitors due to relying on consumer headphone mixing.',
       whatWorked: 'Enforcing strict ITU-R BS.1770 broadcast loudness standards (-14 LUFS integrated for digital platforms, -1.0 dB True Peak ceiling) in Fairlight eliminated all cross-device volume issues.',
@@ -153,8 +153,8 @@ export function Portfolio() {
   return (
     <div className="relative min-h-screen text-foreground selection:bg-primary/20 selection:text-primary">
       <SEOHead
-        title="Geddada Devicharan — Personal Digital Space (@imdvichrn)"
-        description="Geddada Devicharan (@imdvichrn) — Personal digital home. Digital Product Builder, Video Editor & Business Systems Creator based in Visakhapatnam & Vizianagaram, AP, India."
+        title="Geddada Devicharan — Digital Product Builder, Video Editor & Creator"
+        description="Geddada Devicharan is a multidisciplinary digital creator building products, websites, digital systems, and visual experiences across software, video, and creative technology."
         path="/"
         breadcrumbs={[
           { name: 'Home', url: 'https://geddadadevicharan.vercel.app/' },
@@ -169,9 +169,7 @@ export function Portfolio() {
         ]}
         structuredData={[
           generatePersonSchema(),
-          generateWebsiteSchema(),
-          generateOrganizationSchema(),
-          generateExamFlowOSSchema()
+          generateWebsiteSchema()
         ]}
       />
 
@@ -228,7 +226,7 @@ export function Portfolio() {
 
           {/* STEP 4: DISCIPLINE STATEMENT (Balanced & Clean) */}
           <div className="hero-step-4 mt-3 sm:mt-4 text-xs sm:text-base md:text-lg lg:text-xl text-foreground/90 font-normal tracking-normal max-w-xl xl:max-w-2xl mx-0 md:mx-auto leading-snug px-0 md:px-2 text-left md:text-center">
-            Digital Product Builder · Video Editor · Business Systems
+            Digital Product Builder · Video Editor · Post-Production Specialist · Creator
           </div>
 
           {/* STEP 5: PERSONAL INTRO (Calm, human, readable) */}
@@ -547,7 +545,7 @@ export function Portfolio() {
                     High-velocity creative post-production in DaVinci Resolve Studio on macOS across commercial promotions, music events, and social campaigns.
                   </p>
                   <div className="text-xs font-mono text-muted-foreground space-y-1.5 pt-1">
-                    <div>• Node-based ACES / DaVinci YRGB color science</div>
+                    <div>• Node-based color grading & color space transforms</div>
                     <div>• Fairlight ITU-R BS.1770 broadcast audio mastering</div>
                     <div>• Creator of Perfect Pack ($10 USD creative asset kit)</div>
                   </div>

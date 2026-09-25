@@ -217,7 +217,7 @@ export function WritingPage() {
   return (
     <PageShell maxWidth="default">
       <SEOHead
-        title="Writing & Build Logs | Geddada Devicharan"
+        title="Writing & Build Logs — Geddada Devicharan"
         description="Technical build logs, engineering case studies, software architecture, video post-production insights, and cognitive psychology essays by Geddada Devicharan."
         path="/writing"
         breadcrumbs={[

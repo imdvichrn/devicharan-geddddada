@@ -91,7 +91,7 @@ const skillPillars: SkillPillar[] = [
       },
       {
         name: "Node-Based Color Grading & Color Science",
-        description: "Primary and secondary grading, color space transforms (ACES / DaVinci YRGB Color Managed), skin tone qualification, and shot-to-shot balance.",
+        description: "Primary and secondary grading, color space transforms (CST), skin tone qualification, and shot-to-shot balance.",
         evidence: "Consistent cinema-grade grade continuity across multi-camera shoots and mixed camera color profiles."
       },
       {
@@ -189,7 +189,7 @@ export default function SkillsPage() {
   return (
     <PageShell>
       <SEOHead
-        title="Technical & Creative Capabilities | Geddada Devicharan"
+        title="Technical & Creative Capabilities — Geddada Devicharan"
         description="A grounded breakdown of capabilities across Software Development, Digital Products, Video Post-Production (700+ projects), Business Systems, and Automation."
         path="/skills"
         breadcrumbs={[

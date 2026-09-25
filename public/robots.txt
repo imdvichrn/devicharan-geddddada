@@ -73,4 +73,3 @@ Allow: /
 
 # Sitemaps
 Sitemap: https://geddadadevicharan.vercel.app/sitemap.xml
-Sitemap: https://geddadadevicharan.vercel.app/sitemap-index.xml

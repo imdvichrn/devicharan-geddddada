@@ -6,7 +6,7 @@
  * 2. hi -> natural greeting
  * 3. video -> video post-production & DaVinci Resolve deliverables
  * 4. editing -> video editing & timeline post-production
- * 5. color grading -> node-based ACES / DaVinci Wide Gamut pipeline
+ * 5. color grading -> node-based color grading and color space transforms
  * 6. software -> software engineering & products (ExamFlowOS)
  * 7. ExamFlowOS -> 100% free CBT testing operating system facts
  * 8. who are you -> Geddada Devicharan identity
@@ -70,8 +70,8 @@ export async function runEcholessTests(): Promise<{ passed: boolean; results: st
   engine.resetMemory();
   const resGrading = await engine.respond('color grading');
   assert(
-    resGrading.entityId === 'video' && (resGrading.text.toLowerCase().includes('color') || resGrading.text.toLowerCase().includes('aces')),
-    'color grading returns ACES / DaVinci Wide Gamut color pipeline facts',
+    resGrading.entityId === 'video' && resGrading.text.toLowerCase().includes('color'),
+    'color grading returns node-based color grading facts',
     resGrading.text
   );
 

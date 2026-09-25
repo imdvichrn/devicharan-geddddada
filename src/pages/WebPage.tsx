@@ -17,7 +17,7 @@ export function WebPage() {
   return (
     <PageShell>
       <SEOHead
-        title="Websites & Digital Presence — 8+ Managed Sites | Geddada Devicharan"
+        title="Websites & Digital Presence — Geddada Devicharan"
         description="End-to-end website development, ongoing management, SEO, and digital presence architectures. Actively managing 8+ business websites including Sri Lahari Studios and Annapurna Foundation."
         path="/web"
         breadcrumbs={[

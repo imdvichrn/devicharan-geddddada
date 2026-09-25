@@ -36,13 +36,13 @@ export const EXAMFLOW_OS_FACTS = {
 } as const;
 
 export const VIDEO_POST_PRODUCTION_FACTS = {
-  scope: "700+ commercial, narrative, wedding, corporate, and creative video deliverables completed.",
-  primaryTool: "DaVinci Resolve Studio",
+  scope: "700+ client video deliverables across short-form, ads, song shoots, motion design, and color grading.",
+  primaryTool: "DaVinci Resolve Studio (macOS)",
   competencies: [
-    "Node-based Color Grading (ACES, DaVinci Wide Gamut, Color Space Transforms).",
-    "Fusion Motion Graphics (title sequences, tracked UI elements, dynamic transitions).",
-    "Fairlight Audio Post-Production (dialogue isolation, spectral repair, loudness normalization to broadcast standards).",
-    "Rhythmic and narrative pacing tailored for retention and emotional resonance.",
+    "Node-based Color Grading and Color Space Transforms.",
+    "Fusion Motion Graphics (titles, callouts, kinetic typography).",
+    "Fairlight Audio Post-Production (dialogue cleanup, loudness normalization).",
+    "Rhythmic pacing tailored for retention and audience engagement.",
   ],
   portfolioPath: "/video",
 } as const;
@@ -90,8 +90,8 @@ export const SKILLS_AND_STACK = {
     "Tailwind CSS", "Vite", "HTML5", "CSS3 / Modern Layouts", "Git", "GitHub"
   ],
   postProduction: [
-    "DaVinci Resolve Studio", "Node-based Color Grading", "Fusion Compositing",
-    "Fairlight Audio Engineering", "Color Management (DWG/ACES)", "Sound Design"
+    "DaVinci Resolve Studio", "Node-based Color Grading", "Fusion Motion Design",
+    "Fairlight Audio Engineering", "Color Space Transforms", "Sound Design"
   ],
   businessAutomation: [
     "n8n Workflow Automation", "Webhooks & REST APIs", "Zapier", "Cloud Functions", "Operational Tooling"
@@ -193,7 +193,7 @@ export function getVerifiedKnowledgeBase(): string {
 ## 3. VIDEO EDITING & POST-PRODUCTION
 - Volume: ${VIDEO_POST_PRODUCTION_FACTS.scope}
 - Primary Tool: ${VIDEO_POST_PRODUCTION_FACTS.primaryTool}
-- Specializations: Node-based color grading (DWG/ACES workflows), Fusion motion design, Fairlight audio mastering (dialogue restoration, loudness compliance), narrative pacing.
+- Specializations: Node-based color grading, Fusion motion design, Fairlight audio mastering (dialogue cleanup, loudness compliance), rhythmic pacing.
 - Portfolio route: ${VIDEO_POST_PRODUCTION_FACTS.portfolioPath}
 
 ## 4. CREATIVE TOOLKIT: PERFECT PACK

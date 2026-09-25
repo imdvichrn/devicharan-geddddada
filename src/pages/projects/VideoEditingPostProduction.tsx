@@ -93,7 +93,7 @@ export function VideoEditingPostProduction() {
   return (
     <PageShell maxWidth="wide">
       <SEOHead
-        title={`${title} — 700+ Deliverables | Geddada Devicharan`}
+        title="Video Editing & Post-Production — Geddada Devicharan"
         description={description}
         path="/projects/video-editing-post-production"
         breadcrumbs={[

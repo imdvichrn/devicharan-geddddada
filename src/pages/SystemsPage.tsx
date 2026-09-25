@@ -16,7 +16,7 @@ export function SystemsPage() {
   return (
     <PageShell>
       <SEOHead
-        title="Business Systems & Automation — Practical Workflows | Geddada Devicharan"
+        title="Business Systems & Automation — Geddada Devicharan"
         description="Engineering practical digital systems and automations for businesses. Workflow improvement, client intake routing, n8n integrations, and systems engineering grounded in B.Tech EEE."
         path="/systems"
         breadcrumbs={[

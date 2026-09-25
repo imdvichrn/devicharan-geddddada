@@ -18,34 +18,14 @@ export const generatePersonSchema = () => ({
   "@context": "https://schema.org",
   "@type": "Person",
   "@id": `${BASE_URL}/#person`,
-  "name": PERSON_NAME,
-  "alternateName": ["imdvichrn", "@imdvichrn"],
+  "name": "Geddada Devicharan",
+  "alternateName": "@imdvichrn",
   "url": `${BASE_URL}/`,
   "image": `${BASE_URL}/profile-avatar.png`,
-  "jobTitle": "Digital Product Builder · Video Editor · Creator",
+  "jobTitle": "Digital Product Builder · Video Editor · Post-Production Specialist · Creator",
   "description":
-    "Geddada Devicharan is a multidisciplinary digital creator building products, websites, digital systems, and visual experiences across software, video, and creative technology.",
-  "knowsAbout": [
-    "Software Development",
-    "Web Development",
-    "React",
-    "TypeScript",
-    "Video Editing",
-    "DaVinci Resolve Studio",
-    "Color Grading",
-    "Fairlight Audio",
-    "Business Systems",
-    "Automation",
-    "ExamFlowOS",
-    "Perfect Pack",
-  ],
+    "Geddada Devicharan is a digital product builder, video editor, and business systems creator based in Visakhapatnam & Vizianagaram, AP, India.",
   "sameAs": SOCIAL_PROFILES,
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Visakhapatnam",
-    "addressRegion": "Andhra Pradesh",
-    "addressCountry": "India",
-  },
 });
 
 export const generateWebsiteSchema = () => ({
@@ -53,13 +33,8 @@ export const generateWebsiteSchema = () => ({
   "@type": "WebSite",
   "@id": `${BASE_URL}/#website`,
   "name": "Geddada Devicharan",
-  "alternateName": ["imdvichrn", "Geddada Devicharan Portfolio"],
+  "alternateName": "Geddada Devicharan Portfolio",
   "url": `${BASE_URL}/`,
-  "description":
-    "Geddada Devicharan is a multidisciplinary digital creator building products, websites, digital systems, and visual experiences across software, video, and creative technology.",
-  "inLanguage": "en-IN",
-  "author": { "@id": `${BASE_URL}/#person` },
-  "publisher": { "@id": `${BASE_URL}/#person` },
 });
 
 export const generateOrganizationSchema = () => ({

@@ -114,7 +114,7 @@ export default function PerfectPackPage() {
   return (
     <>
       <SEOHead
-        title="Perfect Pack for DaVinci Resolve | Cinematic Editing Toolkit"
+        title="Perfect Pack for DaVinci Resolve — Geddada Devicharan"
         description="In-development professional DaVinci Resolve toolkit featuring cinematic presets, sound effects, motion titles, and workflow assets by Geddada Devicharan."
         path="/perfect-pack"
         ogImage="https://geddadadevicharan.vercel.app/og/og-perfectpack.png"

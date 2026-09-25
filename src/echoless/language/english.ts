@@ -51,22 +51,22 @@ export const ENGLISH_COMPOSER = {
 
   video: {
     explain: [
-      "In video post-production, Devicharan has completed 700+ deliverables across commercial promotions, narrative films, and corporate projects, working primarily in DaVinci Resolve Studio on macOS. His pipeline covers narrative assembly, node-based ACES and DaVinci Wide Gamut color grading, and audio mastering in Fairlight.",
-      "Devicharan specializes in color grading and creative video editing in DaVinci Resolve Studio, with a track record of 700+ deliverables spanning commercial projects and narrative films. His workflows emphasize color precision, seamless audio normalization in Fairlight, and kinetic motion titles in Fusion."
+      "In video post-production, Devicharan has completed 700+ deliverables across short-form content, ads, song shoots, and motion design, working primarily in DaVinci Resolve Studio on macOS. His pipeline covers precision pacing, node-based color grading, and audio mastering in Fairlight.",
+      "Devicharan specializes in node-based color grading and video editing in DaVinci Resolve Studio on macOS, with a track record of 700+ deliverables across short-form reels, product ads, and song shoots. His workflows emphasize color consistency, audio normalization in Fairlight, and motion titles in Fusion."
     ],
     editing: [
-      "For video editing and timeline finishing, Devicharan works end-to-end in DaVinci Resolve Studio on macOS. He handles narrative assembly, precision pacing, audio cleanup in Fairlight, and motion graphics in Fusion across 700+ completed deliverables. Everything is cut with meticulous attention to rhythm and narrative flow.",
+      "For video editing and timeline finishing, Devicharan works end-to-end in DaVinci Resolve Studio on macOS. He handles pacing, audio cleanup in Fairlight, and motion graphics in Fusion across 700+ completed deliverables. Everything is cut with meticulous attention to rhythm, clarity, and client retention.",
       "His video editing workflow covers complete post-production in DaVinci Resolve Studio: multi-track timeline construction, audio normalization in Fairlight, and motion titles in Fusion."
     ],
     colorGrading: [
-      "In color grading, Devicharan builds node-based color pipelines using ACES and DaVinci Wide Gamut color science. He focuses on disciplined node trees, accurate skin tone reproduction, color contrast curves, and custom PowerGrade architectures in DaVinci Resolve Studio.",
-      "His color grading work centers on DaVinci Resolve Studio, utilizing ACES and DaVinci Wide Gamut color pipelines. He emphasizes shot-to-shot matching, natural highlight rolloff, and custom PowerGrades for commercial and narrative projects."
+      "In color grading, Devicharan builds node-based color pipelines in DaVinci Resolve Studio on macOS. He focuses on disciplined node trees, accurate skin tone reproduction, color contrast curves, and consistent shot-to-shot matching across camera formats.",
+      "His color grading work centers on DaVinci Resolve Studio on macOS, utilizing node-based color grading and color space transforms. He emphasizes shot-to-shot matching, natural highlight rolloff, and clean skin tone qualification for commercial and promotional projects."
     ],
     expand: [
-      "His pipeline spans node-based color grading (ACES / DaVinci Wide Gamut), motion graphics in Fusion, and audio restoration in Fairlight. He handles the full post stack—from advanced color space transforms to broadcast audio loudness compliance.",
-      "He handles the full post stack—from advanced color space transforms to audio loudness normalization in Fairlight and kinetic typography in Fusion."
+      "His pipeline spans node-based color grading, motion graphics in Fusion, and audio sweetening in Fairlight. He handles the post stack from color transforms to audio loudness compliance.",
+      "He handles post-production in DaVinci Resolve Studio—from color grading and color space transforms to audio loudness normalization in Fairlight and kinetic typography in Fusion."
     ],
-    why: "He focuses on DaVinci Resolve Studio because of its unified color science and audio engines, ensuring cinematic consistency across high-volume production deliverables."
+    why: "He focuses on DaVinci Resolve Studio on macOS because of its unified color science and audio engines, ensuring reliable visual polish across high-volume production deliverables."
   },
 
   software: {

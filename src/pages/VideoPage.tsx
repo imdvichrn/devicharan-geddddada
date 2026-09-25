@@ -20,7 +20,7 @@ export function VideoPage() {
   return (
     <PageShell>
       <SEOHead
-        title="Video Editing & Post-Production — 700+ Deliverables | Geddada Devicharan"
+        title="Video Editing & Post-Production — Geddada Devicharan"
         description="High-volume commercial post-production operating in DaVinci Resolve Studio on macOS. 700+ client video projects completed across commercial spots, short-form reels, color grading, motion graphics, and broadcast audio."
         path="/video"
         breadcrumbs={[
@@ -185,7 +185,7 @@ export function VideoPage() {
                 <ColorScienceIcon size={20} strokeWidth={1.6} />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-foreground">DaVinci YRGB Color Managed & ACES</h3>
+                <h3 className="text-lg font-semibold text-foreground">Node-Based Color Grading & Color Space Transforms</h3>
                 <div className="text-xs text-muted-foreground font-mono">Precision Color Correction & Creative Look Design</div>
               </div>
             </div>
@@ -195,7 +195,7 @@ export function VideoPage() {
             </p>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-border/40 font-mono text-xs text-foreground/80">
-              <div>• ACES & DaVinci YRGB</div>
+              <div>• Color Space Transforms</div>
               <div>• Skin tone qualification</div>
               <div>• Multi-cam match</div>
               <div>• Film grain / Halation</div>

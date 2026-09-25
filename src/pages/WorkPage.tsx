@@ -184,7 +184,7 @@ export function WorkPage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-mono text-muted-foreground">
               <div className="p-4 rounded-xl bg-background/50 border border-border/30 space-y-1">
                 <span className="text-foreground font-semibold block">Color Science</span>
-                <span>ACES & DaVinci YRGB color management with skin-tone qualification.</span>
+                <span>Node-based color grading & color space transforms with skin-tone qualification.</span>
               </div>
               <div className="p-4 rounded-xl bg-background/50 border border-border/30 space-y-1">
                 <span className="text-foreground font-semibold block">Fairlight Mastering</span>

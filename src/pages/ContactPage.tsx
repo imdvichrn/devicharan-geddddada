@@ -19,7 +19,7 @@ export function ContactPage() {
   return (
     <PageShell maxWidth="wide">
       <SEOHead
-        title="Contact & Communication | Geddada Devicharan"
+        title="Contact & Communication — Geddada Devicharan"
         description="Get in touch with Geddada Devicharan (@imdvichrn). Direct communication for software products, business workflows, video post-production, or web ecosystems."
         path="/contact"
         breadcrumbs={[

@@ -22,7 +22,7 @@ export function SoftwarePage() {
   return (
     <PageShell>
       <SEOHead
-        title="Software & Products — ExamFlowOS & Tools | Geddada Devicharan"
+        title="Software & Products — Geddada Devicharan"
         description="Software and digital products created by Geddada Devicharan: ExamFlowOS (free CBT platform for 10K+ students, ~700 active users) and Perfect Pack ($10 DaVinci Resolve toolkit)."
         path="/software"
         breadcrumbs={[

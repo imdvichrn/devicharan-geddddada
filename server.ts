@@ -76,6 +76,36 @@ async function handleChatRequest(req: Request, res: Response) {
 }
 
 // Routes
+app.get('/sitemap.xml', (_req: Request, res: Response) => {
+  const isProduction = process.env.NODE_ENV === 'production';
+  const filePath = isProduction
+    ? path.resolve(__dirname, 'dist', 'sitemap.xml')
+    : path.resolve(__dirname, 'public', 'sitemap.xml');
+  res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+  res.sendFile(filePath);
+});
+
+app.get('/sitemap-index.xml', (_req: Request, res: Response) => {
+  res.redirect(301, '/sitemap.xml');
+});
+
+app.get('/robots.txt', (_req: Request, res: Response) => {
+  const isProduction = process.env.NODE_ENV === 'production';
+  const filePath = isProduction
+    ? path.resolve(__dirname, 'dist', 'robots.txt')
+    : path.resolve(__dirname, 'public', 'robots.txt');
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.sendFile(filePath);
+});
+
+app.get('/favicon.ico', (_req: Request, res: Response) => {
+  const isProduction = process.env.NODE_ENV === 'production';
+  const filePath = isProduction
+    ? path.resolve(__dirname, 'dist', 'favicon.ico')
+    : path.resolve(__dirname, 'public', 'favicon.ico');
+  res.sendFile(filePath);
+});
+
 app.get('/Geddada_Devicharan_CV.pdf', (_req: Request, res: Response) => {
   const isProduction = process.env.NODE_ENV === 'production';
   const filePath = isProduction
