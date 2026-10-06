@@ -154,7 +154,7 @@ export function Portfolio() {
     <div className="relative min-h-screen text-foreground selection:bg-primary/20 selection:text-primary">
       <SEOHead
         title="Geddada Devicharan — Digital Product Builder · Video Editor · Digital Systems"
-        description="Geddada Devicharan — Digital Product Builder · Video Editor · Digital Systems based in Visakhapatnam & Vizianagaram, AP, India."
+        description="Geddada Devicharan builds digital products, digital systems and visual experiences, with a focus on thoughtful software and video."
         path="/"
         breadcrumbs={[
           { name: 'Home', url: 'https://geddadadevicharan.vercel.app/' },
