@@ -78,6 +78,7 @@ export function Navigation() {
   }, [handleKeyDown]);
 
   const isWorkActive = [
+    '/works',
     '/work', 
     '/software', 
     '/products', 
@@ -92,9 +93,9 @@ export function Navigation() {
 
   const navItems = [
     { label: 'Home', path: '/', isActive: location.pathname === '/' },
-    { label: 'Work', path: '/work', isActive: isWorkActive },
-    { label: 'Writing', path: '/writing', isActive: location.pathname.startsWith('/writing') },
+    { label: 'Works', path: '/works', isActive: isWorkActive },
     { label: 'Experiments', path: '/experiments', isActive: location.pathname.startsWith('/experiments') },
+    { label: 'Writing', path: '/writing', isActive: location.pathname.startsWith('/writing') },
     { label: 'About', path: '/about', isActive: location.pathname.startsWith('/about') || location.pathname.startsWith('/skills') },
     { label: 'Contact', path: '/contact', isActive: location.pathname.startsWith('/contact') },
   ];
@@ -261,7 +262,7 @@ export function Navigation() {
               <span className="text-[11px] text-muted-foreground font-mono">AP, India</span>
             </div>
             <p className="text-[11px] text-muted-foreground">
-              Digital Product Builder · Video Editor · Business Systems
+              Digital Product Builder · Video Editor · Digital Systems
             </p>
           </div>
         </div>

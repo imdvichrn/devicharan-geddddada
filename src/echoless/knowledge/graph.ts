@@ -77,7 +77,7 @@ export class KnowledgeGraph {
           'imdvichrn', 'him', 'he', 'author', 'creator', 'developer', 'editor', 'builder',
           'అతను', 'దేవిచరణ్', 'చరణ్'
         ],
-        description: 'Digital Product Builder, Video Editor / Post-Production Specialist, and Business Systems Creator',
+        description: 'Digital Product Builder · Video Editor · Digital Systems',
         actionId: 'contact',
         verified: true,
       },

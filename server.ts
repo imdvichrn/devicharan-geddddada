@@ -115,7 +115,6 @@ app.get('/Geddada_Devicharan_CV.pdf', (_req: Request, res: Response) => {
 });
 
 app.post('/api/chat', handleChatRequest);
-app.post('/functions/v1/echoless-chat', handleChatRequest);
 
 // Registration endpoint for launch lists (ExamFlow OS, Perfect Pack)
 app.post('/api/register-launch', (req: Request, res: Response) => {

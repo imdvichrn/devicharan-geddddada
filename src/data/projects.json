@@ -1,0 +1,189 @@
+[
+  {
+    "id": "examflow-os",
+    "title": "ExamFlowOS",
+    "shortDescription": "Free competitive exam preparation & CBT platform with multi-stream exam database, 10K+ total users, approximately 700 active users, and low-cost Google Drive cloud backup architecture.",
+    "longDescription": "ExamFlowOS is a dedicated exam preparation and Computer-Based Testing (CBT) platform built to make competitive-exam preparation seamless, structured, and completely free for students. It covers AP & TG ECET, POLYCET, ICET, and other state entrance exams with user-owned Google Drive cloud backups.",
+    "category": "software",
+    "year": "2025–2026",
+    "technologies": ["React", "TypeScript", "Vite", "Tailwind CSS", "Framer Motion", "Google Drive API", "CBT Engine"],
+    "topics": [
+      "exam preparation",
+      "CBT",
+      "mock tests",
+      "ap ecet",
+      "tg ecet",
+      "icet",
+      "polycet",
+      "study workflow",
+      "spaced repetition",
+      "free student tools",
+      "offline first"
+    ],
+    "metrics": {
+      "totalUsers": "10,000+",
+      "activeUsers": "700+",
+      "costToStudent": "100% Free"
+    },
+    "links": {
+      "website": "https://examflowos.in",
+      "caseStudy": "/works/examflow-os",
+      "blogJourney": "/works/examflow-os/blog/examflowos-journey"
+    }
+  },
+  {
+    "id": "perfect-pack",
+    "title": "Perfect Pack for DaVinci Resolve",
+    "shortDescription": "Production editing asset toolkit for DaVinci Resolve Studio featuring cinematic presets, motion graphics, audio sweetening tools, and post-production workflows.",
+    "longDescription": "Perfect Pack is an all-in-one editing and post-production toolkit developed for video editors using DaVinci Resolve Studio on macOS and Windows. Built from 700+ deliverables of real-world editing experience.",
+    "category": "creative-tools",
+    "year": "2024–2026",
+    "technologies": ["DaVinci Resolve Studio", "Fusion VFX", "Fairlight Audio", "Lua Scripting", "DRFX Bundles"],
+    "topics": [
+      "perfect pack",
+      "davinci resolve",
+      "editing toolkit",
+      "presets",
+      "transitions",
+      "sound effects",
+      "motion graphics",
+      "color grading",
+      "plugins"
+    ],
+    "metrics": {
+      "targetPlatform": "DaVinci Resolve Studio (macOS & Windows)",
+      "deliverablesGrounded": "700+ Projects"
+    },
+    "links": {
+      "caseStudy": "/works/perfect-pack"
+    }
+  },
+  {
+    "id": "video-editing-showcase",
+    "title": "Video Editing & Post-Production (700+ Deliverables)",
+    "shortDescription": "700+ client video projects delivered in DaVinci Resolve Studio on macOS across short-form reels, product ads, song shoots, and node-based color grading.",
+    "longDescription": "Professional post-production pipeline built around DaVinci Resolve Studio on macOS: rhythm-driven timeline editing, node-based color grading, Fairlight audio mastering, and Fusion motion titles.",
+    "category": "video",
+    "year": "2022–2026",
+    "technologies": ["DaVinci Resolve Studio (macOS)", "Fusion VFX", "Fairlight Audio", "Node-based Color Grading", "CST"],
+    "topics": [
+      "video editing",
+      "post production",
+      "color grading",
+      "davinci resolve",
+      "reels",
+      "commercials",
+      "song shoots",
+      "motion design",
+      "audio normalization",
+      "fairlight"
+    ],
+    "metrics": {
+      "completedDeliverables": "700+",
+      "hardware": "macOS Apple Silicon Studio Workflow"
+    },
+    "links": {
+      "showcase": "/video",
+      "detailedCaseStudy": "/works/video-editing-post-production"
+    }
+  },
+  {
+    "id": "annapurna-foundation",
+    "title": "Annapurna Foundation",
+    "shortDescription": "Building and managing the complete digital presence and video media for an impactful non-profit organisation in Andhra Pradesh.",
+    "longDescription": "Annapurna Foundation spans food seva, animal care (GoSeva & Street Dogs), educational support, and community sanitation. Devicharan architects their web platform, media workflows, and digital documentation.",
+    "category": "web",
+    "year": "2024–2026",
+    "technologies": ["Web Development", "Video Post-Production", "Vercel", "Digital Presence Management"],
+    "topics": [
+      "annapurna foundation",
+      "ngo",
+      "food seva",
+      "goseva",
+      "animal welfare",
+      "web management",
+      "digital presence"
+    ],
+    "metrics": {
+      "initiativesCovered": "4 Core Programs",
+      "role": "Web Engineer & Media Specialist"
+    },
+    "links": {
+      "caseStudy": "/works/annapurna-foundation"
+    }
+  },
+  {
+    "id": "sri-lahari-studios",
+    "title": "Sri Lahari Studios — Digital Business OS",
+    "shortDescription": "Complete digital operating system for a 10-year photo and cinematography studio in Kothavalasa & Chinnamushidiwada: website, branding, local SEO, and client workflows.",
+    "longDescription": "Modernized the digital footprint of an established photography studio with web infrastructure, unified branding, local SEO, and automated inquiry capture pipelines.",
+    "category": "systems",
+    "year": "2024–2025",
+    "technologies": ["Responsive Web", "n8n Automation", "Local SEO", "Brand Identity"],
+    "topics": [
+      "sri lahari studios",
+      "photography studio",
+      "cinematography",
+      "local seo",
+      "inquiry automation",
+      "branding"
+    ],
+    "metrics": {
+      "businessHistory": "10 Years Operating",
+      "impact": "Automated Client Intake & Regional Discoverability"
+    },
+    "links": {
+      "caseStudy": "/works/sri-lahari-studios"
+    }
+  },
+  {
+    "id": "managed-websites",
+    "title": "Managed Client Websites (8+ Active Deployments)",
+    "shortDescription": "Full-stack development, ongoing maintenance, UI design, technical SEO, and sitemap infrastructure for 8+ commercial client web properties.",
+    "longDescription": "Active management of production web properties with 99.9% uptime, core web vitals optimization, modern responsive UX, and automated deployment pipelines.",
+    "category": "web",
+    "year": "2024–2026",
+    "technologies": ["React", "TypeScript", "Vite", "Tailwind CSS", "Next.js", "Technical SEO", "Cloudflare", "Vercel"],
+    "topics": [
+      "managed websites",
+      "web engineering",
+      "seo",
+      "client websites",
+      "uptime maintenance",
+      "ui design"
+    ],
+    "metrics": {
+      "activeWebsites": "8+",
+      "averageUptime": "99.9%"
+    },
+    "links": {
+      "showcase": "/web",
+      "caseStudy": "/works/managed-websites"
+    }
+  },
+  {
+    "id": "business-systems-automation",
+    "title": "Business Systems & Automation Engineering",
+    "shortDescription": "Practical digital operations and workflow automation: client intake routing, n8n integrations, webhooks, and event-driven pipelines.",
+    "longDescription": "Eliminating manual administrative friction and lead drop-offs for service businesses through event-driven webhooks, n8n automation pipelines, and API integrations.",
+    "category": "systems",
+    "year": "2024–2026",
+    "technologies": ["n8n", "Webhooks", "REST APIs", "CRM Integrations", "Email Delivery Pipelines"],
+    "topics": [
+      "automation",
+      "business systems",
+      "n8n",
+      "webhooks",
+      "client intake",
+      "operations engineering"
+    ],
+    "metrics": {
+      "operationalTimeSaved": "15+ hrs/week per client",
+      "pipelineReliability": "100% Event-Driven"
+    },
+    "links": {
+      "showcase": "/systems",
+      "caseStudy": "/works/business-systems-automation"
+    }
+  }
+]

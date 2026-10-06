@@ -22,19 +22,21 @@ export const generatePersonSchema = () => ({
   "alternateName": "@imdvichrn",
   "url": `${BASE_URL}/`,
   "image": `${BASE_URL}/profile-avatar.png`,
-  "jobTitle": "Digital Product Builder · Video Editor · Post-Production Specialist · Creator",
+  "jobTitle": "Digital Product Builder · Video Editor · Digital Systems",
   "description":
-    "Geddada Devicharan is a digital product builder, video editor, and business systems creator based in Visakhapatnam & Vizianagaram, AP, India.",
+    "Geddada Devicharan — Digital Product Builder · Video Editor · Digital Systems based in Visakhapatnam & Vizianagaram, AP, India.",
   "sameAs": SOCIAL_PROFILES,
 });
 
 export const generateWebsiteSchema = () => ({
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "@id": `${BASE_URL}/#website`,
   "name": "Geddada Devicharan",
-  "alternateName": "Geddada Devicharan Portfolio",
-  "url": `${BASE_URL}/`,
+  "alternateName": [
+    "Devicharan",
+    "Geddada Devicharan Portfolio"
+  ],
+  "url": "https://geddadadevicharan.vercel.app/"
 });
 
 export const generateOrganizationSchema = () => ({
@@ -83,7 +85,7 @@ export const generateEchoessBrandSchema = () => ({
 export const generateExamFlowOSSchema = () => ({
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "@id": `${BASE_URL}/project/examflow-os#software`,
+  "@id": `${BASE_URL}/works/examflow-os#software`,
   "name": "ExamFlowOS",
   "alternateName": [
     "ExamFlow OS",
@@ -100,7 +102,7 @@ export const generateExamFlowOSSchema = () => ({
   "applicationSubCategory": "AI Study System",
   "operatingSystem": "Web (Browser-based, runs on Windows, macOS, Linux, Android, iOS)",
   "url": "https://examflowos.in",
-  "sameAs": [`${BASE_URL}/project/examflow-os`],
+  "sameAs": [`${BASE_URL}/works/examflow-os`],
   "image": `${BASE_URL}/examflow-logo.jpg`,
   "description":
     "ExamFlowOS — an AI-powered productivity and study system designed by Geddada Devicharan. A browser-based StudyOS / ProductivityOS combining hierarchical syllabus tracking, SM2 spaced repetition, focus-mode ambient audio, and behavioral analytics for deep work and exam mastery.",
@@ -220,10 +222,10 @@ export const generateProjectSchema = (data: {
 }) => ({
   "@context": "https://schema.org",
   "@type": "CreativeWork",
-  "@id": data.url || `${BASE_URL}/project/${data.id}`,
+  "@id": data.url || `${BASE_URL}/works/${data.id}`,
   "name": data.title,
   "description": data.description,
-  "url": data.url || `${BASE_URL}/project/${data.id}`,
+  "url": data.url || `${BASE_URL}/works/${data.id}`,
   "datePublished": data.year ? `${data.year}-01-01` : undefined,
   "keywords": [
     ...(data.tools || []),
@@ -255,7 +257,7 @@ export const generateProductSchema = (data: {
     "price": data.price,
     "priceCurrency": data.currency || "USD",
     "availability": "https://schema.org/InStock",
-    "url": data.url || `${BASE_URL}/perfect-pack`,
+    "url": data.url || `${BASE_URL}/works/perfect-pack`,
     "seller": { "@id": `${BASE_URL}/#person` },
   },
 });
@@ -305,12 +307,12 @@ export const generateEchoessAppSchema = () => ({
 export const generatePerfectPackProductSchema = () => ({
   "@context": "https://schema.org",
   "@type": "Product",
-  "@id": `${BASE_URL}/perfect-pack#product`,
+  "@id": `${BASE_URL}/works/perfect-pack#product`,
   "name": "Perfect Pack — Cinematic Editing Toolkit for DaVinci Resolve",
   "description":
     "Professional DaVinci Resolve toolkit featuring cinematic presets, transitions, sound effects, editing assets, and workflow tools by Geddada Devicharan.",
   "image": `${BASE_URL}/og/og-perfectpack.png?v=3`,
-  "url": `${BASE_URL}/perfect-pack`,
+  "url": `${BASE_URL}/works/perfect-pack`,
   "category": "Video Editing Toolkit",
   "brand": { "@type": "Brand", "name": "Geddada Devicharan" },
   "manufacturer": { "@id": `${BASE_URL}/#person` },
@@ -319,7 +321,7 @@ export const generatePerfectPackProductSchema = () => ({
     "price": "10",
     "priceCurrency": "USD",
     "availability": "https://schema.org/PreOrder",
-    "url": `${BASE_URL}/perfect-pack`,
+    "url": `${BASE_URL}/works/perfect-pack`,
     "seller": { "@id": `${BASE_URL}/#person` },
   },
 });

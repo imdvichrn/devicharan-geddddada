@@ -1,0 +1,63 @@
+{
+  "disciplines": [
+    {
+      "id": "video",
+      "name": "Video Editing & Post-Production",
+      "tools": ["DaVinci Resolve Studio (macOS)", "Fusion VFX", "Fairlight Audio"],
+      "skills": [
+        "Node-based Color Grading",
+        "Color Space Transforms (CST)",
+        "Skin-Tone Qualification",
+        "Shot-to-Shot Matching",
+        "Pacing & Retention Architecture",
+        "Fairlight Loudness Normalization",
+        "Motion Graphics & Titles",
+        "Short-form Content Finishing",
+        "Commercial Product Ads",
+        "Song Shoot Editorial"
+      ]
+    },
+    {
+      "id": "software",
+      "name": "Software & Product Engineering",
+      "tools": ["React 19", "TypeScript", "Vite", "Tailwind CSS", "Framer Motion"],
+      "skills": [
+        "Offline-First Architecture",
+        "Local-First State Management",
+        "CBT Exam Engines",
+        "Google Drive API Integration",
+        "Component Design Systems",
+        "Single Page Applications (SPA)",
+        "Zero-Pill Typographic Hierarchy",
+        "Responsive Layout Math"
+      ]
+    },
+    {
+      "id": "web",
+      "name": "Websites & Technical Infrastructure",
+      "tools": ["Next.js", "Vercel", "Cloudflare", "Git / GitHub"],
+      "skills": [
+        "Technical SEO & Core Web Vitals",
+        "Dynamic & Static XML Sitemaps",
+        "OpenGraph & Twitter Social Cards",
+        "Schema.org Structured Data (JSON-LD)",
+        "Robots.txt Crawl Control",
+        "DNS & Domain Infrastructure",
+        "99.9% Uptime Maintenance"
+      ]
+    },
+    {
+      "id": "systems",
+      "name": "Business Systems & Automation",
+      "tools": ["n8n", "Webhooks", "REST APIs", "EmailJS"],
+      "skills": [
+        "Event-Driven Pipelines",
+        "Client Intake Automation",
+        "CRM Data Routing",
+        "Multi-Step Webhook Flows",
+        "Lead Triage Workflows",
+        "Operational Drag Elimination"
+      ]
+    }
+  ]
+}

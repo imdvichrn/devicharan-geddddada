@@ -634,15 +634,10 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
           style={{ border: 'none', outline: 'none' }}
           aria-label="Chat Support - Click to talk with Echoless"
         >
-          {/* Continuous looping Siri Orb - runs regardless of chat state */}
-          <motion.div
-            animate={{ scale: [1, 1.06, 1] }}
-            transition={{ duration: 2.4, repeat: Infinity, repeatType: 'loop' }}
-            className="w-12 h-12 sm:w-14 sm:h-14 md:w-[72px] md:h-[72px] rounded-full overflow-hidden flex items-center justify-center"
-            style={{ borderRadius: '50%', border: 'none', outline: 'none' }}
-          >
+          {/* Siri Orb Trigger */}
+          <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-[72px] md:h-[72px] rounded-full overflow-hidden flex items-center justify-center">
             <SiriOrb className="w-full h-full" isOpen={isOpen} />
-          </motion.div>
+          </div>
         </Button>
       </motion.div>
 
@@ -670,11 +665,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
               <div className="relative z-10 px-4 py-3 border-b border-chat-border/50 flex-shrink-0 bg-background/40 backdrop-blur-md">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5 flex-1">
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                      className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-primary to-accent"
-                    />
+                    <div className="w-2.5 h-2.5 rounded-full bg-primary" />
                     <div>
                       <h3 className="font-semibold text-xs tracking-wide uppercase text-chat-text">Echoless</h3>
                       <p className="text-[11px] text-chat-text-muted flex items-center gap-1.5">

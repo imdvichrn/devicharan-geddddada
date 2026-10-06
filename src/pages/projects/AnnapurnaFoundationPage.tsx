@@ -23,7 +23,7 @@ import { PageShell } from '@/components/PageShell';
 import { generateCreativeWorkSchema } from '@/lib/structuredData';
 
 export function AnnapurnaFoundationPage() {
-  const canonicalUrl = 'https://geddadadevicharan.vercel.app/project/annapurna-foundation';
+  const canonicalUrl = 'https://geddadadevicharan.vercel.app/works/annapurna-foundation';
   const logoUrl = 'https://annapurna-foundation.com/assets/logo/logo-master-transparent-1024x1024.png';
   const websiteUrl = 'https://annapurna-foundation.com';
 
@@ -32,7 +32,7 @@ export function AnnapurnaFoundationPage() {
 
   const breadcrumbs = [
     { name: 'Home', url: 'https://geddadadevicharan.vercel.app' },
-    { name: 'Work', url: 'https://geddadadevicharan.vercel.app/work' },
+    { name: 'Works', url: 'https://geddadadevicharan.vercel.app/works' },
     { name: 'Annapurna Foundation', url: canonicalUrl }
   ];
 
@@ -60,7 +60,7 @@ export function AnnapurnaFoundationPage() {
       <SEOHead
         title={title}
         description={description}
-        path="/project/annapurna-foundation"
+        path="/works/annapurna-foundation"
         ogType="article"
         ogImage="https://geddadadevicharan.vercel.app/og/og-home.png"
         breadcrumbs={breadcrumbs}
@@ -74,17 +74,17 @@ export function AnnapurnaFoundationPage() {
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
             <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
             <ChevronRight size={12} />
-            <Link to="/work" className="hover:text-foreground transition-colors">Work</Link>
+            <Link to="/works" className="hover:text-foreground transition-colors">Works</Link>
             <ChevronRight size={12} />
             <span className="text-foreground font-medium">Annapurna Foundation</span>
           </nav>
 
           <Link
-            to="/work"
+            to="/works"
             className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-foreground transition-colors group"
           >
             <ArrowLeft size={13} className="group-hover:-translate-x-1 transition-transform" />
-            <span className="hidden sm:inline">Back to Work</span>
+            <span className="hidden sm:inline">Back to Works</span>
           </Link>
         </div>
 
@@ -645,11 +645,11 @@ export function AnnapurnaFoundationPage() {
             </a>
             
             <Link
-              to="/work"
+              to="/works"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-lg text-xs font-medium border border-border/70 hover:border-foreground/40 bg-background text-foreground transition-colors"
             >
               <ArrowLeft size={13} />
-              <span>Back to Work</span>
+              <span>Back to Works</span>
             </Link>
           </div>
         </section>

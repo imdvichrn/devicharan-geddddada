@@ -10,7 +10,7 @@ export const DEVICHARAN_IDENTITY = {
   fullName: "Geddada Devicharan",
   preferredName: "Devicharan",
   onlineHandle: "@imdvichrn",
-  currentRole: "Digital Product Builder, Video Editor / Post-Production Specialist, Business Systems Creator",
+  currentRole: "Digital Product Builder · Video Editor · Digital Systems",
   location: "Visakhapatnam & Vizianagaram, Andhra Pradesh, India",
   summary: "A multidisciplinary builder blending software engineering, business automation, and high-end video post-production.",
 } as const;

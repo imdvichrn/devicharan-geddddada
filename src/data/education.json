@@ -1,0 +1,13 @@
+{
+  "degree": "Bachelor of Technology (B.Tech)",
+  "field": "Electrical and Electronics Engineering (EEE)",
+  "location": "Andhra Pradesh, India",
+  "period": "Graduated with Engineering Distinction",
+  "engineeringPrinciples": [
+    "First-principles systems analysis",
+    "Control systems theory and feedback loops",
+    "Signal analysis and frequency domain fundamentals (applied directly to audio/color workflows)",
+    "Circuit efficiency and constraint-driven optimization (applied to software architecture)"
+  ],
+  "relevanceToCurrentWork": "His engineering background directly informs his software architecture (clean state, low-cost zero-overhead models) and his post-production workflow (node pipelines, color transforms, audio physics)."
+}

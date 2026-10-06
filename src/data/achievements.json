@@ -1,0 +1,32 @@
+[
+  {
+    "id": "video-deliverables",
+    "headline": "700+ Video Deliverables Finished",
+    "category": "video",
+    "details": "Completed over 700 client deliverables in DaVinci Resolve Studio on macOS across short-form reels, commercial ads, and creative song shoots."
+  },
+  {
+    "id": "examflowos-adoption",
+    "headline": "10,000+ Students on ExamFlowOS",
+    "category": "software",
+    "details": "Solo architected and coded ExamFlowOS, reaching over 10K registered students with ~700 active learners preparing for AP & TG ECET, ICET, and POLYCET."
+  },
+  {
+    "id": "managed-websites",
+    "headline": "8+ Live Client Websites Maintained",
+    "category": "web",
+    "details": "Engineers and manages the ongoing infrastructure, SEO, and uptime for 8+ commercial client web properties with 99.9% uptime."
+  },
+  {
+    "id": "zero-cost-architecture",
+    "headline": "Zero-Cost Cloud Architecture",
+    "category": "software",
+    "details": "Engineered a Google Drive-based backup persistence layer that keeps ExamFlowOS 100% free for students indefinitely without recurring database costs."
+  },
+  {
+    "id": "perfect-pack-created",
+    "headline": "Creator of Perfect Pack",
+    "category": "creative-tools",
+    "details": "Authored the Perfect Pack post-production toolkit for DaVinci Resolve Studio editors, bundling presets, transitions, and sound effects."
+  }
+]

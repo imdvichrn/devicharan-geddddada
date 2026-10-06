@@ -1,0 +1,58 @@
+[
+  {
+    "id": "who-is-devicharan",
+    "question": "Who is Geddada Devicharan?",
+    "keywords": ["who are you", "who is devicharan", "tell me about yourself", "bio", "background", "about"],
+    "answer": "Geddada Devicharan (@imdvichrn) is a multidisciplinary digital product builder, video editor, and systems creator based in Visakhapatnam & Vizianagaram, AP, India. He builds minimal software systems, finishes commercial video projects in DaVinci Resolve Studio (700+ deliverables), and manages digital infrastructure.",
+    "links": ["/about", "/works"]
+  },
+  {
+    "id": "video-editing-tools",
+    "question": "What tools and software does Devicharan use for video editing?",
+    "keywords": ["video tools", "editing software", "davinci", "premiere", "hardware", "color grading tools"],
+    "answer": "Devicharan edits exclusively in DaVinci Resolve Studio on macOS (Apple Silicon). His pipeline includes node-based color grading with color space transforms (CST), Fusion for motion design, and Fairlight for dialogue cleanup and loudness normalization.",
+    "links": ["/video", "/works/video-editing-post-production"]
+  },
+  {
+    "id": "examflowos-details",
+    "question": "What is ExamFlowOS and why is it free?",
+    "keywords": ["examflowos", "exam app", "ecet", "cbt", "free exam prep", "cost", "google drive"],
+    "answer": "ExamFlowOS is a free competitive exam preparation and CBT platform built for students preparing for AP & TG ECET, ICET, and POLYCET. Built solo by Devicharan, it serves 10,000+ students (~700 active) with a novel Google Drive cloud backup architecture that keeps it 100% free forever without database paywalls.",
+    "links": ["/works/examflow-os", "https://examflowos.in"]
+  },
+  {
+    "id": "perfect-pack-details",
+    "question": "What is Perfect Pack for DaVinci Resolve?",
+    "keywords": ["perfect pack", "presets", "davinci plugin", "drfx", "transitions", "sfx"],
+    "answer": "Perfect Pack is a curated post-production asset toolkit for DaVinci Resolve Studio. Built from 700+ deliverables of editing experience, it bundles cinematic presets, motion titles, seamless transitions, and sound effects.",
+    "links": ["/works/perfect-pack"]
+  },
+  {
+    "id": "experiments-details",
+    "question": "What kind of experiments and research does Devicharan publish?",
+    "keywords": ["experiments", "research", "lab", "explorations", "spaced repetition experiment", "mppt", "longevity"],
+    "answer": "Devicharan documents technical explorations and personal inquiry across cognitive psychology (adaptive spaced repetition in ExamFlowOS), post-production CLI automation, clean energy microgrids (MPPT photovoltaic efficiency), and longevity literature.",
+    "links": ["/experiments", "/experiments/sm2-cbt-recall"]
+  },
+  {
+    "id": "hiring-and-availability",
+    "question": "Is Devicharan available for freelance projects or full-time roles?",
+    "keywords": ["hire", "availability", "freelance", "contract", "work with you", "rates", "pricing"],
+    "answer": "Yes, Devicharan takes on select commercial video editing projects, custom web engineering, and business systems automation. You can reach out directly via the contact form or email at devicharangeddada@gmail.com.",
+    "links": ["/contact"]
+  },
+  {
+    "id": "education-background",
+    "question": "What is Devicharan's educational background?",
+    "keywords": ["education", "college", "degree", "engineering", "btech", "eee"],
+    "answer": "Devicharan holds a B.Tech in Electrical and Electronics Engineering (EEE) from Andhra Pradesh, India. His systems engineering training underpins his first-principles approach to software architecture and technical post-production workflows.",
+    "links": ["/about"]
+  },
+  {
+    "id": "location",
+    "question": "Where is Devicharan located?",
+    "keywords": ["location", "where are you", "city", "country", "india", "vizag", "vizianagaram"],
+    "answer": "Devicharan is based in Visakhapatnam and Vizianagaram, Andhra Pradesh, India, working remotely with clients across India and globally.",
+    "links": ["/contact"]
+  }
+]

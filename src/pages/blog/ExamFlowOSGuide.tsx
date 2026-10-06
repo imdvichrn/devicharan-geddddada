@@ -24,7 +24,7 @@ import {
 } from 'lucide-react';
 
 const CANONICAL =
-  'https://geddadadevicharan.vercel.app/project/examflow-os/blog/examflowos-all-in-one-exam-prep-app-ap-tg-ecet-icet-polycet';
+  'https://geddadadevicharan.vercel.app/works/examflow-os/blog/examflowos-all-in-one-exam-prep-app-ap-tg-ecet-icet-polycet';
 const PUBLISHED = '2026-07-13';
 const TITLE =
   'ExamFlowOS: All-in-One AP/TG Exam Prep App';
@@ -82,7 +82,7 @@ const breadcrumbSchema = {
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://geddadadevicharan.vercel.app/' },
-    { '@type': 'ListItem', position: 2, name: 'ExamFlow OS', item: 'https://geddadadevicharan.vercel.app/project/examflow-os' },
+    { '@type': 'ListItem', position: 2, name: 'ExamFlowOS', item: 'https://geddadadevicharan.vercel.app/works/examflow-os' },
     { '@type': 'ListItem', position: 3, name: 'ExamFlowOS Review & Guide', item: CANONICAL },
   ],
 };
@@ -190,12 +190,13 @@ export default function ExamFlowOSGuide() {
       <SEOHead
         title={`${TITLE} | Geddada Devicharan`}
         description={DESCRIPTION}
-        path="/project/examflow-os/blog/examflowos-all-in-one-exam-prep-app-ap-tg-ecet-icet-polycet"
+        path="/works/examflow-os/blog/examflowos-all-in-one-exam-prep-app-ap-tg-ecet-icet-polycet"
         ogType="article"
         ogImage="https://geddadadevicharan.vercel.app/og/og-examflowos.png"
         breadcrumbs={[
           { name: 'Home', url: 'https://geddadadevicharan.vercel.app/' },
-          { name: 'ExamFlow OS', url: 'https://geddadadevicharan.vercel.app/project/examflow-os' },
+          { name: 'Works', url: 'https://geddadadevicharan.vercel.app/works' },
+          { name: 'ExamFlowOS', url: 'https://geddadadevicharan.vercel.app/works/examflow-os' },
           { name: 'ExamFlowOS Review & Guide', url: CANONICAL }
         ]}
         structuredData={[articleSchema, breadcrumbSchema, faqSchema, howToSchema]}
@@ -210,7 +211,7 @@ export default function ExamFlowOSGuide() {
               </li>
               <li aria-hidden>/</li>
               <li>
-                <Link to="/project/examflow-os" className="hover:text-foreground transition-colors">ExamFlow OS</Link>
+                <Link to="/works/examflow-os" className="hover:text-foreground transition-colors">ExamFlowOS</Link>
               </li>
               <li aria-hidden>/</li>
               <li className="text-foreground">Documentation</li>
@@ -218,11 +219,11 @@ export default function ExamFlowOSGuide() {
           </nav>
 
           <Link
-            to="/project/examflow-os"
+            to="/works/examflow-os"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to ExamFlow OS
+            Back to ExamFlowOS Case Study
           </Link>
 
           <motion.article
@@ -676,21 +677,21 @@ export default function ExamFlowOSGuide() {
               <div className="mt-12 flex flex-wrap gap-3">
                 <Button asChild>
                   <a
-                    href="https://examflowos.vercel.app"
+                    href="https://examflowos.in"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2"
                   >
                     <Search className="h-4 w-4" />
-                    Open ExamFlowOS
+                    Open ExamFlowOS (examflowos.in)
                     <ExternalLink className="h-4 w-4" />
                   </a>
                 </Button>
                 <Button asChild variant="outline">
-                  <Link to="/project/examflow-os">View Project Page</Link>
+                  <Link to="/works/examflow-os">View Case Study</Link>
                 </Button>
                 <Button asChild variant="ghost">
-                  <Link to="/project/examflow-os/blog/examflowos-journey">
+                  <Link to="/works/examflow-os/blog/examflowos-journey">
                     Read: Building ExamFlowOS
                   </Link>
                 </Button>

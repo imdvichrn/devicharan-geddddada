@@ -1,7 +1,8 @@
-// Echoless AI Chat Service — deterministic conversational streaming for Geddada Devicharan's portfolio
+// Portfolio Intelligence Assistant Service — Fast local-first architecture for Geddada Devicharan's portfolio
 
 import { Project } from '@/data/projects';
-import { defaultEngine } from '@/echoless/engine';
+import { defaultChatbot } from '@/chatbot/chatbot';
+import { ActionChip, GeneratedResponse } from '@/chatbot/responseEngine';
 
 export interface Message {
   role: 'user' | 'assistant';
@@ -10,6 +11,8 @@ export interface Message {
   projectLink?: string;
   timestamp?: Date;
   relatedProject?: Project;
+  suggestedActions?: ActionChip[];
+  suggestedFollowups?: string[];
 }
 
 export interface ChatContext {
@@ -20,13 +23,26 @@ export interface ChatContext {
 }
 
 /**
- * Stream a chat response from the deterministic Echoless engine.
- * Calls onDelta with each token chunk, onDone when complete.
+ * Fast local-first response resolution (< 2ms) without artificial token lag.
+ */
+export async function getAssistantResponse(
+  messages: { role: string; content: string }[]
+): Promise<GeneratedResponse> {
+  const lastUser = messages.filter((m) => m.role === 'user').pop();
+  const query = lastUser?.content || '';
+  const history = messages.map((m) => ({
+    role: m.role as 'user' | 'assistant',
+    content: m.content,
+  }));
+
+  return await defaultChatbot.respond(query, history);
+}
+
+/**
+ * Streaming interface for backward compatibility. Emits response immediately.
  */
 export async function streamChatMessage({
   messages,
-  taskType,
-  modelPreference,
   onDelta,
   onDone,
   onError,
@@ -34,65 +50,35 @@ export async function streamChatMessage({
   messages: { role: string; content: string }[];
   taskType?: 'general' | 'fast' | 'complex';
   modelPreference?: 'general' | 'fast' | 'complex';
-  onDelta: (text: string) => void;
+  onDelta: (text: string, responseMeta?: GeneratedResponse) => void;
   onDone: () => void;
   onError?: (error: string) => void;
 }) {
   try {
-    await defaultEngine.streamConversation(
-      messages,
-      {
-        onChunk: (chunk) => {
-          onDelta(chunk);
-        },
-        onDone: () => {
-          onDone();
-        },
-        onError: (err) => {
-          if (onError) onError(err);
-          else onDone();
-        },
-      }
-    );
-  } catch (err) {
-    console.warn("Notice during streamChatMessage:", err);
-    try {
-      const lastUser = messages[messages.length - 1]?.content || "";
-      const resp = await defaultEngine.respond(lastUser, messages);
-      onDelta(resp.text);
-    } catch {
-      onDelta("What would you like to explore across Devicharan's software products, video post-production, or digital systems?");
-    }
+    const resp = await getAssistantResponse(messages);
+    onDelta(resp.text, resp);
     onDone();
+  } catch (err: any) {
+    console.warn("Notice during streamChatMessage:", err);
+    if (onError) onError(err.message || 'Error resolving query');
+    else {
+      onDelta("What would you like to explore across Devicharan's software products, video post-production, or digital systems?");
+      onDone();
+    }
   }
 }
 
 /**
- * Non-streaming fallback — sends message and returns full text response.
+ * Non-streaming direct resolution.
  */
 export async function sendChatMessage(
   messages: Message[]
-): Promise<{ text: string; sources?: string[]; projectLink?: string }> {
-  return new Promise((resolve, reject) => {
-    let fullText = "";
-    const apiMessages = messages.map((m) => ({
-      role: m.role,
-      content: m.content,
-    }));
-
-    streamChatMessage({
-      messages: apiMessages,
-      onDelta: (chunk) => {
-        fullText += chunk;
-      },
-      onDone: () => {
-        resolve({ text: fullText || "What would you like to explore across Devicharan's work?" });
-      },
-      onError: (error) => {
-        reject(new Error(error));
-      },
-    });
-  });
+): Promise<GeneratedResponse> {
+  const apiMessages = messages.map((m) => ({
+    role: m.role,
+    content: m.content,
+  }));
+  return await getAssistantResponse(apiMessages);
 }
 
 export function getUserNameFromStorage(): string | null {

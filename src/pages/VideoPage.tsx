@@ -25,7 +25,7 @@ export function VideoPage() {
         path="/video"
         breadcrumbs={[
           { name: 'Home', url: 'https://geddadadevicharan.vercel.app' },
-          { name: 'Work', url: 'https://geddadadevicharan.vercel.app/work' },
+          { name: 'Works', url: 'https://geddadadevicharan.vercel.app/works' },
           { name: 'Video & Post-Production', url: 'https://geddadadevicharan.vercel.app/video' }
         ]}
       />
@@ -36,7 +36,7 @@ export function VideoPage() {
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono text-muted-foreground pt-2">
           <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
           <ChevronRight size={12} />
-          <Link to="/work" className="hover:text-foreground transition-colors">Work</Link>
+          <Link to="/works" className="hover:text-foreground transition-colors">Works</Link>
           <ChevronRight size={12} />
           <span className="text-foreground font-medium">Video & Post-Production</span>
         </nav>

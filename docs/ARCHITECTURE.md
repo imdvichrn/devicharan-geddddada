@@ -14,8 +14,7 @@ Browser
                     │                 └── hooks + lib helpers
                     └── Chatbot              root-level, single instance
                           └── services/chatService.ts
-                                └── Supabase edge function `echoless-chat`
-                                      └── Lovable AI Gateway (streaming SSE)
+                                └── echoless/engine.ts (Deterministic local engine)
 ```
 
 ## Rendering model
@@ -37,8 +36,8 @@ JSON-LD `@graph`, while per-page tags are added at runtime with Helmet.
 | Hooks | `src/hooks/**` | Theme, mobile breakpoint, toast |
 | Lib | `src/lib/**` | Pure helpers: schema builders, video URL helpers, `cn` |
 | Data | `src/data/projects.ts` | Static content model |
-| Services | `src/services/chatService.ts` | Network access for the assistant |
-| Backend | `supabase/functions/**` | AI proxy + transactional email |
+| Services | `src/services/chatService.ts` | Assistant interface to local Echoless engine |
+| AI Engine | `src/echoless/**` | Deterministic knowledge engine & streaming |
 
 ## State
 There is no global store. State is local (`useState`/`useRef`) except:

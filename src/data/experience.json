@@ -1,0 +1,44 @@
+[
+  {
+    "role": "Lead Video Editor & Post-Production Specialist",
+    "period": "2022 – Present",
+    "focus": "DaVinci Resolve Studio (macOS)",
+    "deliverablesCount": "700+",
+    "highlights": [
+      "Finished 700+ deliverables across short-form reels, product ads, and creative song shoots",
+      "Node-based color grading, color space transforms (CST), skin-tone qualification, and shot-to-shot matching",
+      "Fairlight audio loudness mastering and dialogue cleanup",
+      "Fusion motion graphics, titles, and visual effects"
+    ]
+  },
+  {
+    "role": "Digital Product Builder & Software Architect",
+    "period": "2024 – Present",
+    "focus": "React, TypeScript, Vite, Offline-First Systems",
+    "highlights": [
+      "Sole developer and architect of ExamFlowOS, reaching 10,000+ total users with ~700 active students",
+      "Pioneered zero-cost Google Drive cloud backup architecture to eliminate monthly database charges for free education",
+      "Creator of Perfect Pack for DaVinci Resolve Studio"
+    ]
+  },
+  {
+    "role": "Web Engineer & Systems Administrator",
+    "period": "2024 – Present",
+    "focus": "Full-Stack Web, Technical SEO, Vercel, Cloudflare",
+    "highlights": [
+      "Engineered and actively maintains 8+ live commercial websites with 99.9% uptime",
+      "Architects XML sitemaps, OpenGraph metadata, schema.org JSON-LD, and Core Web Vitals optimizations",
+      "Manages complete digital presence for Annapurna Foundation and Sri Lahari Studios"
+    ]
+  },
+  {
+    "role": "Business Systems & Automation Specialist",
+    "period": "2024 – Present",
+    "focus": "n8n, Webhooks, REST APIs, Client Routing",
+    "highlights": [
+      "Engineers event-driven lead routing and client onboarding automation pipelines",
+      "Integrates n8n workflows with CRMs, forms, and email triggers to eliminate administrative busywork",
+      "Applies B.Tech EEE control systems methodology to business operational workflows"
+    ]
+  }
+]

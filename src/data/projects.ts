@@ -168,7 +168,7 @@ export const projects: Project[] = [
       'Plug-and-play DRFX integration designed for immediate timeline drop-in'
     ],
     category: 'design',
-    externalLink: '/perfect-pack'
+    externalLink: '/works/perfect-pack'
   }
 ];
 

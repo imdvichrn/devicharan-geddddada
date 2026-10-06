@@ -28,7 +28,7 @@ import { PageShell } from '@/components/PageShell';
 import { generateBreadcrumbSchema, generateSoftwareApplicationSchema } from '@/lib/structuredData';
 
 export function ExamFlowOSPage() {
-  const canonicalUrl = 'https://geddadadevicharan.vercel.app/project/examflow-os';
+  const canonicalUrl = 'https://geddadadevicharan.vercel.app/works/examflow-os';
   const logoUrl = 'https://geddadadevicharan.vercel.app/examflow-logo.jpg';
   const websiteUrl = 'https://examflowos.in';
 
@@ -37,7 +37,7 @@ export function ExamFlowOSPage() {
 
   const breadcrumbs = [
     { name: 'Home', url: 'https://geddadadevicharan.vercel.app' },
-    { name: 'Work', url: 'https://geddadadevicharan.vercel.app/work' },
+    { name: 'Works', url: 'https://geddadadevicharan.vercel.app/works' },
     { name: 'ExamFlowOS', url: canonicalUrl }
   ];
 
@@ -105,7 +105,7 @@ export function ExamFlowOSPage() {
       <SEOHead
         title={title}
         description={description}
-        path="/project/examflow-os"
+        path="/works/examflow-os"
         ogImage="https://geddadadevicharan.vercel.app/og/og-examflowos.png"
         ogType="article"
         breadcrumbs={breadcrumbs}
@@ -119,17 +119,17 @@ export function ExamFlowOSPage() {
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
             <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
             <ChevronRight size={12} />
-            <Link to="/work" className="hover:text-foreground transition-colors">Work</Link>
+            <Link to="/works" className="hover:text-foreground transition-colors">Works</Link>
             <ChevronRight size={12} />
             <span className="text-foreground font-medium">ExamFlowOS</span>
           </nav>
 
           <Link
-            to="/work"
+            to="/works"
             className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-foreground transition-colors group"
           >
             <ArrowLeft size={13} className="group-hover:-translate-x-1 transition-transform" />
-            <span className="hidden sm:inline">Back to Work</span>
+            <span className="hidden sm:inline">Back to Works</span>
           </Link>
         </div>
 
@@ -724,14 +724,20 @@ export function ExamFlowOSPage() {
           </div>
 
           <div className="flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-muted-foreground">
-            <Link to="/work" className="hover:text-foreground transition-colors inline-flex items-center gap-1">
+            <Link to="/works" className="hover:text-foreground transition-colors inline-flex items-center gap-1">
               <ArrowLeft size={12} />
-              <span>Return to Work Overview</span>
+              <span>Return to Works Overview</span>
             </Link>
-            <Link to="/project/annapurna-foundation" className="hover:text-foreground transition-colors inline-flex items-center gap-1">
-              <span>Next Case Study: Annapurna Foundation</span>
-              <ChevronRight size={12} />
-            </Link>
+            <div className="flex items-center gap-4">
+              <Link to="/experiments/sm2-cbt-recall" className="hover:text-primary transition-colors inline-flex items-center gap-1">
+                <span>Recall Experiment Note</span>
+                <ChevronRight size={12} />
+              </Link>
+              <Link to="/works/annapurna-foundation" className="hover:text-foreground transition-colors inline-flex items-center gap-1">
+                <span>Next: Annapurna Foundation</span>
+                <ChevronRight size={12} />
+              </Link>
+            </div>
           </div>
         </section>
 

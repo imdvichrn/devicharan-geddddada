@@ -1,4 +1,5 @@
 import { SEOHead } from '@/components/SEOHead';
+import { Link } from 'react-router-dom';
 import { 
   Mail, 
   ArrowUpRight, 
@@ -188,6 +189,23 @@ export function ContactPage() {
           </div>
 
         </div>
+
+        {/* Portfolio Destination Links */}
+        <section className="pt-10 border-t border-border/40 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-muted-foreground">
+          <div className="flex items-center gap-4">
+            <Link to="/works" className="hover:text-foreground">← Explore Works</Link>
+            <Link to="/experiments" className="hover:text-foreground">Experiments</Link>
+            <Link to="/about" className="hover:text-foreground">About Devicharan</Link>
+          </div>
+          <a 
+            href="/Geddada_Devicharan_CV.pdf" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-primary hover:underline"
+          >
+            Download Curriculum Vitae (PDF) ↗
+          </a>
+        </section>
 
       </main>
     </PageShell>

@@ -153,12 +153,12 @@ export function Portfolio() {
   return (
     <div className="relative min-h-screen text-foreground selection:bg-primary/20 selection:text-primary">
       <SEOHead
-        title="Geddada Devicharan — Digital Product Builder, Video Editor & Creator"
-        description="Geddada Devicharan is a multidisciplinary digital creator building products, websites, digital systems, and visual experiences across software, video, and creative technology."
+        title="Geddada Devicharan — Digital Product Builder · Video Editor · Digital Systems"
+        description="Geddada Devicharan — Digital Product Builder · Video Editor · Digital Systems based in Visakhapatnam & Vizianagaram, AP, India."
         path="/"
         breadcrumbs={[
           { name: 'Home', url: 'https://geddadadevicharan.vercel.app/' },
-          { name: 'Work', url: 'https://geddadadevicharan.vercel.app/work' },
+          { name: 'Works', url: 'https://geddadadevicharan.vercel.app/works' },
           { name: 'Software', url: 'https://geddadadevicharan.vercel.app/software' },
           { name: 'Video Studio', url: 'https://geddadadevicharan.vercel.app/video' },
           { name: 'Web & Systems', url: 'https://geddadadevicharan.vercel.app/web' },
@@ -193,17 +193,17 @@ export function Portfolio() {
 
         <div className="relative z-10 w-full max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto flex flex-col items-start md:items-center">
           
-          {/* STEP 1: PORTRAIT ANCHOR */}
+          {/* STEP 1: PORTRAIT ANCHOR (Editorial First Anchor) */}
           <div className="mb-4 sm:mb-6 hero-step-1">
             <div 
-              className="relative w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full overflow-hidden border border-border bg-card shadow-[0_4px_20px_rgba(0,0,0,0.18)] ml-0 md:mx-auto transition-transform duration-300 hover:scale-[1.02] depth-interactive"
+              className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full overflow-hidden border border-border/80 bg-card shadow-[0_8px_30px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.35)] mx-0 md:mx-auto transition-transform duration-300 hover:scale-[1.02] depth-interactive ring-1 ring-border/40"
               style={{
-                transform: `translate3d(${heroPointerDepth.pixelX * 0.3}px, ${heroPointerDepth.pixelY * 0.3}px, 0)`
+                transform: `translate3d(${heroPointerDepth.pixelX * 0.2}px, ${heroPointerDepth.pixelY * 0.2}px, 0)`
               }}
             >
               <img 
                 src={profileImage} 
-                alt="Geddada Devicharan portrait" 
+                alt="Geddada Devicharan editorial portrait" 
                 width={144}
                 height={144}
                 className="w-full h-full object-cover object-center" 
@@ -213,34 +213,34 @@ export function Portfolio() {
             </div>
           </div>
 
-          {/* STEP 2: HANDLE (@imdvichrn) */}
-          <div className="hero-step-2 text-xs sm:text-sm font-mono text-primary font-medium tracking-wide text-left md:text-center flex items-center gap-1.5">
+          {/* STEP 2: DISPLAY NAME (Instrument Serif) */}
+          <h1 className="hero-step-2 mt-1 sm:mt-2 font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-normal tracking-tight text-foreground leading-[1.06] text-left md:text-center">
+            Geddada Devicharan
+          </h1>
+
+          {/* STEP 3: DISCIPLINE STATEMENT */}
+          <div className="hero-step-3 mt-2 sm:mt-3 text-xs sm:text-base md:text-lg lg:text-xl text-foreground/90 font-normal tracking-normal max-w-xl xl:max-w-2xl mx-0 md:mx-auto leading-snug px-0 md:px-2 text-left md:text-center">
+            Digital Product Builder · Video Editor · Digital Systems
+          </div>
+
+          {/* STEP 4: HANDLE & VERIFIED (@imdvichrn) */}
+          <div className="hero-step-4 mt-2 sm:mt-2.5 text-xs sm:text-sm font-mono text-primary font-medium tracking-wide text-left md:text-center flex items-center gap-1.5 justify-start md:justify-center">
             <span>@imdvichrn</span>
             <VerifiedCheckIcon size={13} className="text-primary inline-block" />
           </div>
 
-          {/* STEP 3: DISPLAY NAME (Instrument Serif) */}
-          <h1 className="hero-step-3 mt-2 sm:mt-3 font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-normal tracking-tight text-foreground leading-[1.06] text-left md:text-center">
-            Geddada Devicharan
-          </h1>
-
-          {/* STEP 4: DISCIPLINE STATEMENT (Balanced & Clean) */}
-          <div className="hero-step-4 mt-3 sm:mt-4 text-xs sm:text-base md:text-lg lg:text-xl text-foreground/90 font-normal tracking-normal max-w-xl xl:max-w-2xl mx-0 md:mx-auto leading-snug px-0 md:px-2 text-left md:text-center">
-            Digital Product Builder · Video Editor · Post-Production Specialist · Creator
-          </div>
-
           {/* STEP 5: PERSONAL INTRO (Calm, human, readable) */}
-          <p className="hero-step-5 mt-2.5 sm:mt-4 text-xs sm:text-sm md:text-base lg:text-[17px] text-muted-foreground max-w-md sm:max-w-xl md:max-w-2xl mx-0 md:mx-auto leading-relaxed font-normal px-0 md:px-2 text-left md:text-center">
+          <p className="hero-step-5 mt-3 sm:mt-4 text-xs sm:text-sm md:text-base lg:text-[17px] text-muted-foreground max-w-md sm:max-w-xl md:max-w-2xl mx-0 md:mx-auto leading-relaxed font-normal px-0 md:px-2 text-left md:text-center">
             Designing minimal software systems, finishing commercial post-production video, and managing digital infrastructure from Andhra Pradesh, India.
           </p>
 
-          {/* STEP 6: ACTIONS (Physical depth & micro-lift on hover, press down state) */}
+          {/* STEP 6: ACTIONS */}
           <div className="hero-step-6 mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-start md:justify-center gap-3 w-full sm:w-auto max-w-md md:max-w-none mx-0 md:mx-auto">
             
             {/* Primary Action */}
             <a 
               href="#work-map"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 h-11 sm:h-12 rounded-xl text-xs sm:text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/95 depth-interactive shadow-[0_2px_10px_rgba(0,122,255,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shrink-0"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 h-11 sm:h-12 rounded-xl text-xs sm:text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/95 depth-interactive shadow-[0_2px_10px_rgba(0,122,255,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shrink-0 transition-all duration-200"
             >
               <span>Explore my work</span>
               <ArrowRight size={14} strokeWidth={2} />
@@ -252,7 +252,7 @@ export function Portfolio() {
             {/* Tertiary Action: Get in touch */}
             <Link 
               to="/contact"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-5 h-11 sm:h-12 rounded-xl text-xs sm:text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/40 depth-interactive transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shrink-0"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-5 h-11 sm:h-12 rounded-xl text-xs sm:text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/40 depth-interactive transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shrink-0"
             >
               <span>Get in touch</span>
             </Link>
@@ -738,7 +738,7 @@ export function Portfolio() {
                   About Geddada Devicharan.
                 </h2>
                 <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl">
-                  Digital Product Builder, Video Editor & Business Systems Creator based in Andhra Pradesh.
+                  Digital Product Builder · Video Editor · Digital Systems based in Andhra Pradesh.
                 </p>
               </div>
 
@@ -847,7 +847,7 @@ export function Portfolio() {
               Geddada Devicharan
             </p>
             <p className="text-xs sm:text-sm text-muted-foreground">
-              Digital Product Builder, Video Editor & Business Systems Creator.
+              Digital Product Builder · Video Editor · Digital Systems
             </p>
             <p className="text-[11px] sm:text-xs font-mono text-muted-foreground/60 pt-1">
               Visakhapatnam & Vizianagaram, AP, India · © {new Date().getFullYear()}

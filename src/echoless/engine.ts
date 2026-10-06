@@ -1,40 +1,10 @@
 /**
- * Echoless Deterministic Conversational Engine
- * 
- * Flow:
- * User Input
- *   ↓
- * Understanding / Parser (Language, Tokens, Cues)
- *   ↓
- * Intent Classifier
- *   ↓
- * Entity Recognition (Deterministic + Fuzzy Aliases)
- *   ↓
- * Context & Referent Resolver (Conversation State & History)
- *   ↓
- * Knowledge Graph & Verified Facts
- *   ↓
- * Response Planner
- *   ↓
- * Sentence Composer (Multi-Language)
- *   ↓
- * Anti-Repetition & Rhythm Variation
- *   ↓
- * Output Validator (Fact bounds & Zero URL Leakage)
- *   ↓
- * Verified Action IDs & Stream
+ * Echoless Conversational Engine
+ * Bridges conversation orchestration to the structured JSON-backed chatbot brain.
  */
 
-import { parseInput, SupportedLanguage } from './core/parser';
-import { classifyIntent } from './core/intent';
-import { extractEntities } from './core/entities';
-import { resolveContext } from './core/resolver';
-import { evaluateConfidence } from './core/confidence';
-import { planResponse } from './response/planner';
-import { composeResponse } from './response/composer';
-import { ConversationMemory } from './conversation/memory';
-import { ConversationTurn } from './conversation/state';
-import { getVerifiedActions } from './knowledge/actions';
+import { defaultChatbot, ChatMessage } from '../chatbot/chatbot';
+import { SupportedLanguage } from './core/parser';
 
 export interface EcholessResponse {
   text: string;
@@ -52,10 +22,12 @@ export interface StreamCallbacks {
 }
 
 export class EcholessEngine {
-  private memory: ConversationMemory;
+  public resetMemory() {
+    defaultChatbot.resetMemory();
+  }
 
-  constructor() {
-    this.memory = new ConversationMemory();
+  public getHonestUnavailableResponse(): string {
+    return "What would you like to explore across Devicharan's software products, DaVinci Resolve post-production, or digital systems?";
   }
 
   /**
@@ -65,157 +37,42 @@ export class EcholessEngine {
     userInput: string,
     historyMessages?: { role: string; content: string }[]
   ): Promise<EcholessResponse> {
-    // Reconstruct conversation state if multi-turn history is provided
-    if (historyMessages && historyMessages.length > 1) {
-      this.reconstructStateFromHistory(historyMessages.slice(0, -1));
-    }
+    const history: ChatMessage[] = (historyMessages || []).map((m) => ({
+      role: m.role as 'user' | 'assistant',
+      content: m.content,
+    }));
 
-    const state = this.memory.getState();
-
-    // 1. Parse input
-    const parsed = parseInput(userInput, state.languagePreference);
-
-    // 2. Classify intent
-    const hasActiveContext = Boolean(state.currentEntityId);
-    const intentMatch = classifyIntent(parsed, hasActiveContext);
-
-    // 3. Extract entities (deterministic + fuzzy)
-    const extractedEntities = extractEntities(parsed);
-
-    // 4. Resolve Context & Referents ("it", "tell me more", "the other one", "why?")
-    const resolvedContext = resolveContext(
-      parsed,
-      intentMatch.type,
-      extractedEntities,
-      state
-    );
-
-    // 5. Evaluate Confidence
-    const confidenceEval = evaluateConfidence(
-      parsed,
-      intentMatch.type,
-      resolvedContext
-    );
-
-    // 6. Plan Response
-    const plan = planResponse(
-      intentMatch.type,
-      resolvedContext.entityId,
-      parsed.language,
-      state,
-      confidenceEval.isConfident,
-      confidenceEval.clarificationPrompt,
-      intentMatch.subTopic
-    );
-
-    // 7. Compose Natural Sentences from Verified Knowledge
-    const { text, actionIds } = composeResponse(
-      plan,
-      state.turnCount,
-      state,
-      confidenceEval.clarificationPrompt
-    );
-
-    // 8. Record Turn in Conversation Memory
-    const turn: ConversationTurn = {
-      id: `turn_${Date.now()}`,
-      timestamp: Date.now(),
-      userText: userInput,
-      intent: intentMatch.type,
-      resolvedEntityId: resolvedContext.entityId,
-      responseText: text,
-      actionIds,
-      language: parsed.language,
-      factsUsed: [],
-    };
-    this.memory.recordTurn(turn);
+    const response = await defaultChatbot.respond(userInput, history);
 
     return {
-      text,
-      actionIds,
-      confidence: confidenceEval.score,
-      intent: intentMatch.type,
-      entityId: resolvedContext.entityId,
-      language: parsed.language,
+      text: response.text,
+      actionIds: response.sources || [],
+      confidence: 0.96,
+      intent: response.intent,
+      entityId: response.entityId,
+      language: 'en',
     };
   }
 
   /**
-   * Stream a conversation turn with realistic character/word delta pacing
+   * Streaming conversational response generator
    */
   public async streamConversation(
     messages: { role: string; content: string }[],
-    callbacks: StreamCallbacks,
-    _options?: any
+    callbacks: StreamCallbacks
   ): Promise<void> {
-    try {
-      const lastMessage = messages[messages.length - 1];
-      const userText = lastMessage?.role === 'user' ? lastMessage.content : '';
-
-      const response = await this.respond(userText, messages);
-      const fullText = response.text;
-
-      // Stream words smoothly
-      const words = fullText.split(' ');
-      for (let i = 0; i < words.length; i++) {
-        const chunk = (i === 0 ? '' : ' ') + words[i];
-        await callbacks.onChunk(chunk);
-        // Realistic micro-delay for conversational feel
-        await new Promise((resolve) => setTimeout(resolve, 18));
-      }
-
-      if (callbacks.onDone) {
-        await callbacks.onDone();
-      }
-    } catch (err) {
-      if (callbacks.onError) {
-        await callbacks.onError(err);
-      } else {
-        await callbacks.onChunk("What would you like to explore across Devicharan's work?");
+    await defaultChatbot.streamConversation(messages, {
+      onChunk: async (chunk) => {
+        if (callbacks.onChunk) await callbacks.onChunk(chunk);
+      },
+      onDone: async () => {
         if (callbacks.onDone) await callbacks.onDone();
-      }
-    }
-  }
-
-  public getHonestUnavailableResponse(): string {
-    return "What would you like to explore across Devicharan's software products, video post-production, or digital systems?";
-  }
-
-  public getMemory(): ConversationMemory {
-    return this.memory;
-  }
-
-  public resetMemory(): void {
-    this.memory.reset();
-  }
-
-  /**
-   * Fast state reconstruction from preceding message turns
-   */
-  private reconstructStateFromHistory(messages: { role: string; content: string }[]) {
-    this.memory.reset();
-    for (let i = 0; i < messages.length; i++) {
-      const msg = messages[i];
-      if (msg.role === 'user') {
-        const parsed = parseInput(msg.content);
-        const entities = extractEntities(parsed);
-        const intent = classifyIntent(parsed, Boolean(this.memory.getState().currentEntityId));
-        const context = resolveContext(parsed, intent.type, entities, this.memory.getState());
-
-        const assistantMsg = messages[i + 1]?.role === 'assistant' ? messages[i + 1].content : '';
-        this.memory.recordTurn({
-          id: `hist_${i}`,
-          timestamp: Date.now() - (messages.length - i) * 1000,
-          userText: msg.content,
-          intent: intent.type,
-          resolvedEntityId: context.entityId,
-          responseText: assistantMsg,
-          actionIds: [],
-          language: parsed.language,
-          factsUsed: [],
-        });
-      }
-    }
+      },
+      onError: async (err) => {
+        if (callbacks.onError) await callbacks.onError(err);
+        else if (callbacks.onDone) await callbacks.onDone();
+      },
+    });
   }
 }
 

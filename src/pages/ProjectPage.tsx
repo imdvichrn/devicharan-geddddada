@@ -130,11 +130,11 @@ export default function ProjectPage() {
             <p className="text-xs text-muted-foreground">The requested case study does not exist or has been relocated.</p>
           </div>
           <Link
-            to="/work"
+            to="/works"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs font-medium bg-foreground text-background hover:bg-foreground/90 transition-colors"
           >
             <ArrowLeft size={13} />
-            <span>Back to All Work</span>
+            <span>Back to All Works</span>
           </Link>
         </Window>
       </div>
@@ -154,12 +154,12 @@ export default function ProjectPage() {
       <SEOHead
         title={`${project.title} | Case Study | Geddada Devicharan`}
         description={project.shortDescription}
-        path={`/project/${project.id}`}
+        path={`/works/${project.id}`}
         ogImage={project.id === 'examflow-os' ? 'https://geddadadevicharan.vercel.app/og/og-examflowos.png' : undefined}
         breadcrumbs={[
           { name: 'Home', url: 'https://geddadadevicharan.vercel.app' },
-          { name: 'Work', url: 'https://geddadadevicharan.vercel.app/work' },
-          { name: project.title, url: `https://geddadadevicharan.vercel.app/project/${project.id}` }
+          { name: 'Works', url: 'https://geddadadevicharan.vercel.app/works' },
+          { name: project.title, url: `https://geddadadevicharan.vercel.app/works/${project.id}` }
         ]}
       />
 
@@ -168,11 +168,11 @@ export default function ProjectPage() {
         {/* Top Back Link */}
         <div>
           <Link
-            to="/work"
+            to="/works"
             className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors group"
           >
             <ArrowLeft size={13} className="group-hover:-translate-x-1 transition-transform" />
-            <span>Back to All Work</span>
+            <span>Back to All Works</span>
           </Link>
         </div>
 
@@ -452,10 +452,10 @@ export default function ProjectPage() {
                 </p>
               </div>
               <Link
-                to="/work"
+                to="/works"
                 className="text-xs font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5"
               >
-                <span>View All Projects</span>
+                <span>View All Works</span>
                 <ArrowRight size={13} />
               </Link>
             </div>
@@ -464,7 +464,7 @@ export default function ProjectPage() {
               {relatedProjects.map((rel) => (
                 <Link
                   key={rel.id}
-                  to={`/project/${rel.id}`}
+                  to={`/works/${rel.id}`}
                   className="p-6 rounded-2xl border border-border/50 bg-card/20 hover:bg-card/40 transition-all duration-300 space-y-3 group flex flex-col justify-between"
                 >
                   <div className="space-y-2">

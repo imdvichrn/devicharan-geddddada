@@ -1,0 +1,55 @@
+{
+  "name": "Geddada Devicharan",
+  "handle": "@imdvichrn",
+  "headline": "Digital Product Builder · Video Editor · Digital Systems",
+  "subtitle": "Digital Product Builder · Video Editor · Digital Systems",
+  "bio": "Designing minimal software systems, finishing commercial post-production video, and managing digital infrastructure from Visakhapatnam & Vizianagaram, Andhra Pradesh, India.",
+  "location": {
+    "city": "Visakhapatnam & Vizianagaram",
+    "state": "Andhra Pradesh",
+    "country": "India"
+  },
+  "education": {
+    "degree": "B.Tech in Electrical & Electronics Engineering (EEE)",
+    "institution": "JNTUK Affiliated Engineering College",
+    "foundation": "Systems engineering, signal analysis, mathematical modeling, first-principles logic"
+  },
+  "links": {
+    "email": "devicharangeddada@gmail.com",
+    "github": "https://github.com/imdvichrn",
+    "linkedin": "https://www.linkedin.com/in/geddadadevicharan",
+    "instagram": "https://www.instagram.com/imdvichrn",
+    "portfolio": "https://geddadadevicharan.vercel.app"
+  },
+  "disciplines": [
+    {
+      "id": "video",
+      "title": "Video Editing & Post-Production",
+      "summary": "700+ deliverables finished in DaVinci Resolve Studio on macOS across short-form, ads, song shoots, node-based color grading, and Fairlight audio.",
+      "route": "/video"
+    },
+    {
+      "id": "software",
+      "title": "Software & Products",
+      "summary": "Offline-first web applications, ExamFlowOS serving 10K+ students, and digital creative tools built with React, TypeScript, and Vite.",
+      "route": "/software"
+    },
+    {
+      "id": "web",
+      "title": "Websites & Digital Presence",
+      "summary": "Full-stack development, technical SEO, and ongoing infrastructure management for 8+ commercial client websites.",
+      "route": "/web"
+    },
+    {
+      "id": "systems",
+      "title": "Business Systems & Automation",
+      "summary": "Automated client intake, n8n webhook workflows, and digital operations pipelines eliminating operational drag.",
+      "route": "/systems"
+    }
+  ],
+  "philosophy": {
+    "design": "Make every design decision feel intentional, quiet, precise, and inevitable. No animation without a reason.",
+    "software": "Zero-friction, sustainable, client-first architecture that eliminates unnecessary recurring cloud database fees for users.",
+    "video": "Disciplined narrative pacing, accurate node-based color grading, and broadcast-compliant Fairlight audio."
+  }
+}

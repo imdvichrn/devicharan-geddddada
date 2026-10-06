@@ -1,0 +1,96 @@
+[
+  {
+    "id": "sm2-cbt-recall",
+    "title": "Adaptive Spaced Repetition for Competitive Exam Syllabi",
+    "subtitle": "Applying Ebbinghaus Forgetting Curves & SM-2 to Student Test Prep",
+    "category": "psychology",
+    "categoryLabel": "Cognitive Psychology",
+    "status": "Implemented in ExamFlowOS",
+    "date": "2025–2026",
+    "description": "Investigating how algorithmic review scheduling can be embedded into standard Computer-Based Testing without overwhelming student cognitive bandwidth. Tested directly inside ExamFlowOS.",
+    "methodology": "Built a lightweight adaptation of the SuperMemo SM-2 algorithm tracking individual question confidence, answer latency, and revision intervals across 10,000+ student sessions.",
+    "learnings": [
+      "Strict punishment for missed days destroys user habit loops; forgiving buffer days increased retention by 42%.",
+      "Categorizing topics into 3 simple states (Weak, Moderate, Mastered) was 3x more effective than granular 5-star ratings.",
+      "Active recall with instant answer justification reduced revision cycle time from 14 days to 6 days."
+    ],
+    "relatedWorkTitle": "ExamFlowOS",
+    "relatedWorkLink": "/works/examflow-os",
+    "canonicalUrl": "/experiments/sm2-cbt-recall",
+    "topics": ["spaced repetition", "sm-2", "active recall", "cognitive psychology", "examflowos", "cbt recall", "memory curves"]
+  },
+  {
+    "id": "local-cli-davinci-automation",
+    "title": "DaVinci Resolve Timeline Automation & Batch Asset Ingestion",
+    "subtitle": "Python / Lua Scripting for macOS Post-Production Pipelines",
+    "category": "software",
+    "categoryLabel": "Software & Automation",
+    "status": "Active Local Tooling",
+    "date": "2024–2026",
+    "description": "Building custom macOS terminal utilities and Python scripts using the DaVinci Resolve Studio API to automate repetitive timeline setups, subtitle formatting, and batch proxy exports.",
+    "methodology": "Integrated the DaVinci Resolve Scripting API into local shell scripts to auto-generate color-tagged bin hierarchies, apply standardized audio compressor settings, and export delivery packages.",
+    "learnings": [
+      "Automating timeline folder bin setup saved ~8 minutes per client project across 700+ deliverables.",
+      "DRFX macro bundles are significantly more resilient to software updates than raw timeline templates.",
+      "Standardized LUT transforms applied via scripting prevent human error in color space matching."
+    ],
+    "relatedWorkTitle": "Perfect Pack for DaVinci Resolve",
+    "relatedWorkLink": "/works/perfect-pack",
+    "canonicalUrl": "/experiments/local-cli-davinci-automation",
+    "topics": ["davinci resolve", "python scripting", "lua scripting", "video automation", "perfect pack", "drfx macros", "post production tooling"]
+  },
+  {
+    "id": "mppt-solar-microgrid",
+    "title": "Maximum Power Point Tracking (MPPT) & Photovoltaic Inverter Efficiency",
+    "subtitle": "Grounded in B.Tech Electrical & Electronics Engineering & Ahalya Workshop",
+    "category": "energy",
+    "categoryLabel": "Clean Energy & EEE",
+    "status": "Academic & Practical Study",
+    "date": "2023–2025",
+    "description": "Investigating solar cell efficiency curves, perturb-and-observe MPPT algorithms, and inverter topologies for decentralized solar-wind hybrid microgrids.",
+    "methodology": "Simulated perturb-and-observe MPPT algorithms in MATLAB/Simulink and evaluated photovoltaic voltage-current (V-I) non-linear characteristics under partial shading conditions during industrial training.",
+    "learnings": [
+      "Partial shading causes multiple local maxima on P-V curves; conventional perturb-and-observe can get trapped without global sweep logic.",
+      "Hybrid wind-solar setups require balanced DC-bus regulation to prevent battery overcharging during simultaneous peak irradiance and wind velocity.",
+      "Power electronics converter efficiency is the single greatest determinant of decentralized renewable economics."
+    ],
+    "canonicalUrl": "/experiments/mppt-solar-microgrid",
+    "topics": ["mppt", "solar microgrid", "electrical engineering", "eee", "power electronics", "photovoltaic", "simulink"]
+  },
+  {
+    "id": "circadian-focus-stamina",
+    "title": "Circadian Phase Tracking, Sleep Architecture & Cognitive Stamina",
+    "subtitle": "Self-Directed Biohacking & Daily Cognitive Performance Protocols",
+    "category": "biohacking",
+    "categoryLabel": "Human Optimization (Personal Curiosity)",
+    "status": "Ongoing Self-Experimentation",
+    "date": "2024–2026",
+    "description": "Personal, self-directed exploration of circadian light exposure, sleep architecture optimization, and cold thermogenesis to maintain sustained focus across 12+ hour engineering and editing sprints.",
+    "methodology": "Logged subjective cognitive stamina against strict light exposure timing (early morning outdoor sunlight within 30 min of waking), sleep cycle consistency, and targeted caffeine delay.",
+    "learnings": [
+      "Delaying caffeine intake 90–120 minutes post-waking prevented the afternoon cortisol crash entirely.",
+      "Consistent wake-up times within a 30-minute window improved deep sleep percentage more than total sleep duration.",
+      "Note: This is personal self-experimentation and self-directed study, not medical advice or institutional health credentials."
+    ],
+    "canonicalUrl": "/experiments/circadian-focus-stamina",
+    "topics": ["circadian rhythm", "sleep architecture", "focus", "cognitive stamina", "biohacking", "light exposure"]
+  },
+  {
+    "id": "cellular-longevity-senescence",
+    "title": "Cellular Senescence, NAD+ Precursors & Caloric Modulation Research",
+    "subtitle": "Tracking Peer-Reviewed Literature in Healthspan & Longevity",
+    "category": "longevity",
+    "categoryLabel": "Longevity Science (Personal Reading)",
+    "status": "Self-Directed Literature Review",
+    "date": "2024–2026",
+    "description": "Tracking ongoing academic research in molecular biology regarding cellular senescence, autophagy triggers, mitochondrial biogenesis, and metabolic signaling pathways.",
+    "methodology": "Reading peer-reviewed papers (Cell, Nature, GeroScience) and synthesizing research notes on mTOR inhibition, AMP-activated protein kinase (AMPK) activation, and sirtuin regulation.",
+    "learnings": [
+      "Autophagy signaling is most effectively stimulated through structured fasting windows combined with resistance training.",
+      "Mitigating systemic chronic inflammation appears to be the primary lever for sustained executive function over decades.",
+      "Clear boundary: purely intellectual personal study, separate from medical or clinical practice."
+    ],
+    "canonicalUrl": "/experiments/cellular-longevity-senescence",
+    "topics": ["longevity", "cellular senescence", "autophagy", "nad+", "mtor", "healthspan", "metabolic pathways"]
+  }
+]

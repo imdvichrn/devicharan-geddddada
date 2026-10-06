@@ -51,7 +51,7 @@ export const VERIFIED_FACTS: TypedFact[] = [
     id: 'dc_role',
     entityId: 'devicharan',
     attribute: 'role',
-    value: 'Digital Product Builder, Video Editor / Post-Production Specialist, and Business Systems Creator',
+    value: 'Digital Product Builder · Video Editor · Digital Systems',
     verified: true,
     category: 'identity',
     description: 'Core professional disciplines',

@@ -95,11 +95,11 @@ export function VideoEditingPostProduction() {
       <SEOHead
         title="Video Editing & Post-Production — Geddada Devicharan"
         description={description}
-        path="/projects/video-editing-post-production"
+        path="/works/video-editing-post-production"
         breadcrumbs={[
           { name: "Home", url: "https://geddadadevicharan.vercel.app" },
-          { name: "Work", url: "https://geddadadevicharan.vercel.app/work" },
-          { name: title, url: "https://geddadadevicharan.vercel.app/projects/video-editing-post-production" }
+          { name: "Works", url: "https://geddadadevicharan.vercel.app/works" },
+          { name: title, url: "https://geddadadevicharan.vercel.app/works/video-editing-post-production" }
         ]}
         structuredData={[
           generateVideoObjectSchema({
@@ -125,17 +125,17 @@ export function VideoEditingPostProduction() {
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
             <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
             <ChevronRight size={12} />
-            <Link to="/work" className="hover:text-foreground transition-colors">Work</Link>
+            <Link to="/works" className="hover:text-foreground transition-colors">Works</Link>
             <ChevronRight size={12} />
             <span className="text-foreground font-medium">Video Editing</span>
           </nav>
 
           <Link
-            to="/work"
+            to="/works"
             className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-foreground transition-colors group"
           >
             <ArrowLeft size={13} className="group-hover:-translate-x-1 transition-transform" />
-            <span className="hidden sm:inline">Back to Work</span>
+            <span className="hidden sm:inline">Back to Works</span>
           </Link>
         </div>
 
@@ -380,11 +380,11 @@ export function VideoEditingPostProduction() {
           </div>
 
           <div className="flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-muted-foreground">
-            <Link to="/work" className="hover:text-foreground transition-colors inline-flex items-center gap-1">
+            <Link to="/works" className="hover:text-foreground transition-colors inline-flex items-center gap-1">
               <ArrowLeft size={12} />
-              <span>Return to Work Overview</span>
+              <span>Return to Works Overview</span>
             </Link>
-            <Link to="/project/examflow-os" className="hover:text-foreground transition-colors inline-flex items-center gap-1">
+            <Link to="/works/examflow-os" className="hover:text-foreground transition-colors inline-flex items-center gap-1">
               <span>View Case Study: ExamFlowOS</span>
               <ChevronRight size={12} />
             </Link>

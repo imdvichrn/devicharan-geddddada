@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { SEOHead } from '@/components/SEOHead';
+import { Link } from 'react-router-dom';
 import { 
   Zap, 
   Brain, 
@@ -9,103 +10,14 @@ import {
   Wind, 
   Info,
   Clock,
-  Sparkles
+  Sparkles,
+  ArrowRight,
+  FlaskConical,
+  ChevronRight
 } from 'lucide-react';
 import { WindowChrome } from '@/components/WindowChrome';
 import { PageShell } from '@/components/PageShell';
-
-interface ExperimentItem {
-  id: string;
-  category: 'software' | 'psychology' | 'energy' | 'biohacking' | 'longevity';
-  categoryLabel: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  methodology: string;
-  status: string;
-  learnings: string[];
-  isPersonalCuriosity?: boolean;
-}
-
-const experiments: ExperimentItem[] = [
-  {
-    id: 'sm2-cbt-recall',
-    category: 'psychology',
-    categoryLabel: 'Cognitive Psychology',
-    title: 'Adaptive Spaced Repetition for Competitive Exam Syllabi',
-    subtitle: 'Applying Ebbinghaus Forgetting Curves & SM-2 to Student Test Prep',
-    description: 'Investigating how algorithmic review scheduling can be embedded into standard Computer-Based Testing without overwhelming student cognitive bandwidth. Tested directly inside ExamFlowOS.',
-    methodology: 'Built a lightweight adaptation of the SuperMemo SM-2 algorithm tracking individual question confidence, answer latency, and revision intervals across 10,000+ student sessions.',
-    status: 'Implemented in ExamFlowOS',
-    learnings: [
-      'Strict punishment for missed days destroys user habit loops; forgiving buffer days increased retention by 42%.',
-      'Categorizing topics into 3 simple states (Weak, Moderate, Mastered) was 3x more effective than granular 5-star ratings.',
-      'Active recall with instant answer justification reduced revision cycle time from 14 days to 6 days.'
-    ]
-  },
-  {
-    id: 'local-cli-davinci-automation',
-    category: 'software',
-    categoryLabel: 'Software & Automation',
-    title: 'DaVinci Resolve Timeline Automation & Batch Asset Ingestion',
-    subtitle: 'Python / Lua Scripting for macOS Post-Production Pipelines',
-    description: 'Building custom macOS terminal utilities and Python scripts using the DaVinci Resolve Studio API to automate repetitive timeline setups, subtitle formatting, and batch proxy exports.',
-    methodology: 'Integrated the DaVinci Resolve Scripting API into local shell scripts to auto-generate color-tagged bin hierarchies, apply standardized audio compressor settings, and export delivery packages.',
-    status: 'Active Local Tooling',
-    learnings: [
-      'Automating timeline folder bin setup saved ~8 minutes per client project across 700+ deliverables.',
-      'DRFX macro bundles are significantly more resilient to software updates than raw timeline templates.',
-      'Standardized LUT transforms applied via scripting prevent human error in color space matching.'
-    ]
-  },
-  {
-    id: 'mppt-solar-microgrid',
-    category: 'energy',
-    categoryLabel: 'Clean Energy & EEE',
-    title: 'Maximum Power Point Tracking (MPPT) & Photovoltaic Inverter Efficiency',
-    subtitle: 'Grounded in B.Tech Electrical & Electronics Engineering & Ahalya Workshop',
-    description: 'Investigating solar cell efficiency curves, perturb-and-observe MPPT algorithms, and inverter topologies for decentralized solar-wind hybrid microgrids.',
-    methodology: 'Simulated perturb-and-observe MPPT algorithms in MATLAB/Simulink and evaluated photovoltaic voltage-current (V-I) non-linear characteristics under partial shading conditions during industrial training.',
-    status: 'Academic & Practical Study',
-    learnings: [
-      'Partial shading causes multiple local maxima on P-V curves; conventional perturb-and-observe can get trapped without global sweep logic.',
-      'Hybrid wind-solar setups require balanced DC-bus regulation to prevent battery overcharging during simultaneous peak irradiance and wind velocity.',
-      'Power electronics converter efficiency is the single greatest determinant of decentralized renewable economics.'
-    ]
-  },
-  {
-    id: 'circadian-focus-stamina',
-    category: 'biohacking',
-    categoryLabel: 'Human Optimization (Personal Curiosity)',
-    title: 'Circadian Phase Tracking, Sleep Architecture & Cognitive Stamina',
-    subtitle: 'Self-Directed Biohacking & Daily Cognitive Performance Protocols',
-    description: 'Personal, self-directed exploration of circadian light exposure, sleep architecture optimization, and cold thermogenesis to maintain sustained focus across 12+ hour engineering and editing sprints.',
-    methodology: 'Logged subjective cognitive stamina against strict light exposure timing (early morning outdoor sunlight within 30 min of waking), sleep cycle consistency, and targeted caffeine delay.',
-    status: 'Ongoing Self-Experimentation',
-    isPersonalCuriosity: true,
-    learnings: [
-      'Delaying caffeine intake 90–120 minutes post-waking prevented the afternoon cortisol crash entirely.',
-      'Consistent wake-up times within a 30-minute window improved deep sleep percentage more than total sleep duration.',
-      'Note: This is personal self-experimentation and self-directed study, not medical advice or institutional health credentials.'
-    ]
-  },
-  {
-    id: 'cellular-longevity-senescence',
-    category: 'longevity',
-    categoryLabel: 'Longevity Science (Personal Reading)',
-    title: 'Cellular Senescence, NAD+ Precursors & Caloric Modulation Research',
-    subtitle: 'Tracking Peer-Reviewed Literature in Healthspan & Longevity',
-    description: 'Tracking ongoing academic research in molecular biology regarding cellular senescence, autophagy triggers, mitochondrial biogenesis, and metabolic signaling pathways.',
-    methodology: 'Reading peer-reviewed papers (Cell, Nature, GeroScience) and synthesizing research notes on mTOR inhibition, AMP-activated protein kinase (AMPK) activation, and sirtuin regulation.',
-    status: 'Self-Directed Literature Review',
-    isPersonalCuriosity: true,
-    learnings: [
-      'Autophagy signaling is most effectively stimulated through structured fasting windows combined with resistance training.',
-      'Mitigating systemic chronic inflammation appears to be the primary lever for sustained executive function over decades.',
-      'Clear boundary: purely intellectual personal study, separate from medical or clinical practice.'
-    ]
-  }
-];
+import { experiments } from '@/data/experiments';
 
 export function ExperimentsPage() {
   const [activeCategory, setActiveCategory] = useState<string>('all');
@@ -117,8 +29,8 @@ export function ExperimentsPage() {
   return (
     <PageShell maxWidth="default">
       <SEOHead
-        title="Experiments & Research — Geddada Devicharan"
-        description="Experiments in software architecture, cognitive psychology, clean energy systems, and personal optimization research by Geddada Devicharan."
+        title="Experiments & Explorations — Geddada Devicharan"
+        description="Research notes, software prototypes, cognitive recall experiments, and clean energy studies by Geddada Devicharan."
         path="/experiments"
         breadcrumbs={[
           { name: 'Home', url: 'https://geddadadevicharan.vercel.app' },
@@ -128,12 +40,20 @@ export function ExperimentsPage() {
 
       <main className="space-y-10">
         
+        {/* Breadcrumb Navigation */}
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono text-muted-foreground pt-2">
+          <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
+          <ChevronRight size={12} />
+          <span className="text-foreground font-medium">Experiments</span>
+        </nav>
+
         {/* Header Window */}
         <div className="border border-border/60 rounded-xl bg-card/60 backdrop-blur-sm p-6 sm:p-8 space-y-4">
           <WindowChrome className="mb-2" />
           <div className="space-y-2">
-            <div className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
-              Product Lab · Engineering & Personal Inquiries
+            <div className="text-xs font-mono text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
+              <FlaskConical size={14} className="text-primary" />
+              <span>Product Lab · Engineering & Personal Inquiries</span>
             </div>
             <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-foreground">
               Experiments & Exploration
@@ -144,7 +64,7 @@ export function ExperimentsPage() {
           </div>
 
           {/* Responsibility Banner: Disclosing personal reading vs professional credentials */}
-          <div className="p-3 rounded-lg bg-muted/40 border border-border/40 flex items-start gap-2.5 text-xs text-muted-foreground">
+          <div className="p-3.5 rounded-lg bg-muted/40 border border-border/40 flex items-start gap-2.5 text-xs text-muted-foreground">
             <Info size={15} className="text-primary shrink-0 mt-0.5" />
             <p className="leading-relaxed">
               <strong className="text-foreground font-medium">Clarity Note:</strong> Professional qualifications (B.Tech Electrical & Electronics Engineering, Diploma, BHEL industrial training, software & video systems) are strictly distinguished from personal biohacking and longevity research, which represent self-directed intellectual curiosity and personal habit experiments, not medical credentials.
@@ -181,7 +101,7 @@ export function ExperimentsPage() {
           {filteredExperiments.map((exp) => (
             <article 
               key={exp.id}
-              className="border border-border/50 rounded-xl bg-card/40 backdrop-blur-xs p-6 sm:p-7 space-y-4 hover:border-border transition-colors"
+              className="border border-border/50 rounded-xl bg-card/40 backdrop-blur-xs p-6 sm:p-7 space-y-4 hover:border-border transition-colors group"
             >
               <div className="space-y-1.5">
                 <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
@@ -197,7 +117,9 @@ export function ExperimentsPage() {
                 </div>
 
                 <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
-                  {exp.title}
+                  <Link to={`/experiments/${exp.id}`} className="hover:text-primary transition-colors">
+                    {exp.title}
+                  </Link>
                 </h2>
                 <p className="text-xs sm:text-sm font-mono text-muted-foreground">
                   {exp.subtitle}
@@ -208,7 +130,7 @@ export function ExperimentsPage() {
                 {exp.description}
               </p>
 
-              {/* Methodology */}
+              {/* Methodology Preview */}
               <div className="p-3.5 rounded-lg bg-background/60 border border-border/40 text-xs sm:text-sm space-y-1">
                 <span className="font-semibold text-foreground text-xs uppercase tracking-wider font-mono">
                   Method & Approach
@@ -216,23 +138,42 @@ export function ExperimentsPage() {
                 <p className="text-muted-foreground leading-relaxed">{exp.methodology}</p>
               </div>
 
-              {/* Core Learnings / Observations */}
-              <div className="space-y-2 pt-1">
-                <span className="text-xs font-semibold text-foreground tracking-wide font-mono uppercase">
-                  Observed Learnings & Principles
-                </span>
-                <ul className="space-y-1.5 text-xs sm:text-sm text-muted-foreground list-disc pl-5">
-                  {exp.learnings.map((learning, idx) => (
-                    <li key={idx} className="leading-relaxed pl-1">
-                      {learning}
-                    </li>
-                  ))}
-                </ul>
+              {/* Action to view complete detail */}
+              <div className="pt-2 flex items-center justify-between">
+                {exp.relatedWorkLink ? (
+                  <Link
+                    to={exp.relatedWorkLink}
+                    className="text-xs font-mono text-muted-foreground hover:text-foreground flex items-center gap-1"
+                  >
+                    <span>Related Work: {exp.relatedWorkTitle}</span>
+                  </Link>
+                ) : (
+                  <span />
+                )}
+
+                <Link
+                  to={`/experiments/${exp.id}`}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline group-hover:translate-x-0.5 transition-transform"
+                >
+                  <span>Read Full Experiment</span>
+                  <ArrowRight size={13} />
+                </Link>
               </div>
 
             </article>
           ))}
         </div>
+
+        {/* Footer Navigation */}
+        <section className="pt-8 border-t border-border/40 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-muted-foreground">
+          <Link to="/works" className="hover:text-foreground flex items-center gap-1">
+            <span>← Explore Works</span>
+          </Link>
+          <div className="flex items-center gap-4">
+            <Link to="/about" className="hover:text-foreground">About</Link>
+            <Link to="/contact" className="hover:text-foreground">Contact</Link>
+          </div>
+        </section>
 
       </main>
     </PageShell>

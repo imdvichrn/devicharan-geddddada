@@ -91,6 +91,30 @@ All colors MUST be HSL for proper theming.
     --radius: 1rem;
 
     /* =========================================================================
+       CONTAINER SYSTEM TOKENS
+       ========================================================================= */
+    --content-max: 1200px;
+    --reading-max: 720px;
+    --page-padding: clamp(20px, 4vw, 64px);
+
+    /* =========================================================================
+       SEMANTIC SPACING RHYTHM
+       (4, 8, 12, 16, 24, 32, 48, 64, 80, 96, 128, 160)
+       ========================================================================= */
+    --space-4: 4px;      /* Hairline offset / micro-nudge */
+    --space-8: 8px;      /* Within an element (icon + label, inline tag) */
+    --space-12: 12px;    /* Tightly bound sibling controls */
+    --space-16: 16px;    /* Related elements (input + label, stacked fields) */
+    --space-24: 24px;    /* Component internal padding / card gutters */
+    --space-32: 32px;    /* Sub-component group division */
+    --space-48: 48px;    /* Component group / card cluster separation */
+    --space-64: 64px;    /* Mid-tier layout partition */
+    --space-80: 80px;    /* Standard section-to-section boundary */
+    --space-96: 96px;    /* Major section separation */
+    --space-128: 128px;  /* Major narrative transition / chapter break */
+    --space-160: 160px;  /* Top-level landmark clearance */
+
+    /* =========================================================================
        CENTRAL FLUID SPACING SYSTEM (CSS clamp() strategy)
        Eliminates fixed pixel breakpoints in favor of smooth, continuous viewport scaling
        ========================================================================= */

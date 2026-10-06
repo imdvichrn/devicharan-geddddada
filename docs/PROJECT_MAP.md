@@ -18,27 +18,26 @@ There is no application server in this repository.
 | Animation | framer-motion |
 | Head/meta | react-helmet-async |
 | Data/async | @tanstack/react-query (provider only), direct fetch |
-| Backend | Lovable Cloud (Supabase): Postgres table + 3 edge functions |
-| Email | EmailJS (contact form, client-side), Resend via edge functions |
+| AI Engine | Echoless (deterministic local portfolio knowledge engine) |
+| Email | EmailJS (contact form, client-side) |
 | Analytics | @vercel/analytics |
-| Package manager | bun (`bun.lock`) — npm lockfile also present |
+| Package manager | npm / bun |
 
 ## Directory map
 ```
 /
 ├── index.html                 Static shell: meta, OG/Twitter tags, JSON-LD graph
-├── vite.config.ts             Vite config + sitemap plugin
+├── vite.config.ts             Vite config
 ├── vercel.json                SPA rewrites, security headers, cache headers
 ├── tailwind.config.ts         Design tokens (HSL semantic colors)
 ├── scripts/
-│   ├── generateSitemap.ts     Builds public/sitemap.xml from src/data/projects.ts
-│   └── vite-plugin-sitemap.ts Runs the generator on dev start and build
+│   └── audit.ts               Verification and stabilization audit suite
 ├── public/                    Served verbatim at the site root
 │   ├── og/                    Pre-rendered social share images
 │   ├── favicon_io/            Favicons + site.webmanifest
 │   ├── assets/                Perfect Pack media (logo, preview, demo video)
-│   ├── cv.pdf, examflow-logo.jpg, profile-avatar.png, siri-wave.webm
-│   ├── robots.txt, sitemap.xml, sitemap-index.xml
+│   ├── Geddada_Devicharan_CV.pdf, examflow-logo.jpg, profile-avatar.png, siri-wave.webm
+│   ├── robots.txt, sitemap.xml, favicon.ico
 │   └── googlec2e77a230f9718e1.html  (Search Console verification)
 ├── src/
 │   ├── main.tsx               Entry point + document-title guard
@@ -49,11 +48,9 @@ There is no application server in this repository.
 │   ├── hooks/                 useTheme, use-mobile, use-toast
 │   ├── lib/                   structuredData.ts, video.ts, utils.ts
 │   ├── data/projects.ts       Single source of truth for project content
-│   ├── services/chatService.ts Streaming client for the Echoless edge function
-│   ├── integrations/supabase/ Auto-generated client + DB types (do not edit)
+│   ├── services/chatService.ts Assistant service for Echoless engine
+│   ├── echoless/              Deterministic conversational assistant engine
 │   └── assets/                Bundled media imported by components
-└── supabase/functions/        Edge functions (echoless-chat, send-contact-email,
-                               send-perfect-pack-email)
 ```
 
 ## Where data comes from

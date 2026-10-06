@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 
 const CANONICAL =
-  'https://geddadadevicharan.vercel.app/project/examflow-os/blog/examflowos-journey';
+  'https://geddadadevicharan.vercel.app/works/examflow-os/blog/examflowos-journey';
 const PUBLISHED = '2026-06-25';
 const TITLE =
   'Building ExamFlowOS: A Better Way to Access Previous Year Question Papers';
@@ -77,8 +77,8 @@ const breadcrumbSchema = {
     {
       '@type': 'ListItem',
       position: 2,
-      name: 'ExamFlow OS',
-      item: 'https://geddadadevicharan.vercel.app/project/examflow-os',
+      name: 'ExamFlowOS',
+      item: 'https://geddadadevicharan.vercel.app/works/examflow-os',
     },
     {
       '@type': 'ListItem',
@@ -95,12 +95,13 @@ export default function ExamFlowOSJourney() {
       <SEOHead
         title={`${TITLE} | Geddada Devicharan`}
         description={DESCRIPTION}
-        path="/project/examflow-os/blog/examflowos-journey"
+        path="/works/examflow-os/blog/examflowos-journey"
         ogType="article"
         ogImage="https://geddadadevicharan.vercel.app/og/og-examflowos.png"
         breadcrumbs={[
           { name: 'Home', url: 'https://geddadadevicharan.vercel.app/' },
-          { name: 'ExamFlow OS', url: 'https://geddadadevicharan.vercel.app/project/examflow-os' },
+          { name: 'Works', url: 'https://geddadadevicharan.vercel.app/works' },
+          { name: 'ExamFlowOS', url: 'https://geddadadevicharan.vercel.app/works/examflow-os' },
           { name: 'Building ExamFlowOS', url: CANONICAL }
         ]}
         structuredData={[articleSchema, breadcrumbSchema]}
@@ -121,10 +122,10 @@ export default function ExamFlowOSJourney() {
               <li aria-hidden>/</li>
               <li>
                 <Link
-                  to="/project/examflow-os"
+                  to="/works/examflow-os"
                   className="hover:text-foreground transition-colors"
                 >
-                  ExamFlow OS
+                  ExamFlowOS
                 </Link>
               </li>
               <li aria-hidden>/</li>
@@ -134,11 +135,11 @@ export default function ExamFlowOSJourney() {
 
           {/* Back link */}
           <Link
-            to="/project/examflow-os"
+            to="/works/examflow-os"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to ExamFlow OS
+            Back to ExamFlowOS Case Study
           </Link>
 
           {/* Article window */}
@@ -315,17 +316,17 @@ export default function ExamFlowOSJourney() {
               <div className="mt-12 flex flex-wrap gap-3">
                 <Button asChild>
                   <a
-                    href="https://examflowos.vercel.app"
+                    href="https://examflowos.in"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2"
                   >
-                    Visit ExamFlowOS
+                    Visit ExamFlowOS (examflowos.in)
                     <ExternalLink className="h-4 w-4" />
                   </a>
                 </Button>
                 <Button asChild variant="outline">
-                  <Link to="/project/examflow-os">View Project Page</Link>
+                  <Link to="/works/examflow-os">View Case Study</Link>
                 </Button>
               </div>
             </div>

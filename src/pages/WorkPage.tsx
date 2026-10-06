@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import { 
   ArrowRight, 
   ChevronRight,
-  Sliders
+  Sliders,
+  Layers,
+  Sparkles,
+  ArrowUpRight
 } from 'lucide-react';
 import {
   SoftwareProductIcon,
@@ -11,19 +14,18 @@ import {
   WebEcosystemIcon,
   BusinessSystemsIcon
 } from '@/components/icons/PortfolioIcons';
-import { WindowChrome } from '@/components/WindowChrome';
 import { PageShell } from '@/components/PageShell';
 
 export function WorkPage() {
   return (
     <PageShell>
       <SEOHead
-        title="Work — Software, Video, Web & Systems | Geddada Devicharan"
-        description="Things I've built, edited, designed and managed: ExamFlowOS, 700+ video editing projects in DaVinci Resolve, 8+ managed websites, and business systems."
-        path="/work"
+        title="Works & Case Studies — Geddada Devicharan"
+        description="Explore digital products, software applications, DaVinci Resolve post-production deliverables, and managed client web systems by Geddada Devicharan."
+        path="/works"
         breadcrumbs={[
           { name: 'Home', url: 'https://geddadadevicharan.vercel.app' },
-          { name: 'Work', url: 'https://geddadadevicharan.vercel.app/work' }
+          { name: 'Works', url: 'https://geddadadevicharan.vercel.app/works' }
         ]}
       />
 
@@ -33,19 +35,19 @@ export function WorkPage() {
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono text-muted-foreground pt-2">
           <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
           <ChevronRight size={12} />
-          <span className="text-foreground font-medium">Work</span>
+          <span className="text-foreground font-medium">Works</span>
         </nav>
 
         {/* Header */}
         <header className="space-y-4 max-w-3xl">
           <div className="text-xs font-mono uppercase tracking-widest text-primary font-medium">
-            WORK
+            WORKS & CASE STUDIES
           </div>
           <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-foreground leading-[1.05]">
             Things I&apos;ve built, edited, designed and managed.
           </h1>
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-            A central map to my four core disciplines. Choose a dedicated space below to explore detailed case studies, architectural breakdowns, and live projects.
+            A central index of my core disciplines. Choose an individual case study or explore specialized domain spaces across software, video post-production, web ecosystems, and business automations.
           </p>
         </header>
 
@@ -71,7 +73,7 @@ export function WorkPage() {
               to="/software"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/95 depth-interactive shrink-0 shadow-sm"
             >
-              <span>Explore Software</span>
+              <span>Explore Software Hub</span>
               <ArrowRight size={14} />
             </Link>
           </div>
@@ -80,51 +82,87 @@ export function WorkPage() {
             Building human-centered digital tools and educational software. From full-scale Computer-Based Testing (CBT) engines serving thousands of students with zero-cost cloud sync, to specialized creative assets for editors.
           </p>
 
-          {/* Featured Case Study Card: ExamFlowOS */}
-          <div className="p-6 sm:p-8 rounded-2xl depth-widget depth-interactive space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-border/40">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-card border border-border/60 p-1 overflow-hidden shrink-0 shadow-xs">
-                  <img 
-                    src="/examflow-logo.jpg" 
-                    alt="ExamFlowOS official logo" 
-                    className="w-full h-full object-cover rounded-lg"
-                    loading="lazy"
-                  />
+          {/* Featured Projects Grid in Software */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            {/* Project 1: ExamFlowOS */}
+            <div className="p-6 sm:p-8 rounded-2xl depth-widget depth-interactive space-y-6 flex flex-col justify-between">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-border/40">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-card border border-border/60 p-1 overflow-hidden shrink-0 shadow-xs">
+                      <img 
+                        src="/examflow-logo.jpg" 
+                        alt="ExamFlowOS official logo" 
+                        className="w-full h-full object-cover rounded-lg"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-foreground">ExamFlowOS</h3>
+                      <div className="text-xs font-mono text-primary font-medium">Software · CBT Engine · Web App</div>
+                    </div>
+                  </div>
+                  <div className="text-[11px] font-mono text-emerald-500 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <span>10K+ Students</span>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-foreground">ExamFlowOS</h3>
-                  <div className="text-xs font-mono text-primary font-medium">Software · CBT · Product Design</div>
-                </div>
+
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                  Free competitive exam preparation and CBT platform with multi-stream exam database, authentic timed test interface, and zero-cost Google Drive cloud backup architecture.
+                </p>
               </div>
 
-              <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>10K+ Total Users (~700 Active)</span>
+              <div className="pt-2 flex items-center justify-between border-t border-border/30">
+                <Link
+                  to="/works/examflow-os"
+                  className="inline-flex items-center gap-1.5 text-xs font-mono text-primary hover:underline font-medium"
+                >
+                  <span>Read Case Study</span>
+                  <ArrowRight size={13} />
+                </Link>
+                <a
+                  href="https://examflowos.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-mono text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  examflowos.in ↗
+                </a>
               </div>
             </div>
 
-            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-2xl">
-              Free exam preparation and CBT platform built for students. Features structured previous-year exam papers across AP & TG state entrance tests, an authentic timed testing interface, mistake analysis, and Google Drive cloud sync.
-            </p>
+            {/* Project 2: Perfect Pack */}
+            <div className="p-6 sm:p-8 rounded-2xl depth-widget depth-interactive space-y-6 flex flex-col justify-between">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-border/40">
+                  <div className="space-y-0.5">
+                    <h3 className="text-xl font-semibold text-foreground">Perfect Pack for DaVinci</h3>
+                    <div className="text-xs font-mono text-primary font-medium">Creative Tooling · Presets · DRFX</div>
+                  </div>
+                  <div className="text-[11px] font-mono text-muted-foreground px-2.5 py-0.5 rounded-full bg-muted border border-border/40">
+                    In Development
+                  </div>
+                </div>
 
-            <div className="pt-2 flex items-center justify-between border-t border-border/30">
-              <Link
-                to="/project/examflow-os"
-                className="inline-flex items-center gap-1.5 text-xs font-mono text-primary hover:underline font-medium"
-              >
-                <span>Read Case Study</span>
-                <ArrowRight size={13} />
-              </Link>
-              <a
-                href="https://examflowos.in"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs font-mono text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Visit ExamFlowOS ↗
-              </a>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                  Production editing asset toolkit for DaVinci Resolve Studio featuring cinematic presets, sound design beds, motion titles, and timeline workflow accelerators grounded in 700+ deliverables.
+                </p>
+              </div>
+
+              <div className="pt-2 flex items-center justify-between border-t border-border/30">
+                <Link
+                  to="/works/perfect-pack"
+                  className="inline-flex items-center gap-1.5 text-xs font-mono text-primary hover:underline font-medium"
+                >
+                  <span>Explore Toolkit</span>
+                  <ArrowRight size={13} />
+                </Link>
+                <span className="text-xs font-mono text-muted-foreground">macOS & Windows</span>
+              </div>
             </div>
+
           </div>
         </section>
 
@@ -146,13 +184,22 @@ export function WorkPage() {
               </div>
             </div>
 
-            <Link
-              to="/video"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/95 depth-interactive shrink-0 shadow-sm"
-            >
-              <span>Explore Video</span>
-              <ArrowRight size={14} />
-            </Link>
+            <div className="flex items-center gap-3">
+              <Link
+                to="/works/video-editing-post-production"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-mono border border-border/80 hover:border-foreground/40 text-foreground transition-colors"
+              >
+                <span>Case Study</span>
+                <ArrowRight size={13} />
+              </Link>
+              <Link
+                to="/video"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/95 depth-interactive shrink-0 shadow-sm"
+              >
+                <span>Video Showcase</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
           </div>
 
           <p className="text-sm sm:text-base text-muted-foreground max-w-3xl leading-relaxed">
@@ -231,20 +278,35 @@ export function WorkPage() {
 
           {/* Visual Preview: Managed Sites Roster */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="p-6 rounded-2xl depth-widget depth-interactive space-y-3">
-              <div className="flex items-center justify-between text-xs font-mono">
-                <span className="text-primary font-semibold uppercase">Commercial Studio</span>
-                <span className="text-emerald-500 flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  Live & Managed
-                </span>
+            
+            {/* Sri Lahari Studios */}
+            <div className="p-6 rounded-2xl depth-widget depth-interactive space-y-4 flex flex-col justify-between">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between text-xs font-mono">
+                  <span className="text-primary font-semibold uppercase">Commercial Studio OS</span>
+                  <span className="text-emerald-500 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    Live & Managed
+                  </span>
+                </div>
+                <h3 className="text-lg font-semibold text-foreground">Sri Lahari Studios</h3>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                  Full digital operating system, responsive portfolio showcase, and regional local search presence for a 10-year studio in Kothavalasa & Vizag.
+                </p>
               </div>
-              <h3 className="text-lg font-semibold text-foreground">Sri Lahari Studios</h3>
-              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                Full digital presence, responsive portfolio showcase, and regional search presence for a 10-year studio in Kothavalasa & Vizag.
-              </p>
+
+              <div className="pt-2 flex items-center justify-between border-t border-border/30">
+                <Link
+                  to="/works/sri-lahari-studios"
+                  className="inline-flex items-center gap-1.5 text-xs font-mono text-primary hover:underline font-medium"
+                >
+                  <span>Read Case Study</span>
+                  <ArrowRight size={13} />
+                </Link>
+              </div>
             </div>
 
+            {/* Annapurna Foundation */}
             <div className="p-6 rounded-2xl depth-widget depth-interactive space-y-4 flex flex-col justify-between">
               <div className="space-y-3">
                 <div className="flex items-center justify-between text-xs font-mono">
@@ -275,7 +337,7 @@ export function WorkPage() {
 
               <div className="pt-2 flex items-center justify-between border-t border-border/30">
                 <Link
-                  to="/project/annapurna-foundation"
+                  to="/works/annapurna-foundation"
                   className="inline-flex items-center gap-1.5 text-xs font-mono text-primary hover:underline font-medium"
                 >
                   <span>Read Case Study</span>
@@ -291,11 +353,12 @@ export function WorkPage() {
                 </a>
               </div>
             </div>
+
           </div>
         </section>
 
         {/* =========================================================================
-            4. BUSINESS SYSTEMS
+            4. BUSINESS SYSTEMS & AUTOMATIONS
             ========================================================================= */}
         <section aria-labelledby="systems-heading" className="space-y-6 pt-10 border-t border-border/40">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
@@ -312,13 +375,22 @@ export function WorkPage() {
               </div>
             </div>
 
-            <Link
-              to="/systems"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/95 depth-interactive shrink-0 shadow-sm"
-            >
-              <span>Explore Systems</span>
-              <ArrowRight size={14} />
-            </Link>
+            <div className="flex items-center gap-3">
+              <Link
+                to="/works/business-systems-automation"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-mono border border-border/80 hover:border-foreground/40 text-foreground transition-colors"
+              >
+                <span>Case Study</span>
+                <ArrowRight size={13} />
+              </Link>
+              <Link
+                to="/systems"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/95 depth-interactive shrink-0 shadow-sm"
+              >
+                <span>Explore Systems</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
           </div>
 
           <p className="text-sm sm:text-base text-muted-foreground max-w-3xl leading-relaxed">
@@ -350,6 +422,16 @@ export function WorkPage() {
                 </span>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Footer Navigation Hierarchy */}
+        <section className="pt-12 border-t border-border/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono text-muted-foreground">
+          <Link to="/" className="hover:text-foreground">← Back to Home</Link>
+          <div className="flex items-center gap-4">
+            <Link to="/experiments" className="hover:text-foreground">Explore Experiments →</Link>
+            <Link to="/about" className="hover:text-foreground">About Devicharan</Link>
+            <Link to="/contact" className="hover:text-foreground">Contact</Link>
           </div>
         </section>
 

@@ -116,12 +116,13 @@ export default function PerfectPackPage() {
       <SEOHead
         title="Perfect Pack for DaVinci Resolve — Geddada Devicharan"
         description="In-development professional DaVinci Resolve toolkit featuring cinematic presets, sound effects, motion titles, and workflow assets by Geddada Devicharan."
-        path="/perfect-pack"
+        path="/works/perfect-pack"
         ogImage="https://geddadadevicharan.vercel.app/og/og-perfectpack.png"
         ogType="website"
         breadcrumbs={[
           { name: 'Home', url: 'https://geddadadevicharan.vercel.app' },
-          { name: 'Perfect Pack', url: 'https://geddadadevicharan.vercel.app/perfect-pack' }
+          { name: 'Works', url: 'https://geddadadevicharan.vercel.app/works' },
+          { name: 'Perfect Pack', url: 'https://geddadadevicharan.vercel.app/works/perfect-pack' }
         ]}
         structuredData={generatePerfectPackProductSchema()}
       />
@@ -132,12 +133,17 @@ export default function PerfectPackPage() {
         <div className="w-full space-y-12">
           {/* Back navigation */}
           <ScrollReveal distance={12}>
-            <Link to="/work">
-              <Button variant="ghost" size="sm" className="depth-interactive text-muted-foreground hover:text-foreground group">
-                <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
-                Back to All Work
-              </Button>
-            </Link>
+            <div className="flex items-center justify-between">
+              <Link to="/works">
+                <Button variant="ghost" size="sm" className="depth-interactive text-muted-foreground hover:text-foreground group">
+                  <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+                  Back to All Works
+                </Button>
+              </Link>
+              <Link to="/experiments/local-cli-davinci-automation" className="text-xs font-mono text-primary hover:underline">
+                Related Automation Experiment →
+              </Link>
+            </div>
           </ScrollReveal>
 
           {/* Hero Card */}

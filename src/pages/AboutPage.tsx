@@ -20,7 +20,7 @@ export function AboutPage() {
     <PageShell>
       <SEOHead
         title="About — Geddada Devicharan"
-        description="Geddada Devicharan — Digital Product Builder, Video Editor & Business Systems Creator based in Visakhapatnam & Vizianagaram, AP, India."
+        description="Geddada Devicharan — Digital Product Builder · Video Editor · Digital Systems based in Visakhapatnam & Vizianagaram, AP, India."
         path="/about"
         breadcrumbs={[
           { name: 'Home', url: 'https://geddadadevicharan.vercel.app' },
@@ -48,7 +48,7 @@ export function AboutPage() {
           </h1>
 
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-            Digital Product Builder, Video Editor, and Business Systems Creator. Final-year Electrical and Electronics Engineering student with a focus on high-efficiency client software, cinema post-production, and practical automations.
+            Digital Product Builder · Video Editor · Digital Systems. Final-year Electrical and Electronics Engineering student with a focus on high-efficiency client software, cinema post-production, and practical automations.
           </p>
         </header>
 
@@ -260,10 +260,17 @@ export function AboutPage() {
 
           <div className="flex flex-wrap items-center gap-4">
             <Link 
-              to="/work" 
+              to="/works" 
               className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-medium rounded-lg border border-border/80 hover:border-foreground/50 bg-background text-foreground transition-colors"
             >
-              <span>Explore Work Map</span>
+              <span>Explore Works</span>
+              <ArrowRight size={13} />
+            </Link>
+            <Link 
+              to="/experiments" 
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-medium rounded-lg border border-border/80 hover:border-foreground/50 bg-background text-foreground transition-colors"
+            >
+              <span>Experiments</span>
               <ArrowRight size={13} />
             </Link>
             <Link 
