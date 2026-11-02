@@ -35,6 +35,12 @@ import ContactPage from "./pages/ContactPage";
 import SkillsPage from "./pages/SkillsPage";
 import ExamFlowOSJourney from "./pages/blog/ExamFlowOSJourney";
 import ExamFlowOSGuide from "./pages/blog/ExamFlowOSGuide";
+import ExamFlowOSRegistrations from "./pages/blog/ExamFlowOSRegistrations";
+import ZeroCostArchitecture from "./pages/blog/ZeroCostArchitecture";
+import TenYearStudioMonetization from "./pages/blog/TenYearStudioMonetization";
+import LessonsFrom700Users from "./pages/blog/LessonsFrom700Users";
+import CleanWebArchitecture from "./pages/blog/CleanWebArchitecture";
+import CognitiveLoadAndLearning from "./pages/blog/CognitiveLoadAndLearning";
 
 const queryClient = new QueryClient();
 
@@ -87,6 +93,12 @@ function AnimatedRoutes() {
           {/* Skills & Writing */}
           <Route path="/skills" element={<PageTransition><PageContainer maxWidth="wide"><SkillsPage /></PageContainer></PageTransition>} />
           <Route path="/writing" element={<PageTransition><PageContainer maxWidth="default"><WritingPage /></PageContainer></PageTransition>} />
+          <Route path="/writing/examflowos-10000-registrations" element={<PageTransition><PageContainer maxWidth="default"><ExamFlowOSRegistrations /></PageContainer></PageTransition>} />
+          <Route path="/writing/architecture-of-zero-cost" element={<PageTransition><PageContainer maxWidth="default"><ZeroCostArchitecture /></PageContainer></PageTransition>} />
+          <Route path="/writing/monetization-of-10-year-studio" element={<PageTransition><PageContainer maxWidth="default"><TenYearStudioMonetization /></PageContainer></PageTransition>} />
+          <Route path="/writing/lessons-from-700-active-users" element={<PageTransition><PageContainer maxWidth="default"><LessonsFrom700Users /></PageContainer></PageTransition>} />
+          <Route path="/writing/the-clean-web-architecture" element={<PageTransition><PageContainer maxWidth="default"><CleanWebArchitecture /></PageContainer></PageTransition>} />
+          <Route path="/writing/cognitive-load-spaced-repetition-learning" element={<PageTransition><PageContainer maxWidth="default"><CognitiveLoadAndLearning /></PageContainer></PageTransition>} />
           
           {/* Canonical Individual Work / Project Pages */}
           <Route path="/works/examflow-os" element={<PageTransition><PageContainer maxWidth="wide"><ExamFlowOSPage /></PageContainer></PageTransition>} />

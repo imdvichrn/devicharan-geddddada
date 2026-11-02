@@ -57,10 +57,10 @@ export function Navigation() {
   // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
-      const originalStyle = window.getComputedStyle(document.body).overflow;
+      const originalOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
       return () => {
-        document.body.style.overflow = originalStyle;
+        document.body.style.overflow = originalOverflow;
       };
     }
   }, [isMobileMenuOpen]);
@@ -115,15 +115,21 @@ export function Navigation() {
       >
         <div className="max-w-[1240px] 2xl:max-w-[1380px] mx-auto page-shell-gutter h-[var(--header-height)] flex items-center justify-between">
           
-          {/* Brand Anchor: Devicharan (@imdvichrn) */}
+          {/* Brand Anchor: Geddada Devicharan (@imdvichrn) */}
           <Link 
             to="/" 
             className="flex items-center gap-2 text-sm font-medium tracking-tight text-foreground hover:opacity-85 transition-opacity focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded px-1"
             aria-label="Geddada Devicharan home"
           >
-            <span className="font-semibold tracking-tight text-base sm:text-sm">Devicharan</span>
-            <span className="text-[11px] text-muted-foreground/60 hidden sm:inline font-mono">
-              @imdvichrn
+            <img 
+              src={theme === 'dark' ? '/masters/logo-dark-mode.png' : '/masters/logo-light-mode.png'} 
+              alt="Geddada Devicharan logo mark" 
+              className="w-5 h-5 object-contain"
+            />
+            <span className="font-semibold tracking-tight text-base sm:text-sm">Geddada Devicharan</span>
+            <span className="text-[11px] text-muted-foreground/70 hidden lg:inline-flex items-center gap-1.5 font-mono">
+              <span>@imdvichrn</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-highlight shadow-[0_0_6px_hsl(var(--highlight))]" title="Active portfolio" />
             </span>
           </Link>
 
@@ -136,7 +142,8 @@ export function Navigation() {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`px-3.5 py-1.5 rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary ${
+                aria-current={item.isActive ? 'page' : undefined}
+                className={`px-3.5 py-1.5 rounded-full transition-all duration-150 active:scale-95 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
                   item.isActive 
                     ? 'bg-primary/10 text-primary font-semibold border border-primary/25 shadow-xs' 
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/40 border border-transparent'
@@ -200,7 +207,12 @@ export function Navigation() {
               onClick={() => setIsMobileMenuOpen(false)}
               className="flex items-center gap-2 text-sm font-semibold tracking-tight text-foreground"
             >
-              <span>Devicharan</span>
+              <img 
+                src={theme === 'dark' ? '/masters/logo-dark-mode.png' : '/masters/logo-light-mode.png'} 
+                alt="Geddada Devicharan logo mark" 
+                className="w-5 h-5 object-contain"
+              />
+              <span>Geddada Devicharan</span>
               <span className="text-[11px] text-muted-foreground/70 font-mono">@imdvichrn</span>
             </Link>
 

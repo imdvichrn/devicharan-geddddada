@@ -557,11 +557,7 @@ export const BackgroundLoop: React.FC = () => {
       className="fixed inset-0 pointer-events-none overflow-hidden z-0 select-none bg-background transition-colors duration-500"
       aria-hidden="true"
     >
-      {/* Pure Living Spatial Canvas strictly contained at z-0 without any line art, boxes, or grids */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 block w-full h-full pointer-events-none"
-      />
+      <div className="absolute inset-0 bg-background" />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 
 export interface PointerDepth {
   x: number; // Normalized -1 to 1
@@ -13,9 +13,15 @@ export interface PointerDepth {
  * 
  * Provides smooth 2–8px micro-displacement physics driven by pointer movement
  * with natural velocity damping and calm resting state.
+ * 
+ * Performance Guarantees:
+ * - ZERO React state re-renders during 60/120fps animation ticks
+ * - Directly updates depthRef and optional portraitRef DOM element
+ * - Self-pausing loop: automatically stops running RAF when motion settles
+ * - Respects prefers-reduced-motion
  */
 export function usePointerDepth(maxOffset: number = 6, damping: number = 0.08) {
-  const [depth, setDepth] = useState<PointerDepth>({
+  const depthRef = useRef<PointerDepth>({
     x: 0,
     y: 0,
     pixelX: 0,
@@ -26,11 +32,63 @@ export function usePointerDepth(maxOffset: number = 6, damping: number = 0.08) {
   const targetRef = useRef({ x: 0, y: 0, isHovered: false });
   const currentRef = useRef({ x: 0, y: 0 });
   const animFrameRef = useRef<number | null>(null);
+  const isLoopRunningRef = useRef(false);
   const containerRef = useRef<HTMLElement | null>(null);
+  const portraitRef = useRef<HTMLDivElement | null>(null);
 
   // Check for reduced motion preference
   const prefersReducedMotion = typeof window !== 'undefined' && 
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const startAnimation = useCallback(() => {
+    if (prefersReducedMotion || isLoopRunningRef.current) return;
+    isLoopRunningRef.current = true;
+
+    const tick = () => {
+      const target = targetRef.current;
+      const current = currentRef.current;
+
+      // Smooth lerp damping
+      current.x += (target.x - current.x) * damping;
+      current.y += (target.y - current.y) * damping;
+
+      const pixelX = Math.round(current.x * maxOffset * 100) / 100;
+      const pixelY = Math.round(current.y * maxOffset * 100) / 100;
+
+      depthRef.current.x = current.x;
+      depthRef.current.y = current.y;
+      depthRef.current.pixelX = pixelX;
+      depthRef.current.pixelY = pixelY;
+      depthRef.current.isHovered = target.isHovered;
+
+      // Update portrait DOM element directly without triggering React re-renders
+      if (portraitRef.current) {
+        portraitRef.current.style.transform = `translate3d(${pixelX * 0.2}px, ${pixelY * 0.2}px, 0)`;
+      }
+
+      // Check if settled (both target and current very close to target, and not hovered)
+      const dx = Math.abs(target.x - current.x);
+      const dy = Math.abs(target.y - current.y);
+      const isSettled = dx < 0.0005 && dy < 0.0005 && !target.isHovered;
+
+      if (isSettled) {
+        current.x = 0;
+        current.y = 0;
+        depthRef.current.pixelX = 0;
+        depthRef.current.pixelY = 0;
+        if (portraitRef.current) {
+          portraitRef.current.style.transform = 'translate3d(0px, 0px, 0px)';
+        }
+        isLoopRunningRef.current = false;
+        animFrameRef.current = null;
+        return;
+      }
+
+      animFrameRef.current = requestAnimationFrame(tick);
+    };
+
+    animFrameRef.current = requestAnimationFrame(tick);
+  }, [damping, maxOffset, prefersReducedMotion]);
 
   const handlePointerMove = useCallback((e: PointerEvent | React.PointerEvent) => {
     if (prefersReducedMotion) return;
@@ -59,56 +117,32 @@ export function usePointerDepth(maxOffset: number = 6, damping: number = 0.08) {
         isHovered: true
       };
     }
-  }, [prefersReducedMotion]);
+
+    startAnimation();
+  }, [prefersReducedMotion, startAnimation]);
 
   const handlePointerLeave = useCallback(() => {
     targetRef.current = { x: 0, y: 0, isHovered: false };
-  }, []);
+    startAnimation();
+  }, [startAnimation]);
 
   useEffect(() => {
-    if (prefersReducedMotion) return;
-
-    let isRunning = true;
-
-    const tick = () => {
-      if (!isRunning) return;
-
-      const target = targetRef.current;
-      const current = currentRef.current;
-
-      // Smooth lerp damping
-      current.x += (target.x - current.x) * damping;
-      current.y += (target.y - current.y) * damping;
-
-      // Only update state if meaningful change
-      const pixelX = Math.round(current.x * maxOffset * 100) / 100;
-      const pixelY = Math.round(current.y * maxOffset * 100) / 100;
-
-      setDepth({
-        x: current.x,
-        y: current.y,
-        pixelX,
-        pixelY,
-        isHovered: target.isHovered
-      });
-
-      animFrameRef.current = requestAnimationFrame(tick);
-    };
-
-    animFrameRef.current = requestAnimationFrame(tick);
-
     return () => {
-      isRunning = false;
       if (animFrameRef.current) {
         cancelAnimationFrame(animFrameRef.current);
+        animFrameRef.current = null;
       }
+      isLoopRunningRef.current = false;
     };
-  }, [maxOffset, damping, prefersReducedMotion]);
+  }, []);
 
   return {
-    depth,
+    depth: depthRef.current,
+    depthRef,
+    portraitRef,
     containerRef,
     handlePointerMove,
     handlePointerLeave
   };
 }
+

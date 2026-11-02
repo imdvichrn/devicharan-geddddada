@@ -13,6 +13,7 @@ import {
 import { VideoEmbed } from '@/components/VideoEmbed';
 import { WindowChrome } from '@/components/WindowChrome';
 import { PageShell } from '@/components/PageShell';
+import { AnimatedCounter } from '@/components/motion/AnimatedCounter';
 
 export function VideoPage() {
   const primaryVideoId = "cmk8S96EDQ0";
@@ -48,8 +49,9 @@ export function VideoPage() {
           <div className="text-xs font-mono uppercase tracking-widest text-primary font-medium">
             DISCIPLINE 02 · VIDEO & CREATIVE PRODUCTION
           </div>
-          <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-foreground leading-[1.05]">
-            700+ Client Video Projects
+          <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-foreground leading-[1.05] flex flex-wrap items-baseline gap-2">
+            <span><AnimatedCounter value={700} suffix="+" /></span>
+            <span>Client Video Projects</span>
           </h1>
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
             High-throughput commercial post-production operating in <strong className="text-foreground font-medium">DaVinci Resolve Studio</strong> on macOS. Video editing, colorist workflows, node-based color transforms, motion design, and Fairlight broadcast audio mastering.

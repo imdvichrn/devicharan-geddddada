@@ -3,90 +3,62 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    {
-      "source": "/sitemap-index.xml",
-      "destination": "/sitemap.xml",
-      "permanent": true
-    }
+    { "source": "/sitemap-index.xml", "destination": "/sitemap.xml", "permanent": true },
+    { "source": "/work", "destination": "/works", "permanent": true },
+    { "source": "/projects", "destination": "/works", "permanent": true },
+    { "source": "/project/examflow-os", "destination": "/works/examflow-os", "permanent": true },
+    { "source": "/projects/examflow-os", "destination": "/works/examflow-os", "permanent": true },
+    { "source": "/perfect-pack", "destination": "/works/perfect-pack", "permanent": true },
+    { "source": "/project/perfect-pack", "destination": "/works/perfect-pack", "permanent": true },
+    { "source": "/projects/perfect-pack", "destination": "/works/perfect-pack", "permanent": true },
+    { "source": "/project/annapurna-foundation", "destination": "/works/annapurna-foundation", "permanent": true },
+    { "source": "/projects/annapurna-foundation", "destination": "/works/annapurna-foundation", "permanent": true },
+    { "source": "/project/video-editing-post-production", "destination": "/works/video-editing-post-production", "permanent": true },
+    { "source": "/projects/video-editing-post-production", "destination": "/works/video-editing-post-production", "permanent": true },
+    { "source": "/project/examflow-os/blog/examflowos-journey", "destination": "/works/examflow-os/blog/examflowos-journey", "permanent": true },
+    { "source": "/project/examflow-os/blog/examflowos-all-in-one-exam-prep-app-ap-tg-ecet-icet-polycet", "destination": "/works/examflow-os/blog/examflowos-all-in-one-exam-prep-app-ap-tg-ecet-icet-polycet", "permanent": true }
   ],
   "headers": [
     {
       "source": "/sitemap.xml",
       "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/xml; charset=utf-8"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600, stale-while-revalidate=86400"
-        }
+        { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" }
       ]
     },
     {
       "source": "/robots.txt",
       "headers": [
-        {
-          "key": "Content-Type",
-          "value": "text/plain; charset=utf-8"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600, stale-while-revalidate=86400"
-        }
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" }
       ]
     },
     {
       "source": "/assets/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
     },
     {
-      "source": "/(og|favicon_io)/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=86400, stale-while-revalidate=604800"
-        }
-      ]
+      "source": "/ECHOLESS.lottie",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" }]
     },
     {
-      "source": "/((?!assets/|og/|favicon_io/|sitemap|robots).*)",
+      "source": "/(og|favicon_io|browser|apple|android-pwa|masters|certificates)/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }]
+    },
+    {
+      "source": "/((?!assets/|certificates/|og/|favicon_io/|browser/|apple/|android-pwa/|masters/|site.webmanifest|asset-manifest.json|favicon|sitemap|robots|ECHOLESS.lottie).*)",
       "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        },
-        {
-          "key": "Strict-Transport-Security",
-          "value": "max-age=63072000; includeSubDomains; preload"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "camera=(), microphone=(), geolocation=()"
-        }
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
       ]
     }
   ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!assets/|certificates/|og/|favicon_io/|browser/|apple/|android-pwa/|masters/|site.webmanifest|asset-manifest.json|favicon|sitemap|robots|ECHOLESS.lottie).*)",
       "destination": "/index.html"
     }
   ]

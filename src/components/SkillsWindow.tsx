@@ -1,6 +1,7 @@
 import React from 'react';
 import { WindowChrome } from '@/components/WindowChrome';
 import { Palette, Code2, Cpu, Compass } from 'lucide-react';
+import { SpotlightCard } from '@/components/motion/SpotlightCard';
 
 export function SkillsWindow({ className = "" }: { className?: string }) {
   const skillGroups = [
@@ -65,10 +66,11 @@ export function SkillsWindow({ className = "" }: { className?: string }) {
           {skillGroups.map((group) => {
             const Icon = group.icon;
             return (
-              <div 
+              <SpotlightCard
                 key={group.title}
-                className="p-5 sm:p-6 rounded-xl border border-border/40 bg-background/50 space-y-4 flex flex-col justify-between"
+                className="h-full"
               >
+                <div className="p-5 sm:p-6 space-y-4 flex flex-col justify-between h-full">
                 <div className="space-y-3">
                   <div className="flex items-center gap-2 text-foreground font-semibold text-sm">
                     <div className="w-7 h-7 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0">
@@ -112,9 +114,10 @@ export function SkillsWindow({ className = "" }: { className?: string }) {
                   </div>
                 </div>
               </div>
-            );
-          })}
-        </div>
+            </SpotlightCard>
+          );
+        })}
+      </div>
       </div>
     </div>
   );

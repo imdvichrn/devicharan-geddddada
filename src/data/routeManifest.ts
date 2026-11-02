@@ -8,6 +8,7 @@ export interface RouteDefinition {
   schemaType: 'WebSite' | 'CollectionPage' | 'SoftwareApplication' | 'Product' | 'CreativeWork' | 'VideoObject' | 'TechArticle' | 'BlogPosting' | 'AboutPage' | 'ContactPage';
   isCanonical: boolean;
   redirectTo?: string;
+  lastModified?: string;
 }
 
 export const DOMAIN = 'https://geddadadevicharan.vercel.app';
@@ -23,6 +24,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['Geddada Devicharan', 'imdvichrn', 'digital product builder', 'video editor', 'digital systems', 'ExamFlowOS', 'Perfect Pack'],
     schemaType: 'WebSite',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 2. Works Hub
@@ -35,6 +37,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['Geddada Devicharan works', 'ExamFlowOS case study', 'video post-production', 'managed websites', 'business systems'],
     schemaType: 'CollectionPage',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 3. Disciplines: Software
@@ -47,6 +50,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['ExamFlowOS', 'CBT testing engine', 'software products', 'Google Drive cloud backup', 'Geddada Devicharan software'],
     schemaType: 'CollectionPage',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 4. Disciplines: Video
@@ -59,6 +63,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['video editing', 'color grading', 'DaVinci Resolve Studio', 'Fairlight audio', '700 deliverables', 'Geddada Devicharan video'],
     schemaType: 'CollectionPage',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 5. Disciplines: Web
@@ -71,6 +76,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['managed websites', 'technical SEO', 'web development', 'Sri Lahari Studios', 'Annapurna Foundation'],
     schemaType: 'CollectionPage',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 6. Disciplines: Systems
@@ -83,6 +89,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['business systems', 'n8n automation', 'event-driven webhooks', 'inquiry routing', 'digital operations'],
     schemaType: 'CollectionPage',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 7. Writing & Build Logs
@@ -95,6 +102,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['software architecture notes', 'build in public', 'technical SEO case study', 'spaced repetition essay'],
     schemaType: 'CollectionPage',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 8. Capabilities / Skills Index
@@ -107,6 +115,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['Geddada Devicharan skills', 'software development', 'video post-production', 'B.Tech EEE'],
     schemaType: 'CollectionPage',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 9. Experiments Hub
@@ -119,6 +128,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['SM-2 spaced repetition', 'DaVinci CLI automation', 'circadian focus', 'product lab'],
     schemaType: 'CollectionPage',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 10. About
@@ -131,6 +141,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['About Geddada Devicharan', 'imdvichrn biography', 'B.Tech EEE JNTUK', 'digital systems engineer'],
     schemaType: 'AboutPage',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 11. Contact
@@ -143,6 +154,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['Contact Geddada Devicharan', 'hire video editor', 'software development consulting'],
     schemaType: 'ContactPage',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 12. Case Study: ExamFlowOS
@@ -155,6 +167,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['ExamFlowOS', 'AP ECET prep', 'TG ECET prep', 'ICET exam prep', 'CBT test simulator'],
     schemaType: 'SoftwareApplication',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 13. Case Study: Perfect Pack
@@ -167,6 +180,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['Perfect Pack', 'DaVinci Resolve presets', 'DRFX macros', 'editing toolkit', 'video presets'],
     schemaType: 'Product',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 14. Case Study: Annapurna Foundation
@@ -179,6 +193,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['Annapurna Foundation', 'NGO website', 'food seva digital presence', 'Geddada Devicharan NGO work'],
     schemaType: 'CreativeWork',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 15. Case Study: Video Editing Post-Production
@@ -191,6 +206,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['700 video projects', 'DaVinci Resolve color grading', 'Fairlight audio mastering', 'video editor Vizag'],
     schemaType: 'VideoObject',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 16. Case Study: Sri Lahari Studios
@@ -203,6 +219,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['Sri Lahari Studios', 'photography studio OS', 'local SEO Vizag', 'inquiry automation'],
     schemaType: 'CreativeWork',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 17. Case Study: Managed Client Websites
@@ -215,6 +232,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['managed websites', 'client website engineering', 'technical SEO maintenance'],
     schemaType: 'CreativeWork',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 18. Case Study: Business Systems Automation
@@ -227,6 +245,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['n8n automation', 'webhook pipelines', 'lead triage automation', 'business systems'],
     schemaType: 'CreativeWork',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 19. Blog Article: ExamFlowOS Journey
@@ -239,6 +258,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['Building ExamFlowOS', 'previous year question papers', 'AP entrance exams', 'CBT practice'],
     schemaType: 'BlogPosting',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 20. Blog Article: ExamFlowOS Guide
@@ -251,6 +271,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['ExamFlowOS guide', 'AP ECET study app', 'TG ECET CBT test', 'spaced repetition flashcards'],
     schemaType: 'BlogPosting',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 21. Experiment Detail: SM-2 Recall
@@ -263,6 +284,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['SM-2 algorithm experiment', 'spaced repetition CBT', 'cognitive recall research'],
     schemaType: 'TechArticle',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 22. Experiment Detail: DaVinci CLI
@@ -275,6 +297,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['DaVinci Resolve scripting', 'macOS editing CLI', 'Python timeline automation'],
     schemaType: 'TechArticle',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 23. Experiment Detail: Circadian Focus
@@ -287,6 +310,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['circadian protocol', 'focus block architecture', 'deep work stamina'],
     schemaType: 'TechArticle',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // 24. Experiment Detail: BESS Microgrid
@@ -299,6 +323,7 @@ export const routeManifest: RouteDefinition[] = [
     keywords: ['solar PV microgrid', 'BESS efficiency', 'EEE power systems'],
     schemaType: 'TechArticle',
     isCanonical: true,
+    lastModified: '2026-10-22',
   },
 
   // Legacy Aliases (mapped to canonical targets)
@@ -444,5 +469,70 @@ export const routeManifest: RouteDefinition[] = [
     schemaType: 'BlogPosting',
     isCanonical: false,
     redirectTo: '/works/examflow-os/blog/examflowos-all-in-one-exam-prep-app-ap-tg-ecet-icet-polycet',
+  },
+  {
+    path: '/writing/examflowos-10000-registrations',
+    canonicalUrl: `${DOMAIN}/writing/examflowos-10000-registrations`,
+    title: '10,000 Registrations: The Journey Behind ExamFlowOS | Devicharan Geddada',
+    description: 'From an idea in November 2025 to 10,000+ registrations and 700+ monthly active users. Devicharan Geddada shares the story, challenges, and Pinky Promise behind ExamFlowOS.',
+    ogImage: `${DOMAIN}/og/og-examflowos.png`,
+    keywords: ['ExamFlowOS 10000 registrations', 'ExamFlowOS milestone', 'Devicharan Geddada writing', 'imdvichrn', 'product milestone'],
+    schemaType: 'BlogPosting',
+    isCanonical: true,
+    lastModified: '2026-10-22',
+  },
+  {
+    path: '/writing/architecture-of-zero-cost',
+    canonicalUrl: `${DOMAIN}/writing/architecture-of-zero-cost`,
+    title: 'The Architecture of Zero Cost: Scaling Software with Zero Infrastructure Bills | Devicharan Geddada',
+    description: 'How to design, scale, and maintain public-good software to 10,000+ users without accumulating recurring database and server costs. Insights from building ExamFlowOS.',
+    ogImage: `${DOMAIN}/og/og-software.png`,
+    keywords: ['zero-cost architecture', 'ExamFlowOS', 'static web delivery', 'user-owned storage', 'Google Drive sync'],
+    schemaType: 'BlogPosting',
+    isCanonical: true,
+    lastModified: '2026-10-22',
+  },
+  {
+    path: '/writing/monetization-of-10-year-studio',
+    canonicalUrl: `${DOMAIN}/writing/monetization-of-10-year-studio`,
+    title: 'Monetization of a 10-Year Studio: Chasing Longevity Over Short-Term Gains | Devicharan Geddada',
+    description: 'A thoughtful reflection on sustainable solo software development, avoiding intrusive advertising, and the discipline required to build products that remain useful for a decade.',
+    ogImage: `${DOMAIN}/og/og-sri-lahari.png`,
+    keywords: ['indie studio business model', '10-year horizon', 'sustainable monetization', 'Perfect Pack', 'independent developer strategy'],
+    schemaType: 'BlogPosting',
+    isCanonical: true,
+    lastModified: '2026-10-22',
+  },
+  {
+    path: '/writing/lessons-from-700-active-users',
+    canonicalUrl: `${DOMAIN}/writing/lessons-from-700-active-users`,
+    title: 'Lessons from 700+ Monthly Active Users: Reality of Solo Product Growth | Devicharan Geddada',
+    description: 'A practical case study on what real-world students reveal that local testing cannot, analyzing retention metrics, cache issues, and prioritizing stability for ExamFlowOS.',
+    ogImage: `${DOMAIN}/og/og-home.png`,
+    keywords: ['active users versus registration', 'indie hacking metrics', 'student learning platforms', 'ExamFlowOS case study', 'product analytics solo developer'],
+    schemaType: 'BlogPosting',
+    isCanonical: true,
+    lastModified: '2026-10-22',
+  },
+  {
+    path: '/writing/the-clean-web-architecture',
+    canonicalUrl: `${DOMAIN}/writing/the-clean-web-architecture`,
+    title: 'The Clean Web Architecture: Reducing Future Cognitive Friction | Devicharan Geddada',
+    description: 'A practical discussion on separation of concerns, component structure, environment configuration, and minimizing external packages to maintain high performance and readability.',
+    ogImage: `${DOMAIN}/og/og-web.png`,
+    keywords: ['clean web architecture', 'Vite React SPA best practices', 'minimizing npm dependencies', 'accessible design semantic HTML', 'maintainable web engineering'],
+    schemaType: 'BlogPosting',
+    isCanonical: true,
+    lastModified: '2026-10-22',
+  },
+  {
+    path: '/writing/cognitive-load-spaced-repetition-learning',
+    canonicalUrl: `${DOMAIN}/writing/cognitive-load-spaced-repetition-learning`,
+    title: 'Cognitive Load, Spaced Repetition, and Learning | Devicharan Geddada',
+    description: 'A thoughtful essay connecting software interface design with how students learn, exploring working memory limits, active recall, and ExamFlowOS’s design loop.',
+    ogImage: `${DOMAIN}/og/og-systems.png`,
+    keywords: ['cognitive load theory', 'spaced repetition SM-2', 'active recall retrieval practice', 'ExamFlowOS learning loop', 'educational software UX design'],
+    schemaType: 'BlogPosting',
+    isCanonical: true,
   },
 ];

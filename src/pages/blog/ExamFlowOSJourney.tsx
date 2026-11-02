@@ -16,6 +16,7 @@ import {
   Compass,
   Rocket,
 } from 'lucide-react';
+import { TableOfContents } from '@/components/TableOfContents';
 
 const CANONICAL =
   'https://geddadadevicharan.vercel.app/works/examflow-os/blog/examflowos-journey';
@@ -142,13 +143,15 @@ export default function ExamFlowOSJourney() {
             Back to ExamFlowOS Case Study
           </Link>
 
-          {/* Article window */}
-          <motion.article
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="glass-panel border border-glass-border rounded-2xl overflow-hidden"
-          >
+          {/* Article Layout with Table of Contents */}
+          <div className="relative flex justify-center 2xl:justify-between items-start gap-10">
+            {/* Article window */}
+            <motion.article
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="glass-panel border border-glass-border rounded-2xl overflow-hidden flex-1 max-w-full 2xl:max-w-[880px]"
+            >
             <div className="flex items-center justify-between px-4 py-3 border-b border-glass-border bg-background/40">
               <WindowChrome />
               <span className="text-xs text-muted-foreground font-mono">
@@ -331,7 +334,11 @@ export default function ExamFlowOSJourney() {
               </div>
             </div>
           </motion.article>
+
+          {/* Dynamic Table of Contents */}
+          <TableOfContents />
         </div>
-      </PageShell>
+      </div>
+    </PageShell>
   );
 }

@@ -1,0 +1,196 @@
+{
+  "brand": "Geddada Devicharan",
+  "source": "User-provided raster brand-board image; central abstract mark isolated from the source artwork.",
+  "extracted_colors": {
+    "primary_white": "#F6F4F3",
+    "primary_cyan": "#00E1E3",
+    "dark_background": "#02040A",
+    "light_background": "#F5F7FA",
+    "monochrome_ink": "#0B1117"
+  },
+  "vector_note": "favicon.svg uses paths traced from the supplied raster symbol. It is a scalable approximation, not an original source vector.",
+  "assets": [
+    {
+      "file": "README.md",
+      "dimensions": "N/A",
+      "format": "Markdown",
+      "transparency": "N/A",
+      "intended_use": "Documentation, preview, or QA reference."
+    },
+    {
+      "file": "android-pwa/icon-192-maskable.png",
+      "dimensions": "192x192",
+      "format": "PNG",
+      "transparency": "No",
+      "intended_use": "Maskable PWA icon with extra safe-zone padding."
+    },
+    {
+      "file": "android-pwa/icon-192.png",
+      "dimensions": "192x192",
+      "format": "PNG",
+      "transparency": "No",
+      "intended_use": "Standard Android/PWA install icon."
+    },
+    {
+      "file": "android-pwa/icon-512-maskable.png",
+      "dimensions": "512x512",
+      "format": "PNG",
+      "transparency": "No",
+      "intended_use": "High-resolution maskable PWA icon with extra safe-zone padding."
+    },
+    {
+      "file": "android-pwa/icon-512.png",
+      "dimensions": "512x512",
+      "format": "PNG",
+      "transparency": "No",
+      "intended_use": "High-resolution Android/PWA install icon."
+    },
+    {
+      "file": "apple/apple-touch-icon-152x152.png",
+      "dimensions": "152x152",
+      "format": "PNG",
+      "transparency": "No",
+      "intended_use": "Legacy Apple touch icon size; opaque dark background."
+    },
+    {
+      "file": "apple/apple-touch-icon.png",
+      "dimensions": "180x180",
+      "format": "PNG",
+      "transparency": "No",
+      "intended_use": "Apple touch/home-screen icon; opaque dark background."
+    },
+    {
+      "file": "browser/favicon-16x16.png",
+      "dimensions": "16x16",
+      "format": "PNG",
+      "transparency": "Yes",
+      "intended_use": "Small browser/tab favicon."
+    },
+    {
+      "file": "browser/favicon-32x32.png",
+      "dimensions": "32x32",
+      "format": "PNG",
+      "transparency": "Yes",
+      "intended_use": "Standard browser favicon and pinned UI icon."
+    },
+    {
+      "file": "browser/favicon-48x48.png",
+      "dimensions": "48x48",
+      "format": "PNG",
+      "transparency": "Yes",
+      "intended_use": "Larger browser/Windows shortcut favicon."
+    },
+    {
+      "file": "browser/favicon.ico",
+      "dimensions": "16x16; 32x32; 48x48",
+      "format": "ICO",
+      "transparency": "Yes (frame-dependent)",
+      "intended_use": "Legacy browser favicon; contains 16, 32, and 48 px frames."
+    },
+    {
+      "file": "browser/favicon.svg",
+      "dimensions": "550 × 550",
+      "format": "SVG",
+      "transparency": "Yes (transparent SVG canvas)",
+      "intended_use": "Scalable vector favicon in the original two-color treatment."
+    },
+    {
+      "file": "integration/favicon-integration.html",
+      "dimensions": "N/A",
+      "format": "HTML",
+      "transparency": "N/A",
+      "intended_use": "HTML head tags for favicon, Apple icon, manifest, and theme color."
+    },
+    {
+      "file": "integration/icon-preview-grid.png",
+      "dimensions": "1320x260",
+      "format": "PNG",
+      "transparency": "No",
+      "intended_use": "Documentation, preview, or QA reference."
+    },
+    {
+      "file": "integration/qa-report.md",
+      "dimensions": "N/A",
+      "format": "Markdown",
+      "transparency": "N/A",
+      "intended_use": "Documentation, preview, or QA reference."
+    },
+    {
+      "file": "integration/site.webmanifest",
+      "dimensions": "N/A",
+      "format": "JSON web manifest",
+      "transparency": "N/A",
+      "intended_use": "PWA metadata and icon declarations."
+    },
+    {
+      "file": "masters/logo-1024.png",
+      "dimensions": "1024x1024",
+      "format": "PNG",
+      "transparency": "Yes",
+      "intended_use": "1024 px transparent primary master for general web use."
+    },
+    {
+      "file": "masters/logo-dark-bg.png",
+      "dimensions": "1024x1024",
+      "format": "PNG",
+      "transparency": "No",
+      "intended_use": "Primary logo on a solid dark app/brand background."
+    },
+    {
+      "file": "masters/logo-dark-mode.png",
+      "dimensions": "1024x1024",
+      "format": "PNG",
+      "transparency": "Yes",
+      "intended_use": "Bright white/cyan version for dark interfaces; transparent."
+    },
+    {
+      "file": "masters/logo-light-bg.png",
+      "dimensions": "1024x1024",
+      "format": "PNG",
+      "transparency": "No",
+      "intended_use": "Dark/cyan logo on a solid light background."
+    },
+    {
+      "file": "masters/logo-light-mode.png",
+      "dimensions": "1024x1024",
+      "format": "PNG",
+      "transparency": "Yes",
+      "intended_use": "Dark/cyan version for light interfaces; transparent."
+    },
+    {
+      "file": "masters/logo-monochrome.png",
+      "dimensions": "1024x1024",
+      "format": "PNG",
+      "transparency": "Yes",
+      "intended_use": "Single-color charcoal logo on transparency."
+    },
+    {
+      "file": "masters/logo-primary-transparent.png",
+      "dimensions": "1024x1024",
+      "format": "PNG",
+      "transparency": "Yes",
+      "intended_use": "Original white/cyan identity on transparency."
+    },
+    {
+      "file": "masters/logo-transparent.png",
+      "dimensions": "2048x2048",
+      "format": "PNG",
+      "transparency": "Yes",
+      "intended_use": "2048 px transparent primary master; rendered from traced paths."
+    },
+    {
+      "file": "integration/asset-inventory.csv",
+      "dimensions": "N/A (inventory file)",
+      "format": "CSV",
+      "transparency": "N/A",
+      "intended_use": "Complete per-file dimensions, format, transparency, and purpose."
+    },
+    {
+      "file": "integration/asset-manifest.json",
+      "dimensions": "N/A (manifest file)",
+      "format": "JSON",
+      "transparency": "N/A",
+      "intended_use": "Machine-readable brand metadata and asset inventory."
+    }
+  ]
+}

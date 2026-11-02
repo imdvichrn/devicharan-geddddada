@@ -17,6 +17,8 @@ import {
 } from '@/components/icons/PortfolioIcons';
 import { WindowChrome } from '@/components/WindowChrome';
 import { PageShell } from '@/components/PageShell';
+import { AnimatedCounter } from '@/components/motion/AnimatedCounter';
+import { SvgStrokeReveal } from '@/components/motion/SvgStrokeReveal';
 
 export function SoftwarePage() {
   return (
@@ -94,9 +96,16 @@ export function SoftwarePage() {
                     <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-muted-foreground">
                       <span className="text-primary font-semibold uppercase tracking-wider">Flagship Product</span>
                       <span aria-hidden="true">·</span>
-                      <span className="text-foreground font-semibold">10,000+ Total Users</span>
+                      <span className="text-foreground font-semibold inline-flex items-center gap-1">
+                        <AnimatedCounter value={10000} suffix="+" />
+                        <span>Total Users</span>
+                      </span>
                       <span aria-hidden="true">·</span>
-                      <span className="text-foreground/90 font-medium">~700 Active</span>
+                      <span className="text-foreground/90 font-medium inline-flex items-center gap-1">
+                        <span>~</span>
+                        <AnimatedCounter value={700} />
+                        <span>Active</span>
+                      </span>
                       <span aria-hidden="true">·</span>
                       <span className="text-muted-foreground font-medium">100% Free</span>
                     </div>

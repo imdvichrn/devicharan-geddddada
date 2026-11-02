@@ -47,8 +47,8 @@ export function Window({
           <div className="flex items-center gap-3 shrink-0">
             {badge && <div>{badge}</div>}
             {statusText && (
-              <div className="flex items-center gap-1.5 text-[11px] font-mono text-primary font-medium">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              <div className="flex items-center gap-1.5 text-[11px] font-mono text-foreground font-medium bg-highlight/15 border border-highlight/30 px-2.5 py-0.5 rounded-full">
+                <span className="w-1.5 h-1.5 rounded-full bg-highlight shadow-[0_0_5px_hsl(var(--highlight))]" />
                 <span>{statusText}</span>
               </div>
             )}

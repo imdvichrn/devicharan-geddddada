@@ -1,5 +1,7 @@
+import { useState, useEffect } from 'react';
 import { SEOHead } from '@/components/SEOHead';
 import { ContactForm } from '@/components/ContactForm';
+import { CredentialsSection } from '@/components/CredentialsSection';
 import { HiddenIdentityBlock, FooterMicroBio } from '@/components/SEOContent';
 import { 
   generatePersonSchema, 
@@ -12,6 +14,11 @@ import { HeroField } from '@/components/HeroField';
 import { usePointerDepth } from '@/hooks/usePointerDepth';
 import { ScrollReveal } from '@/components/motion/ScrollReveal';
 import { DownloadCVButton } from '@/components/motion/MicroFeedback';
+import { SpotlightCard } from '@/components/motion/SpotlightCard';
+import { AnimatedCounter } from '@/components/motion/AnimatedCounter';
+import { SvgStrokeReveal } from '@/components/motion/SvgStrokeReveal';
+import { TextReveal } from '@/components/motion/TextReveal';
+import { HeadingReveal } from '@/components/motion/HeadingReveal';
 import { 
   SoftwareProductIcon,
   VideoStudioIcon,
@@ -25,7 +32,7 @@ import {
   VerifiedCheckIcon
 } from '@/components/icons/PortfolioIcons';
 import { toast } from '@/hooks/use-toast';
-import { useState } from 'react';
+import { useTheme } from '@/hooks/useTheme';
 import { useInView } from 'react-intersection-observer';
 import { Link } from 'react-router-dom';
 import { 
@@ -132,11 +139,14 @@ const articles = [
 ];
 
 export function Portfolio() {
+  const { theme } = useTheme();
   const [selectedArticle, setSelectedArticle] = useState<typeof articles[0] | null>(null);
   
   // High performance pointer parallax for HeroField
   const { 
     depth: heroPointerDepth, 
+    depthRef: heroPointerDepthRef,
+    portraitRef: heroPortraitRef,
     containerRef: heroContainerRef, 
     handlePointerMove: handleHeroPointerMove, 
     handlePointerLeave: handleHeroPointerLeave 
@@ -153,8 +163,8 @@ export function Portfolio() {
   return (
     <div className="relative min-h-screen text-foreground selection:bg-primary/20 selection:text-primary">
       <SEOHead
-        title="Geddada Devicharan — Digital Product Builder · Video Editor · Digital Systems"
-        description="Geddada Devicharan builds digital products, digital systems and visual experiences, with a focus on thoughtful software and video."
+        title="Geddada Devicharan — Digital Product Builder, Video Editor & Creator"
+        description="Digital Product Builder · Video Editor · Post-Production Specialist · Creator"
         path="/"
         breadcrumbs={[
           { name: 'Home', url: 'https://geddadadevicharan.vercel.app/' },
@@ -169,7 +179,13 @@ export function Portfolio() {
         ]}
         structuredData={[
           generatePersonSchema(),
-          generateWebsiteSchema()
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Geddada Devicharan",
+            "alternateName": "Geddada Devicharan Portfolio",
+            "url": "https://geddadadevicharan.vercel.app/"
+          }
         ]}
       />
 
@@ -189,16 +205,17 @@ export function Portfolio() {
         className="relative pb-16 sm:pb-24 md:pb-28 lg:pb-32 w-full min-h-[62vh] flex flex-col justify-center items-start md:items-center text-left md:text-center overflow-x-hidden page-shell-gutter"
       >
         {/* Dedicated subtle HeroField separate from global background with 2-8px parallax */}
-        <HeroField pointerDepth={heroPointerDepth} />
+        <HeroField pointerDepthRef={heroPointerDepthRef} pointerDepth={heroPointerDepth} />
 
         <div className="relative z-10 w-full max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto flex flex-col items-start md:items-center">
           
           {/* STEP 1: PORTRAIT ANCHOR (Editorial First Anchor) */}
           <div className="mb-4 sm:mb-6 hero-step-1">
             <div 
-              className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full overflow-hidden border border-border/80 bg-card shadow-[0_8px_30px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.35)] mx-0 md:mx-auto transition-transform duration-300 hover:scale-[1.02] depth-interactive ring-1 ring-border/40"
+              ref={heroPortraitRef}
+              className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full overflow-hidden border border-border/80 bg-card shadow-[0_8px_30px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.35)] mx-0 md:mx-auto transition-transform duration-300 hover:scale-[1.02] depth-interactive ring-1 ring-border/40 will-change-transform"
               style={{
-                transform: `translate3d(${heroPointerDepth.pixelX * 0.2}px, ${heroPointerDepth.pixelY * 0.2}px, 0)`
+                transform: 'translate3d(0px, 0px, 0px)'
               }}
             >
               <img 
@@ -214,19 +231,26 @@ export function Portfolio() {
           </div>
 
           {/* STEP 2: DISPLAY NAME (Instrument Serif) */}
-          <h1 className="hero-step-2 mt-1 sm:mt-2 font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-normal tracking-tight text-foreground leading-[1.06] text-left md:text-center">
-            Geddada Devicharan
-          </h1>
+          <HeadingReveal 
+            text="Geddada Devicharan"
+            className="hero-step-2 mt-1 sm:mt-2 font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-normal tracking-tight text-foreground leading-[1.06] text-left md:text-center w-full"
+          />
 
-          {/* STEP 3: DISCIPLINE STATEMENT */}
+
+          {/* STEP 3: DISCIPLINE STATEMENT (Editorial & Calm) */}
           <div className="hero-step-3 mt-2 sm:mt-3 text-xs sm:text-base md:text-lg lg:text-xl text-foreground/90 font-normal tracking-normal max-w-xl xl:max-w-2xl mx-0 md:mx-auto leading-snug px-0 md:px-2 text-left md:text-center">
-            Digital Product Builder · Video Editor · Digital Systems
+            <TextReveal text="Digital Product Builder · Video Editor · Digital Systems" delay={0.2} />
           </div>
 
-          {/* STEP 4: HANDLE & VERIFIED (@imdvichrn) */}
-          <div className="hero-step-4 mt-2 sm:mt-2.5 text-xs sm:text-sm font-mono text-primary font-medium tracking-wide text-left md:text-center flex items-center gap-1.5 justify-start md:justify-center">
-            <span>@imdvichrn</span>
+          {/* STEP 4: HANDLE & VERIFIED (@imdvichrn) + AVAILABILITY INDICATOR */}
+          <div className="hero-step-4 mt-2 sm:mt-2.5 text-xs sm:text-sm font-mono text-foreground/80 font-medium tracking-wide text-left md:text-center flex flex-wrap items-center gap-2 justify-start md:justify-center">
+            <span className="text-primary font-semibold">@imdvichrn</span>
             <VerifiedCheckIcon size={13} className="text-primary inline-block" />
+            <span className="text-border hidden sm:inline" aria-hidden="true">·</span>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-mono text-muted-foreground bg-muted/60 px-2 py-0.5 rounded-full border border-border/40">
+              <span className="w-1.5 h-1.5 rounded-full bg-highlight shadow-[0_0_6px_hsl(var(--highlight))]" />
+              <span>Available for 2026 Projects</span>
+            </span>
           </div>
 
           {/* STEP 5: PERSONAL INTRO (Calm, human, readable) */}
@@ -240,7 +264,7 @@ export function Portfolio() {
             {/* Primary Action */}
             <a 
               href="#work-map"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 h-11 sm:h-12 rounded-xl text-xs sm:text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/95 depth-interactive shadow-[0_2px_10px_rgba(0,122,255,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shrink-0 transition-all duration-200"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 h-11 sm:h-12 rounded-xl text-xs sm:text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/95 depth-interactive shadow-[0_2px_12px_hsl(var(--primary)/0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shrink-0 transition-all duration-200"
             >
               <span>Explore my work</span>
               <ArrowRight size={14} strokeWidth={2} />
@@ -334,45 +358,64 @@ export function Portfolio() {
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-7 xl:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-7 xl:gap-8">
             {primaryPathways.map((pathway, idx) => {
               const Icon = pathway.icon;
+              // Asymmetric editorial weighting tailored to each discipline
+              const gridSpan = idx === 0 
+                ? 'md:col-span-12 lg:col-span-7' 
+                : idx === 1 
+                ? 'md:col-span-12 lg:col-span-5' 
+                : 'md:col-span-6 lg:col-span-6';
               return (
-                <ScrollReveal key={pathway.id} staggerIndex={idx} distance={18}>
-                  <Link
-                    to={pathway.path}
-                    className="p-6 sm:p-8 lg:p-10 xl:p-11 rounded-2xl depth-widget depth-interactive hover:border-foreground/30 transition-all duration-200 flex flex-col justify-between space-y-6 group h-full"
-                  >
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-muted/70 border border-border/80 flex items-center justify-center text-foreground group-hover:text-primary transition-colors">
-                          <Icon size={22} strokeWidth={1.6} />
+                <ScrollReveal key={pathway.id} staggerIndex={idx} distance={18} className={gridSpan}>
+                  <SpotlightCard className="h-full">
+                    <Link
+                      to={pathway.path}
+                      className="p-6 sm:p-8 lg:p-9 xl:p-10 transition-all duration-200 flex flex-col justify-between space-y-6 group h-full select-none"
+                    >
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-muted/60 border border-border/80 flex items-center justify-center text-foreground group-hover:text-primary transition-colors">
+                            <SvgStrokeReveal>
+                              <Icon size={22} strokeWidth={1.6} />
+                            </SvgStrokeReveal>
+                          </div>
+                          <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground flex items-center gap-1 group-hover:text-foreground">
+                            <span>Enter space</span>
+                            <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                          </span>
                         </div>
-                        <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground flex items-center gap-1 group-hover:text-foreground">
-                          <span>Enter space</span>
-                          <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+
+                        <div className="space-y-1.5">
+                          <div className="text-xs font-mono text-primary font-medium flex items-center gap-2">
+                            <span>{pathway.kicker}</span>
+                            {idx === 0 && (
+                              <span className="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full bg-highlight/20 text-foreground border border-highlight/40 font-semibold">
+                                <span className="w-1 h-1 rounded-full bg-highlight" />
+                                <span>Featured</span>
+                              </span>
+                            )}
+                          </div>
+                          <h3 className="font-display text-2xl sm:text-3xl font-normal text-foreground group-hover:text-primary transition-colors">
+                            {pathway.title}
+                          </h3>
+                        </div>
+
+                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                          {pathway.summary}
+                        </p>
+                      </div>
+
+                      <div className="pt-4 border-t border-border/50 text-xs font-mono text-foreground/85 font-medium flex items-center justify-between">
+                        <span className="flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-highlight shadow-[0_0_5px_hsl(var(--highlight))]" />
+                          <span>{pathway.evidence}</span>
                         </span>
+                        <span className="text-muted-foreground group-hover:text-primary transition-transform group-hover:translate-x-1 duration-150">→</span>
                       </div>
-
-                      <div className="space-y-1.5">
-                        <div className="text-xs font-mono text-primary font-medium">
-                          {pathway.kicker}
-                        </div>
-                        <h3 className="font-display text-2xl sm:text-3xl font-normal text-foreground group-hover:text-primary transition-colors">
-                          {pathway.title}
-                        </h3>
-                      </div>
-
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                        {pathway.summary}
-                      </p>
-                    </div>
-
-                    <div className="pt-4 border-t border-border/50 text-xs font-mono text-foreground/80 font-medium flex items-center justify-between">
-                      <span>{pathway.evidence}</span>
-                      <span className="text-muted-foreground group-hover:text-primary transition-colors">→</span>
-                    </div>
-                  </Link>
+                    </Link>
+                  </SpotlightCard>
                 </ScrollReveal>
               );
             })}
@@ -417,9 +460,9 @@ export function Portfolio() {
               <WindowChrome 
                 title="ExamFlowOS — Computer-Based Testing & Preparation Platform"
                 rightElement={
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="text-xs font-mono text-emerald-500 font-medium">Live</span>
+                  <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-highlight/15 border border-highlight/40">
+                    <span className="w-1.5 h-1.5 rounded-full bg-highlight shadow-[0_0_6px_hsl(var(--highlight))]" />
+                    <span className="text-[11px] font-mono text-foreground font-semibold">Live</span>
                   </div>
                 }
               />
@@ -441,9 +484,16 @@ export function Portfolio() {
                       <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-muted-foreground">
                         <span className="text-primary font-semibold uppercase tracking-wider">Flagship Software</span>
                         <span aria-hidden="true">·</span>
-                        <span className="text-foreground font-semibold">10,000+ Total Users</span>
+                        <span className="text-foreground font-semibold inline-flex items-center gap-1">
+                          <AnimatedCounter value={10000} suffix="+" />
+                          <span>Total Users</span>
+                        </span>
                         <span aria-hidden="true">·</span>
-                        <span className="text-foreground/90 font-medium">~700 Active</span>
+                        <span className="text-foreground/90 font-medium inline-flex items-center gap-1">
+                          <span>~</span>
+                          <AnimatedCounter value={700} />
+                          <span>Active</span>
+                        </span>
                         <span aria-hidden="true">·</span>
                         <span className="text-muted-foreground">Free for Students</span>
                       </div>
@@ -477,8 +527,12 @@ export function Portfolio() {
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 sm:gap-4 lg:gap-5 text-xs font-mono text-muted-foreground">
-                  <div className="p-4 sm:p-5 rounded-xl bg-background/50 border border-border/50">
-                    <span className="text-primary font-bold text-sm sm:text-base block">10K+ Users</span>
+                  <div className="p-4 sm:p-5 rounded-xl bg-background/50 border border-highlight/40 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-8 h-8 bg-highlight/10 rounded-bl-full pointer-events-none" />
+                    <span className="text-foreground font-bold text-sm sm:text-base block flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-highlight shadow-[0_0_5px_hsl(var(--highlight))]" />
+                      <span>10K+ Users</span>
+                    </span>
                     <span className="text-[11px] sm:text-xs">Registered accounts</span>
                   </div>
                   <div className="p-4 sm:p-5 rounded-xl bg-background/50 border border-border/50">
@@ -535,8 +589,9 @@ export function Portfolio() {
             <ScrollReveal distance={18} staggerIndex={1}>
               <article className="p-6 sm:p-8 lg:p-10 rounded-2xl depth-widget depth-interactive hover:border-foreground/30 space-y-6 flex flex-col justify-between h-full">
                 <div className="space-y-4">
-                  <div className="text-xs font-mono text-primary font-semibold uppercase">
-                    700+ Video Deliverables
+                  <div className="text-xs font-mono text-primary font-semibold uppercase flex items-center gap-1">
+                    <AnimatedCounter value={700} suffix="+" />
+                    <span>Video Deliverables</span>
                   </div>
                   <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-normal text-foreground">
                     Video Post-Production & Color
@@ -723,6 +778,11 @@ export function Portfolio() {
       )}
 
       {/* =========================================================================
+          4.5 CREDENTIALS & CERTIFICATIONS
+          ========================================================================= */}
+      <CredentialsSection />
+
+      {/* =========================================================================
           5. ABOUT & BACKGROUND (NO AGE / DOB)
           ========================================================================= */}
       <section id="about" className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 max-w-[1240px] 2xl:max-w-[1380px] mx-auto border-t border-border/40">
@@ -843,9 +903,16 @@ export function Portfolio() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
           
           <div className="space-y-1">
-            <p className="text-base font-semibold text-foreground">
-              Geddada Devicharan
-            </p>
+            <div className="flex items-center gap-2 justify-center md:justify-start">
+              <img 
+                src={theme === 'dark' ? '/masters/logo-dark-mode.png' : '/masters/logo-light-mode.png'} 
+                alt="Geddada Devicharan logo mark" 
+                className="w-5 h-5 object-contain"
+              />
+              <p className="text-base font-semibold text-foreground">
+                Geddada Devicharan
+              </p>
+            </div>
             <p className="text-xs sm:text-sm text-muted-foreground">
               Digital Product Builder · Video Editor · Digital Systems
             </p>

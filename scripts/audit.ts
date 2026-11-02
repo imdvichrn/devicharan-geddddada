@@ -157,7 +157,11 @@ async function runAudit() {
     'public/robots.txt',
     'public/sitemap.xml',
     'public/Geddada_Devicharan_CV.pdf',
-    'public/siri-wave.webm'
+    'public/ECHOLESS.lottie',
+    'public/certificates/COLOR20-EN-ENDUSER_CertLetter_20261022_060027.pdf',
+    'public/certificates/blackmagic-design-logo.jpeg',
+    'public/certificates/davinci-resolve-20-assessment-evidence.jpeg',
+    'public/certificates/davinci-resolve-20-certificate-preview.png'
   ];
 
   for (const asset of requiredAssets) {

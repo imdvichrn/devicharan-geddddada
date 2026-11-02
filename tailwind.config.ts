@@ -29,6 +29,10 @@ export default {
           foreground: "hsl(var(--primary-foreground))",
           glow: "hsl(var(--primary-glow))",
         },
+        highlight: {
+          DEFAULT: "hsl(var(--highlight))",
+          foreground: "hsl(var(--highlight-foreground))",
+        },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",

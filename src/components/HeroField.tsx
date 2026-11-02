@@ -1,15 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { useTheme } from '@/hooks/useTheme';
+import { PointerDepth } from '@/hooks/usePointerDepth';
 
 interface HeroFieldProps {
   className?: string;
-  pointerDepth?: {
-    pixelX: number;
-    pixelY: number;
-    x: number;
-    y: number;
-    isHovered: boolean;
-  };
+  pointerDepth?: PointerDepth;
+  pointerDepthRef?: React.RefObject<PointerDepth | null> | React.MutableRefObject<PointerDepth>;
 }
 
 /**
@@ -17,50 +13,79 @@ interface HeroFieldProps {
  * 
  * Works in tandem with the global ambient spatial field:
  * - Visually quiet, editorial astronomical coordinate presence
- * - 2–8px smooth parallax displacement reacting to cursor/pointer
+ * - 2–8px smooth parallax displacement reacting to cursor/pointer via refs
+ * - Single-initialization animation loop: never destroyed or recreated on pointer moves
+ * - Pauses rendering automatically when scrolled out of viewport or tab hidden
  * - Quiet center calm zone preserving 100% text legibility
  * - Mobile-specific density & touch damping
  * - Respects prefers-reduced-motion
  */
 export const HeroField: React.FC<HeroFieldProps> = ({ 
   className = '',
-  pointerDepth = { pixelX: 0, pixelY: 0, x: 0, y: 0, isHovered: false }
+  pointerDepth,
+  pointerDepthRef
 }) => {
   const { theme } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
+  // Synchronize incoming pointerDepth object into an internal ref for zero-rerender rendering
+  const internalDepthRef = useRef<PointerDepth>(
+    pointerDepthRef?.current || pointerDepth || { pixelX: 0, pixelY: 0, x: 0, y: 0, isHovered: false }
+  );
+
+  useEffect(() => {
+    if (pointerDepthRef?.current) {
+      internalDepthRef.current = pointerDepthRef.current;
+    } else if (pointerDepth) {
+      internalDepthRef.current = pointerDepth;
+    }
+  });
+
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
     const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
-    let animId: number;
+    let animId = 0;
     let width = 0;
     let height = 0;
     let dpr = 1;
     let isMobile = false;
+    let isVisible = true;
+    let time = 0;
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let prefersReducedMotion = mediaQuery.matches;
 
-    const resize = () => {
-      if (!canvas || !containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      width = rect.width;
-      height = rect.height;
-      isMobile = width < 768;
+    function resize() {
+      if (!canvas || !container || !ctx) return;
+      const rect = container.getBoundingClientRect();
+      const nextDpr = Math.min(window.devicePixelRatio || 1, 2);
+      const nextWidth = Math.floor(rect.width);
+      const nextHeight = Math.floor(rect.height);
 
-      canvas.width = Math.floor(width * dpr);
-      canvas.height = Math.floor(height * dpr);
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
+      if (nextWidth === 0 || nextHeight === 0) return;
 
-    resize();
-    window.addEventListener('resize', resize, { passive: true });
+      if (width !== nextWidth || height !== nextHeight || dpr !== nextDpr) {
+        width = nextWidth;
+        height = nextHeight;
+        dpr = nextDpr;
+        isMobile = width < 768;
+
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        if (prefersReducedMotion) {
+          render();
+        }
+      }
+    }
 
     // Grid coordinates & anchor geometry
     const isDark = document.documentElement.classList.contains('dark') || theme === 'dark';
@@ -75,13 +100,14 @@ export const HeroField: React.FC<HeroFieldProps> = ({
       { bx: 0.74, by: 0.48, depth: 0.7, radius: 1.4, label: '' },
     ];
 
-    let time = 0;
-
-    const render = () => {
+    function render() {
+      if (!ctx || width === 0 || height === 0) return;
       ctx.clearRect(0, 0, width, height);
 
-      const px = pointerDepth.pixelX || 0;
-      const py = pointerDepth.pixelY || 0;
+      // Direct ref lookup on every frame without triggering any React updates
+      const currentDepth = pointerDepthRef?.current || internalDepthRef.current;
+      const px = currentDepth.pixelX || 0;
+      const py = currentDepth.pixelY || 0;
 
       // Color tokens
       const strokeBase = isDark 
@@ -180,23 +206,80 @@ export const HeroField: React.FC<HeroFieldProps> = ({
       ctx.fillRect(0, 0, width, height);
       ctx.globalCompositeOperation = 'source-over';
 
-      if (!prefersReducedMotion) {
+      if (!prefersReducedMotion && isVisible && !document.hidden) {
         time += 16;
         animId = requestAnimationFrame(render);
+      } else {
+        animId = 0;
       }
-    };
-
-    if (prefersReducedMotion) {
-      render();
-    } else {
-      animId = requestAnimationFrame(render);
     }
 
-    return () => {
-      window.removeEventListener('resize', resize);
-      if (animId) cancelAnimationFrame(animId);
+    function startLoop() {
+      if (prefersReducedMotion) {
+        render();
+      } else if (!animId && isVisible && !document.hidden) {
+        animId = requestAnimationFrame(render);
+      }
+    }
+
+    function stopLoop() {
+      if (animId) {
+        cancelAnimationFrame(animId);
+        animId = 0;
+      }
+    }
+
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+
+    // Pause rendering when hero is outside the viewport
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        isVisible = entry?.isIntersecting ?? true;
+        if (isVisible) {
+          startLoop();
+        } else {
+          stopLoop();
+        }
+      },
+      { threshold: 0 }
+    );
+
+    observer.observe(container);
+
+    // Pause rendering when browser tab is hidden
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopLoop();
+      } else if (isVisible) {
+        startLoop();
+      }
     };
-  }, [theme, pointerDepth]);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // Respect user toggling prefers-reduced-motion
+    const handleMotionChange = (e: MediaQueryListEvent) => {
+      prefersReducedMotion = e.matches;
+      if (prefersReducedMotion) {
+        stopLoop();
+        render();
+      } else if (isVisible && !document.hidden) {
+        startLoop();
+      }
+    };
+    mediaQuery.addEventListener('change', handleMotionChange);
+
+    startLoop();
+
+    return () => {
+      stopLoop();
+      window.removeEventListener('resize', resize);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      mediaQuery.removeEventListener('change', handleMotionChange);
+      observer.disconnect();
+    };
+  }, [theme]); // Strictly theme only; canvas lifecycle is never destroyed on pointer coordinate changes
 
   return (
     <div 
@@ -213,3 +296,4 @@ export const HeroField: React.FC<HeroFieldProps> = ({
 };
 
 export default HeroField;
+

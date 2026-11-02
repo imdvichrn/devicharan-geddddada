@@ -230,11 +230,9 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
     };
 
     try {
-      const audio = new Audio('/siri-wave.webm');
-      audio.volume = 0.4;
-      audio.play().catch(() => playFallbackBeep());
-    } catch (err) {
       playFallbackBeep();
+    } catch (err) {
+      // no-op
     }
 
     setInput('');
@@ -628,17 +626,23 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.94 }}
       >
-        <Button
+        <button
+          type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full shadow-2xl transition-all duration-200 overflow-hidden bg-transparent hover:bg-transparent border-0 outline-none ring-0 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:outline-none flex items-center justify-center p-0 cursor-pointer depth-interactive"
-          style={{ border: 'none', outline: 'none' }}
+          className="relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-transparent hover:bg-transparent active:bg-transparent border-0 outline-none p-0 flex items-center justify-center cursor-pointer select-none transition-transform duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          style={{
+            border: 'none',
+            outline: 'none',
+            background: 'transparent',
+            boxShadow: 'none',
+          }}
           aria-label="Chat Support - Click to talk with Echoless"
         >
-          {/* Siri Orb Trigger */}
-          <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-[72px] md:h-[72px] rounded-full overflow-hidden flex items-center justify-center">
+          {/* Siri Orb Trigger - fills 92–95% of the circular button area */}
+          <div className="w-[93%] h-[93%] sm:w-[94%] sm:h-[94%] md:w-[95%] md:h-[95%] rounded-full flex items-center justify-center overflow-hidden bg-transparent">
             <SiriOrb className="w-full h-full" isOpen={isOpen} />
           </div>
-        </Button>
+        </button>
       </motion.div>
 
       {/* Echo Less Floating Panel - Semi-transparent with glassmorphism */}
@@ -668,8 +672,8 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
                     <div className="w-2.5 h-2.5 rounded-full bg-primary" />
                     <div>
                       <h3 className="font-semibold text-xs tracking-wide uppercase text-chat-text">Echoless</h3>
-                      <p className="text-[11px] text-chat-text-muted flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
+                      <p className="text-[11px] text-chat-text-muted flex items-center gap-1.5 font-mono">
+                        <span className="w-1.5 h-1.5 bg-highlight shadow-[0_0_6px_hsl(var(--highlight))] rounded-full"></span>
                         Online
                       </p>
                     </div>

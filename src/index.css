@@ -37,37 +37,41 @@ All colors MUST be HSL for proper theming.
 
 @layer base {
   :root {
-    /* Base colors - Light: clean, editorial, warm-neutral */
-    --background: 220 14% 97%;
-    --foreground: 224 24% 10%;
+    /* Base colors - Editorial Spectrum Light: Warm Paper & Editorial Ink */
+    --background: 43 24% 95%;
+    --foreground: 40 9% 9%;
 
     /* Glass panel backgrounds */
-    --glass: 220 15% 98%;
-    --glass-border: 220 12% 88%;
-    --glass-shadow: 224 20% 16%;
+    --glass: 43 20% 97%;
+    --glass-border: 43 15% 87%;
+    --glass-shadow: 40 9% 10%;
 
     /* Card and surface colors */
     --card: 0 0% 100%;
-    --card-foreground: 224 24% 12%;
+    --card-foreground: 40 9% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 224 24% 10%;
+    --popover-foreground: 40 9% 9%;
 
-    /* Primary - Apple System Blue Light (#007AFF) */
-    --primary: 211 100% 50%;
+    /* Primary - Brand Aubergine (#6E4B8B) */
+    --primary: 273 30% 42%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 211 100% 60%;
+    --primary-glow: 273 36% 54%;
 
-    /* Secondary - restrained neutral */
-    --secondary: 220 12% 93%;
-    --secondary-foreground: 224 20% 22%;
+    /* Highlight Accent - Electric Lime (#D6F36A) */
+    --highlight: 73 84% 69%;
+    --highlight-foreground: 40 9% 9%;
 
-    /* Muted backgrounds */
-    --muted: 220 12% 95%;
-    --muted-foreground: 220 8% 42%;
+    /* Secondary - restrained soft stone warm neutral */
+    --secondary: 43 14% 91%;
+    --secondary-foreground: 40 9% 18%;
 
-    /* Accent - Apple System Blue */
-    --accent: 211 100% 50%;
+    /* Muted backgrounds & Warm Graphite text (#68665F) */
+    --muted: 43 16% 92%;
+    --muted-foreground: 44 5% 39%;
+
+    /* Accent - Aubergine with soft tint */
+    --accent: 273 30% 42%;
     --accent-foreground: 0 0% 100%;
 
     /* Status colors */
@@ -78,10 +82,10 @@ All colors MUST be HSL for proper theming.
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
 
-    /* Interactive elements */
-    --border: 220 13% 89%;
-    --input: 220 12% 92%;
-    --ring: 211 100% 50%;
+    /* Interactive elements - Soft Stone (#E3E0D8) */
+    --border: 43 15% 87%;
+    --input: 43 15% 88%;
+    --ring: 273 30% 42%;
 
     /* Window chrome colors */
     --window-red: 0 85% 60%;
@@ -95,7 +99,9 @@ All colors MUST be HSL for proper theming.
        ========================================================================= */
     --content-max: 1200px;
     --reading-max: 720px;
-    --page-padding: clamp(20px, 4vw, 64px);
+    --page-padding: clamp(14px, 4vw, 64px);
+
+
 
     /* =========================================================================
        SEMANTIC SPACING RHYTHM
@@ -207,76 +213,80 @@ All colors MUST be HSL for proper theming.
   }
 
   .dark {
-    /* Base colors - Dark: cinematic, rich charcoal, warm neutral depth */
-    --background: 224 24% 7%;
-    --foreground: 220 15% 96%;
+    /* Base colors - Editorial Spectrum Dark: #151419 base, #211F25 surfaces, #F4F0E8 text */
+    --background: 252 11% 9%;
+    --foreground: 40 33% 93%;
 
     /* Glass panel backgrounds */
-    --glass: 224 22% 10%;
-    --glass-border: 224 18% 18%;
-    --glass-shadow: 224 35% 3%;
+    --glass: 260 9% 14%;
+    --glass-border: 264 9% 23%;
+    --glass-shadow: 252 15% 4%;
 
     /* Card and surface colors */
-    --card: 224 22% 9%;
-    --card-foreground: 220 15% 94%;
+    --card: 260 9% 14%;
+    --card-foreground: 40 33% 94%;
 
-    --popover: 224 22% 9%;
-    --popover-foreground: 220 15% 96%;
+    --popover: 260 9% 14%;
+    --popover-foreground: 40 33% 93%;
 
-    /* Primary - Apple System Blue Dark (#0A84FF) */
-    --primary: 210 100% 52%;
-    --primary-foreground: 0 0% 100%;
-    --primary-glow: 210 100% 64%;
+    /* Primary - Editorial Aubergine Luminous (#B59AD4) */
+    --primary: 268 42% 72%;
+    --primary-foreground: 252 11% 9%;
+    --primary-glow: 268 50% 82%;
 
-    /* Secondary */
-    --secondary: 224 18% 15%;
-    --secondary-foreground: 220 12% 88%;
+    /* Highlight Accent - Electric Lime (#D6F36A) */
+    --highlight: 73 84% 69%;
+    --highlight-foreground: 40 9% 9%;
 
-    /* Muted backgrounds */
-    --muted: 224 18% 12%;
-    --muted-foreground: 220 10% 65%;
+    /* Secondary - subtle dark charcoal surface */
+    --secondary: 260 9% 17%;
+    --secondary-foreground: 274 9% 82%;
 
-    /* Accent - Apple System Blue */
-    --accent: 210 100% 52%;
-    --accent-foreground: 0 0% 100%;
+    /* Muted backgrounds & Warm graphite dark text (#B8B1BE) */
+    --muted: 260 9% 12%;
+    --muted-foreground: 274 9% 72%;
+
+    /* Accent - Aubergine */
+    --accent: 268 42% 72%;
+    --accent-foreground: 252 11% 9%;
 
     /* Status colors */
     --destructive: 0 72% 60%;
-    --destructive-foreground: 224 25% 6%;
+    --destructive-foreground: 252 11% 9%;
     --success: 142 70% 45%;
-    --success-foreground: 224 25% 6%;
+    --success-foreground: 252 11% 9%;
     --warning: 38 92% 56%;
-    --warning-foreground: 224 25% 6%;
+    --warning-foreground: 252 11% 9%;
 
-    /* Interactive elements */
-    --border: 224 16% 18%;
-    --input: 224 18% 14%;
-    --ring: 210 100% 52%;
+    /* Interactive elements - Soft borders (#38343E) */
+    --border: 264 9% 23%;
+    --input: 264 9% 20%;
+    --ring: 268 42% 72%;
 
     /* Signature Background System (BackgroundLoop) */
-    --bg-tone: 224 24% 7%;
-    --bg-accent-intensity: 0.14;
-    --bg-line-opacity: 0.07;
-    --bg-particle-opacity: 0.22;
-    --bg-glow-intensity: 0.14;
+    --bg-tone: 252 11% 9%;
+    --bg-accent-intensity: 0.12;
+    --bg-line-opacity: 0.06;
+    --bg-particle-opacity: 0.18;
+    --bg-glow-intensity: 0.12;
     --bg-anim-speed: 1.0;
 
-    /* Hero */
-    --hero-bg: 224 30% 6%;
-    --hero-bg-mid: 224 25% 10%;
-    --hero-text: 220 15% 96%;
-    --hero-text-muted: 220 15% 75%;
-    --hero-accent: 210 100% 52%;
-    --hero-accent-muted: 210 60% 45%;
+    /* Hero - Aubergine & Deep Charcoal depth */
+    --hero-bg: 252 11% 7%;
+    --hero-bg-mid: 260 9% 12%;
+    --hero-text: 40 33% 93%;
+    --hero-text-muted: 274 9% 72%;
+    --hero-accent: 268 42% 72%;
+    --hero-accent-muted: 273 30% 45%;
 
     /* Chatbot panel */
-    --chat-bg: 225 30% 7%;
-    --chat-border: 220 30% 20%;
-    --chat-text: 225 10% 92%;
-    --chat-text-muted: 220 15% 60%;
-    --chat-bubble-user: 210 100% 52%;
-    --chat-bubble-bot: 225 25% 14%;
-    --chat-input-bg: 225 25% 11%;
+    --chat-bg: 260 9% 11%;
+    --chat-border: 264 9% 23%;
+    --chat-text: 40 33% 93%;
+    --chat-text-muted: 274 9% 72%;
+    --chat-bubble-user: 268 42% 72%;
+    --chat-bubble-bot: 260 9% 16%;
+    --chat-input-bg: 260 9% 13%;
 
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
@@ -369,7 +379,8 @@ html.theme-transitioning *::after {
 }
 
 .depth-interactive:active {
-  transform: translateY(1px);
+  transform: scale(0.985) translateY(0.5px);
+  transition-duration: 80ms;
   box-shadow: 
     0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
@@ -377,10 +388,11 @@ html.theme-transitioning *::after {
 /* Mobile-adapted tactile press */
 @media (max-width: 640px) {
   .depth-interactive:hover {
-    transform: translateY(-0.75px);
+    transform: translateY(-0.5px);
   }
   .depth-interactive:active {
-    transform: translateY(0.75px);
+    transform: scale(0.98) translateY(0.5px);
+    transition-duration: 60ms;
   }
 }
 
@@ -434,16 +446,21 @@ html.theme-transitioning *::after {
 @layer base {
   * {
     @apply border-border;
+    box-sizing: border-box;
   }
   
   html {
     scroll-behavior: smooth !important;
+    overflow-x: clip;
   }
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
     transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
-    overscroll-behavior: none;
+    min-height: 100%;
+    min-width: 320px;
+    overflow-x: clip;
+    overflow-wrap: break-word;
   }
 
   /* =========================================================================
@@ -982,5 +999,47 @@ html.theme-transitioning *::after {
   .text-fluid-sm {
     font-size: var(--font-fluid-sm);
     line-height: 1.5;
+  }
+}
+
+/* =========================================================================
+   ACCESSIBILITY & FOCUS DISCIPLINE (WCAG 2.2 AA)
+   Unambiguous, visible focus rings with non-clipping outline offsets
+   ========================================================================= */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid hsl(var(--primary)) !important;
+  outline-offset: 2px !important;
+}
+
+/* =========================================================================
+   COMPREHENSIVE PREFERS-REDUCED-MOTION OVERRIDES (Rule 10 & Rule 18)
+   Guarantees vestibular comfort without disabling content or feedback
+   ========================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-gradient-shift,
+  .animate-spin,
+  .animate-pulse,
+  .animate-bounce {
+    animation: none !important;
+  }
+
+  /* Keep essential opacity feedback while eliminating spatial jumps and blurs */
+  [data-reduced-motion-fallback] {
+    transform: none !important;
+    filter: none !important;
   }
 }

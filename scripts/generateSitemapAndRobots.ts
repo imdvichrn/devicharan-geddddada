@@ -8,10 +8,11 @@ function generateSitemap() {
 
   const urlsXml = canonicalRoutes
     .map(route => {
+      const lastMod = route.lastModified || today;
       const priority = route.path === '/' ? '1.0' : route.path.startsWith('/works/') ? '0.9' : '0.8';
       return `  <url>
     <loc>${route.canonicalUrl}</loc>
-    <lastmod>${today}</lastmod>
+    <lastmod>${lastMod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>${priority}</priority>
   </url>`;
