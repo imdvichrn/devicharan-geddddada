@@ -241,7 +241,7 @@ export function ContactForm({ showChrome = true, className = '', title = 'Get In
               placeholder="Your name"
               value={formData.name}
               onChange={handleInputChange}
-              className={`h-11 sm:h-12 px-3.5 sm:px-4 text-xs sm:text-sm md:text-base rounded-xl bg-background/60 border-border/80 focus:border-primary focus:ring-1 focus:ring-primary/40 transition-all ${errors.name ? 'border-destructive' : ''}`}
+              className={`h-11 sm:h-12 px-3.5 sm:px-4 text-base sm:text-sm rounded-xl bg-background/60 border-border/80 focus:border-primary focus:ring-1 focus:ring-primary/40 transition-colors ${errors.name ? 'border-destructive' : ''}`}
               required
               disabled={isSubmitting}
             />
@@ -261,7 +261,7 @@ export function ContactForm({ showChrome = true, className = '', title = 'Get In
               placeholder="name@example.com"
               value={formData.email}
               onChange={handleInputChange}
-              className={`h-11 sm:h-12 px-3.5 sm:px-4 text-xs sm:text-sm md:text-base rounded-xl bg-background/60 border-border/80 focus:border-primary focus:ring-1 focus:ring-primary/40 transition-all ${errors.email ? 'border-destructive' : ''}`}
+              className={`h-11 sm:h-12 px-3.5 sm:px-4 text-base sm:text-sm rounded-xl bg-background/60 border-border/80 focus:border-primary focus:ring-1 focus:ring-primary/40 transition-colors ${errors.email ? 'border-destructive' : ''}`}
               required
               disabled={isSubmitting}
             />
@@ -281,7 +281,7 @@ export function ContactForm({ showChrome = true, className = '', title = 'Get In
             placeholder="Project inquiry, video post-production, or consultation"
             value={formData.subject}
             onChange={handleInputChange}
-            className={`h-11 sm:h-12 px-3.5 sm:px-4 text-xs sm:text-sm md:text-base rounded-xl bg-background/60 border-border/80 focus:border-primary focus:ring-1 focus:ring-primary/40 transition-all ${errors.subject ? 'border-destructive' : ''}`}
+            className={`h-11 sm:h-12 px-3.5 sm:px-4 text-base sm:text-sm rounded-xl bg-background/60 border-border/80 focus:border-primary focus:ring-1 focus:ring-primary/40 transition-colors ${errors.subject ? 'border-destructive' : ''}`}
             required
             disabled={isSubmitting}
           />
@@ -301,7 +301,7 @@ export function ContactForm({ showChrome = true, className = '', title = 'Get In
             value={formData.message}
             onChange={handleInputChange}
             rows={5}
-            className={`min-h-[130px] sm:min-h-[150px] md:min-h-[170px] p-3.5 sm:p-4 text-xs sm:text-sm md:text-base rounded-xl bg-background/60 border-border/80 focus:border-primary focus:ring-1 focus:ring-primary/40 resize-y leading-relaxed transition-all ${errors.message ? 'border-destructive' : ''}`}
+            className={`min-h-[130px] sm:min-h-[150px] md:min-h-[170px] p-3.5 sm:p-4 text-base sm:text-sm rounded-xl bg-background/60 border-border/80 focus:border-primary focus:ring-1 focus:ring-primary/40 resize-y leading-relaxed transition-colors ${errors.message ? 'border-destructive' : ''}`}
             required
             disabled={isSubmitting}
           />

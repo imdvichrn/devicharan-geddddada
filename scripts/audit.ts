@@ -88,10 +88,14 @@ async function runAudit() {
   }
 
   // Check WebSite schema
-  if (!indexHtml.includes('"name": "Geddada Devicharan"') || !indexHtml.includes('"alternateName": "Geddada Devicharan Portfolio"')) {
-    errors.push('index.html WebSite JSON-LD missing exact name or alternateName');
+  if (
+    !indexHtml.includes('"name": "Geddada Devicharan"') || 
+    !indexHtml.includes('"Devicharan"') || 
+    !indexHtml.includes('"imdvichrn"')
+  ) {
+    errors.push('index.html WebSite JSON-LD missing exact name or alternateName array');
   } else {
-    console.log('  ✓ WebSite JSON-LD verified (name: "Geddada Devicharan", alternateName: "Geddada Devicharan Portfolio")');
+    console.log('  ✓ WebSite JSON-LD verified (name: "Geddada Devicharan", alternateName: ["Devicharan", "imdvichrn"])');
   }
 
   // Check Person schema
@@ -150,6 +154,8 @@ async function runAudit() {
     'public/og/og-perfectpack.png',
     'public/og/og-echoless.png',
     'public/favicon.ico',
+    'public/favicon-96x96.png',
+    'public/favicon-48x48.png',
     'public/favicon_io/favicon.ico',
     'public/favicon_io/favicon-16x16.png',
     'public/favicon_io/favicon-32x32.png',

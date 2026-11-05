@@ -177,16 +177,7 @@ export function Portfolio() {
           { name: 'Experiments & Lab', url: 'https://geddadadevicharan.vercel.app/experiments' },
           { name: 'Contact', url: 'https://geddadadevicharan.vercel.app/contact' }
         ]}
-        structuredData={[
-          generatePersonSchema(),
-          {
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": "Geddada Devicharan",
-            "alternateName": "Geddada Devicharan Portfolio",
-            "url": "https://geddadadevicharan.vercel.app/"
-          }
-        ]}
+        structuredData={generatePersonSchema()}
       />
 
       <HiddenIdentityBlock />
@@ -904,11 +895,22 @@ export function Portfolio() {
           
           <div className="space-y-1">
             <div className="flex items-center gap-2 justify-center md:justify-start">
-              <img 
-                src={theme === 'dark' ? '/masters/logo-dark-mode.png' : '/masters/logo-light-mode.png'} 
-                alt="Geddada Devicharan logo mark" 
-                className="w-5 h-5 object-contain"
-              />
+              <div className="relative w-5 h-5 shrink-0">
+                <img 
+                  src="/masters/logo-dark-mode.png" 
+                  alt="Geddada Devicharan logo mark" 
+                  width="20"
+                  height="20"
+                  className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-150 ${theme === 'dark' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                />
+                <img 
+                  src="/masters/logo-light-mode.png" 
+                  alt="Geddada Devicharan logo mark" 
+                  width="20"
+                  height="20"
+                  className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-150 ${theme === 'light' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                />
+              </div>
               <p className="text-base font-semibold text-foreground">
                 Geddada Devicharan
               </p>

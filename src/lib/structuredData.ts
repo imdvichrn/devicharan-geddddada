@@ -31,12 +31,16 @@ export const generatePersonSchema = () => ({
 export const generateWebsiteSchema = () => ({
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": "https://geddadadevicharan.vercel.app/#website",
   "name": "Geddada Devicharan",
   "alternateName": [
     "Devicharan",
-    "Geddada Devicharan Portfolio"
+    "imdvichrn"
   ],
-  "url": "https://geddadadevicharan.vercel.app/"
+  "url": "https://geddadadevicharan.vercel.app/",
+  "publisher": {
+    "@id": "https://geddadadevicharan.vercel.app/#person"
+  }
 });
 
 export const generateOrganizationSchema = () => ({

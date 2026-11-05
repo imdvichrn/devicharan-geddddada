@@ -1,9 +1,17 @@
 import express, { Request, Response } from 'express';
+import http from 'http';
+import { WebSocketServer, WebSocket } from 'ws';
 import { createServer as createViteServer } from 'vite';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
+import { Modality, LiveServerMessage } from '@google/genai';
 import { defaultEngine } from './src/echoless/engine';
+import {
+  getSharedGeminiClient,
+  formatGeminiHistory,
+  ECHOLESS_SYSTEM_INSTRUCTION,
+} from './src/server/gemini';
 
 dotenv.config();
 
@@ -27,7 +35,7 @@ interface ContactMessage {
 }
 const contactSubmissions: ContactMessage[] = [];
 
-// Common chat handler for /api/chat and legacy alias
+// Common chat handler for /api/chat with Server-Side Gemini streaming + deterministic fallback
 async function handleChatRequest(req: Request, res: Response) {
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
@@ -37,26 +45,79 @@ async function handleChatRequest(req: Request, res: Response) {
   const { messages, taskType, modelPreference } = req.body;
 
   if (!Array.isArray(messages) || messages.length === 0) {
-    const greeting = "Hey. I'm Echoless, Devicharan's personal AI assistant. What would you like to explore across his software products, video post-production, or digital systems?";
+    const greeting =
+      "Hey there. I'm Echoless — Devicharan's digital companion and creative co-pilot. I know his work, his design thinking, and his craft inside out (and I'm rather proud of it). What brings you by today?";
     res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: greeting } }] })}\n\n`);
     res.write('data: [DONE]\n\n');
     res.end();
     return;
   }
 
+  const lastUser = messages.filter((m: any) => m.role === 'user').pop();
+  const query = lastUser?.content || '';
+
+  // 1. Try server-side Gemini Developer API streaming
+  const ai = getSharedGeminiClient();
+  if (ai && query.trim()) {
+    try {
+      const modelName =
+        process.env.VITE_GEMINI_MODEL ||
+        process.env.GEMINI_MODEL ||
+        'gemini-3.5-flash-lite';
+      const history = formatGeminiHistory(messages.slice(0, -1));
+
+      const chat = ai.chats.create({
+        model: modelName,
+        history,
+        config: {
+          systemInstruction: ECHOLESS_SYSTEM_INSTRUCTION,
+          temperature: 0.7,
+          maxOutputTokens: 1024,
+        },
+      });
+
+      const streamResult = await chat.sendMessageStream({ message: query });
+      let streamedAny = false;
+
+      for await (const chunk of streamResult) {
+        const text = chunk.text;
+        if (text) {
+          streamedAny = true;
+          res.write(
+            `data: ${JSON.stringify({ choices: [{ delta: { content: text } }] })}\n\n`
+          );
+        }
+      }
+
+      if (streamedAny) {
+        res.write('data: [DONE]\n\n');
+        res.end();
+        return;
+      }
+    } catch (geminiError: any) {
+      console.warn(
+        'Server-side Gemini streaming notice, falling back to local Echoless engine:',
+        geminiError?.message || geminiError
+      );
+    }
+  }
+
+  // 2. Deterministic local Echoless engine fallback
   try {
     await defaultEngine.streamConversation(
       messages,
       {
         onChunk: async (chunk: string) => {
-          res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: chunk } }] })}\n\n`);
+          res.write(
+            `data: ${JSON.stringify({ choices: [{ delta: { content: chunk } }] })}\n\n`
+          );
         },
         onDone: async () => {
           res.write('data: [DONE]\n\n');
           res.end();
         },
         onError: async (err: any) => {
-          console.warn('Stream error in chat handler:', err);
+          console.warn('Local fallback error in chat handler:', err);
         },
       },
       {
@@ -68,12 +129,50 @@ async function handleChatRequest(req: Request, res: Response) {
     console.error('Echoless engine chat exception:', error);
     if (!res.writableEnded) {
       const fallback = defaultEngine.getHonestUnavailableResponse();
-      res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: fallback } }] })}\n\n`);
+      res.write(
+        `data: ${JSON.stringify({ choices: [{ delta: { content: fallback } }] })}\n\n`
+      );
       res.write('data: [DONE]\n\n');
       res.end();
     }
   }
 }
+
+// Server-side non-streaming Gemini content generation endpoint
+app.post('/api/gemini/generate', async (req: Request, res: Response) => {
+  const { prompt, contents, model: requestedModel } = req.body;
+  if (!prompt && !contents) {
+    res.status(400).json({ error: 'Prompt or contents is required' });
+    return;
+  }
+
+  const ai = getSharedGeminiClient();
+  if (!ai) {
+    res.status(503).json({ error: 'Server-side Gemini client not configured' });
+    return;
+  }
+
+  try {
+    const model =
+      requestedModel ||
+      process.env.VITE_GEMINI_MODEL ||
+      process.env.GEMINI_MODEL ||
+      'gemini-3.5-flash-lite';
+
+    const response = await ai.models.generateContent({
+      model,
+      contents: contents || prompt,
+      config: {
+        systemInstruction: ECHOLESS_SYSTEM_INSTRUCTION,
+      },
+    });
+
+    res.json({ text: response.text });
+  } catch (error: any) {
+    console.error('Server generateContent error:', error);
+    res.status(500).json({ error: error.message || 'Failed to generate content' });
+  }
+});
 
 // Routes
 app.get('/sitemap.xml', (_req: Request, res: Response) => {
@@ -151,7 +250,9 @@ app.post(['/api/contact', '/api/send-message'], (req: Request, res: Response) =>
   };
 
   contactSubmissions.push(newSubmission);
-  console.log(`[Contact Submission] Received from ${newSubmission.name} <${newSubmission.email}> - "${newSubmission.subject}"`);
+  console.log(
+    `[Contact Submission] Received from ${newSubmission.name} <${newSubmission.email}> - "${newSubmission.subject}"`
+  );
 
   res.json({
     success: true,
@@ -165,7 +266,7 @@ app.get('/api/health', (_req: Request, res: Response) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Setup Vite or static serving
+// Setup Vite or static serving & WebSocket Live API server
 async function startServer() {
   const isProduction = process.env.NODE_ENV === 'production';
 
@@ -182,8 +283,86 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running at http://0.0.0.0:${PORT}`);
+  const server = http.createServer(app);
+
+  // Setup WebSocket Server for Gemini Live API audio streaming
+  const wss = new WebSocketServer({ noServer: true });
+
+  server.on('upgrade', (request, socket, head) => {
+    const url = new URL(request.url || '', `http://${request.headers.host || 'localhost'}`);
+    if (url.pathname === '/api/live' || url.pathname === '/live') {
+      wss.handleUpgrade(request, socket, head, (ws) => {
+        wss.emit('connection', ws, request);
+      });
+    }
+  });
+
+  wss.on('connection', async (clientWs: WebSocket) => {
+    const ai = getSharedGeminiClient();
+    if (!ai) {
+      clientWs.send(JSON.stringify({ error: 'GEMINI_API_KEY not configured on server' }));
+      clientWs.close();
+      return;
+    }
+
+    try {
+      const session = await ai.live.connect({
+        model: 'gemini-3.8-live',
+        config: {
+          responseModalities: [Modality.AUDIO],
+          speechConfig: {
+            voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Zephyr' } },
+          },
+          systemInstruction: ECHOLESS_SYSTEM_INSTRUCTION,
+        },
+        callbacks: {
+          onmessage: (message: LiveServerMessage) => {
+            for (const part of message.serverContent?.modelTurn?.parts ?? []) {
+              if (part.inlineData?.data && clientWs.readyState === WebSocket.OPEN) {
+                clientWs.send(JSON.stringify({ audio: part.inlineData.data }));
+              }
+            }
+            if (message.serverContent?.interrupted && clientWs.readyState === WebSocket.OPEN) {
+              clientWs.send(JSON.stringify({ interrupted: true }));
+            }
+          },
+          onclose: () => {
+            if (clientWs.readyState === WebSocket.OPEN) {
+              clientWs.close();
+            }
+          },
+        },
+      });
+
+      clientWs.on('message', (data: any) => {
+        try {
+          const parsed = JSON.parse(data.toString());
+          if (parsed.audio) {
+            session.sendRealtimeInput({
+              audio: { data: parsed.audio, mimeType: 'audio/pcm;rate=16000' },
+            });
+          }
+        } catch (e) {
+          console.warn('Error handling client Live message:', e);
+        }
+      });
+
+      clientWs.on('close', () => {
+        try {
+          session.close();
+        } catch {}
+      });
+    } catch (err: any) {
+      console.error('Error starting Gemini Live session on server:', err);
+      if (clientWs.readyState === WebSocket.OPEN) {
+        clientWs.send(JSON.stringify({ error: err.message || 'Failed to connect Live API' }));
+        clientWs.close();
+      }
+    }
+  });
+
+  server.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running at http://0.0.0.0:${PORT} (Gemini Chat & Live API enabled)`);
   });
 }
 

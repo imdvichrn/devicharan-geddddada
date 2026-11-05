@@ -73,7 +73,7 @@ export const HeroField: React.FC<HeroFieldProps> = ({
         width = nextWidth;
         height = nextHeight;
         dpr = nextDpr;
-        isMobile = width < 768;
+        isMobile = width < 768 || (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches);
 
         canvas.width = Math.floor(width * dpr);
         canvas.height = Math.floor(height * dpr);
@@ -81,8 +81,11 @@ export const HeroField: React.FC<HeroFieldProps> = ({
         canvas.style.height = `${height}px`;
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-        if (prefersReducedMotion) {
+        if (prefersReducedMotion || isMobile) {
+          stopLoop();
           render();
+        } else if (isVisible && !document.hidden) {
+          startLoop();
         }
       }
     }
@@ -215,7 +218,7 @@ export const HeroField: React.FC<HeroFieldProps> = ({
     }
 
     function startLoop() {
-      if (prefersReducedMotion) {
+      if (prefersReducedMotion || isMobile) {
         render();
       } else if (!animId && isVisible && !document.hidden) {
         animId = requestAnimationFrame(render);

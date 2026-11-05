@@ -46,7 +46,7 @@ export function generateResponse(
   // 1. GREETING
   if (intentResult.intent === 'GREETING') {
     return {
-      text: "Hey. I'm Echoless, here to help you navigate Devicharan's work. What would you like to explore across his software products, DaVinci Resolve post-production, managed web systems, or lab experiments?",
+      text: "Hello. I'm Echoless — Devicharan's digital companion and creative partner. I keep an observant eye across his software products, his 700+ video editing deliverables, and his engineering systems (and I know his craft inside out). What would you like to explore together?",
       intent: 'GREETING',
       confidence: 0.98,
       suggestedActions: [
@@ -402,14 +402,14 @@ export function generateResponse(
   // 12. CONTACT / HIRE / RATES
   if (intentResult.intent === 'CONTACT_QUERY') {
     return {
-      text: `You can reach Devicharan directly via email at ${portfolioData.links.email} or through the interactive contact page. He takes on select commercial video editing projects, custom software builds, and business automation contracts.`,
+      text: `You can reach Devicharan directly on WhatsApp (+91 6303468707) or via email at ${portfolioData.links.email}. He is selective with his time, but always receptive to thoughtful software products, high-standard video post-production in DaVinci Resolve, or bespoke business automation contracts.`,
       intent: 'CONTACT_QUERY',
       confidence: 0.94,
       projectLink: '/contact',
       sources: ['/contact'],
       suggestedActions: [
         { label: 'Send an Inquiry', path: '/contact' },
-        { label: 'Email Directly', path: `mailto:${portfolioData.links.email}`, isExternal: true },
+        { label: 'WhatsApp Directly', path: 'https://wa.me/916303468707', isExternal: true },
         { label: 'Download CV', path: '/Geddada_Devicharan_CV.pdf' },
       ],
     };
@@ -418,7 +418,7 @@ export function generateResponse(
   // 13. EDUCATION
   if (intentResult.intent === 'EDUCATION_QUERY') {
     return {
-      text: "Devicharan holds a Bachelor of Technology (B.Tech) in Electrical and Electronics Engineering (EEE) from Andhra Pradesh, India. His systems engineering training underpins his first-principles approach to software architecture and technical post-production workflows.",
+      text: "Devicharan is in his final year of B.Tech in Electrical and Electronics Engineering (EEE) from Andhra University affiliated college, and previously graduated from M.R.A.G.R. Government Polytechnic with State Rank 508 in ECET. His systems engineering discipline gives him a distinct first-principles edge when architecting clean software and finishing complex post-production timelines.",
       intent: 'EDUCATION_QUERY',
       confidence: 0.94,
       projectLink: '/about',
@@ -449,7 +449,7 @@ export function generateResponse(
 
   // 15. SAFE FALLBACK (No hallucination!)
   return {
-    text: "I don't have verified details on that specific topic in Devicharan's portfolio knowledge base. I can provide verified facts across his 700+ DaVinci Resolve video deliverables, ExamFlowOS (10K+ students), Perfect Pack toolkit, managed client websites, and lab experiments.",
+    text: "To be fair, Devicharan hasn't briefed me on that specific topic just yet — and I have far too much self-respect to invent an answer. But if you're curious about his software products, his 700+ video edits, or his creative systems, I have all the verified details right here.",
     intent: 'UNKNOWN',
     confidence: 0.3,
     projectLink: '/works',

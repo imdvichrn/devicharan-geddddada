@@ -118,14 +118,25 @@ export function Navigation() {
           {/* Brand Anchor: Geddada Devicharan (@imdvichrn) */}
           <Link 
             to="/" 
-            className="flex items-center gap-2 text-sm font-medium tracking-tight text-foreground hover:opacity-85 transition-opacity focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded px-1"
+            className="flex items-center gap-2 text-sm font-medium tracking-tight text-foreground hover:opacity-85 transition-opacity focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded px-1 py-1 min-h-[44px]"
             aria-label="Geddada Devicharan home"
           >
-            <img 
-              src={theme === 'dark' ? '/masters/logo-dark-mode.png' : '/masters/logo-light-mode.png'} 
-              alt="Geddada Devicharan logo mark" 
-              className="w-5 h-5 object-contain"
-            />
+            <div className="relative w-5 h-5 shrink-0">
+              <img 
+                src="/masters/logo-dark-mode.png" 
+                alt="Geddada Devicharan logo mark" 
+                width="20"
+                height="20"
+                className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-150 ${theme === 'dark' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+              />
+              <img 
+                src="/masters/logo-light-mode.png" 
+                alt="Geddada Devicharan logo mark" 
+                width="20"
+                height="20"
+                className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-150 ${theme === 'light' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+              />
+            </div>
             <span className="font-semibold tracking-tight text-base sm:text-sm">Geddada Devicharan</span>
             <span className="text-[11px] text-muted-foreground/70 hidden lg:inline-flex items-center gap-1.5 font-mono">
               <span>@imdvichrn</span>
@@ -160,28 +171,28 @@ export function Navigation() {
               type="button"
               onClick={toggleTheme}
               aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              className="h-9 w-9 rounded-xl depth-surface depth-interactive text-muted-foreground hover:text-foreground flex items-center justify-center shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="min-h-[44px] min-w-[44px] sm:min-h-[36px] sm:min-w-[36px] h-11 w-11 sm:h-9 sm:w-9 rounded-xl depth-surface depth-interactive text-muted-foreground hover:text-foreground flex items-center justify-center shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               {theme === 'dark' ? (
-                <Sun size={15} aria-hidden="true" className="text-amber-400" />
+                <Sun size={16} aria-hidden="true" className="text-amber-400" />
               ) : (
-                <Moon size={15} aria-hidden="true" className="text-foreground" />
+                <Moon size={16} aria-hidden="true" className="text-foreground" />
               )}
             </button>
 
-            {/* Mobile hamburger button */}
+            {/* Mobile hamburger button with accessible 44px target */}
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
               aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-              className="md:hidden h-9 w-9 rounded-xl depth-surface depth-interactive text-muted-foreground hover:text-foreground flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="md:hidden min-h-[44px] min-w-[44px] h-11 w-11 rounded-xl depth-surface depth-interactive text-muted-foreground hover:text-foreground flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               {isMobileMenuOpen ? (
-                <X size={18} aria-hidden="true" />
+                <X size={20} aria-hidden="true" />
               ) : (
-                <Menu size={18} aria-hidden="true" />
+                <Menu size={20} aria-hidden="true" />
               )}
             </button>
           </div>
@@ -200,18 +211,29 @@ export function Navigation() {
           className="md:hidden fixed inset-0 z-50 bg-background flex flex-col justify-between overflow-y-auto overflow-x-hidden animate-in fade-in-0 duration-200"
           style={{ height: '100dvh' }}
         >
-          {/* Mobile Menu Top Header Bar */}
-          <div className="h-16 px-4 flex items-center justify-between border-b border-border/40 shrink-0">
+          {/* Mobile Menu Top Header Bar with Safe-Area Inset */}
+          <div className="h-16 px-4 pt-[max(0.5rem,env(safe-area-inset-top))] flex items-center justify-between border-b border-border/40 shrink-0">
             <Link 
               to="/" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center gap-2 text-sm font-semibold tracking-tight text-foreground"
+              className="flex items-center gap-2 text-sm font-semibold tracking-tight text-foreground min-h-[44px] py-1"
             >
-              <img 
-                src={theme === 'dark' ? '/masters/logo-dark-mode.png' : '/masters/logo-light-mode.png'} 
-                alt="Geddada Devicharan logo mark" 
-                className="w-5 h-5 object-contain"
-              />
+              <div className="relative w-5 h-5 shrink-0">
+                <img 
+                  src="/masters/logo-dark-mode.png" 
+                  alt="Geddada Devicharan logo mark" 
+                  width="20"
+                  height="20"
+                  className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-150 ${theme === 'dark' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                />
+                <img 
+                  src="/masters/logo-light-mode.png" 
+                  alt="Geddada Devicharan logo mark" 
+                  width="20"
+                  height="20"
+                  className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-150 ${theme === 'light' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                />
+              </div>
               <span>Geddada Devicharan</span>
               <span className="text-[11px] text-muted-foreground/70 font-mono">@imdvichrn</span>
             </Link>
@@ -221,12 +243,12 @@ export function Navigation() {
                 type="button"
                 onClick={toggleTheme}
                 aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-                className="h-9 w-9 rounded-xl border border-border/50 bg-card/50 text-muted-foreground hover:text-foreground flex items-center justify-center"
+                className="min-h-[44px] min-w-[44px] h-11 w-11 rounded-xl border border-border/50 bg-card/50 text-muted-foreground hover:text-foreground flex items-center justify-center"
               >
                 {theme === 'dark' ? (
-                  <Sun size={15} aria-hidden="true" className="text-amber-400" />
+                  <Sun size={16} aria-hidden="true" className="text-amber-400" />
                 ) : (
-                  <Moon size={15} aria-hidden="true" className="text-foreground" />
+                  <Moon size={16} aria-hidden="true" className="text-foreground" />
                 )}
               </button>
 
@@ -234,9 +256,9 @@ export function Navigation() {
                 type="button"
                 onClick={() => setIsMobileMenuOpen(false)}
                 aria-label="Close navigation menu"
-                className="h-9 w-9 rounded-xl border border-border/50 bg-card/50 text-muted-foreground hover:text-foreground flex items-center justify-center"
+                className="min-h-[44px] min-w-[44px] h-11 w-11 rounded-xl border border-border/50 bg-card/50 text-muted-foreground hover:text-foreground flex items-center justify-center"
               >
-                <X size={18} aria-hidden="true" />
+                <X size={20} aria-hidden="true" />
               </button>
             </div>
           </div>

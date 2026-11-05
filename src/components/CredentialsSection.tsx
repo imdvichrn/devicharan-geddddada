@@ -130,7 +130,7 @@ export function CredentialsSection() {
                           <KeyRound size={12} className="text-primary" />
                           <span>Credential ID</span>
                         </span>
-                        <span className="text-foreground font-medium selection:bg-primary/20">{cred.credentialId}</span>
+                        <span className="text-foreground font-medium selection:bg-primary/20 break-all sm:break-normal">{cred.credentialId}</span>
                       </div>
 
                       <div className="space-y-1 col-span-2 sm:col-span-1">
@@ -322,10 +322,10 @@ export function CredentialsSection() {
                     type="button"
                     onClick={() => setZoomScale((prev) => Math.max(0.75, prev - 0.25))}
                     disabled={zoomScale <= 0.75}
-                    className="p-1.5 rounded hover:bg-background disabled:opacity-40 text-muted-foreground hover:text-foreground transition-colors"
+                    className="h-9 w-9 sm:h-7 sm:w-7 flex items-center justify-center rounded hover:bg-background disabled:opacity-40 text-muted-foreground hover:text-foreground transition-colors"
                     title="Zoom Out"
                   >
-                    <ZoomOut size={14} />
+                    <ZoomOut size={15} />
                   </button>
                   <span className="px-1.5 text-[11px] font-mono text-foreground min-w-[3rem] text-center">
                     {Math.round(zoomScale * 100)}%
@@ -334,19 +334,19 @@ export function CredentialsSection() {
                     type="button"
                     onClick={() => setZoomScale((prev) => Math.min(2.5, prev + 0.25))}
                     disabled={zoomScale >= 2.5}
-                    className="p-1.5 rounded hover:bg-background disabled:opacity-40 text-muted-foreground hover:text-foreground transition-colors"
+                    className="h-9 w-9 sm:h-7 sm:w-7 flex items-center justify-center rounded hover:bg-background disabled:opacity-40 text-muted-foreground hover:text-foreground transition-colors"
                     title="Zoom In"
                   >
-                    <ZoomIn size={14} />
+                    <ZoomIn size={15} />
                   </button>
                   {zoomScale !== 1 && (
                     <button
                       type="button"
                       onClick={() => setZoomScale(1)}
-                      className="p-1.5 rounded hover:bg-background text-muted-foreground hover:text-foreground transition-colors"
+                      className="h-9 w-9 sm:h-7 sm:w-7 flex items-center justify-center rounded hover:bg-background text-muted-foreground hover:text-foreground transition-colors"
                       title="Reset Zoom"
                     >
-                      <RotateCcw size={13} />
+                      <RotateCcw size={14} />
                     </button>
                   )}
                 </div>

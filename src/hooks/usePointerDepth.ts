@@ -36,12 +36,15 @@ export function usePointerDepth(maxOffset: number = 6, damping: number = 0.08) {
   const containerRef = useRef<HTMLElement | null>(null);
   const portraitRef = useRef<HTMLDivElement | null>(null);
 
-  // Check for reduced motion preference
+  // Check for reduced motion preference and touch device
   const prefersReducedMotion = typeof window !== 'undefined' && 
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  const isTouchDevice = typeof window !== 'undefined' && 
+    (window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768);
+
   const startAnimation = useCallback(() => {
-    if (prefersReducedMotion || isLoopRunningRef.current) return;
+    if (prefersReducedMotion || isTouchDevice || isLoopRunningRef.current) return;
     isLoopRunningRef.current = true;
 
     const tick = () => {
@@ -91,7 +94,7 @@ export function usePointerDepth(maxOffset: number = 6, damping: number = 0.08) {
   }, [damping, maxOffset, prefersReducedMotion]);
 
   const handlePointerMove = useCallback((e: PointerEvent | React.PointerEvent) => {
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || isTouchDevice) return;
 
     if (containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect();

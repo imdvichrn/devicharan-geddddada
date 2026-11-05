@@ -62,7 +62,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
   const initialMessages: Message[] = [
     {
       role: 'assistant',
-      content: `Hey. I'm Echoless. What would you like to explore across Devicharan's software products, video post-production, or digital systems?`,
+      content: `Hey there. I'm Echoless — Devicharan's digital companion and creative co-pilot. I know his work, his design thinking, and his craft inside out (and I'm rather proud of it). What brings you by today?`,
       timestamp: new Date(),
     }
   ];
@@ -573,45 +573,42 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
   };
 
   const renderContentWithLinks = (content: string): string => {
-    // Strip markdown link syntax from display text
+    // Strip markdown link syntax from display text [label](url) -> label
     let cleaned = content.replace(/\[([^\]]+)\]\((?:https?:\/\/[^\s)]+|\/[^\s)]+)\)/g, '$1');
-    // Strip bare URLs from display text since buttons handle them
-    cleaned = cleaned.replace(/https?:\/\/[^\s)<>]+/g, '').replace(/\s{2,}/g, ' ').trim();
+    // Strip bare URLs from display text since action buttons handle them
+    cleaned = cleaned.replace(/https?:\/\/[^\s)<>]+/g, '');
+    // Clean residual double-asterisk bold markers and single-asterisk italic markers
+    cleaned = cleaned.replace(/\*\*([^*]+)\*\*/g, '$1');
+    cleaned = cleaned.replace(/\*([^*]+)\*/g, '$1');
+    // Clean excessive spaces and multiple blank lines
+    cleaned = cleaned.replace(/[ \t]{2,}/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
     return cleaned;
   };
 
   const getActionStyle = (actionOrUrl: string) => {
     const a = actionOrUrl.toLowerCase();
     if (a.includes('instagram')) {
-      // Restrained Instagram-inspired accent (subtle warm rose/amber glass border)
-      return 'bg-gradient-to-r from-rose-500/10 via-pink-500/10 to-amber-500/10 hover:from-rose-500/15 hover:to-amber-500/15 text-rose-100 border border-rose-400/30 hover:border-rose-400/50 shadow-xs';
+      return 'bg-rose-500/10 dark:bg-rose-500/15 hover:bg-rose-500/20 text-rose-900 dark:text-rose-100 border border-rose-500/30 dark:border-rose-400/40 shadow-xs';
     }
     if (a.includes('github')) {
-      // Neutral monochrome
-      return 'bg-zinc-800/60 hover:bg-zinc-700/60 text-zinc-200 border border-zinc-700/60 hover:border-zinc-500/70 shadow-xs';
+      return 'bg-slate-200/80 dark:bg-zinc-800/70 hover:bg-slate-300/80 dark:hover:bg-zinc-700/80 text-slate-900 dark:text-zinc-100 border border-slate-300 dark:border-zinc-700/70 shadow-xs';
     }
     if (a.includes('linkedin') || a.includes('facebook') || a.includes('twitter') || a.includes('x.com')) {
-      // Restrained blue
-      return 'bg-sky-500/10 hover:bg-sky-500/20 text-sky-200 border border-sky-400/30 hover:border-sky-400/50 shadow-xs';
+      return 'bg-sky-500/10 dark:bg-sky-500/15 hover:bg-sky-500/20 text-sky-900 dark:text-sky-100 border border-sky-500/30 dark:border-sky-400/40 shadow-xs';
     }
     if (a.includes('whatsapp') || a.includes('wa.me')) {
-      // Restrained green
-      return 'bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 hover:border-emerald-400/50 shadow-xs';
+      return 'bg-emerald-500/10 dark:bg-emerald-500/15 hover:bg-emerald-500/20 text-emerald-900 dark:text-emerald-100 border border-emerald-500/30 dark:border-emerald-400/40 shadow-xs';
     }
     if (a.includes('video') || a.includes('showreel')) {
-      // Cinematic violet/blue
-      return 'bg-violet-500/10 hover:bg-violet-500/20 text-violet-200 border border-violet-400/30 hover:border-violet-400/50 shadow-xs';
+      return 'bg-violet-500/10 dark:bg-violet-500/15 hover:bg-violet-500/20 text-violet-900 dark:text-violet-100 border border-violet-500/30 dark:border-violet-400/40 shadow-xs';
     }
     if (a.includes('software') || a.includes('examflow') || a.includes('web')) {
-      // Sapphire blue
-      return 'bg-blue-500/10 hover:bg-blue-500/20 text-blue-200 border border-blue-400/30 hover:border-blue-400/50 shadow-xs';
+      return 'bg-blue-500/10 dark:bg-blue-500/15 hover:bg-blue-500/20 text-blue-900 dark:text-blue-100 border border-blue-500/30 dark:border-blue-400/40 shadow-xs';
     }
     if (a.includes('cv') || a.includes('resume') || a.includes('.pdf')) {
-      // Neutral document treatment
-      return 'bg-slate-700/30 hover:bg-slate-700/50 text-slate-200 border border-slate-600/40 hover:border-slate-400/60 shadow-xs';
+      return 'bg-amber-500/10 dark:bg-amber-500/15 hover:bg-amber-500/20 text-amber-900 dark:text-amber-100 border border-amber-500/30 dark:border-amber-400/40 shadow-xs';
     }
-    // Apple-inspired unified glass pill
-    return 'bg-muted/40 hover:bg-muted/60 text-chat-text border border-chat-border/50 hover:border-primary/40 shadow-xs';
+    return 'bg-muted/60 hover:bg-muted/90 text-chat-text border border-chat-border/60 hover:border-primary/40 shadow-xs';
   };
 
   return (
@@ -659,17 +656,17 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
             }}
           >
             {/* Glass Panel Container */}
-            <div className="relative h-full rounded-2xl overflow-hidden shadow-2xl border border-chat-border bg-chat-bg/95 backdrop-blur-xl flex flex-col">
+            <div className="relative h-full rounded-2xl overflow-hidden shadow-2xl border border-chat-border bg-chat-bg/95 backdrop-blur-xl flex flex-col transition-colors duration-150">
               {/* Animated background gradient */}
-              <div className="absolute inset-0 opacity-20">
+              <div className="absolute inset-0 opacity-20 pointer-events-none">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/15 to-transparent" />
               </div>
 
               {/* Header */}
-              <div className="relative z-10 px-4 py-3 border-b border-chat-border/50 flex-shrink-0 bg-background/40 backdrop-blur-md">
+              <div className="relative z-10 px-4 py-3 border-b border-chat-border/50 flex-shrink-0 bg-background/40 backdrop-blur-md transition-colors duration-150">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5 flex-1">
-                    <div className="w-2.5 h-2.5 rounded-full bg-primary" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_8px_hsl(var(--primary))]" />
                     <div>
                       <h3 className="font-semibold text-xs tracking-wide uppercase text-chat-text">Echoless</h3>
                       <p className="text-[11px] text-chat-text-muted flex items-center gap-1.5 font-mono">
@@ -680,7 +677,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
                   </div>
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="text-chat-text-muted hover:text-chat-text transition-colors p-1.5 rounded-md hover:bg-muted/30 cursor-pointer"
+                    className="text-chat-text-muted hover:text-chat-text transition-colors p-1.5 rounded-md hover:bg-muted/40 cursor-pointer"
                     aria-label="Close chat"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -713,13 +710,17 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
                           action.action();
                           setShowQuickActions(false);
                         }}
-                        className="w-full text-left p-3 rounded-lg border border-chat-border/50 hover:border-primary/50 bg-primary/5 hover:bg-primary/10 transition-all duration-200 group"
+                        className="w-full text-left p-3 rounded-xl border border-chat-border/60 hover:border-primary/50 bg-card/60 dark:bg-primary/5 hover:bg-primary/10 transition-all duration-200 group flex items-center justify-between cursor-pointer"
                       >
-                        <div className="flex items-center gap-2 mb-1">
-                          {action.icon}
-                          <span className="text-sm font-medium text-chat-text group-hover:text-primary-foreground transition-colors">{action.label}</span>
+                        <div className="flex items-center gap-3">
+                          <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                            {action.icon}
+                          </div>
+                          <div>
+                            <span className="text-sm font-medium text-chat-text group-hover:text-primary transition-colors block">{action.label}</span>
+                            <p className="text-xs text-chat-text-muted">{action.description}</p>
+                          </div>
                         </div>
-                        <p className="text-xs text-chat-text-muted/70 ml-6">{action.description}</p>
                       </motion.button>
                     ))}
                   </motion.div>
@@ -736,10 +737,10 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
                   >
                     <motion.div
                       layout
-                      className={`max-w-[85%] p-3 rounded-2xl text-sm transition-all duration-200 ${
+                      className={`max-w-[85%] p-3.5 rounded-2xl text-sm transition-all duration-150 ${
                         message.role === 'user'
-                          ? 'bg-gradient-to-br from-chat-bubble-user to-primary text-primary-foreground rounded-br-none'
-                          : 'bg-chat-bubble-bot border border-chat-border/50 text-chat-text rounded-bl-none backdrop-blur-sm'
+                          ? 'bg-primary text-primary-foreground rounded-br-none shadow-xs font-medium'
+                          : 'bg-chat-bubble-bot border border-chat-border/60 text-chat-text rounded-bl-none backdrop-blur-sm shadow-xs'
                       }`}
                     >
                       <div className="whitespace-pre-wrap leading-relaxed text-sm">
@@ -792,7 +793,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
 
                       {/* Timestamp */}
                       {message.timestamp && (
-                        <div className="text-xs opacity-50 mt-1">
+                        <div className="text-[11px] opacity-60 mt-1.5 font-mono">
                           {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </div>
                       )}
@@ -809,7 +810,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
                     transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                     className="flex justify-start"
                   >
-                    <div className="bg-chat-bubble-bot border border-chat-border/50 text-chat-text px-3 py-2 rounded-2xl rounded-bl-none backdrop-blur-md flex items-center gap-2.5 shadow-xs">
+                    <div className="bg-chat-bubble-bot border border-chat-border/60 text-chat-text px-3.5 py-2.5 rounded-2xl rounded-bl-none backdrop-blur-md flex items-center gap-2.5 shadow-xs transition-colors duration-150">
                       <div className="w-4 h-4 rounded-full overflow-hidden flex items-center justify-center">
                         <SiriOrb className="w-full h-full" />
                       </div>
@@ -838,13 +839,13 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
               </div>
 
               {/* Input Area */}
-              <form onSubmit={sendMessage} className="relative z-10 p-4 border-t border-chat-border/50 flex-shrink-0">
+              <form onSubmit={sendMessage} className="relative z-10 p-3.5 border-t border-chat-border/50 flex-shrink-0 bg-background/30 backdrop-blur-md transition-colors duration-150">
                 <div className="flex gap-2">
                   <Input
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    placeholder="Ask anything..."
-                    className="flex-1 text-sm bg-chat-input-bg border-chat-border/50 text-chat-text placeholder:text-chat-text-muted/50 rounded-lg focus:border-primary/50 focus:ring-primary/20"
+                    placeholder="Ask anything about Devicharan..."
+                    className="flex-1 text-base sm:text-sm bg-chat-input-bg border-chat-border/60 text-chat-text placeholder:text-chat-text-muted/60 rounded-xl focus:border-primary focus:ring-1 focus:ring-primary/30 transition-colors duration-150"
                     disabled={isLoading}
                     maxLength={2000}
                     onKeyDown={(e) => {
@@ -862,7 +863,7 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
                       type="submit"
                       size="sm"
                       disabled={!input.trim() || isLoading}
-                      className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground rounded-lg"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-3.5 shadow-xs transition-colors duration-150 cursor-pointer"
                     >
                       <Send size={16} />
                     </Button>
@@ -871,21 +872,22 @@ export const Chatbot = forwardRef<{ toggleChat: () => void }, {}>((props, ref) =
               </form>
 
               {/* Social Links Footer */}
-              <div className="relative z-10 px-4 py-3 border-t border-chat-border/50 flex justify-center items-center gap-3">
+              <div className="relative z-10 px-4 py-2.5 border-t border-chat-border/50 flex justify-center items-center gap-4 bg-background/40 backdrop-blur-md transition-colors duration-150">
                 {[
                   { icon: Linkedin, url: 'https://www.linkedin.com/in/geddadadevicharan', label: 'LinkedIn' },
                   { icon: Instagram, url: 'https://www.instagram.com/imdvichrn', label: 'Instagram' },
                   { icon: Facebook, url: 'https://www.facebook.com/imdvichrn', label: 'Facebook' },
+                  { icon: Github, url: 'https://github.com/imdvichrn/imdvichrn', label: 'GitHub' },
                 ].map((social, idx) => (
                   <motion.button
                     key={idx}
-                    whileHover={{ scale: 1.2 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => window.open(social.url, '_blank')}
-                    className="w-8 h-8 rounded-full hover:bg-primary/20 flex items-center justify-center transition-colors"
+                    whileHover={{ scale: 1.15 }}
+                    whileTap={{ scale: 0.92 }}
+                    onClick={() => window.open(social.url, '_blank', 'noopener,noreferrer')}
+                    className="w-7 h-7 rounded-full hover:bg-primary/15 flex items-center justify-center transition-colors cursor-pointer"
                     aria-label={social.label}
                   >
-                    <social.icon size={16} className="text-chat-text-muted hover:text-primary transition-colors" />
+                    <social.icon size={15} className="text-chat-text-muted hover:text-primary transition-colors" />
                   </motion.button>
                 ))}
               </div>

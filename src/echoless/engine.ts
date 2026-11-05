@@ -27,7 +27,7 @@ export class EcholessEngine {
   }
 
   public getHonestUnavailableResponse(): string {
-    return "What would you like to explore across Devicharan's software products, DaVinci Resolve post-production, or digital systems?";
+    return "I'm right here with you. What would you like to explore together across Devicharan's software products, DaVinci Resolve post-production, or digital systems?";
   }
 
   /**

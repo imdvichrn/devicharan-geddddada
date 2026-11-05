@@ -14,11 +14,13 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(() => {
     if (typeof window !== 'undefined') {
+      if (document.documentElement.classList.contains('dark')) return 'dark';
+      if (document.documentElement.classList.contains('light')) return 'light';
       const stored = localStorage.getItem('theme') as Theme;
       if (stored === 'light' || stored === 'dark') return stored;
       return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
-    return 'light';
+    return 'dark';
   });
 
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -35,7 +37,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (!prefersReducedMotion) {
-      // Enable coordinated 450ms physical transition across surfaces, borders, shadows, text
+      // Enable coordinated 150ms subtle transition on scoped surfaces and text
       root.classList.add('theme-transitioning');
       setIsTransitioning(true);
     }
@@ -49,7 +51,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       transitionTimeoutRef.current = window.setTimeout(() => {
         root.classList.remove('theme-transitioning');
         setIsTransitioning(false);
-      }, 450);
+      }, 150);
     }
   }, []);
 
@@ -67,8 +69,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   // Initial sync on mount
   useEffect(() => {
     const root = window.document.documentElement;
-    root.classList.remove('light', 'dark');
-    root.classList.add(theme);
+    if (!root.classList.contains(theme)) {
+      root.classList.remove('light', 'dark');
+      root.classList.add(theme);
+    }
     localStorage.setItem('theme', theme);
   }, [theme]);
 
